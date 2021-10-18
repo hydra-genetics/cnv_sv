@@ -11,12 +11,12 @@ rule cnvkit_create_targets:
     input:
         bed=config["reference"]["design_bedfile"],
     output:
-        bed=temp("cnv/cnvkit_create_targets/cnvkit.target.bed"),
+        bed=temp("cnv/cnvkit_create_targets/target.bed"),
     log:
-        "cnv/cnvkit_create_targets/cnvkit.target.bed.log",
+        "cnv/cnvkit_create_targets/target.bed.log",
     benchmark:
         repeat(
-            "cnv/cnvkit_create_targets/cnvkit.target.bed.benchmark.tsv",
+            "cnv/cnvkit_create_targets/target.bed.benchmark.tsv",
             config.get("cnvkit_create_targets", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_create_targets", config["default_resources"]).get("threads", config["default_resources"]["threads"])
@@ -25,6 +25,6 @@ rule cnvkit_create_targets:
     conda:
         "../envs/cnvkit_create_targets.yaml"
     message:
-        "{rule}: Use cnvkit to create target bedfile cnvkit.target.bed"
+        "{rule}: Use cnvkit to create target bedfile target.bed"
     shell:
         "(cnvkit.py target --split {input.bed} -o {output.bed}) &> {log}"

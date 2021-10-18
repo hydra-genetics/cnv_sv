@@ -9,7 +9,9 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/cnvkit_create_targets.smk"
+include: "rules/cnvkit_create_access.smk"
 include: "rules/cnvkit_create_antitargets.smk"
+include: "rules/cnvkit_coverage.smk"
 
 
 report: "report/workflow.rst"

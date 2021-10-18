@@ -16,3 +16,6 @@ cnvkit_create_antitargets:
 
 cnvkit_create_access:
   container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_coverage:
+  container: "docker://gmsuppsala/somatic:develop"

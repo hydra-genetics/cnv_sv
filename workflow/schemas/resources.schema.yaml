@@ -32,5 +32,15 @@ properties:
         type: string
         description: default max execution time for 'cnvkit_create_antitargets'
 
+  cnvkit_coverage:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_coverage'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_coverage'
+
   required:
     - default_resources

@@ -18,6 +18,9 @@ properties:
       design_bedfile:
         type: string
         description: path to the design bedfile
+      fasta:
+        type: string
+        description: path to fasta reference file
   required:
     - samples
     - units
@@ -40,6 +43,26 @@ properties:
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated for cnvkit_create_targets
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  cnvkit_create_access:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_create_access
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  cnvkit_coverage:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_coverage
       container:
         type: string
         description: name or path to docker/singularity container

@@ -9,14 +9,15 @@ __license__ = "GPL-3"
 
 rule cnvkit_create_antitargets:
     input:
-        bed="cnv/cnvkit_create_targets/cnvkit.target.bed",
+        bed="cnv/cnvkit_create_targets/target.bed",
+        access="cnv/cnvkit_create_access/access_excludes.bed",
     output:
-        bed=temp("cnv/cnvkit_create_antitargets/cnvkit.antitarget.bed"),
+        bed=temp("cnv/cnvkit_create_antitargets/antitarget.bed"),
     log:
-        "cnv/cnvkit_create_antitargets/cnvkit.antitarget.bed.log",
+        "cnv/cnvkit_create_antitargets/antitarget.bed.log",
     benchmark:
         repeat(
-            "cnv/cnvkit_create_antitargets/cnvkit.antitarget.bed.benchmark.tsv",
+            "cnv/cnvkit_create_antitargets/antitarget.bed.benchmark.tsv",
             config.get("cnvkit_create_antitargets", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_create_antitargets", config["default_resources"]).get("threads", config["default_resources"]["threads"])
@@ -25,6 +26,6 @@ rule cnvkit_create_antitargets:
     conda:
         "../envs/cnvkit_create_antitargets.yaml"
     message:
-        "{rule}: Use cnvkit to create antitarget bedfile cnvkit.antitarget.bed"
+        "{rule}: Use cnvkit to create antitarget bedfile antitarget.bed"
     shell:
-        "(cnvkit.py antitarget {input.bed} -o {output.bed}) &> {log}"
+        "(cnvkit.py antitarget {input.bed} -g {input.access} -o {output.bed}) &> {log}"

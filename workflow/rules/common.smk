@@ -46,4 +46,9 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
-    return ["cnv/cnvkit_create_targets/cnvkit.target.bed", "cnv/cnvkit_create_antitargets/cnvkit.antitarget.bed"]
+    return [
+        "cnv/cnvkit_coverage/%s_%s.%sargetcoverage.cnn" % (sample, t, target)
+        for target in ["t", "antit"]
+        for sample in get_samples(samples)
+        for t in get_unit_types(units, sample)
+    ]
