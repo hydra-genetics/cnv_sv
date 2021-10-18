@@ -9,3 +9,6 @@ reference:
 
 cnvkit_create_targets:
   container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_create_antitargets:
+  container: "docker://gmsuppsala/somatic:develop"

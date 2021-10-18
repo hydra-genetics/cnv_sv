@@ -46,4 +46,4 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
-    return ["cnv/cnvkit_create_targets/cnvkit.target.bed"]
+    return ["cnv/cnvkit_create_targets/cnvkit.target.bed", "cnv/cnvkit_create_antitargets/cnvkit.antitarget.bed"]
