@@ -5,10 +5,14 @@ units: "units.tsv"
 default_container: "docker://marrip/common:1.1.0"
 
 reference:
-  design_bedfile: "references/twist_DNA_solid.chr1.annotated.bed"
+  fasta: "reference/WASH7P.fna"
+  design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
 
 cnvkit_create_targets:
   container: "docker://gmsuppsala/somatic:develop"
 
 cnvkit_create_antitargets:
+  container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_create_access:
   container: "docker://gmsuppsala/somatic:develop"
