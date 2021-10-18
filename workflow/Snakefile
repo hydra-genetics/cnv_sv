@@ -6,31 +6,13 @@ __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+
 include: "rules/common.smk"
+include: "rules/cnvkit_create_targets.smk"
+
 
 report: "report/workflow.rst"
 
-rule dummy:
-    output:
-        "cnv/dummy/{sample}_{type}.dummy.txt"
-    params:
-        extra=config.get("dummy", {}).get("extra", ""),
-    log:
-        "cnv/dummy/{sample}_{type}.output.log"
-    benchmark:
-       repeat("module/dummy/{sample}_{type}.output.benchmark.tsv", config.get("dummy", {}).get("benchmark_repeats", 1),)
-    threads: # optional
-       config.get("dummy", config["default_resources"])["threads"]
-    container:
-       config.get("dummy", {}).get("container", config["default_container"])
-    conda:
-       "../envs/dummy.yaml"
-    message:
-       "{rule}: Do stuff on module/{rule}/{wildcards.sample}_{wildcards.type}.input"
-    shell:
-        """
-        touch {output}
-        """
 
 rule all:
     input:

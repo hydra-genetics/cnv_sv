@@ -3,3 +3,9 @@ samples: "samples.tsv"
 units: "units.tsv"
 
 default_container: "docker://marrip/common:1.1.0"
+
+reference:
+  design_bedfile: "references/twist_DNA_solid.chr1.annotated.bed"
+
+cnvkit_create_targets:
+  container: "docker://gmsuppsala/somatic:develop"

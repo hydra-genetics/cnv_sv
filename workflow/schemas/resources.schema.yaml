@@ -12,5 +12,15 @@ properties:
         type: string
         description: default max execution time for a rule
 
+  cnvkit_create_targets:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_create_targets'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_create_targets'
+
   required:
     - default_resources

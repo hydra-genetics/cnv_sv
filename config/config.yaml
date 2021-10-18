@@ -1,8 +1,10 @@
 ---
 
- resources: "resources.yaml"
- samples: "samples.tsv"
- units: "units.tsv"
+resources: "resources.yaml"
+samples: "samples.tsv"
+units: "units.tsv"
 
- tools:
-   common: "docker://hydra/common:1.1.0"
+default_container: "docker://hydra/common:1.1.0"
+
+references:
+  design_bedfile: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed"
