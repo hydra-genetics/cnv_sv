@@ -46,8 +46,16 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
-    return [
+    output_files = [
         "cnv/cnvkit_call/%s/%s_%s.cns" % (sample, sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
     ]
+    output_files.append(
+        [
+            "cnv/germline_vcf/%s_%s.germline.vcf" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
+    return output_files

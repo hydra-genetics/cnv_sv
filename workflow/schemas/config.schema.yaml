@@ -79,3 +79,16 @@ properties:
       normal_reference:
         type: string
         description: path to normal reference panel for cnvkit calling
+
+  germline_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for germline_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      filter:
+        type: string
+        description: filters used to create the germline vcf file
