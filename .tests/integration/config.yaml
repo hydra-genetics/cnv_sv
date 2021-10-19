@@ -19,3 +19,7 @@ cnvkit_create_access:
 
 cnvkit_coverage:
   container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_call:
+  container: "docker://gmsuppsala/somatic:develop"
+  normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"

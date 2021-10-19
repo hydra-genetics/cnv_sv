@@ -66,3 +66,16 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+
+  cnvkit_call:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_call
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      normal_reference:
+        type: string
+        description: path to normal reference panel for cnvkit calling

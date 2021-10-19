@@ -11,7 +11,7 @@ include: "rules/common.smk"
 include: "rules/cnvkit_create_targets.smk"
 include: "rules/cnvkit_create_access.smk"
 include: "rules/cnvkit_create_antitargets.smk"
-include: "rules/cnvkit_coverage.smk"
+include: "rules/cnvkit_call.smk"
 
 
 report: "report/workflow.rst"
