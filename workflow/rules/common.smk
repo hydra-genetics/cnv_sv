@@ -22,6 +22,23 @@ min_version("6.8.0")
 configfile: "config.yaml"
 
 
+def get_sample(samples: pandas.DataFrame, wildcards: snakemake.io.Wildcards) -> pandas.Series:
+    """
+    function used to extract one sample(row) from sample.tsv
+    Args:
+        samples: DataFrame generate by importing a file following schema defintion
+               found in pre-alignment/workflow/schemas/samples.schema.tsv
+        wildcards: wildcards object with at least the following wildcard names
+               sample
+    Returns:
+        Series containing data of the selected row
+    Raises:
+        raises an exception (KeyError) if no sample can be extracted from the Dataframe
+    """
+    sample = samples.loc[(wildcards.sample)].dropna()
+    return sample
+
+
 validate(config, schema="../schemas/config.schema.yaml")
 config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
@@ -47,15 +64,8 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     output_files = [
-        "cnv/cnvkit_call/%s/%s_%s.cns" % (sample, sample, t)
+        "cnv/cnvkit_call_loh/%s_%s.loh.cns" % (sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
     ]
-    output_files.append(
-        [
-            "cnv/germline_vcf/%s_%s.germline.vcf" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
     return output_files

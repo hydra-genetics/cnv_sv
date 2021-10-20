@@ -92,3 +92,13 @@ properties:
       filter:
         type: string
         description: filters used to create the germline vcf file
+
+  cnvkit_call_loh:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_call_loh
+      container:
+        type: string
+        description: name or path to docker/singularity container

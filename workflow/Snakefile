@@ -10,6 +10,7 @@ __license__ = "GPL-3"
 include: "rules/common.smk"
 include: "rules/cnvkit_call.smk"
 include: "rules/germline_vcf.smk"
+include: "rules/cnvkit_call_loh.smk"
 
 
 report: "report/workflow.rst"
