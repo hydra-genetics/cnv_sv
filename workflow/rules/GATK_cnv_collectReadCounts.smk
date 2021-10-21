@@ -13,7 +13,7 @@ rule GATK_cnv_collectReadCounts:
         bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
         interval=config["GATK_cnv_collectReadCounts"]["interval"],
     output:
-        "cnv/GATK_cnv_collectReadCounts/{sample}_{type}.counts.hdf5",
+        temp("cnv/GATK_cnv_collectReadCounts/{sample}_{type}.counts.hdf5"),
     params:
         mergingRule="OVERLAPPING_ONLY",
         extra=config.get("GATK_cnv_collectReadCounts", {}).get("extra", ""),
