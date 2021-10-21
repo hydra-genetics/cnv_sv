@@ -29,4 +29,4 @@ rule cnvkit_create_targets:
     message:
         "{rule}: Use cnvkit to create target bedfile target.bed"
     shell:
-        "(cnvkit.py target --split {input.bed} -o {output.bed}) &> {log}"
+        "(cnvkit.py target --split {input.bed} -o {output.bed} {params.extra}) &> {log}"

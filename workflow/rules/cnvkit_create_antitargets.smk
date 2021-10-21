@@ -30,4 +30,4 @@ rule cnvkit_create_antitargets:
     message:
         "{rule}: Use cnvkit to create antitarget bedfile antitarget.bed"
     shell:
-        "(cnvkit.py antitarget {input.bed} -g {input.access} -o {output.bed}) &> {log}"
+        "(cnvkit.py antitarget {input.bed} -g {input.access} -o {output.bed} {params.extra}) &> {log}"
