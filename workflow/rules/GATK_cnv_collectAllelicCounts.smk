@@ -16,7 +16,6 @@ rule GATK_cnv_collectAllelicCounts:
     output:
         temp("cnv/GATK_cnv_collectAllelicCounts/{sample}_{type}.clean.allelicCounts.tsv"),
     params:
-        mergingRule="OVERLAPPING_ONLY",
         extra=config.get("GATK_cnv_collectAllelicCounts", {}).get("extra", ""),
     log:
         "cnv/GATK_cnv_collectAllelicCounts/{sample}_{type}.clean.allelicCounts.tsv.log",

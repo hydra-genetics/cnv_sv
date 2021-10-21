@@ -102,3 +102,74 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+
+  GATK_cnv_denoiseReadCounts:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for GATK_cnv_denoiseReadCounts
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to GATK_cnv_denoiseReadCounts
+
+  GATK_cnv_collectReadCounts:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for GATK_cnv_collectReadCounts
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      interval:
+        type: string
+        description: picard interval file for the target bed file
+      extra:
+        type: string
+        description: parameters that should be forwarded to GATK_cnv_collectReadCounts
+
+  GATK_cnv_modelSegments:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for GATK_cnv_modelSegments
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to GATK_cnv_modelSegments
+
+  GATK_cnv_callCopyRatioSegments:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for GATK_cnv_callCopyRatioSegments
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to GATK_cnv_callCopyRatioSegments
+
+  GATK_cnv_collectAllelicCounts:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for GATK_cnv_collectAllelicCounts
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      SNP_interval:
+        type: string
+        description: picard interval file for the germline SNPs
+      extra:
+        type: string
+        description: parameters that should be forwarded to GATK_cnv_collectAllelicCounts
