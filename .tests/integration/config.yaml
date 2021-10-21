@@ -38,3 +38,6 @@ GATK_cnv_collectAllelicCounts:
 
 GATK_cnv_modelSegments:
   container: "docker://gmsuppsala/somatic:develop"
+
+GATK_cnv_callCopyRatioSegments:
+  container: "docker://gmsuppsala/somatic:develop"

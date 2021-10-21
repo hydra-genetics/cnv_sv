@@ -13,6 +13,7 @@ rule GATK_cnv_modelSegments:
         allelicCounts="cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.allelicCounts.tsv",
     output:
         temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.modelFinal.seg"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.sr.seg"),
     params:
         outdir=lambda wildcards, output: os.path.dirname(output[0]),
         outPrefix="{sample}_{type}.clean",
