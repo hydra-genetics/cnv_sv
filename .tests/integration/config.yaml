@@ -35,3 +35,6 @@ GATK_cnv_denoiseReadCounts:
 GATK_cnv_collectAllelicCounts:
   container: "docker://gmsuppsala/somatic:develop"
   SNP_interval: "reference/gnomad_SNP_0.001_target.annotated.interval_list"
+
+GATK_cnv_modelSegments:
+  container: "docker://gmsuppsala/somatic:develop"
