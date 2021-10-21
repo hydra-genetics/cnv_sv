@@ -17,3 +17,6 @@ GATK_cnv_collectReadCounts:
 
 GATK_cnv_denoiseReadCounts:
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/GATK_Twist_PoN.hdf5"
+
+GATK_cnv_collectAllelicCounts:
+  SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"

@@ -31,3 +31,7 @@ GATK_cnv_collectReadCounts:
 GATK_cnv_denoiseReadCounts:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "reference/GATK_Twist_PoN.hdf5"
+
+GATK_cnv_collectAllelicCounts:
+  container: "docker://gmsuppsala/somatic:develop"
+  SNP_interval: "reference/gnomad_SNP_0.001_target.annotated.interval_list"
