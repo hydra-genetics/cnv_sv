@@ -12,5 +12,65 @@ properties:
         type: string
         description: default max execution time for a rule
 
+  cnvkit_create_targets:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_create_targets'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_create_targets'
+
+  cnvkit_create_antitargets:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_create_antitargets'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_create_antitargets'
+
+  cnvkit_coverage:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_coverage'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_coverage'
+
+  cnvkit_call:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_call'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_call'
+
+  germline_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'germline_vcf'
+      time:
+        type: string
+        description: default max execution time for 'germline_vcf'
+
+  cnvkit_call_loh:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_call_loh'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_call_loh'
+
   required:
     - default_resources
