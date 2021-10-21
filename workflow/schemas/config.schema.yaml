@@ -36,16 +36,22 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_create_targets
 
   cnvkit_create_antitargets:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_create_targets
+        description: set number of times benchmark should be repeated for cnvkit_create_antitargets
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_create_antitargets
 
   cnvkit_create_access:
     type: object
@@ -56,6 +62,9 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_create_access
 
   cnvkit_coverage:
     type: object
@@ -79,6 +88,9 @@ properties:
       normal_reference:
         type: string
         description: path to normal reference panel for cnvkit calling
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_call
 
   germline_vcf:
     type: object
@@ -92,6 +104,9 @@ properties:
       filter:
         type: string
         description: filters used to create the germline vcf file
+      extra:
+        type: string
+        description: extra parameters sent to germline_vcf
 
   cnvkit_call_loh:
     type: object
@@ -102,3 +117,6 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_call_loh

@@ -13,6 +13,8 @@ rule cnvkit_create_antitargets:
         access="cnv/cnvkit_create_access/access_excludes.bed",
     output:
         bed=temp("cnv/cnvkit_create_antitargets/antitarget.bed"),
+    params:
+        extra=config.get("cnvkit_create_antitargets", {}).get("extra", ""),
     log:
         "cnv/cnvkit_create_antitargets/antitarget.bed.log",
     benchmark:

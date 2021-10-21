@@ -12,6 +12,8 @@ rule cnvkit_create_access:
         fasta=config["reference"]["fasta"],
     output:
         bed=temp("cnv/cnvkit_create_access/access_excludes.bed"),
+    params:
+        extra=config.get("cnvkit_create_access", {}).get("extra", ""),
     log:
         "cnv/cnvkit_create_access/access_excludes.bed.log",
     benchmark:

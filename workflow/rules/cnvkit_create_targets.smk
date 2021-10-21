@@ -12,6 +12,8 @@ rule cnvkit_create_targets:
         bed=config["reference"]["design_bedfile"],
     output:
         bed=temp("cnv/cnvkit_create_targets/target.bed"),
+    params:
+        extra=config.get("cnvkit_create_targets", {}).get("extra", ""),
     log:
         "cnv/cnvkit_create_targets/target.bed.log",
     benchmark:
