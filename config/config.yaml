@@ -11,3 +11,6 @@ reference:
 
 cnvkit_call:
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/cnvkit_Twist_PoN.cnn"
+
+GATK_cnv_collectReadCounts:
+  interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.interval_list"

@@ -23,3 +23,7 @@ cnvkit_coverage:
 cnvkit_call:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"
+
+GATK_cnv_collectReadCounts:
+  container: "docker://gmsuppsala/somatic:develop"
+  interval: "reference/twist_DNA_solid.HES45.annotated.bed"
