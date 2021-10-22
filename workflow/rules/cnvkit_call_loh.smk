@@ -31,4 +31,4 @@ rule cnvkit_call_loh:
     message:
         "{rule}: Call cnvs with loh info into cnv/cnvkit_call_loh/{wildcards.sample}_{wildcards.type}.loh.cns"
     shell:
-        "(cnvkit.py call {input.segment} -v {input.vcf} -o {output.segment} --purity {params.TC}) &> {log}"
+        "(cnvkit.py call {input.segment} -v {input.vcf} -o {output.segment} --purity {params.TC} {params.extra}) &> {log}"

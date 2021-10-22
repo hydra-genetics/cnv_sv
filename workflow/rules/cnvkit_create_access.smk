@@ -29,4 +29,4 @@ rule cnvkit_create_access:
     message:
         "{rule}: Use cnvkit to create a bedfile with regions that are inaccessible in sequencing in access_excludes.bed"
     shell:
-        "(cnvkit.py access {input.fasta} -o {output.bed}) &> {log}"
+        "(cnvkit.py access {input.fasta} -o {output.bed} {params.extra}) &> {log}"
