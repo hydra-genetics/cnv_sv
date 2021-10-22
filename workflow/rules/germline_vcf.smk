@@ -33,5 +33,5 @@ rule germline_vcf:
     message:
         "{rule}: Create a germline only vcf cnv/germline_vcf/{wildcards.sample}_{wildcards.type}.germline.vcf"
     shell:
-        "(bcftools view {input.vcf} | "
+        "(zcat {input.vcf} | "
         "filter_vep -o {output.vcf} {params.filter}) &> {log}"
