@@ -23,3 +23,9 @@ cnvkit_coverage:
 cnvkit_call:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"
+
+cnvkit_call_loh:
+  container: "docker://gmsuppsala/somatic:develop"
+  
+germline_vcf:
+  container: "docker://ensemblorg/ensembl-vep:release_99.0"
