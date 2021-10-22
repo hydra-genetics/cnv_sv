@@ -9,14 +9,22 @@ __license__ = "GPL-3"
 
 rule GATK_cnv_modelSegments:
     input:
-        denoisedCopyRatio="cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.denoisedCR.tsv",
-        allelicCounts="cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.allelicCounts.tsv",
+        denoisedCopyRatio="cnv/GATK_cnv_denoiseReadCounts/{sample}_{type}.clean.denoisedCR.tsv",
+        allelicCounts="cnv/GATK_cnv_collectAllelicCounts/{sample}_{type}.clean.allelicCounts.tsv",
     output:
         temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.modelFinal.seg"),
-        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.sr.seg"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.cr.seg"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.af.igv.seg"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.cr.igv.seg"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.hets.tsv"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.modelBegin.cr.param"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.modelBegin.af.param"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.modelBegin.seg"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.modelFinal.af.param"),
+        temp("cnv/GATK_cnv_modelSegments/{sample}_{type}.modelFinal.cr.param"),
     params:
         outdir=lambda wildcards, output: os.path.dirname(output[0]),
-        outPrefix="{sample}_{type}.clean",
+        outprefix="{sample}_{type}.clean",
         extra=config.get("GATK_cnv_modelSegments", {}).get("extra", ""),
     log:
         "cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.modelFinal.seg.log",
@@ -36,6 +44,6 @@ rule GATK_cnv_modelSegments:
         "(gatk --java-options '-Xmx4g' ModelSegments "
         "--denoised-copy-ratios {input.denoisedCopyRatio} "
         "--allelic-counts {input.allelicCounts} "
-        "--output {params.outDir} "
-        "--output-prefix {params.outPrefix}"
+        "--output {params.outdir} "
+        "--output-prefix {params.outprefix}"
         "{params.extra}) &> {log}"

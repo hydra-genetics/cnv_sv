@@ -5,7 +5,7 @@ units: "units.tsv"
 default_container: "docker://marrip/common:1.1.0"
 
 reference:
-  fasta: "reference/WASH7P.fna"
+  fasta: "reference/HES45.fna"
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
 
 cnvkit_create_targets:
@@ -26,11 +26,11 @@ cnvkit_call:
 
 GATK_cnv_collectReadCounts:
   container: "docker://gmsuppsala/somatic:develop"
-  interval: "reference/twist_DNA_solid.HES45.annotated.bed"
+  interval: "reference/twist_DNA_solid.HES45.annotated.interval_list"
 
 GATK_cnv_denoiseReadCounts:
   container: "docker://gmsuppsala/somatic:develop"
-  normal_reference: "reference/GATK_Twist_PoN.hdf5"
+  normal_reference: "reference/twist_DNA_solid.HES45.GATK_cnv.PoN.hdf5"
 
 GATK_cnv_collectAllelicCounts:
   container: "docker://gmsuppsala/somatic:develop"

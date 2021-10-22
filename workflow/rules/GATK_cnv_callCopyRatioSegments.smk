@@ -9,9 +9,10 @@ __license__ = "GPL-3"
 
 rule GATK_cnv_callCopyRatioSegments:
     input:
-        "cnv/GATK_cnv_callCopyRatioSegments/{sample}_{type}.clean.cr.seg",
+        "cnv/GATK_cnv_modelSegments/{sample}_{type}.clean.cr.seg",
     output:
         temp("cnv/GATK_cnv_callCopyRatioSegments/{sample}_{type}.clean.calledCNVs.seg"),
+        temp("cnv/GATK_cnv_callCopyRatioSegments/{sample}_{type}.clean.calledCNVs.igv.seg"),
     params:
         extra=config.get("GATK_cnv_callCopyRatioSegments", {}).get("extra", ""),
     log:

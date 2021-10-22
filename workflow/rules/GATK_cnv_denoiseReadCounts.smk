@@ -35,4 +35,4 @@ rule GATK_cnv_denoiseReadCounts:
         "--count-panel-of-normals {input.hdf5PoN} "
         "--standardized-copy-ratios {output.stdCopyRatio} "
         "--denoised-copy-ratios {output.denoisedCopyRatio} "
-        "{params.exra}) &> {log}"
+        "{params.extra}) &> {log}"
