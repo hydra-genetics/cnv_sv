@@ -35,5 +35,3 @@ rule germline_vcf:
     shell:
         "(zcat {input.vcf} | "
         "filter_vep -o {output.vcf} {params.filter} {params.extra}) &> {log}"
-
-        
