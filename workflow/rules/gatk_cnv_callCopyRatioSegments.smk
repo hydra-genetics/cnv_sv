@@ -11,8 +11,8 @@ rule gatk_cnv_callCopyRatioSegments:
     input:
         "cnv/gatk_cnv_modelSegments/{sample}_{type}.clean.cr.seg",
     output:
-        segments = temp("cnv/gatk_cnv_callCopyRatioSegments/{sample}_{type}.clean.calledCNVs.seg"),
-        igv_segments = temp("cnv/gatk_cnv_callCopyRatioSegments/{sample}_{type}.clean.calledCNVs.igv.seg"),
+        segments=temp("cnv/gatk_cnv_callCopyRatioSegments/{sample}_{type}.clean.calledCNVs.seg"),
+        igv_segments=temp("cnv/gatk_cnv_callCopyRatioSegments/{sample}_{type}.clean.calledCNVs.igv.seg"),
     params:
         extra=config.get("gatk_cnv_callCopyRatioSegments", {}).get("extra", ""),
     log:
