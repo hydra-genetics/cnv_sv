@@ -26,24 +26,24 @@ cnvkit_call:
 
 cnvkit_call_loh:
   container: "docker://gmsuppsala/somatic:develop"
-  
+
 germline_vcf:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
 
-GATK_cnv_collectReadCounts:
+gatk_cnv_collectReadCounts:
   container: "docker://gmsuppsala/somatic:develop"
   interval: "reference/twist_DNA_solid.HES45.annotated.interval_list"
 
-GATK_cnv_denoiseReadCounts:
+gatk_cnv_denoiseReadCounts:
   container: "docker://gmsuppsala/somatic:develop"
   normal_reference: "reference/twist_DNA_solid.HES45.GATK_cnv.PoN.hdf5"
 
-GATK_cnv_collectAllelicCounts:
+gatk_cnv_collectAllelicCounts:
   container: "docker://gmsuppsala/somatic:develop"
   SNP_interval: "reference/gnomad_SNP_0.001_target.annotated.interval_list"
 
-GATK_cnv_modelSegments:
+gatk_cnv_modelSegments:
   container: "docker://gmsuppsala/somatic:develop"
 
-GATK_cnv_callCopyRatioSegments:
+gatk_cnv_callCopyRatioSegments:
   container: "docker://gmsuppsala/somatic:develop"

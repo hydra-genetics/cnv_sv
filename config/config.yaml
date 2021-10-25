@@ -8,18 +8,18 @@ default_container: "docker://gmsuppsala/somatic:develop"
 
 reference:
   design_bedfile: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.bed"
-  
+
 germline_vcf:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
 
 cnvkit_call:
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/cnvkit_Twist_PoN.cnn"
 
-GATK_cnv_collectReadCounts:
+gatk_cnv_collectReadCounts:
   interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2_nochr_3c.sort.merged.padded20.hg19.210311.met.annotated.interval_list"
 
-GATK_cnv_denoiseReadCounts:
+gatk_cnv_denoiseReadCounts:
   normal_reference: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/PoN/GATK_Twist_PoN.hdf5"
 
-GATK_cnv_collectAllelicCounts:
+gatk_cnv_collectAllelicCounts:
   SNP_interval: "/projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/gnomad_SNP_0.001_target.annotated.interval_list"
