@@ -15,6 +15,7 @@ rule cnvkit_call_loh:
         segment="cnv/cnvkit_call_loh/{sample}_{type}.loh.cns",
     params:
         TC=lambda wildcards: get_sample(samples, wildcards)["TC"],
+        extra=config.get("cnvkit_call_loh", {}).get("extra", ""),
     log:
         "cnv/cnvkit_call_loh/{sample}_{type}.loh.cns.log",
     benchmark:
@@ -30,4 +31,4 @@ rule cnvkit_call_loh:
     message:
         "{rule}: Call cnvs with loh info into cnv/cnvkit_call_loh/{wildcards.sample}_{wildcards.type}.loh.cns"
     shell:
-        "(cnvkit.py call {input.segment} -v {input.vcf} -o {output.segment} --purity {params.TC}) &> {log}"
+        "(cnvkit.py call {input.segment} -v {input.vcf} -o {output.segment} --purity {params.TC} {params.extra}) &> {log}"

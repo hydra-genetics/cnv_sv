@@ -12,6 +12,8 @@ rule cnvkit_create_access:
         fasta=config["reference"]["fasta"],
     output:
         bed=temp("cnv/cnvkit_create_access/access_excludes.bed"),
+    params:
+        extra=config.get("cnvkit_create_access", {}).get("extra", ""),
     log:
         "cnv/cnvkit_create_access/access_excludes.bed.log",
     benchmark:
@@ -27,4 +29,4 @@ rule cnvkit_create_access:
     message:
         "{rule}: Use cnvkit to create a bedfile with regions that are inaccessible in sequencing in access_excludes.bed"
     shell:
-        "(cnvkit.py access {input.fasta} -o {output.bed}) &> {log}"
+        "(cnvkit.py access {input.fasta} -o {output.bed} {params.extra}) &> {log}"

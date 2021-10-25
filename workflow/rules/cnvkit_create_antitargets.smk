@@ -13,6 +13,8 @@ rule cnvkit_create_antitargets:
         access="cnv/cnvkit_create_access/access_excludes.bed",
     output:
         bed=temp("cnv/cnvkit_create_antitargets/antitarget.bed"),
+    params:
+        extra=config.get("cnvkit_create_antitargets", {}).get("extra", ""),
     log:
         "cnv/cnvkit_create_antitargets/antitarget.bed.log",
     benchmark:
@@ -28,4 +30,4 @@ rule cnvkit_create_antitargets:
     message:
         "{rule}: Use cnvkit to create antitarget bedfile antitarget.bed"
     shell:
-        "(cnvkit.py antitarget {input.bed} -g {input.access} -o {output.bed}) &> {log}"
+        "(cnvkit.py antitarget {input.bed} -g {input.access} -o {output.bed} {params.extra}) &> {log}"

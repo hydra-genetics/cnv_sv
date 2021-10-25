@@ -17,6 +17,7 @@ rule germline_vcf:
             "filter",
             '--filter "DP > 50" --filter "AF >= 0.05" --filter "AF <= 0.95" --filter "MAX_AF >= 0.001" --filter "AF >= 0.001"',
         ),
+        extra=config.get("germline_vcf", {}).get("extra", ""),
     log:
         "cnv/germline_vcf/{sample}_{type}.germline.vcf.log",
     benchmark:
@@ -32,5 +33,5 @@ rule germline_vcf:
     message:
         "{rule}: Create a germline only vcf cnv/germline_vcf/{wildcards.sample}_{wildcards.type}.germline.vcf"
     shell:
-        "(bcftools view {input.vcf} | "
-        "filter_vep -o {output.vcf} {params.filter}) &> {log}"
+        "(zcat {input.vcf} | "
+        "filter_vep -o {output.vcf} {params.filter} {params.extra}) &> {log}"
