@@ -20,8 +20,8 @@ rule gatk_cnv_modelSegments:
         temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.clean.modelBegin.cr.param"),
         temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.clean.modelBegin.af.param"),
         temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.clean.modelBegin.seg"),
-        temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.modelFinal.af.param"),
-        temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.modelFinal.cr.param"),
+        temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.clean.modelFinal.af.param"),
+        temp("cnv/gatk_cnv_modelSegments/{sample}_{type}.clean.modelFinal.cr.param"),
     params:
         outdir=lambda wildcards, output: os.path.dirname(output[0]),
         outprefix="{sample}_{type}.clean",
