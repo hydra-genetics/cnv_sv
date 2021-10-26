@@ -121,25 +121,25 @@ properties:
         type: string
         description: extra parameters sent to cnvkit_call_loh
 
-  gatk_cnv_denoiseReadCounts:
+  gatk_cnv_denoise_read_counts:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_denoiseReadCounts
+        description: set number of times benchmark should be repeated for gatk_cnv_denoise_read_counts
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_denoiseReadCounts
+        description: parameters that should be forwarded to gatk_cnv_denoise_read_counts
 
-  gatk_cnv_collectReadCounts:
+  gatk_cnv_collect_read_counts:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_collectReadCounts
+        description: set number of times benchmark should be repeated for gatk_cnv_collect_read_counts
       container:
         type: string
         description: name or path to docker/singularity container
@@ -148,40 +148,40 @@ properties:
         description: picard interval file for the target bed file
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_collectReadCounts
+        description: parameters that should be forwarded to gatk_cnv_collect_read_counts
 
-  gatk_cnv_modelSegments:
+  gatk_cnv_model_segments:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_modelSegments
+        description: set number of times benchmark should be repeated for gatk_cnv_model_segments
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_modelSegments
+        description: parameters that should be forwarded to gatk_cnv_model_segments
 
-  gatk_cnv_callCopyRatioSegments:
+  gatk_cnv_call_copy_ratio_segments:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_callCopyRatioSegments
+        description: set number of times benchmark should be repeated for gatk_cnv_call_copy_ratio_segments
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_callCopyRatioSegments
+        description: parameters that should be forwarded to gatk_cnv_call_copy_ratio_segments
 
-  gatk_cnv_collectAllelicCounts:
+  gatk_cnv_collect_allelic_counts:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_collectAllelicCounts
+        description: set number of times benchmark should be repeated for gatk_cnv_collect_allelic_counts
       container:
         type: string
         description: name or path to docker/singularity container
@@ -190,4 +190,4 @@ properties:
         description: picard interval file for the germline SNPs
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_collectAllelicCounts
+        description: parameters that should be forwarded to gatk_cnv_collect_allelic_counts

@@ -72,55 +72,55 @@ properties:
         type: string
         description: default max execution time for 'cnvkit_call_loh'
 
-  gatk_cnv_denoiseReadCounts:
+  gatk_cnv_denoise_read_counts:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'gatk_cnv_denoiseReadCounts'
+        description: default number of threads that will be used by 'gatk_cnv_denoise_read_counts'
       time:
         type: string
-        description: default max execution time for 'gatk_cnv_denoiseReadCounts'
+        description: default max execution time for 'gatk_cnv_denoise_read_counts'
 
-  gatk_cnv_collectReadCounts:
+  gatk_cnv_collect_read_counts:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'gatk_cnv_collectReadCounts'
+        description: default number of threads that will be used by 'gatk_cnv_collect_read_counts'
       time:
         type: string
-        description: default max execution time for 'gatk_cnv_collectReadCounts'
+        description: default max execution time for 'gatk_cnv_collect_read_counts'
 
-  gatk_cnv_collectAllelicCounts:
+  gatk_cnv_collect_allelic_counts:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'gatk_cnv_collectAllelicCounts'
+        description: default number of threads that will be used by 'gatk_cnv_collect_allelic_counts'
       time:
         type: string
-        description: default max execution time for 'gatk_cnv_collectAllelicCounts'
+        description: default max execution time for 'gatk_cnv_collect_allelic_counts'
 
-  gatk_cnv_modelSegments:
+  gatk_cnv_model_segments:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'gatk_cnv_modelSegments'
+        description: default number of threads that will be used by 'gatk_cnv_model_segments'
       time:
         type: string
-        description: default max execution time for 'gatk_cnv_modelSegments'
+        description: default max execution time for 'gatk_cnv_model_segments'
 
-  gatk_cnv_callCopyRatioSegments:
+  gatk_cnv_call_copy_ratio_segments:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'gatk_cnv_callCopyRatioSegments'
+        description: default number of threads that will be used by 'gatk_cnv_call_copy_ratio_segments'
       time:
         type: string
-        description: default max execution time for 'gatk_cnv_callCopyRatioSegments'
+        description: default max execution time for 'gatk_cnv_call_copy_ratio_segments'
 
   required:
     - default_resources
