@@ -22,7 +22,10 @@ rule gatk_cnv_call_copy_ratio_segments:
             "cnv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg.benchmark.tsv",
             config.get("gatk_cnv_call_copy_ratio_segments", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("gatk_cnv_call_copy_ratio_segments", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("gatk_cnv_call_copy_ratio_segments", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("gatk_cnv_call_copy_ratio_segments", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("gatk_cnv_call_copy_ratio_segments", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_cnv_call_copy_ratio_segments", {}).get("container", config["default_container"])
     conda:

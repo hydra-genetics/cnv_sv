@@ -7,7 +7,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule gatk_cnv_collectAllelicCounts:
+rule gatk_cnv_collect_allelic_counts:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
         bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
@@ -24,7 +24,10 @@ rule gatk_cnv_collectAllelicCounts:
             "cnv/gatk_cnv_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv.benchmark.tsv",
             config.get("gatk_cnv_collect_allelic_counts", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("gatk_cnv_collect_allelic_counts", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("gatk_cnv_collect_allelic_counts", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("gatk_cnv_collect_allelic_counts", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("gatk_cnv_collect_allelic_counts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_cnv_collect_allelic_counts", {}).get("container", config["default_container"])
     conda:

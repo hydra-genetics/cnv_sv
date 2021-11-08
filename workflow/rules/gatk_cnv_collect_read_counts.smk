@@ -7,7 +7,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule gatk_cnv_collectReadCounts:
+rule gatk_cnv_collect_read_counts:
     input:
         bam="alignment/bwa_mem/{sample}_{type}.bam",
         bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
@@ -24,7 +24,10 @@ rule gatk_cnv_collectReadCounts:
             "cnv/gatk_cnv_collect_read_counts/{sample}_{type}.counts.hdf5.benchmark.tsv",
             config.get("gatk_cnv_collect_read_counts", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("gatk_cnv_collect_read_counts", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("gatk_cnv_collect_read_counts", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("gatk_cnv_collect_read_counts", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("gatk_cnv_collect_read_counts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_cnv_collect_read_counts", {}).get("container", config["default_container"])
     conda:

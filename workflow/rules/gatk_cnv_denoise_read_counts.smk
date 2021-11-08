@@ -23,7 +23,10 @@ rule gatk_cnv_denoise_read_counts:
             "cnv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv.benchmark.tsv",
             config.get("gatk_cnv_denoise_read_counts", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("gatk_cnv_denoise_read_counts", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("gatk_cnv_denoise_read_counts", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("gatk_cnv_denoise_read_counts", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("gatk_cnv_denoise_read_counts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_cnv_denoise_read_counts", {}).get("container", config["default_container"])
     conda:

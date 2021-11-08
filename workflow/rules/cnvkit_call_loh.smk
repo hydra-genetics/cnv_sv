@@ -12,7 +12,7 @@ rule cnvkit_call_loh:
         segment="cnv/cnvkit_call/{sample}/{sample}_{type}.cns",
         vcf="cnv/germline_vcf/{sample}_{type}.germline.vcf",
     output:
-        segment="cnv/cnvkit_call_loh/{sample}_{type}.loh.cns",
+        segment=temp("cnv/cnvkit_call_loh/{sample}_{type}.loh.cns"),
     params:
         TC=lambda wildcards: get_sample(samples, wildcards)["TC"],
         extra=config.get("cnvkit_call_loh", {}).get("extra", ""),

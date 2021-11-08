@@ -7,7 +7,7 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule gatk_cnv_modelSegments:
+rule gatk_cnv_model_segments:
     input:
         denoisedCopyRatio="cnv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
         allelicCounts="cnv/gatk_cnv_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv",
@@ -33,7 +33,10 @@ rule gatk_cnv_modelSegments:
             "cnv/gatk_cnv_model_segments/{sample}_{type}.clean.modelFinal.seg.benchmark.tsv",
             config.get("gatk_cnv_model_segments", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("gatk_cnv_model_segments", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("gatk_cnv_model_segments", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("gatk_cnv_model_segments", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("gatk_cnv_model_segments", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_cnv_model_segments", {}).get("container", config["default_container"])
     conda:
