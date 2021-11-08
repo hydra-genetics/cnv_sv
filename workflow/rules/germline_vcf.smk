@@ -11,7 +11,7 @@ rule germline_vcf:
     input:
         vcf="snv_indel/ensemble_vcf/{sample}_{type}.ensembled.vcf.gz",
     output:
-        vcf="cnv/germline_vcf/{sample}_{type}.germline.vcf",
+        vcf=temp("cnv/germline_vcf/{sample}_{type}.germline.vcf"),
     params:
         filter=config.get("germline_vcf", {}).get(
             "filter",

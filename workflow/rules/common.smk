@@ -51,4 +51,11 @@ def compile_output_list(wildcards):
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
     ]
+    output_files.append(
+        [
+            "cnv/gatk_cnv_call_copy_ratio_segments/%s_%s.clean.calledCNVs.seg" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
     return output_files
