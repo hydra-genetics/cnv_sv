@@ -11,27 +11,33 @@ if config.get("cnvkit_call", {}).get("method", "hybrid") == "hybrid":
 
     rule cnvkit_call:
         input:
-            bam="alignment/bwa_mem/{sample}_{type}.bam",
-            bai="alignment/bwa_mem/{sample}_{type}.bam.bai",
+            bam="alignment/merge_bam/{sample}_{type}.bam",
+            bai="alignment/merge_bam/{sample}_{type}.bam.bai",
             cnv_reference=config["cnvkit_call"]["normal_reference"],
         output:
-            regions=temp("cnv/cnvkit_call/{sample}/{sample}_{type}.cnr"),
-            segments=temp("cnv/cnvkit_call/{sample}/{sample}_{type}.cns"),
-            segments_called=temp("cnv/cnvkit_call/{sample}/{sample}_{type}.call.cns"),
-            bins=temp("cnv/cnvkit_call/{sample}/{sample}_{type}.bintest.cns"),
-            target_coverage=temp("cnv/cnvkit_call/{sample}/{sample}_{type}.targetcoverage.cnn"),
-            antitarget_coverage=temp("cnv/cnvkit_call/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
+            regions=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cnr"),
+            segments=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cns"),
+            segments_called=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.call.cns"),
+            bins=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.bintest.cns"),
+            target_coverage=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.targetcoverage.cnn"),
+            antitarget_coverage=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
         params:
             outdir=lambda wildcards, output: os.path.dirname(output[0]),
             extra=config.get("cnvkit_call", {}).get("extra", ""),
         log:
-            "cnv/cnvkit_call/{sample}/{sample}_{type}.log",
+            "cnv_sv/cnvkit_call/{sample}/{sample}_{type}.log",
         benchmark:
             repeat(
-                "cnv/cnvkit_call/{sample}/{sample}_{type}.benchmark.tsv",
+                "cnv_sv/cnvkit_call/{sample}/{sample}_{type}.benchmark.tsv",
                 config.get("cnvkit_call", {}).get("benchmark_repeats", 1),
             )
-        threads: config.get("cnvkit_call", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+        threads: config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
+        resources:
+            threads=config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
+            time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
+            mem_mb=config.get("cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+            mem_per_cpu=config.get("cnvkit_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+            partition=config.get("cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
         container:
             config.get("cnvkit_call", {}).get("container", config["default_container"])
         conda:

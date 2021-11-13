@@ -11,36 +11,21 @@ properties:
       time:
         type: string
         description: default max execution time for a rule
-
-  cnvkit_create_targets:
-    type: object
-    properties:
-      threads:
+      mem_mb:
         type: integer
-        description: default number of threads that will be used by 'cnvkit_create_targets'
-      time:
-        type: string
-        description: default max execution time for 'cnvkit_create_targets'
-
-  cnvkit_create_antitargets:
-    type: object
-    properties:
-      threads:
+        description: default memory used for a rule
+      mem_per_cpu:
         type: integer
-        description: default number of threads that will be used by 'cnvkit_create_antitargets'
-      time:
+        description: default memory used per cpu for a rule
+      partition:
         type: string
-        description: default max execution time for 'cnvkit_create_antitargets'
-
-  cnvkit_coverage:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'cnvkit_coverage'
-      time:
-        type: string
-        description: default max execution time for 'cnvkit_coverage'
+        description: default partition to use on the cluser for a rule
+    required:
+      - threads
+      - time
+      - mem_mb
+      - mem_per_cpu
+      - partition
 
   cnvkit_call:
     type: object
@@ -51,6 +36,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'cnvkit_call'
+      mem_mb:
+        type: integer
+        description: memory used for 'cnvkit_call'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'cnvkit_call'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'cnvkit_call'
 
   germline_vcf:
     type: object
@@ -61,6 +55,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'germline_vcf'
+      mem_mb:
+        type: integer
+        description: memory used for 'germline_vcf'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'germline_vcf'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'germline_vcf'
 
   cnvkit_call_loh:
     type: object
@@ -71,6 +74,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'cnvkit_call_loh'
+      mem_mb:
+        type: integer
+        description: memory used for 'cnvkit_call_loh'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'cnvkit_call_loh'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'cnvkit_call_loh'
 
   gatk_cnv_denoise_read_counts:
     type: object
@@ -81,6 +93,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'gatk_cnv_denoise_read_counts'
+      mem_mb:
+        type: integer
+        description: memory used for 'gatk_cnv_denoise_read_counts'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'gatk_cnv_denoise_read_counts'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'gatk_cnv_denoise_read_counts'
 
   gatk_cnv_collect_read_counts:
     type: object
@@ -91,6 +112,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'gatk_cnv_collect_read_counts'
+      mem_mb:
+        type: integer
+        description: memory used for 'gatk_cnv_collect_read_counts'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'gatk_cnv_collect_read_counts'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'gatk_cnv_collect_read_counts'
 
   gatk_cnv_collect_allelic_counts:
     type: object
@@ -101,6 +131,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'gatk_cnv_collect_allelic_counts'
+      mem_mb:
+        type: integer
+        description: memory used for 'gatk_cnv_collect_allelic_counts'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'gatk_cnv_collect_allelic_counts'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'gatk_cnv_collect_allelic_counts'
 
   gatk_cnv_model_segments:
     type: object
@@ -111,6 +150,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'gatk_cnv_model_segments'
+      mem_mb:
+        type: integer
+        description: memory used for 'gatk_cnv_model_segments'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'gatk_cnv_model_segments'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'gatk_cnv_model_segments'
 
   gatk_cnv_call_copy_ratio_segments:
     type: object
@@ -121,6 +169,15 @@ properties:
       time:
         type: string
         description: default max execution time for 'gatk_cnv_call_copy_ratio_segments'
+      mem_mb:
+        type: integer
+        description: memory used for 'gatk_cnv_call_copy_ratio_segments'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'gatk_cnv_call_copy_ratio_segments'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'gatk_cnv_call_copy_ratio_segments'
 
   required:
     - default_resources

@@ -47,13 +47,13 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     output_files = [
-        "cnv/cnvkit_call_loh/%s_%s.loh.cns" % (sample, t)
+        "cnv_sv/cnvkit_call_loh/%s_%s.loh.cns" % (sample, t)
         for sample in get_samples(samples)
         for t in get_unit_types(units, sample)
     ]
     output_files.append(
         [
-            "cnv/gatk_cnv_call_copy_ratio_segments/%s_%s.clean.calledCNVs.seg" % (sample, t)
+            "cnv_sv/gatk_cnv_call_copy_ratio_segments/%s_%s.clean.calledCNVs.seg" % (sample, t)
             for sample in get_samples(samples)
             for t in get_unit_types(units, sample)
         ]
