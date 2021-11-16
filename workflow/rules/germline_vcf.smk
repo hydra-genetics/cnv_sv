@@ -11,7 +11,7 @@ rule germline_vcf:
     input:
         vcf="snv_indel/ensemble_vcf/{sample}_{type}.ensembled.vcf.gz",
     output:
-        vcf=temp("cnv/germline_vcf/{sample}_{type}.germline.vcf"),
+        vcf=temp("cnv_sv/germline_vcf/{sample}_{type}.germline.vcf"),
     params:
         filter=config.get("germline_vcf", {}).get(
             "filter",
@@ -19,19 +19,25 @@ rule germline_vcf:
         ),
         extra=config.get("germline_vcf", {}).get("extra", ""),
     log:
-        "cnv/germline_vcf/{sample}_{type}.germline.vcf.log",
+        "cnv_sv/germline_vcf/{sample}_{type}.germline.vcf.log",
     benchmark:
         repeat(
-            "cnv/germline_vcf/{sample}_{type}.germline.vcf.benchmark.tsv",
+            "cnv_sv/germline_vcf/{sample}_{type}.germline.vcf.benchmark.tsv",
             config.get("germline_vcf", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("germline_vcf", config["default_resources"]).get("threads", config["default_resources"]["threads"])
+    threads: config.get("germline_vcf", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("germline_vcf", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("germline_vcf", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("germline_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("germline_vcf", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("germline_vcf", {}).get("partition", config["default_resources"]["partition"]),
     container:
         config.get("germline_vcf", {}).get("container", config["default_container"])
     conda:
         "../envs/germline_vcf.yaml"
     message:
-        "{rule}: Create a germline only vcf cnv/germline_vcf/{wildcards.sample}_{wildcards.type}.germline.vcf"
+        "{rule}: Create a germline only vcf cnv_sv/germline_vcf/{wildcards.sample}_{wildcards.type}.germline.vcf"
     shell:
         "(zcat {input.vcf} | "
         "filter_vep -o {output.vcf} {params.filter} {params.extra}) &> {log}"
