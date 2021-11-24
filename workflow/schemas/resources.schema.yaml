@@ -84,6 +84,25 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_call_loh'
 
+  cnvkit_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_vcf'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_vcf'
+      mem_mb:
+        type: integer
+        description: memory used for 'cnvkit_vcf'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'cnvkit_vcf'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'cnvkit_vcf'
+
   gatk_cnv_denoise_read_counts:
     type: object
     properties:
