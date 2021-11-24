@@ -7,7 +7,7 @@ default_container: "docker://marrip/common:1.1.0"
 reference:
   fasta: "reference/HES45.fna"
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
-  design_intervals: "reference/twist_DNA_solid.HES45.annotated.interval_list"
+  design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
 
 cnvkit_call:
   container: "docker://gmsuppsala/somatic:develop"
