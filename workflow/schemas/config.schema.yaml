@@ -165,3 +165,24 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+
+  svdb:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for svdb
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      cnv_callers:
+        type: array
+        items:
+            type: string
+        description: list of cnv callers that are included in the vcf merging
+      overlap:
+        type: float
+        description: minimum overlap between regions for merging
+      extra:
+        type: string
+        description: parameters that should be forwarded to svdb

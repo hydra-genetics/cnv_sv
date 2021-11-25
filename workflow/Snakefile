@@ -18,6 +18,7 @@ include: "rules/gatk_cnv_collect_allelic_counts.smk"
 include: "rules/gatk_cnv_model_segments.smk"
 include: "rules/gatk_cnv_call_copy_ratio_segments.smk"
 include: "rules/gatk_cnv_vcf.smk"
+include: "rules/svdb.smk"
 
 
 report: "report/workflow.rst"

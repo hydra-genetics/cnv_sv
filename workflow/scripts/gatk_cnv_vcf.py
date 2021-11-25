@@ -18,7 +18,7 @@ def write_vcf_header(sample_name):
     vcf_out.write("##INFO=<ID=BAF_PROBES,Number=1,Type=Integer,Description=\"Number of SNPs for BAF\">\n")
     vcf_out.write("##ALT=<ID=DEL,Description=\"Deletion\">\n")
     vcf_out.write("##ALT=<ID=DUP,Description=\"Duplication\">\n")
-    vcf_out.write("##ALT=<ID=COPY_NEUTRAL,Description=\"Normal copy number\">\n")
+    vcf_out.write("##ALT=<ID=COPY_NORMAL,Description=\"Normal copy number\">\n")
     vcf_out.write("##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n")
     vcf_out.write("##FORMAT=<ID=CN,Number=1,Type=Integer,Description=\"Copy number\">\n")
     vcf_out.write("##FORMAT=<ID=CNQ,Number=1,Type=Integer,Description=\"Number of probes in CNV\">\n")
@@ -55,7 +55,7 @@ for line in seg_in:
         elif cn > 2.5:
             alt = "<DUP>"
         else:
-            alt = "<COPY_NEUTRAL>"
+            alt = "<COPY_NORMAL>"
         id = "."
         qual = "."
         filter = "."

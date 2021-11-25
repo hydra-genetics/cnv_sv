@@ -64,4 +64,7 @@ def compile_output_list(wildcards):
     output_files.append(
         ["cnv_sv/cnvkit_vcf/%s_%s.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
     )
+    output_files.append(
+        ["cnv_sv/svdb/%s_%s.merged.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
+    )
     return output_files
