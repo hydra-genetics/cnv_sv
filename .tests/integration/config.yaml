@@ -42,7 +42,7 @@ gatk_cnv_call_copy_ratio_segments:
 gatk_cnv_vcf:
   container: "docker://hydragenetics/common:0.0.1"
 
-svdb:
+svdb_merge:
   container: "docker://hydragenetics/svdb:2.5.0"
   cnv_callers:
     - "cnvkit"

@@ -166,12 +166,12 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  svdb:
+  svdb_merge:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for svdb
+        description: set number of times benchmark should be repeated for svdb_merge
       container:
         type: string
         description: name or path to docker/singularity container
@@ -185,4 +185,4 @@ properties:
         description: minimum overlap between regions for merging
       extra:
         type: string
-        description: parameters that should be forwarded to svdb
+        description: parameters that should be forwarded to svdb_merge

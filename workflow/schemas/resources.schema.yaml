@@ -217,24 +217,24 @@ properties:
         type: string
         description: partition to use on the cluster for 'gatk_cnv_vcf'
 
-  svdb:
+  svdb_merge:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'svdb'
+        description: default number of threads that will be used by 'svdb_merge'
       time:
         type: string
-        description: default max execution time for 'svdb'
+        description: default max execution time for 'svdb_merge'
       mem_mb:
         type: integer
-        description: memory used for 'svdb'
+        description: memory used for 'svdb_merge'
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'svdb'
+        description: memory used per cpu for 'svdb_merge'
       partition:
         type: string
-        description: partition to use on the cluster for 'svdb'
+        description: partition to use on the cluster for 'svdb_merge'
 
   required:
     - default_resources
