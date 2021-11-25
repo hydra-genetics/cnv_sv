@@ -13,7 +13,7 @@ rule svdb_merge:
         #gatk_cnv_vcf="cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf",
         vcfs=expand(
             "cnv_sv/{cnv_caller}_vcf/{{sample}}_{{type}}.vcf",
-            cnv_caller=config.get("svdb", {}).get("cnv_callers", []),
+            cnv_caller=config.get("svdb_merge", {}).get("cnv_callers", []),
         ),
     output:
         vcf=temp("cnv_sv/svdb_merge/{sample}_{type}.merged.vcf"),
