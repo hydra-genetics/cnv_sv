@@ -13,12 +13,12 @@ rule cnvkit_vcf:
     output:
         vcf=temp("cnv_sv/cnvkit_vcf/{sample}_{type}.vcf"),
     params:
-        sample_id="{sample}_{type}",
+        sample_name="{sample}_{type}",
     log:
         "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_vcf/{sample}_{type}.loh.cns.benchmark.tsv",
+            "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf.benchmark.tsv",
             config.get("cnvkit_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_vcf", {}).get("threads", config["default_resources"]["threads"])
@@ -34,5 +34,5 @@ rule cnvkit_vcf:
         "../envs/cnvkit_vcf.yaml"
     message:
         "{rule}: Export cnvkit segments into vcf in cnv_sv/cnvkit_vcf/{wildcards.sample}_{wildcards.type}.vcf"
-    shell:
-        "(cnvkit.py export vcf {input.segment} -i {params.sample_id} -o {output.vcf}) &> {log}"
+    script:
+        "../scripts/cnvkit_vcf.py"

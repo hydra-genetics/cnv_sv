@@ -155,3 +155,13 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded to gatk_cnv_collect_allelic_counts
+
+  gatk_cnv_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for gatk_cnv_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container

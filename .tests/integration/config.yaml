@@ -2,7 +2,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://marrip/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.0.1"
 
 reference:
   fasta: "reference/HES45.fna"
@@ -17,7 +17,7 @@ cnvkit_call_loh:
   container: "docker://gmsuppsala/somatic:develop"
 
 cnvkit_vcf:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/common:0.0.1"
 
 germline_vcf:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
@@ -38,3 +38,6 @@ gatk_cnv_model_segments:
 
 gatk_cnv_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
+
+gatk_cnv_vcf:
+  container: "docker://hydragenetics/common:0.0.1"

@@ -198,5 +198,24 @@ properties:
         type: string
         description: partition to use on the cluster for 'gatk_cnv_call_copy_ratio_segments'
 
+  gatk_cnv_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'gatk_cnv_vcf'
+      time:
+        type: string
+        description: default max execution time for 'gatk_cnv_vcf'
+      mem_mb:
+        type: integer
+        description: memory used for 'gatk_cnv_vcf'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'gatk_cnv_vcf'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'gatk_cnv_vcf'
+
   required:
     - default_resources
