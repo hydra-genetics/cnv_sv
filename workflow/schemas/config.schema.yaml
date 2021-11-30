@@ -75,6 +75,25 @@ properties:
         type: string
         description: extra parameters sent to cnvkit_call_loh
 
+  cnvkit_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      hom_del_limit:
+        type: string
+        description: copy number threshold for homozygous deletion
+      het_del_limit:
+        type: string
+        description: copy number threshold for heterozygous deletion
+      dup_limit:
+        type: string
+        description: copy number threshold for duplication
+
   gatk_cnv_denoise_read_counts:
     type: object
     properties:
@@ -145,3 +164,43 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded to gatk_cnv_collect_allelic_counts
+
+  gatk_cnv_vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for gatk_cnv_vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      hom_del_limit:
+        type: string
+        description: copy number threshold for homozygous deletion
+      het_del_limit:
+        type: string
+        description: copy number threshold for heterozygous deletion
+      dup_limit:
+        type: string
+        description: copy number threshold for duplication
+
+  svdb_merge:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for svdb_merge
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      cnv_callers:
+        type: array
+        items:
+            type: string
+        description: list of cnv callers that are included in the vcf merging
+      overlap:
+        type: float
+        description: minimum overlap between regions for merging
+      extra:
+        type: string
+        description: parameters that should be forwarded to svdb_merge
