@@ -4,6 +4,9 @@ from datetime import date
 seg_in = open(snakemake.input.segment)
 vcf_out = open(snakemake.output.vcf, "w")
 sample_name = snakemake.params.sample_name
+hom_del_limit = snakemake.params.hom_del_limit
+het_del_limit = snakemake.params.het_del_limit
+dup_limit = snakemake.params.dup_limit
 
 
 def write_vcf_header(gatk_version, sample_name):
@@ -46,9 +49,9 @@ for line in seg_in:
         cn = round(2*pow(2, float(log_odds_ratio)), 1)
         ref = "N"
         alt = ""
-        if cn < 1.5:
+        if cn < het_del_limit:
             alt = "<DEL>"
-        elif cn > 2.5:
+        elif cn > dup_limit:
             alt = "<DUP>"
         else:
             alt = "<COPY_NORMAL>"
@@ -56,9 +59,9 @@ for line in seg_in:
         qual = "."
         filter = "."
         gt = ""
-        if cn < 0.5:
+        if cn < hom_del_limit:
             gt = "1/1"
-        elif (cn >= 0.5 and cn < 1.5) or cn > 2.5:
+        elif (cn >= hom_del_limit and cn < het_del_limit) or cn > dup_limit:
             gt = "0/1"
         else:
             gt = "0/0"
