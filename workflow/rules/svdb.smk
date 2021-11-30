@@ -9,8 +9,6 @@ __license__ = "GPL-3"
 
 rule svdb_merge:
     input:
-        #cnvkit_vcf="cnv_sv/cnvkit_vcf/{sample}_{type}.vcf",
-        #gatk_cnv_vcf="cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf",
         vcfs=expand(
             "cnv_sv/{cnv_caller}_vcf/{{sample}}_{{type}}.vcf",
             cnv_caller=config.get("svdb_merge", {}).get("cnv_callers", []),
