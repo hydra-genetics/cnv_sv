@@ -9,7 +9,7 @@ __license__ = "GPL-3"
 
 rule germline_vcf:
     input:
-        vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vcf.gz",
+        vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
     output:
         vcf=temp("cnv_sv/germline_vcf/{sample}_{type}.germline.vcf"),
     params:
@@ -39,5 +39,4 @@ rule germline_vcf:
     message:
         "{rule}: Create a germline only vcf cnv_sv/germline_vcf/{wildcards.sample}_{wildcards.type}.germline.vcf"
     shell:
-        "(zcat {input.vcf} | "
-        "filter_vep -o {output.vcf} {params.filter} {params.extra}) &> {log}"
+        "(filter_vep -o {output.vcf} {params.filter} {params.extra}) &> {log}"
