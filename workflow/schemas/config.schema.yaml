@@ -174,6 +174,15 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      hom_del_limit:
+        type: string
+        description: copy number threshold for homozygous deletion
+      het_del_limit:
+        type: string
+        description: copy number threshold for heterozygous deletion
+      dup_limit:
+        type: string
+        description: copy number threshold for duplication
 
   svdb_merge:
     type: object

@@ -14,6 +14,9 @@ rule gatk_cnv_vcf:
         vcf=temp("cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf"),
     params:
         sample_id="{sample}_{type}",
+        hom_del_limit = config.get("cnvkit_vcf", {}).get("hom_del_limit", 0.5),
+        het_del_limit = config.get("cnvkit_vcf", {}).get("het_del_limit", 1.5),
+        dup_limit = config.get("cnvkit_vcf", {}).get("dup_limit", 2.5),
     log:
         "cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf.log",
     benchmark:
