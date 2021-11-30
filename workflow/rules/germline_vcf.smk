@@ -39,4 +39,4 @@ rule germline_vcf:
     message:
         "{rule}: Create a germline only vcf cnv_sv/germline_vcf/{wildcards.sample}_{wildcards.type}.germline.vcf"
     shell:
-        "(filter_vep -o {output.vcf} {params.filter} {params.extra}) &> {log}"
+        "(filter_vep -i {input.vcf} -o {output.vcf} {params.filter} {params.extra}) &> {log}"
