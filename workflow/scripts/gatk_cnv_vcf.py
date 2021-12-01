@@ -70,7 +70,7 @@ for line in seg_in:
         else:
             gt = "0/0"
         info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;COPY_NUMBER=%s;PROBES=%s;BAF=%s;BAF_PROBES=%s" % (
-            ref, end_pos, svlen, log_odds_ratio, str(cn), nr_probes, baf, nr_baf_probes
+            alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn), nr_probes, baf, nr_baf_probes
         )
         format = "GT:CN:CNQ"
         data = "%s:%s:%s" % (gt, cn, nr_probes)
