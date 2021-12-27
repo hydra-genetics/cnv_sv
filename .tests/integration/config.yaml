@@ -16,6 +16,9 @@ cnvkit_call:
 cnvkit_call_loh:
   container: "docker://gmsuppsala/somatic:develop"
 
+cnvkit_plot:
+  container: "docker://gmsuppsala/somatic:develop"
+
 cnvkit_vcf:
   container: "docker://hydragenetics/common:0.0.1"
 
