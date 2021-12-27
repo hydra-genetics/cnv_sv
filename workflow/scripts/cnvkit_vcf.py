@@ -46,7 +46,7 @@ for line in seg_in:
         log_odds_ratio = columns[4]
         baf = columns[5]
         dp = columns[11]
-        cn = round(2*pow(2, float(log_odds_ratio)), 1)
+        cn = round(2*pow(2, float(log_odds_ratio)), 2)
         ref = "N"
         alt = ""
         if cn < het_del_limit:
