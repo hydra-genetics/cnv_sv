@@ -236,5 +236,24 @@ properties:
         type: string
         description: partition to use on the cluster for 'svdb_merge'
 
+  svdb_query:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'svdb_query'
+      time:
+        type: string
+        description: default max execution time for 'svdb_query'
+      mem_mb:
+        type: integer
+        description: memory used for 'svdb_query'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'svdb_query'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'svdb_query'
+
   required:
     - default_resources
