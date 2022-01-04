@@ -52,6 +52,12 @@ config_manta_tn:
 manta_run_workflow_tn:
   container: "docker://marrip/manta:v1.6.0"
 
+pindel:
+  container: "docker://marrip/pindel:v0.2.5b8"
+
+pindel2vcf:
+  container: "docker://marrip/pindel:v0.2.5b8"
+
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.5.0"
   cnv_callers:
