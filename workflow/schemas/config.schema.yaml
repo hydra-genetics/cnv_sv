@@ -46,6 +46,16 @@ properties:
         type: string
         description: extra parameters sent to cnvkit_call
 
+  config_manta_tn:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for 'config_manta_tn'
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   germline_vcf:
     type: object
     properties:
@@ -197,15 +207,47 @@ properties:
         type: string
         description: copy number threshold for duplication
 
-  config_manta_tn:
+  generate_pindel_config:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for 'config_manta_tn'
+        description: set number of times benchmark should be repeated for generate_pindel_config
       container:
         type: string
         description: name or path to docker/singularity container
+
+  pindel:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for pindel
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to pindel
+
+  pindel2vcf:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for pindel2vcf
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      refname:
+        type: string
+        description: name and version of the reference genome
+      refdate:
+        type: string
+        description: date of the version of the reference genome used
+      extra:
+        type: string
+        description: parameters that should be forwarded to pindel2vcf
 
   svdb_merge:
     type: object

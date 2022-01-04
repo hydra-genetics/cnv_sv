@@ -73,6 +73,9 @@ def compile_output_list(wildcards):
     )
     output_files.append(["cnv_sv/manta/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)])
     output_files.append(
+        ["cnv_sv/pindel/%s.vcf" % (sample) for sample in get_samples(samples)]
+    )
+    output_files.append(
         [
             "cnv_sv/svdb_merge/%s_%s.merged.vcf" % (sample, t)
             for sample in get_samples(samples)
