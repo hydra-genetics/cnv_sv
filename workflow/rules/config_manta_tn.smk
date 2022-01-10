@@ -12,7 +12,7 @@ rule config_manta_tn:
         bai_n="alignment/merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
     output:
-        scrpt="cnv_sv/manta/{sample}/runWorkflow.py",
+        scrpt=temp("cnv_sv/manta/{sample}/runWorkflow.py"),
     log:
         "cnv_sv/manta/{sample}/run_workflow.py.log",
     benchmark:
