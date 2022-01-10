@@ -3,6 +3,10 @@
 
 import csv
 
+output = snakemake.output.config
+bam = snakemake.intput.bam
+metrics = snakemake.input.metrics
+sample = snakemake.wildcards.sample
 
 def insertSize(file):
     # Open file
@@ -25,10 +29,11 @@ def insertSize(file):
 
 
 def writeConfigFile(output, input, insert_size, sample_id):
-    with open(output[0], "wt") as out_file:
+    with open(output, "wt") as out_file:
         tsv_writer = csv.writer(out_file, delimiter="\t")
         tsv_writer.writerow([input, insert_size, sample_id])
 
 
 # Call functions
-writeConfigFile(snakemake.output.config, snakemake.input.bam, insertSize(snakemake.input.metrics), snakemake.wildcards.sample)
+insert_size = insertSize(metrics)
+writeConfigFile(output, bam, insert_size, sample)
