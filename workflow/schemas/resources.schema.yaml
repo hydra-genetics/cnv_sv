@@ -217,6 +217,25 @@ properties:
         type: string
         description: partition to use on the cluster for 'gatk_cnv_vcf'
 
+  manta_run_workflow_tn:
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: memory used for 'manta_run_workflow_tn'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'manta_run_workflow_tn'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'manta_run_workflow_tn'
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'manta_run_workflow_tn'
+      time:
+        type: string
+        description: default max execution time for 'manta_run_workflow_tn'
+
   svdb_merge:
     type: object
     properties:

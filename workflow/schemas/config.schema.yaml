@@ -2,13 +2,13 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake configuration file
 type: object
 properties:
+  resources:
+    type: string
+    description: Path to resources.yaml file
   samples:
     type: string
   units:
     type: string
-  resources:
-    type: string
-    description: Path to resources.yaml file
   default_container:
     type: string
     description: name or path to a default docker/singularity container
@@ -183,6 +183,16 @@ properties:
       dup_limit:
         type: string
         description: copy number threshold for duplication
+
+  config_manta_tn:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for 'config_manta_tn'
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   svdb_merge:
     type: object
