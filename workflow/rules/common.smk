@@ -52,7 +52,11 @@ def compile_output_list(wildcards):
         for t in get_unit_types(units, sample)
     ]
     output_files.append(
-        ["cnv_sv/cnvkit_plot/%s_%s.png" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
+        [
+            "cnv_sv/cnvkit_scatter_genome/%s_%s.png" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
     )
     output_files.append(
         [
