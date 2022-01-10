@@ -19,8 +19,8 @@ rule manta_run_workflow_tn:
         cand_sv_tbi=temp("cnv_sv/manta/{sample}/results/variants/candidateSV.vcf.gz.tbi"),
         dipl_sv_vcf=temp("cnv_sv/manta/{sample}/results/variants/diploidSV.vcf.gz"),
         dipl_sv_tbi=temp("cnv_sv/manta/{sample}/results/variants/diploidSV.vcf.gz.tbi"),
-        som_sv_vcf="cnv_sv/manta/{sample}/results/variants/somaticSV.vcf.gz",
-        som_sv_tbi="cnv_sv/manta/{sample}/results/variants/somaticSV.vcf.gz.tbi",
+        som_sv_vcf=temp("cnv_sv/manta/{sample}/results/variants/somaticSV.vcf.gz"),
+        som_sv_tbi=temp("cnv_sv/manta/{sample}/results/variants/somaticSV.vcf.gz.tbi"),
         wrk_dir=temp(directory("cnv_sv/manta/{sample}/workspace")),
     log:
         "cnv_sv/manta/{sample}/manta_tn.log",
