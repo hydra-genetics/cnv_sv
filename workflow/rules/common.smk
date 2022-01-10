@@ -71,4 +71,11 @@ def compile_output_list(wildcards):
             for t in get_unit_types(units, sample)
         ]
     )
+    output_files.append(
+        [
+            "cnv_sv/svdb_query/%s_%s.svdb_query.vcf" % (sample, t)
+            for sample in get_samples(samples)
+            for t in get_unit_types(units, sample)
+        ]
+    )
     return output_files
