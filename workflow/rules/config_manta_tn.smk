@@ -38,4 +38,4 @@ rule config_manta_tn:
         "--tumorBam={input.bam_t} "
         "--normalBam={input.bam_n} "
         "--referenceFasta={input.ref} "
-        "--runDir=cnv_sv/manta &> {log}"
+        "--runDir=cnv_sv/manta/{wildcards.sample} &> {log}"
