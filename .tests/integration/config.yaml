@@ -23,6 +23,9 @@ cnvkit_scatter:
 cnvkit_vcf:
   container: "docker://hydragenetics/common:0.0.1"
 
+config_manta_tn:
+  container: "docker://marrip/manta:v1.6.0"
+
 germline_vcf:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
 
@@ -46,17 +49,17 @@ gatk_cnv_call_copy_ratio_segments:
 gatk_cnv_vcf:
   container: "docker://hydragenetics/common:0.0.1"
 
-config_manta_tn:
-  container: "docker://marrip/manta:v1.6.0"
+generate_pindel_config:
+  container: "docker://hydragenetics/common:0.0.1"
 
 manta_run_workflow_tn:
   container: "docker://marrip/manta:v1.6.0"
 
 pindel:
-  container: "docker://marrip/pindel:v0.2.5b8"
+  container: "docker://hydragenetics/pindel:0.2.5b9"
 
 pindel2vcf:
-  container: "docker://marrip/pindel:v0.2.5b8"
+  container: "docker://hydragenetics/pindel:0.2.5b9"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.5.0"
