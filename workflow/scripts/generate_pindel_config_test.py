@@ -25,7 +25,10 @@ class TestInsertSize(unittest.TestCase):
         testcases = [
                 TestCase(
                     name="read metrics file successfully",
-                    input=".tests/generate_pindel_config.insertSize.tsv",
+                    input=(
+                        "workflow/scripts/.tests/"
+                        "generate_pindel_config.insertSize.tsv"
+                    ),
                     expected="200",
                 ),
         ]
@@ -56,14 +59,14 @@ class TestWriteConfigFile(unittest.TestCase):
                 TestCase(
                     name="write config file successfully",
                     output=(
-                        ".tests/"
+                        "workflow/scripts/.tests/"
                         "generate_pindel_config.writeConfigFile.actual.tsv"
                     ),
                     input="test.bam",
                     insert_size="200",
                     sample_id="test",
                     expected=(
-                        ".tests/"
+                        "workflow/scripts/.tests/"
                         "generate_pindel_config.writeConfigFile.expected.tsv"
                     ),
                 ),
