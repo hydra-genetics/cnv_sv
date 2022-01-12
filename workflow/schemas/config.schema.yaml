@@ -217,6 +217,16 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  manta_run_workflow_tn:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for 'config_manta_tn'
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   pindel:
     type: object
     properties:
