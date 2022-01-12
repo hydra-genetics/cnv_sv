@@ -22,7 +22,7 @@ rule pindel2vcf:
         ),
         ref=config["reference"]["fasta"],
     output:
-        vcf="cnv_sv/pindel/{sample}.vcf",
+        vcf=temp("cnv_sv/pindel/{sample}.vcf"),
     params:
         refname=config.get("pindel2vcf", {}).get("refname", "'Genome Reference Consortium Human Build 38'"),
         refdate=config.get("pindel2vcf", {}).get("refdate", "20131217"),
