@@ -17,7 +17,7 @@ cnvkit_call:
 cnvkit_call_loh:
   container: "docker://gmsuppsala/somatic:develop"
 
-cnvkit_scatter_genome:
+cnvkit_scatter:
   container: "docker://gmsuppsala/somatic:develop"
 
 cnvkit_vcf:
