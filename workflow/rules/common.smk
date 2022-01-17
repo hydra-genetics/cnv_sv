@@ -47,9 +47,7 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     output_files = [
-        "cnv_sv/cnvkit_call/%s_%s.loh.cns" % (sample, t)
-        for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
+        "cnv_sv/cnvkit_call/%s_%s.loh.cns" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)
     ]
     output_files.append(
         [
