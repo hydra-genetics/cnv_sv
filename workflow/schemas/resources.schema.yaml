@@ -46,25 +46,6 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_call'
 
-  germline_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'germline_vcf'
-      time:
-        type: string
-        description: default max execution time for 'germline_vcf'
-      mem_mb:
-        type: integer
-        description: memory used for 'germline_vcf'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'germline_vcf'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'germline_vcf'
-
   cnvkit_call_loh:
     type: object
     properties:
@@ -121,6 +102,25 @@ properties:
       partition:
         type: string
         description: partition to use on the cluster for 'cnvkit_vcf'
+
+  config_manta_tn:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'config_manta_tn'
+      time:
+        type: string
+        description: default max execution time for 'config_manta_tn'
+      mem_mb:
+        type: integer
+        description: memory used for 'config_manta_tn'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'config_manta_tn'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'config_manta_tn'
 
   gatk_cnv_denoise_read_counts:
     type: object
@@ -236,6 +236,44 @@ properties:
         type: string
         description: partition to use on the cluster for 'gatk_cnv_vcf'
 
+  generate_pindel_config:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'generate_pindel_config'
+      time:
+        type: string
+        description: default max execution time for 'generate_pindel_config'
+      mem_mb:
+        type: integer
+        description: memory used for 'generate_pindel_config'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'generate_pindel_config'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'generate_pindel_config'
+
+  germline_vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'germline_vcf'
+      time:
+        type: string
+        description: default max execution time for 'germline_vcf'
+      mem_mb:
+        type: integer
+        description: memory used for 'germline_vcf'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'germline_vcf'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'germline_vcf'
+
   manta_run_workflow_tn:
     type: object
     properties:
@@ -254,6 +292,44 @@ properties:
       time:
         type: string
         description: default max execution time for 'manta_run_workflow_tn'
+
+  pindel:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'pindel'
+      time:
+        type: string
+        description: default max execution time for 'pindel'
+      mem_mb:
+        type: integer
+        description: memory used for 'pindel'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'pindel'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'pindel'
+
+  pindel2vcf:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'pindel2vcf'
+      time:
+        type: string
+        description: default max execution time for 'pindel2vcf'
+      mem_mb:
+        type: integer
+        description: memory used for 'pindel2vcf'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'pindel2vcf'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'pindel2vcf'
 
   svdb_merge:
     type: object
