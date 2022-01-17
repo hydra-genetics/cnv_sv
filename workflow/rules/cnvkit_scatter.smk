@@ -9,8 +9,8 @@ __license__ = "GPL-3"
 
 rule cnvkit_scatter:
     input:
-        segments="cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cns",
-        segment_regions="cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cnr",
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
         vcf="cnv_sv/germline_vcf/{sample}_{type}.germline.vcf",
     output:
         plot=temp("cnv_sv/cnvkit_scatter/{sample}_{type}.png"),

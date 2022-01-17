@@ -30,21 +30,26 @@ properties:
     - resources
     - default_container
 
-  cnvkit_call:
+  cnvkit_batch:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_call
+        description: set number of times benchmark should be repeated for cnvkit_batch
       container:
         type: string
         description: name or path to docker/singularity container
+      method:
+        type: string
+        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch
       normal_reference:
         type: string
-        description: path to normal reference panel for cnvkit calling
+        description: path to normal reference panel for cnvkit_batch
       extra:
         type: string
-        description: extra parameters sent to cnvkit_call
+        description: extra parameters sent to cnvkit_batch
+    required:
+      - method
 
   config_manta_tn:
     type: object
@@ -72,18 +77,18 @@ properties:
         type: string
         description: extra parameters sent to germline_vcf
 
-  cnvkit_call_loh:
+  cnvkit_call:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_call_loh
+        description: set number of times benchmark should be repeated for cnvkit_call
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: extra parameters sent to cnvkit_call_loh
+        description: extra parameters sent to cnvkit_call
 
   cnvkit_scatter_genome:
     type: object

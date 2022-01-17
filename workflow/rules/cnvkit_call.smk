@@ -7,45 +7,34 @@ __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-if config.get("cnvkit_call", {}).get("method", "hybrid") == "hybrid":
-
-    rule cnvkit_call:
-        input:
-            bam="alignment/merge_bam/{sample}_{type}.bam",
-            bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-            cnv_reference=config["cnvkit_call"]["normal_reference"],
-        output:
-            regions=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cnr"),
-            segments=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cns"),
-            segments_called=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.call.cns"),
-            bins=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.bintest.cns"),
-            target_coverage=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.targetcoverage.cnn"),
-            antitarget_coverage=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
-        params:
-            outdir=lambda wildcards, output: os.path.dirname(output[0]),
-            extra=config.get("cnvkit_call", {}).get("extra", ""),
-        log:
-            "cnv_sv/cnvkit_call/{sample}/{sample}_{type}.log",
-        benchmark:
-            repeat(
-                "cnv_sv/cnvkit_call/{sample}/{sample}_{type}.benchmark.tsv",
-                config.get("cnvkit_call", {}).get("benchmark_repeats", 1),
-            )
-        threads: config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
-        resources:
-            threads=config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
-            time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
-            mem_mb=config.get("cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-            mem_per_cpu=config.get("cnvkit_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-            partition=config.get("cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
-        container:
-            config.get("cnvkit_call", {}).get("container", config["default_container"])
-        conda:
-            "../envs/cnvkit_call.yaml"
-        message:
-            "{rule}: Use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
-        shell:
-            "(cnvkit.py batch {input.bam} "
-            "-r {input.cnv_reference} "
-            "-d {params.outdir} "
-            "{params.extra}) &> {log}"
+rule cnvkit_call:
+    input:
+        segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        vcf="cnv_sv/germline_vcf/{sample}_{type}.germline.vcf",
+    output:
+        segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.loh.cns"),
+    params:
+        TC=lambda wildcards: get_sample(samples, wildcards)["TC"],
+        extra=config.get("cnvkit_call", {}).get("extra", ""),
+    log:
+        "cnv_sv/cnvkit_call/{sample}_{type}.loh.cns.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_call/{sample}_{type}.loh.cns.benchmark.tsv",
+            config.get("cnvkit_call", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
+    container:
+        config.get("cnvkit_call", {}).get("container", config["default_container"])
+    conda:
+        "../envs/cnvkit_call.yaml"
+    message:
+        "{rule}: Call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
+    shell:
+        "(cnvkit.py call {input.segment} -v {input.vcf} -o {output.segment} --purity {params.TC} {params.extra}) &> {log}"

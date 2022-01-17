@@ -9,7 +9,7 @@ __license__ = "GPL-3"
 
 rule cnvkit_vcf:
     input:
-        segment="cnv_sv/cnvkit_call_loh/{sample}_{type}.loh.cns",
+        segment="cnv_sv/cnvkit_call/{sample}_{type}.loh.cns",
     output:
         vcf=temp("cnv_sv/cnvkit_vcf/{sample}_{type}.vcf"),
     params:
