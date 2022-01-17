@@ -11,7 +11,7 @@ rule gatk_cnv_collect_allelic_counts:
     input:
         bam="alignment/merge_bam/{sample}_{type}.bam",
         bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        interval=config["gatk_cnv_collect_allelic_counts"]["SNP_interval"],
+        interval=config.get("gatk_cnv_collect_allelic_counts", {}).get("SNP_interval", ""),
         ref=config["reference"]["fasta"],
     output:
         temp("cnv_sv/gatk_cnv_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv"),
