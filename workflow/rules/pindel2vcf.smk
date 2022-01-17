@@ -48,4 +48,4 @@ rule pindel2vcf:
     message:
         "{rule}: Convert pindel output to vcf for {wildcards.sample}"
     wrapper:
-        "0.84.0/bio/pindel/pindel2vcf"
+        "v0.85.1/bio/pindel/pindel2vcf"

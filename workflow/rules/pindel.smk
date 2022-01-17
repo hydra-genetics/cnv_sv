@@ -51,4 +51,4 @@ rule pindel:
     message:
         "{rule}: Detect breakpoints in {wildcards.sample}"
     wrapper:
-        "0.84.0/bio/pindel/call"
+        "v0.85.1/bio/pindel/call"
