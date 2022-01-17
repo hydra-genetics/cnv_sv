@@ -13,7 +13,7 @@ if config.get("cnvkit_call", {}).get("method", "hybrid") == "hybrid":
         input:
             bam="alignment/merge_bam/{sample}_{type}.bam",
             bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-            cnv_reference=config["cnvkit_call"]["normal_reference"],
+            cnv_reference=config.get("cnvkit_call", {}).get("normal_reference", ""),
         output:
             regions=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cnr"),
             segments=temp("cnv_sv/cnvkit_call/{sample}/{sample}_{type}.cns"),
