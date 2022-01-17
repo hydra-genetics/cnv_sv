@@ -9,7 +9,7 @@ __license__ = "GPL-3"
 
 rule gatk_cnv_denoise_read_counts:
     input:
-        hdf5PoN=config["gatk_cnv_denoise_read_counts"]["normal_reference"],
+        hdf5PoN=config.get("gatk_cnv_denoise_read_counts", {}).get("normal_reference", ""),
         hdf5Tumor="cnv_sv/gatk_cnv_collect_read_counts/{sample}_{type}.counts.hdf5",
     output:
         denoisedCopyRatio=temp("cnv_sv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv"),
