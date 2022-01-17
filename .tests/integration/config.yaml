@@ -10,11 +10,12 @@ reference:
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
   svdb_vcf: "reference/normal_26_svdb_0.8.vcf"
 
-cnvkit_call:
+cnvkit_batch:
   container: "docker://gmsuppsala/somatic:develop"
+  method: "hybrid"
   normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"
 
-cnvkit_call_loh:
+cnvkit_call:
   container: "docker://gmsuppsala/somatic:develop"
 
 cnvkit_scatter:

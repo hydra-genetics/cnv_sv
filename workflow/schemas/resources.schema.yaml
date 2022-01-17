@@ -27,6 +27,25 @@ properties:
       - mem_per_cpu
       - partition
 
+  cnvkit_batch:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_batch'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_batch'
+      mem_mb:
+        type: integer
+        description: memory used for 'cnvkit_batch'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'cnvkit_batch'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'cnvkit_batch'
+
   cnvkit_call:
     type: object
     properties:
@@ -45,25 +64,6 @@ properties:
       partition:
         type: string
         description: partition to use on the cluster for 'cnvkit_call'
-
-  cnvkit_call_loh:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'cnvkit_call_loh'
-      time:
-        type: string
-        description: default max execution time for 'cnvkit_call_loh'
-      mem_mb:
-        type: integer
-        description: memory used for 'cnvkit_call_loh'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'cnvkit_call_loh'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'cnvkit_call_loh'
 
   cnvkit_scatter_genome:
     type: object
