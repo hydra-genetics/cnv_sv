@@ -11,7 +11,7 @@ rule gatk_cnv_collect_read_counts:
     input:
         bam="alignment/merge_bam/{sample}_{type}.bam",
         bai="alignment/merge_bam/{sample}_{type}.bam.bai",
-        interval=config["reference"]["design_intervals_gatk_cnv"],
+        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
     output:
         temp("cnv_sv/gatk_cnv_collect_read_counts/{sample}_{type}.counts.hdf5"),
     params:
