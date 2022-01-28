@@ -11,15 +11,18 @@ reference:
   svdb_vcf: "reference/normal_26_svdb_0.8.vcf"
 
 cnvkit_batch:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://marrip/cnvkit:0.9.9"
   method: "hybrid"
   normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"
 
 cnvkit_call:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://marrip/cnvkit:0.9.9"
+
+cnvkit_diagram:
+  container: "docker://marrip/cnvkit:0.9.9"
 
 cnvkit_scatter:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://marrip/cnvkit:0.9.9"
 
 cnvkit_vcf:
   container: "docker://hydragenetics/common:0.0.1"
