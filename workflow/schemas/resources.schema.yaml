@@ -65,24 +65,43 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_call'
 
-  cnvkit_scatter_genome:
+  cnvkit_diagram:
     type: object
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'cnvkit_scatter_genome'
+        description: default number of threads that will be used by 'cnvkit_diagram'
       time:
         type: string
-        description: default max execution time for 'cnvkit_scatter_genome'
+        description: default max execution time for 'cnvkit_diagram'
       mem_mb:
         type: integer
-        description: memory used for 'cnvkit_scatter_genome'
+        description: memory used for 'cnvkit_diagram'
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'cnvkit_scatter_genome'
+        description: memory used per cpu for 'cnvkit_diagram'
       partition:
         type: string
-        description: partition to use on the cluster for 'cnvkit_scatter_genome'
+        description: partition to use on the cluster for 'cnvkit_diagram'
+
+  cnvkit_scatter:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_scatter'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_scatter'
+      mem_mb:
+        type: integer
+        description: memory used for 'cnvkit_scatter'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'cnvkit_scatter'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'cnvkit_scatter'
 
   cnvkit_vcf:
     type: object
