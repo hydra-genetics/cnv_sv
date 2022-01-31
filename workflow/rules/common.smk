@@ -46,43 +46,50 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
+    files = {
+        "cnv_sv/cnvkit_call": [
+            "loh.cns",
+        ],
+        "cnv_sv/cnvkit_diagram": [
+            "pdf",
+        ],
+        "cnv_sv/cnvkit_scatter": [
+            "png",
+        ],
+        "cnv_sv/cnvkit_vcf": [
+            "vcf",
+        ],
+        "cnv_sv/gatk_cnv_vcf": [
+            "vcf",
+        ],
+        "cnv_sv/svdb_merge": [
+            "merged.vcf",
+        ],
+        "cnv_sv/svdb_query": [
+            "svdb_query.vcf",
+        ],
+    }
     output_files = [
-        "cnv_sv/cnvkit_call/%s_%s.loh.cns" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)
+        "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for suffix in files[prefix]
     ]
     output_files.append(
         [
-            "cnv_sv/cnvkit_scatter/%s_%s.png" % (sample, t)
+            "cnv_sv/pindel/%s.vcf" % (sample)
+            for prefix in files.keys()
             for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
+            for suffix in files[prefix]
         ]
     )
     output_files.append(
         [
-            "cnv_sv/gatk_cnv_call_copy_ratio_segments/%s_%s.clean.calledCNVs.seg" % (sample, t)
+            "cnv_sv/manta/%s/results/variants/somaticSV.vcf.gz" % (sample)
+            for prefix in files.keys()
             for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        ["cnv_sv/gatk_cnv_vcf/%s_%s.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
-    )
-    output_files.append(
-        ["cnv_sv/cnvkit_vcf/%s_%s.vcf" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
-    )
-    output_files.append(["cnv_sv/manta/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)])
-    output_files.append(["cnv_sv/pindel/%s.vcf" % (sample) for sample in get_samples(samples)])
-    output_files.append(
-        [
-            "cnv_sv/svdb_merge/%s_%s.merged.vcf" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(
-        [
-            "cnv_sv/svdb_query/%s_%s.svdb_query.vcf" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
+            for suffix in files[prefix]
         ]
     )
     return output_files

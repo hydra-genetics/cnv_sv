@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas Almlöf"
 __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@igp.uu.se"
@@ -11,6 +8,7 @@ include: "rules/common.smk"
 include: "rules/config_manta_tn.smk"
 include: "rules/cnvkit_batch.smk"
 include: "rules/cnvkit_call.smk"
+include: "rules/cnvkit_diagram.smk"
 include: "rules/cnvkit_scatter.smk"
 include: "rules/cnvkit_vcf.smk"
 include: "rules/germline_vcf.smk"

@@ -90,18 +90,31 @@ properties:
         type: string
         description: extra parameters sent to cnvkit_call
 
-  cnvkit_scatter_genome:
+  cnvkit_diagram:
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_scatter_genome
+        description: set number of times benchmark should be repeated for cnvkit_diagram
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: extra parameters sent to cnvkit_scatter_genome
+        description: extra parameters sent to cnvkit_diagram
+
+  cnvkit_scatter:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_scatter
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_scatter
 
   cnvkit_vcf:
     type: object
