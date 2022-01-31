@@ -15,7 +15,7 @@ rule germline_vcf:
     params:
         filter=config.get("germline_vcf", {}).get(
             "filter",
-            '--filter "DP > 50" --filter "AF >= 0.05" --filter "AF <= 0.95" --filter "MAX_AF >= 0.001" --filter "AF >= 0.001"',
+            '--filter "DP > 50" --filter "MAX_AF >= 0.001"',
         ),
         extra=config.get("germline_vcf", {}).get("extra", ""),
     log:
