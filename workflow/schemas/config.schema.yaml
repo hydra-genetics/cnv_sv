@@ -51,6 +51,16 @@ properties:
     required:
       - method
 
+  config_manta_t:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for 'config_manta_t'
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   config_manta_tn:
     type: object
     properties:
@@ -231,6 +241,16 @@ properties:
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated for generate_pindel_config
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  manta_run_workflow_t:
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for 'config_manta_t'
       container:
         type: string
         description: name or path to docker/singularity container
