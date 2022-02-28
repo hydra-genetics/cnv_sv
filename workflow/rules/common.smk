@@ -76,20 +76,11 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
         for suffix in files[prefix]
     ]
+    output_files.append(["cnv_sv/pindel/%s.vcf" % (sample) for sample in get_samples(samples)])
     output_files.append(
-        [
-            "cnv_sv/pindel/%s.vcf" % (sample)
-            for prefix in files.keys()
-            for sample in get_samples(samples)
-            for suffix in files[prefix]
-        ]
+        ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
     output_files.append(
-        [
-            "cnv_sv/manta/%s/results/variants/somaticSV.vcf.gz" % (sample)
-            for prefix in files.keys()
-            for sample in get_samples(samples)
-            for suffix in files[prefix]
-        ]
+        ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
     return output_files

@@ -27,6 +27,9 @@ cnvkit_scatter:
 cnvkit_vcf:
   container: "docker://hydragenetics/common:0.0.1"
 
+config_manta_t:
+  container: "docker://marrip/manta:v1.6.0"
+
 config_manta_tn:
   container: "docker://marrip/manta:v1.6.0"
 
@@ -55,6 +58,9 @@ gatk_cnv_vcf:
 
 generate_pindel_config:
   container: "docker://hydragenetics/common:0.0.1"
+
+manta_run_workflow_t:
+  container: "docker://marrip/manta:v1.6.0"
 
 manta_run_workflow_tn:
   container: "docker://marrip/manta:v1.6.0"
