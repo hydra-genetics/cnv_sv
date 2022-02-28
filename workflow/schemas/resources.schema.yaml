@@ -122,6 +122,25 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_vcf'
 
+  config_manta_t:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'config_manta_t'
+      time:
+        type: string
+        description: default max execution time for 'config_manta_t'
+      mem_mb:
+        type: integer
+        description: memory used for 'config_manta_t'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'config_manta_t'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'config_manta_t'
+
   config_manta_tn:
     type: object
     properties:
