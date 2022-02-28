@@ -12,7 +12,7 @@ rule config_manta_tn:
         bai_n="alignment/merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
     output:
-        scrpt=temp("cnv_sv/config_manta_tn/{sample}/runWorkflow.py"),
+        scrpt=temp("cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py"),
     log:
         "cnv_sv/config_manta_tn/{sample}/runWorkflow.py.log",
     benchmark:
@@ -48,7 +48,7 @@ rule manta_run_workflow_tn:
         bam_n="alignment/merge_bam/{sample}_N.bam",
         bai_n="alignment/merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
-        scrpt="cnv_sv/config_manta_tn/{sample}/runWorkflow.py",
+        scrpt="cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py",
     output:
         cand_si_vcf=temp("cnv_sv/manta_run_workflow_tn/{sample}/results/variants/candidateSmallIndels.vcf.gz"),
         cand_si_tbi=temp("cnv_sv/manta_run_workflow_tn/{sample}/results/variants/candidateSmallIndels.vcf.gz.tbi"),
@@ -76,7 +76,7 @@ rule manta_run_workflow_tn:
     container:
         config.get("manta_run_workflow_tn", {}).get("container", config["default_container"])
     conda:
-        "../envs/manta_run_workflow_tn.yaml"
+        "../envs/manta.yaml"
     message:
         "{rule}: Use manta to call sv in {wildcards.sample}"
     shell:
@@ -91,7 +91,7 @@ rule config_manta_t:
         bai_t="alignment/merge_bam/{sample}_T.bam.bai",
         ref=config["reference"]["fasta"],
     output:
-        scrpt=temp("cnv_sv/config_manta_t/{sample}/runWorkflow.py"),
+        scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py"),
     log:
         "cnv_sv/config_manta_t/{sample}/runWorkflow.py.log",
     benchmark:
@@ -116,28 +116,26 @@ rule config_manta_t:
         "configManta.py "
         "--tumorBam={input.bam_t} "
         "--referenceFasta={input.ref} "
-        "--runDir=cnv_sv/config_manta_t/{wildcards.sample} &> {log}"
+        "--runDir=cnv_sv/manta_run_workflow_t/{wildcards.sample} &> {log}"
 
 
 rule manta_run_workflow_t:
     input:
         ref=config["reference"]["fasta"],
-        scrpt="cnv_sv/config_manta_t/{sample}/runWorkflow.py",
+        scrpt="cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py",
     output:
         cand_si_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/candidateSmallIndels.vcf.gz"),
         cand_si_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/candidateSmallIndels.vcf.gz.tbi"),
         cand_sv_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/candidateSV.vcf.gz"),
         cand_sv_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/candidateSV.vcf.gz.tbi"),
-        som_sv_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/somaticSV.vcf.gz"),
-        som_sv_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/somaticSV.vcf.gz.tbi"),
         tum_sv_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz"),
         tum_sv_tbi=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz.tbi"),
         wrk_dir=temp(directory("cnv_sv/manta_run_workflow_t/{sample}/workspace")),
     log:
-        "cnv_sv/manta_run_workflow_t/{sample}/manta_tn.log",
+        "cnv_sv/manta_run_workflow_t/{sample}/manta_t.log",
     benchmark:
         repeat(
-            "cnv_sv/manta_run_workflow_t/{sample}/manta_tn.benchmark.tsv",
+            "cnv_sv/manta_run_workflow_t/{sample}/manta_t.benchmark.tsv",
             config.get("manta_run_workflow_t", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("manta_run_workflow_t", {}).get("threads", config["default_resources"]["threads"])
@@ -150,7 +148,7 @@ rule manta_run_workflow_t:
     container:
         config.get("manta_run_workflow_t", {}).get("container", config["default_container"])
     conda:
-        "../envs/manta_run_workflow_t.yaml"
+        "../envs/manta.yaml"
     message:
         "{rule}: Use manta to call sv in {wildcards.sample}"
     shell:
