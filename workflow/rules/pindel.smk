@@ -29,9 +29,9 @@ rule pindel_call:
         ),
     params:
         prefix=lambda wildcards: "cnv_sv/pindel/%s" % (wildcards.sample),
-        extra=" -j " + config["pindel_call"]["bedfile"]
+        extra=" %s %s " % ("-j", config["pindel_call"]["bedfile"])
         if "bedfile" in config.get("pindel_call", {})
-        else "" + config.get("pindel_call", {}).get("extra", ""),
+        else " %s %s" % ("", config.get("pindel_call", {}).get("extra", "")),
     log:
         "cnv_sv/pindel/{sample}_pindel_call.log",
     benchmark:
@@ -80,10 +80,10 @@ rule pindel2vcf:
         refdate=config.get("pindel2vcf", {}).get("refdate", "20131217"),
         extra=config.get("pindel2vcf", {}).get("extra", ""),
     log:
-        "cnv_sv/pindel/{sample}_pindel2vcf.log",
+        "cnv_sv/pindel/{sample}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/pindel/{sample}_pindel2vcf.benchmark.tsv",
+            "cnv_sv/pindel/{sample}.vcf.benchmark.tsv",
             config.get("pindel2vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pindel2vcf", {}).get("threads", config["default_resources"]["threads"])
