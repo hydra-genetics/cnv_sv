@@ -265,9 +265,12 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  pindel:
+  pindel_call:
     type: object
     properties:
+      bedfile:
+        type: string
+        description: bedfile to restrict pindel call
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated for pindel

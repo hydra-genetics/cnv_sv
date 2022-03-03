@@ -13,7 +13,6 @@ include: "rules/gatk_cnv_vcf.smk"
 include: "rules/generate_pindel_config.smk"
 include: "rules/manta.smk"
 include: "rules/pindel.smk"
-include: "rules/pindel2vcf.smk"
 include: "rules/svdb_merge.smk"
 include: "rules/svdb_query.smk"
 
