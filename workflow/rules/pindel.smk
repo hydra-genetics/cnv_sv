@@ -29,7 +29,9 @@ rule pindel_call:
         ),
     params:
         prefix=lambda wildcards: "cnv_sv/pindel/%s" % (wildcards.sample),
-        extra=config.get("pindel", {}).get("extra", ""),
+        extra=" -j " + config["pindel_call"]["bedfile"]
+        if "bedfile" in config.get("pindel_call", {})
+        else "" + config.get("pindel_call", {}).get("extra", ""),
     log:
         "cnv_sv/pindel/{sample}_pindel_call.log",
     benchmark:
