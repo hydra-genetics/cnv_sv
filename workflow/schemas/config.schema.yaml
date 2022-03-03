@@ -265,7 +265,7 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  pindel:
+  pindel_call:
     type: object
     properties:
       benchmark_repeats:
