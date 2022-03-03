@@ -65,8 +65,9 @@ manta_run_workflow_t:
 manta_run_workflow_tn:
   container: "docker://marrip/manta:v1.6.0"
 
-pindel:
+pindel_call:
   container: "docker://hydragenetics/pindel:0.2.5b9"
+  bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
