@@ -2,7 +2,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.0.1"
+default_container: "docker://hydragenetics/common:0.1.0"
 
 reference:
   fasta: "reference/HES45.fna"
@@ -25,7 +25,7 @@ cnvkit_scatter:
   container: "docker://marrip/cnvkit:0.9.9"
 
 cnvkit_vcf:
-  container: "docker://hydragenetics/common:0.0.1"
+  container: "docker://hydragenetics/common:0.1.0"
 
 config_manta_tn:
   container: "docker://marrip/manta:v1.6.0"
@@ -51,10 +51,10 @@ gatk_cnv_call_copy_ratio_segments:
   container: "docker://gmsuppsala/somatic:develop"
 
 gatk_cnv_vcf:
-  container: "docker://hydragenetics/common:0.0.1"
+  container: "docker://hydragenetics/common:0.1.0"
 
 generate_pindel_config:
-  container: "docker://hydragenetics/common:0.0.1"
+  container: "docker://hydragenetics/common:0.1.0"
 
 manta_run_workflow_tn:
   container: "docker://marrip/manta:v1.6.0"
