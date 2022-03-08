@@ -17,7 +17,7 @@ rule gatk_cnv_vcf:
         hom_del_limit=config.get("gatk_cnv_vcf", {}).get("hom_del_limit", 0.5),
         het_del_limit=config.get("gatk_cnv_vcf", {}).get("het_del_limit", 1.5),
         dup_limit=config.get("gatk_cnv_vcf", {}).get("dup_limit", 2.5),
-        TC=lambda wildcards: get_sample(samples, wildcards)["TC"],
+        TC=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
     log:
         "cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf.log",
     benchmark:
