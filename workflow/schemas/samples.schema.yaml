@@ -4,9 +4,9 @@ properties:
   sample:
     type: string
     description: sample id
-  TC:
+  tumor_content:
     type: string
     description: Tumor content
 required:
   - sample
-  - TC
+  - tumor_content
