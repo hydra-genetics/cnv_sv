@@ -7,9 +7,9 @@ properties:
   type:
     type: string
     description: type of sample (N|T|R)
-  run:
+  flowcell:
     type: string
-    description: sequencing run id
+    description: flowcell id
   lane:
     type: string
     description: lane number
@@ -25,7 +25,7 @@ properties:
 required:
   - sample
   - type
-  - run
+  - flowcell
   - lane
   - fastq1
   - fastq2
