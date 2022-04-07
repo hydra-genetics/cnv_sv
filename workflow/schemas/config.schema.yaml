@@ -315,7 +315,7 @@ properties:
             type: string
         description: list of cnv callers that are included in the vcf merging
       overlap:
-        type: float
+        type: number
         description: minimum overlap between regions for merging
       extra:
         type: string
