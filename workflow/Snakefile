@@ -16,9 +16,6 @@ include: "rules/pindel.smk"
 include: "rules/svdb.smk"
 
 
-report: "report/workflow.rst"
-
-
 rule all:
     input:
         unpack(compile_output_list),
