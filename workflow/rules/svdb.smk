@@ -37,15 +37,17 @@ rule svdb_merge:
     conda:
         "../envs/svdb.yaml"
     message:
-        "{rule}: Merges vcf files from different cnv callers into {output.vcf}"
+        "{rule}: merges vcf files from different cnv callers into {output.vcf}"
     shell:
-        "(svdb --merge --vcf {input.vcfs} > {output.vcf}) 2> {log}"
+        "(svdb --merge "
+        "--vcf {input.vcfs} "
+        "> {output.vcf}) 2> {log}"
 
 
 rule svdb_query:
     input:
         vcf="cnv_sv/svdb_merge/{sample}_{type}.merged.vcf",
-        svdb_vcf=config.get("svdb_query", {}).get("svdb_vcf", ""),
+        svdb_vcf=config.get("svdb_query", {}).get("vcf", ""),
     output:
         vcf=temp("cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf"),
     params:
@@ -70,6 +72,10 @@ rule svdb_query:
     conda:
         "../envs/svdb.yaml"
     message:
-        "{rule}: Use svdb database to filter cnvs into {output.vcf}"
+        "{rule}: use svdb database to filter cnvs into {output.vcf}"
     shell:
-        "(svdb --query --query_vcf {input.vcf} --db {input.svdb_vcf} --prefix {params.prefix} {params.extra}) &> {log}"
+        "(svdb --query "
+        "--query_vcf {input.vcf} "
+        "--db {input.svdb_vcf} "
+        "--prefix {params.prefix} "
+        "{params.extra}) &> {log}"

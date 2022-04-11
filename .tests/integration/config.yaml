@@ -79,4 +79,4 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.5.0"
-  svdb_vcf: "reference/normal_26_svdb_0.8.vcf"
+  vcf: "reference/normal_26_svdb_0.8.vcf"
