@@ -45,7 +45,7 @@ rule svdb_merge:
 rule svdb_query:
     input:
         vcf="cnv_sv/svdb_merge/{sample}_{type}.merged.vcf",
-        svdb_vcf=config.get("reference", {}).get("svdb_vcf", ""),
+        svdb_vcf=config.get("svdb_query", {}).get("svdb_vcf", ""),
     output:
         vcf=temp("cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf"),
     params:
