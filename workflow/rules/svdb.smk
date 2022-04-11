@@ -19,25 +19,25 @@ rule svdb_merge:
         overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
         extra=config.get("svdb_merge", {}).get("extra", ""),
     log:
-        "cnv_sv/svdb_merge/{sample}_{type}.vcf.log",
+        "cnv_sv/svdb_merge/{sample}_{type}.merged.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/svdb_merge/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/svdb_merge/{sample}_{type}.merged.benchmark.tsv",
             config.get("svdb_merge", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("svdb_merge", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("svdb_merge", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("svdb_merge", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("svdb_merge", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("svdb_merge", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("svdb_merge", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("svdb_merge", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("svdb_merge", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("svdb_merge", {}).get("container", config["default_container"])
     conda:
         "../envs/svdb.yaml"
     message:
-        "{rule}: Merges vcf files from different cnv callers into cnv_sv/svdb_merge/{wildcards.sample}_{wildcards.type}.merged.vcf"
+        "{rule}: Merges vcf files from different cnv callers into {output.vcf}"
     shell:
         "(svdb --merge --vcf {input.vcfs} > {output.vcf}) 2> {log}"
 
@@ -52,24 +52,24 @@ rule svdb_query:
         prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
         extra=config.get("svdb_query", {}).get("extra", ""),
     log:
-        "cnv_sv/svdb_query/{sample}_{type}.log",
+        "cnv_sv/svdb_query/{sample}_{type}.svdb_query.log",
     benchmark:
         repeat(
-            "cnv_sv/svdb_query/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.benchmark.tsv",
             config.get("svdb_query", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("svdb_query", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("svdb_query", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("svdb_query", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("svdb_query", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("svdb_query", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("svdb_query", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("svdb_query", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("svdb_query", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("svdb_query", {}).get("container", config["default_container"])
     conda:
         "../envs/svdb.yaml"
     message:
-        "{rule}: Use svdb database to filter cnvs in cnv_sv/svdb_query/{wildcards.sample}_{wildcards.type}.normal_filterered.vcf"
+        "{rule}: Use svdb database to filter cnvs into {output.vcf}"
     shell:
         "(svdb --query --query_vcf {input.vcf} --db {input.svdb_vcf} --prefix {params.prefix} {params.extra}) &> {log}"

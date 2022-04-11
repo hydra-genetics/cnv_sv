@@ -8,7 +8,6 @@ reference:
   fasta: "reference/HES45.fna"
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
-  svdb_vcf: "reference/normal_26_svdb_0.8.vcf"
 
 cnvkit_batch:
   container: "docker://marrip/cnvkit:0.9.9"
@@ -80,3 +79,4 @@ svdb_merge:
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.5.0"
+  svdb_vcf: "reference/normal_26_svdb_0.8.vcf"
