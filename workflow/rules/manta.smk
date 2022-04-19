@@ -6,10 +6,10 @@ __license__ = "GPL-3"
 
 rule config_manta_tn:
     input:
-        bam_t="alignment/merge_bam/{sample}_T.bam",
-        bai_t="alignment/merge_bam/{sample}_T.bam.bai",
-        bam_n="alignment/merge_bam/{sample}_N.bam",
-        bai_n="alignment/merge_bam/{sample}_N.bam.bai",
+        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
+        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
+        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py"),
@@ -43,10 +43,10 @@ rule config_manta_tn:
 
 rule manta_run_workflow_tn:
     input:
-        bam_t="alignment/merge_bam/{sample}_T.bam",
-        bai_t="alignment/merge_bam/{sample}_T.bam.bai",
-        bam_n="alignment/merge_bam/{sample}_N.bam",
-        bai_n="alignment/merge_bam/{sample}_N.bam.bai",
+        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
+        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
+        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
         scrpt="cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py",
     output:
@@ -87,8 +87,8 @@ rule manta_run_workflow_tn:
 
 rule config_manta_t:
     input:
-        bam_t="alignment/merge_bam/{sample}_T.bam",
-        bai_t="alignment/merge_bam/{sample}_T.bam.bai",
+        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
+        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py"),
