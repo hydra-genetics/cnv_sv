@@ -47,11 +47,11 @@ rule svdb_merge:
 rule svdb_query:
     input:
         vcf="cnv_sv/svdb_merge/{sample}_{type}.merged.vcf",
-        svdb_vcf=config.get("svdb_query", {}).get("vcf", ""),
     output:
         vcf=temp("cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf"),
     params:
         prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
+        db_string=config.get("svdb_query", {}).get("db_string", ""),
         extra=config.get("svdb_query", {}).get("extra", ""),
     log:
         "cnv_sv/svdb_query/{sample}_{type}.svdb_query.log",
@@ -76,6 +76,6 @@ rule svdb_query:
     shell:
         "(svdb --query "
         "--query_vcf {input.vcf} "
-        "--db {input.svdb_vcf} "
+        "{params.db_string} "
         "--prefix {params.prefix} "
         "{params.extra}) &> {log}"
