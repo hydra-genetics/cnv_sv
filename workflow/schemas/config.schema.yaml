@@ -330,6 +330,9 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      db_string:
+        type: string
+        description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq)
       extra:
         type: string
         description: parameters that should be forwarded to svdb_query
