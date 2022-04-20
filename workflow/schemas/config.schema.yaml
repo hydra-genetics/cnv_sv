@@ -154,9 +154,14 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      normal_reference:
+        type: string
+        description: path to normal reference panel for gatk DenoiseReadCounts
       extra:
         type: string
         description: parameters that should be forwarded to gatk_cnv_denoise_read_counts
+    required:
+      - normal_reference
 
   gatk_cnv_collect_read_counts:
     type: object
