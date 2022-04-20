@@ -9,7 +9,7 @@ __license__ = "GPL-3"
 
 rule germline_vcf:
     input:
-        vcf="snv_indels/ensemble_vcf/{sample}_{type}.ensembled.vep_annotated.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vep_annotated.vcf",
     output:
         vcf=temp("cnv_sv/germline_vcf/{sample}_{type}.germline.vcf"),
     params:

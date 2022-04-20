@@ -7,8 +7,8 @@ __license__ = "GPL-3"
 rule pindel_call:
     input:
         config="cnv_sv/pindel/{sample}.cfg",
-        bam="alignment/merge_bam/{sample}_T.bam",
-        bai="alignment/merge_bam/{sample}_T.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_T.bam",
+        bai="alignment/samtools_merge_bam/{sample}_T.bam.bai",
         ref=config["reference"]["fasta"],
     output:
         pindel=temp(

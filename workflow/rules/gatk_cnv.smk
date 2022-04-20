@@ -9,8 +9,8 @@ __license__ = "GPL-3"
 
 rule gatk_cnv_collect_read_counts:
     input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
     output:
         temp("cnv_sv/gatk_cnv_collect_read_counts/{sample}_{type}.counts.hdf5"),
@@ -48,8 +48,8 @@ rule gatk_cnv_collect_read_counts:
 
 rule gatk_cnv_collect_allelic_counts:
     input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval=config.get("gatk_cnv_collect_allelic_counts", {}).get("SNP_interval", ""),
         ref=config["reference"]["fasta"],
     output:
