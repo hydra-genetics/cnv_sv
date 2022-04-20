@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule generate_pindel_config:
     input:
-        bam="alignment/merge_bam/{sample}_T.bam",
+        bam="alignment/samtools_merge_bam/{sample}_T.bam",
         metrics="qc/picard_collect_multiple_metrics/{sample}_T.insert_size_metrics",
     output:
         config=temp("cnv_sv/pindel/{sample}.cfg"),

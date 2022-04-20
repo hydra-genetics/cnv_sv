@@ -9,8 +9,8 @@ __license__ = "GPL-3"
 
 rule cnvkit_batch:
     input:
-        bam="alignment/merge_bam/{sample}_{type}.bam",
-        bai="alignment/merge_bam/{sample}_{type}.bam.bai",
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
     output:
         regions=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr"),
