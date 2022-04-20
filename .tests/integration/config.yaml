@@ -72,11 +72,11 @@ pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
 
 svdb_merge:
-  container: "docker://hydragenetics/svdb:2.5.0"
+  container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
     - "gatk_cnv"
 
 svdb_query:
-  container: "docker://hydragenetics/svdb:2.5.0"
+  container: "docker://hydragenetics/svdb:2.6.0"
   db_string: "--db reference/normal_26_svdb_0.8.vcf"

@@ -3,4 +3,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - svdb=2.5.0
+  - svdb=2.6.0
