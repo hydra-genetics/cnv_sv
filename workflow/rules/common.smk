@@ -42,7 +42,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 wildcard_constraints:
     sample="|".join(samples.index),
-    unit="N|T|R",
+    type="N|T|R",
 
 
 def compile_output_list(wildcards):
@@ -68,6 +68,9 @@ def compile_output_list(wildcards):
         "cnv_sv/svdb_query": [
             "svdb_query.vcf",
         ],
+        "cnv_sv/exomedepth": [
+            "SV.txt",
+        ]
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
