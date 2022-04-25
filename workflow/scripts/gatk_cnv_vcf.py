@@ -60,9 +60,9 @@ for line in seg_in:
         cn = round(cn, 2)
         ref = "N"
         alt = ""
-        if cn < het_del_limit:
+        if ccn < het_del_limit:
             alt = "<DEL>"
-        elif cn > dup_limit:
+        elif ccn > dup_limit:
             alt = "<DUP>"
         else:
             alt = "<COPY_NORMAL>"
@@ -70,9 +70,9 @@ for line in seg_in:
         qual = "."
         filter = "."
         gt = ""
-        if cn < hom_del_limit:
+        if ccn < hom_del_limit:
             gt = "1/1"
-        elif (cn >= hom_del_limit and cn < het_del_limit) or cn > dup_limit:
+        elif (ccn >= hom_del_limit and ccn < het_del_limit) or ccn > dup_limit:
             gt = "0/1"
         else:
             gt = "0/0"
