@@ -15,7 +15,9 @@ def write_vcf_header(gatk_version, sample_name):
     vcf_out.write("##INFO=<ID=END,Number=1,Type=Integer,Description=\"End position of the variant described in this record\">\n")
     vcf_out.write("##INFO=<ID=SVLEN,Number=1,Type=Integer,Description=\"Difference in length between REF and ALT alleles\">\n")
     vcf_out.write("##INFO=<ID=SVTYPE,Number=1,Type=String,Description=\"Type of structural variant\">\n")
+    vcf_out.write("##INFO=<ID=CALLER,Number=1,Type=String,Description=\"Caller\">\n")
     vcf_out.write("##INFO=<ID=COPY_NUMBER,Number=1,Type=Float,Description=\"Copy number\">\n")
+    vcf_out.write("##INFO=<ID=CORRECTED_COPY_NUMBER,Number=1,Type=Float,Description=\"Tumour content corrected copy number\">\n")
     vcf_out.write("##INFO=<ID=LOG_ODDS_RATIO,Number=1,Type=Float,Description=\"Log odds ratio\">\n")
     vcf_out.write("##INFO=<ID=PROBES,Number=1,Type=Integer,Description=\"Number of probes in CNV\">\n")
     vcf_out.write("##INFO=<ID=BAF,Number=1,Type=Float,Description=\"SNP minor allele frequency\">\n")
@@ -65,7 +67,7 @@ for line in seg_in:
             gt = "0/1"
         else:
             gt = "0/0"
-        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;COPY_NUMBER=%s;PROBES=%s;BAF=%s" % (
+        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=cnvkit;COPY_NUMBER=NA;CORRECTED_COPY_NUMBER=%s;PROBES=%s;BAF=%s" % (
             alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn), nr_probes, baf
         )
         format = "GT:CN:CNQ:DP"
