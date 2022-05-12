@@ -15,6 +15,7 @@ def write_vcf_header(sample_name):
     vcf_out.write("##INFO=<ID=END,Number=1,Type=Integer,Description=\"End position of the variant described in this record\">\n")
     vcf_out.write("##INFO=<ID=SVLEN,Number=1,Type=Integer,Description=\"Difference in length between REF and ALT alleles\">\n")
     vcf_out.write("##INFO=<ID=SVTYPE,Number=1,Type=String,Description=\"Type of structural variant\">\n")
+    vcf_out.write("##INFO=<ID=CALLER,Number=1,Type=String,Description=\"Caller\">\n")
     vcf_out.write("##INFO=<ID=COPY_NUMBER,Number=1,Type=Float,Description=\"Copy number\">\n")
     vcf_out.write("##INFO=<ID=CORRECTED_COPY_NUMBER,Number=1,Type=Float,Description=\"Tumour content corrected copy number\">\n")
     vcf_out.write("##INFO=<ID=LOG_ODDS_RATIO,Number=1,Type=Float,Description=\"Log odds ratio\">\n")
@@ -76,7 +77,7 @@ for line in seg_in:
             gt = "0/1"
         else:
             gt = "0/0"
-        info1 = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;COPY_NUMBER=%s;CORRECTED_COPY_NUMBER=%s" % (
+        info1 = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=gatk_cnv;COPY_NUMBER=%s;CORRECTED_COPY_NUMBER=%s" % (
             alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn), str(ccn)
         )
         info2 = ";PROBES=%s;BAF=%s;BAF_PROBES=%s" % (nr_probes, baf, nr_baf_probes)
