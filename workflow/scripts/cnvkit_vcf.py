@@ -67,9 +67,10 @@ for line in seg_in:
             gt = "0/1"
         else:
             gt = "0/0"
-        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=cnvkit;COPY_NUMBER=NA;CORRECTED_COPY_NUMBER=%s;PROBES=%s;BAF=%s" % (
+        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=cnvkit;COPY_NUMBER=NA;CORRECTED_COPY_NUMBER=%s" % (
             alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn), nr_probes, baf
         )
+        info = "%s;PROBES=%s;BAF=%s" % (info, nr_probes, baf)
         format = "GT:CN:CNQ:DP"
         data = "%s:%s:%s:%s" % (gt, cn, nr_probes, dp)
         if baf != "":
