@@ -26,8 +26,8 @@ def write_vcf_header(gatk_version, sample_name):
     vcf_out.write("##ALT=<ID=COPY_NORMAL,Description=\"Normal copy number\">\n")
     vcf_out.write("##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n")
     vcf_out.write("##FORMAT=<ID=CN,Number=1,Type=Float,Description=\"Copy number\">\n")
-    vcf_out.write("##FORMAT=<ID=CNQ,Number=1,Type=Integer,Description=\"Number of probes in CNV\">\n")
-    vcf_out.write("##FORMAT=<ID=DP,Number=1,Type=Integer,Description=\"Average coverage over region\">\n")
+    vcf_out.write("##FORMAT=<ID=CNQ,Number=1,Type=Float,Description=\"Number of probes in CNV\">\n")
+    vcf_out.write("##FORMAT=<ID=DP,Number=1,Type=Float,Description=\"Average coverage over region\">\n")
     vcf_out.write("##FORMAT=<ID=BAF,Number=1,Type=Float,Description=\"SNP minor allele frequency\">\n")
     vcf_out.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n" % sample_name)
 
