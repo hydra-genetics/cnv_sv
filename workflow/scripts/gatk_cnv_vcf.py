@@ -26,7 +26,7 @@ def write_vcf_header(sample_name):
     vcf_out.write("##ALT=<ID=DUP,Description=\"Duplication\">\n")
     vcf_out.write("##ALT=<ID=COPY_NORMAL,Description=\"Normal copy number\">\n")
     vcf_out.write("##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n")
-    vcf_out.write("##FORMAT=<ID=CN,Number=1,Type=Integer,Description=\"Copy number\">\n")
+    vcf_out.write("##FORMAT=<ID=CN,Number=1,Type=Float,Description=\"Copy number\">\n")
     vcf_out.write("##FORMAT=<ID=CCN,Number=1,Type=Integer,Description=\"Corrected copy number\">\n")
     vcf_out.write("##FORMAT=<ID=CNQ,Number=1,Type=Integer,Description=\"Number of probes in CNV\">\n")
     vcf_out.write("##FORMAT=<ID=BAF,Number=1,Type=Float,Description=\"SNP minor allele frequency\">\n")
