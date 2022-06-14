@@ -293,25 +293,6 @@ properties:
         type: string
         description: partition to use on the cluster for 'generate_pindel_config'
 
-  germline_vcf:
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'germline_vcf'
-      time:
-        type: string
-        description: default max execution time for 'germline_vcf'
-      mem_mb:
-        type: integer
-        description: memory used for 'germline_vcf'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'germline_vcf'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'germline_vcf'
-
   manta_run_workflow_tn:
     type: object
     properties:

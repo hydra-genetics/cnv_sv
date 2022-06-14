@@ -54,7 +54,7 @@ rule cnvkit_batch:
 rule cnvkit_call:
     input:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
-        vcf="cnv_sv/germline_vcf/{sample}_{type}.germline.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.loh.cns"),
     params:
@@ -127,7 +127,7 @@ rule cnvkit_scatter:
     input:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
-        vcf="cnv_sv/germline_vcf/{sample}_{type}.germline.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         plot=temp("cnv_sv/cnvkit_scatter/{sample}_{type}.png"),
     params:
