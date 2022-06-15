@@ -8,3 +8,8 @@ default_container: "docker://gmsuppsala/somatic:develop"
 
 germline_vcf:
   container: "docker://ensemblorg/ensembl-vep:release_99.0"
+
+exomedepth:
+  container: ""
+  bedfile: ""
+  reference_count: ""
