@@ -1,0 +1,3 @@
+chromosome	start	end	id	CNV_type	size	CN
+1	934253	934453	chr1:934253-934453	duplication	971	1.99
+1	934653	934853	chr1:934653-934853	duplication	971	1.99

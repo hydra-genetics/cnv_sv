@@ -6,11 +6,12 @@ __license__ = "GPL-3"
 
 ## regel som automatisk genererar bedfile for exomedepth!
 
+
 rule exomedepth:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bedfile=config["exomedepth"]["bedfile"],
-        ref_count=config["exomedepth"]["ref_count"],
+        bedfile=config.get("exomedepth", {}).get("bedfile", ""),
+        ref_count=config.get("exomedepth", {}).get("ref_count", ""),
     output:
         result=temp("cnv_sv/exomedepth/{sample}_{type}.txt"),
         aggregated_result=temp("cnv_sv/exomedepth/{sample}_{type}.SV.txt"),
@@ -18,11 +19,9 @@ rule exomedepth:
     params:
         extra=config.get("exomedepth", {}).get("extra", ""),
     log:
-        "cnv_sv/exomedepth/{sample}_{type}.output.log"
+        "cnv_sv/exomedepth/{sample}_{type}.output.log",
     benchmark:
-        repeat(
-            "cnv_sv/exomedepth/{sample}_{type}.output.benchmark.tsv", config.get("exomedepth", {}).get("benchmark_repeats", 1)
-        )
+        repeat("cnv_sv/exomedepth/{sample}_{type}.output.benchmark.tsv", config.get("exomedepth", {}).get("benchmark_repeats", 1))
     threads: config.get("exomedepth", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("exomedepth", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -35,6 +34,6 @@ rule exomedepth:
     conda:
         "../envs/exomedepth.yaml"
     message:
-       "{rule}: Run exomedepth cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
+        "{rule}: run exomedepth cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     script:
         "../scripts/exomedepth.R"

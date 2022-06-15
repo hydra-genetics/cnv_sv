@@ -70,7 +70,7 @@ def compile_output_list(wildcards):
         ],
         "cnv_sv/exomedepth": [
             "SV.txt",
-        ]
+        ],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
