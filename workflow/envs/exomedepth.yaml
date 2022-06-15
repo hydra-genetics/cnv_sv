@@ -3,3 +3,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
+  - r-exomedepth=1.1.15
