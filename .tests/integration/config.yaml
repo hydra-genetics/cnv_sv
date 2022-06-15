@@ -37,9 +37,6 @@ exomedepth:
   ref_count: "reference/ref_count.txt"
   container: "docker://hydragenetics/exomedepth:1.1.15"
 
-germline_vcf:
-  container: "docker://ensemblorg/ensembl-vep:release_99.0"
-
 gatk_cnv_collect_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
 
