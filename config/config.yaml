@@ -5,3 +5,9 @@ samples: "samples.tsv"
 units: "units.tsv"
 
 default_container: "docker://gmsuppsala/somatic:develop"
+
+exomedepth:
+  container: ""
+  bedfile: ""
+  reference_count: ""
+

@@ -129,6 +129,22 @@ properties:
         type: string
         description: copy number threshold for duplication
 
+  exomedepth:
+    type: object
+    properties:
+      benchmark_repeats:
+          type: integer
+          description: set number of times benchmark should be repeated for cnvkit_vcf
+      container:
+          type: string
+          description: name or path to docker/singularity container
+      bedfile:
+        type: string
+        description: path to bedfile
+      ref_count:
+        type: string
+        description: path to reference count file (normal pool)
+
   gatk_cnv_denoise_read_counts:
     type: object
     properties:

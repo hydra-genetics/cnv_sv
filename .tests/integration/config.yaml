@@ -32,6 +32,11 @@ config_manta_t:
 config_manta_tn:
   container: "docker://marrip/manta:v1.6.0"
 
+exomedepth:
+  bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
+  ref_count: "reference/ref_count.txt"
+  container: "docker://hydragenetics/exomedepth:1.1.15"
+
 gatk_cnv_collect_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
 
