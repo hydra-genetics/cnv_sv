@@ -61,13 +61,10 @@ library(rlang)
 
   # Prepare output data frame
   output_df = data.frame(all.exons@CNV.calls[order(all.exons@CNV.calls$BF, decreasing = TRUE),])
-  bamfile <- basename(my.bam)
-
+  
 
   # Txt file
-  output.file <- paste("cnv_sv/exomedepth/", bamfile, ".txt", sep = "")
-  output.file <- gsub(x = output.file, ".bam", "")
-  write.table(file = output.file, x = output_df, row.names = FALSE, sep = "\t")
+  write.table(file = snakemake@input[["result"]], x = output_df, row.names = FALSE, sep = "\t")
 
   # NexusSV .SV.txt file
   nexus <- c("id", "type")
@@ -77,9 +74,7 @@ library(rlang)
 
   names(nexus_df) <- c("Chromosome Region", "Event")
 
-  output.file <- paste("cnv_sv/exomedepth/", bamfile, ".SV.txt", sep = "")
-  output.file <- gsub(x = output.file, ".bam", "")
-  write.table(nexus_df, file = output.file, row.names = FALSE, quote = FALSE, sep = "\t")
+  write.table(nexus_df, file = snakemake@input[["result_aggregated"]], row.names = FALSE, quote = FALSE, sep = "\t")
 
   # AED file
   keep <- c("chromosome", "start", "end", "gene", "nexons", "reads.ratio", "type",
@@ -113,7 +108,5 @@ library(rlang)
     "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")
   aed_df <- rbind(header1, aed_df)
 
-  output.file <- gsub(x = output.file, ".SV.txt", ".aed")
-  write.table(aed_df, file = output.file, row.names = FALSE, quote = FALSE, sep = "\t")
-
+  write.table(aed_df, file = snakemake@input[["aed"]], row.names = FALSE, quote = FALSE, sep = "\t")
 }

@@ -12,9 +12,9 @@ rule exomedepth:
         bedfile=config["exomedepth"]["bedfile"],
         ref_count=config["exomedepth"]["ref_count"],
     output:
-        temp("cnv_sv/exomedepth/{sample}_{type}.txt"),
-        temp("cnv_sv/exomedepth/{sample}_{type}.SV.txt"),
-        temp("cnv_sv/exomedepth/{sample}_{type}.aed"),
+        result=temp("cnv_sv/exomedepth/{sample}_{type}.txt"),
+        aggregated_result=temp("cnv_sv/exomedepth/{sample}_{type}.SV.txt"),
+        aed=temp("cnv_sv/exomedepth/{sample}_{type}.aed"),
     params:
         extra=config.get("exomedepth", {}).get("extra", ""),
     log:
