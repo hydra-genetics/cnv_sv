@@ -317,19 +317,19 @@ properties:
     properties:
       threads:
         type: integer
-        description: default number of threads that will be used by 'picard_update_vcf_sequence_dictionary'
+        description: number of threads
       time:
         type: string
-        description: default max execution time for 'picard_update_vcf_sequence_dictionary'
+        description: max execution time
       mem_mb:
         type: integer
-        description: memory used for 'picard_update_vcf_sequence_dictionary'
+        description: memory used
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'picard_update_vcf_sequence_dictionary'
+        description: memory used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'picard_update_vcf_sequence_dictionary'
+        description: partition to use on the cluster
 
   pindel:
     type: object

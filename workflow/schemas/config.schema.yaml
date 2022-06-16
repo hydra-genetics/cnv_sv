@@ -273,13 +273,13 @@ properties:
   picard_update_vcf_sequence_dictionary:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for picard UpdateVcfSequenceDictionary
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to UpdateVcfSequenceDictionary
+        description: parameters that should be forwarded
 
   pindel_call:
     type: object

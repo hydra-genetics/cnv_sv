@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule picard_update_vcf_sequence_dictionary:
     input:
-        vcf="cnv_sv/pindel/{sample}.noContig.vcf",
+        vcf="cnv_sv/pindel/{sample}.no_contig.vcf",
         fasta=config["reference"]["fasta"],
     output:
         temp("cnv_sv/pindel/{sample}.vcf"),
@@ -35,6 +35,6 @@ rule picard_update_vcf_sequence_dictionary:
     conda:
         "../envs/picard_update_vcf_sequence_dictionary.yaml"
     message:
-        "{rule}: Update cnv_sv/pindel/{wildcards.sample}.noContig.vcf to include contigs."
+        "{rule}: Update cnv_sv/pindel/{wildcards.sample}.no_contig.vcf to include contigs."
     shell:
         "(picard UpdateVcfSequenceDictionary INPUT={input.vcf} SD={input.fasta} OUTPUT={output}) &> {log}"
