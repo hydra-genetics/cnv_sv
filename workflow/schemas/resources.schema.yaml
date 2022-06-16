@@ -28,6 +28,7 @@ properties:
       - partition
 
   cnvkit_batch:
+    description: resource definitions for cnvkit_batch
     type: object
     properties:
       threads:
@@ -47,6 +48,7 @@ properties:
         description: partition to use on the cluster for 'cnvkit_batch'
 
   cnvkit_call:
+    description: resource definitions for cnvkit_call
     type: object
     properties:
       threads:
@@ -66,6 +68,7 @@ properties:
         description: partition to use on the cluster for 'cnvkit_call'
 
   cnvkit_diagram:
+    description: resource definitions for cnvkit_diagram
     type: object
     properties:
       threads:
@@ -85,6 +88,7 @@ properties:
         description: partition to use on the cluster for 'cnvkit_diagram'
 
   cnvkit_scatter:
+    description: resource definitions for cnvkit_scatter
     type: object
     properties:
       threads:
@@ -104,6 +108,7 @@ properties:
         description: partition to use on the cluster for 'cnvkit_scatter'
 
   cnvkit_vcf:
+    description: resource definitions for cnvkit_vcf
     type: object
     properties:
       threads:
@@ -123,6 +128,7 @@ properties:
         description: partition to use on the cluster for 'cnvkit_vcf'
 
   config_manta_t:
+    description: resource definitions for config_manta_t
     type: object
     properties:
       threads:
@@ -142,6 +148,7 @@ properties:
         description: partition to use on the cluster for 'config_manta_t'
 
   config_manta_tn:
+    description: resource definitions for config_manta_tn
     type: object
     properties:
       threads:
@@ -161,6 +168,7 @@ properties:
         description: partition to use on the cluster for 'config_manta_tn'
 
   gatk_cnv_denoise_read_counts:
+    description: resource definitions for gatk_cnv_denoise_read_counts
     type: object
     properties:
       threads:
@@ -180,6 +188,7 @@ properties:
         description: partition to use on the cluster for 'gatk_cnv_denoise_read_counts'
 
   gatk_cnv_collect_read_counts:
+    description: resource definitions for gatk_cnv_collect_read_counts
     type: object
     properties:
       threads:
@@ -199,6 +208,7 @@ properties:
         description: partition to use on the cluster for 'gatk_cnv_collect_read_counts'
 
   gatk_cnv_collect_allelic_counts:
+    description: resource definitions for gatk_cnv_collect_allelic_counts
     type: object
     properties:
       threads:
@@ -218,6 +228,7 @@ properties:
         description: partition to use on the cluster for 'gatk_cnv_collect_allelic_counts'
 
   gatk_cnv_model_segments:
+    description: resource definitions for gatk_cnv_model_segments
     type: object
     properties:
       threads:
@@ -237,6 +248,7 @@ properties:
         description: partition to use on the cluster for 'gatk_cnv_model_segments'
 
   gatk_cnv_call_copy_ratio_segments:
+    description: resource definitions for gatk_cnv_call_copy_ratio_segments
     type: object
     properties:
       threads:
@@ -256,6 +268,7 @@ properties:
         description: partition to use on the cluster for 'gatk_cnv_call_copy_ratio_segments'
 
   gatk_cnv_vcf:
+    description: resource definitions for gatk_cnv_vcf
     type: object
     properties:
       threads:
@@ -275,6 +288,7 @@ properties:
         description: partition to use on the cluster for 'gatk_cnv_vcf'
 
   generate_pindel_config:
+    description: resource definitions for generate_pindel_config
     type: object
     properties:
       threads:
@@ -294,6 +308,7 @@ properties:
         description: partition to use on the cluster for 'generate_pindel_config'
 
   manta_run_workflow_tn:
+    description: resource definitions for manta_run_workflow_tn
     type: object
     properties:
       mem_mb:
@@ -313,6 +328,7 @@ properties:
         description: default max execution time for 'manta_run_workflow_tn'
 
   picard_update_vcf_sequence_dictionary:
+    description: resource definitions for picard_update_vcf_sequence_dictionary
     type: object
     properties:
       threads:
@@ -331,7 +347,8 @@ properties:
         type: string
         description: partition to use on the cluster
 
-  pindel:
+  pindel_call:
+    description: resource definitions for pindel_call
     type: object
     properties:
       threads:
@@ -351,6 +368,7 @@ properties:
         description: partition to use on the cluster for 'pindel'
 
   pindel2vcf:
+    description: resource definitions for pindel2vcf
     type: object
     properties:
       threads:
@@ -370,6 +388,7 @@ properties:
         description: partition to use on the cluster for 'pindel2vcf'
 
   svdb_merge:
+    description: resource definitions for svdb_merge
     type: object
     properties:
       threads:
@@ -389,6 +408,7 @@ properties:
         description: partition to use on the cluster for 'svdb_merge'
 
   svdb_query:
+    description: resource definitions for svdb_query
     type: object
     properties:
       threads:
