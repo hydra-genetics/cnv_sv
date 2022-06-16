@@ -31,6 +31,7 @@ properties:
     - default_container
 
   cnvkit_batch:
+    description: parameters for cnvkit_batch
     type: object
     properties:
       benchmark_repeats:
@@ -52,6 +53,7 @@ properties:
       - method
 
   config_manta_t:
+    description: parameters for config_manta_t
     type: object
     properties:
       benchmark_repeats:
@@ -62,6 +64,7 @@ properties:
         description: name or path to docker/singularity container
 
   config_manta_tn:
+    description: parameters for config_manta_tn
     type: object
     properties:
       benchmark_repeats:
@@ -72,6 +75,7 @@ properties:
         description: name or path to docker/singularity container
 
   cnvkit_call:
+    description: parameters for cnvkit_call
     type: object
     properties:
       benchmark_repeats:
@@ -85,6 +89,7 @@ properties:
         description: extra parameters sent to cnvkit_call
 
   cnvkit_diagram:
+    description: parameters for cnvkit_diagram
     type: object
     properties:
       benchmark_repeats:
@@ -98,6 +103,7 @@ properties:
         description: extra parameters sent to cnvkit_diagram
 
   cnvkit_scatter:
+    description: parameters for cnvkit_scatter
     type: object
     properties:
       benchmark_repeats:
@@ -111,6 +117,7 @@ properties:
         description: extra parameters sent to cnvkit_scatter
 
   cnvkit_vcf:
+    description: parameters for cnvkit_vcf
     type: object
     properties:
       benchmark_repeats:
@@ -130,6 +137,7 @@ properties:
         description: copy number threshold for duplication
 
   exomedepth:
+    description: parameters for exomedepth
     type: object
     properties:
       benchmark_repeats:
@@ -146,6 +154,7 @@ properties:
         description: path to reference count file (normal pool)
 
   gatk_cnv_denoise_read_counts:
+    description: parameters for gatk_cnv_denoise_read_counts
     type: object
     properties:
       benchmark_repeats:
@@ -164,6 +173,7 @@ properties:
       - normal_reference
 
   gatk_cnv_collect_read_counts:
+    description: parameters for gatk_cnv_collect_read_counts
     type: object
     properties:
       benchmark_repeats:
@@ -180,6 +190,7 @@ properties:
         description: parameters that should be forwarded to gatk_cnv_collect_read_counts
 
   gatk_cnv_model_segments:
+    description: parameters for gatk_cnv_model_segments
     type: object
     properties:
       benchmark_repeats:
@@ -193,6 +204,7 @@ properties:
         description: parameters that should be forwarded to gatk_cnv_model_segments
 
   gatk_cnv_call_copy_ratio_segments:
+    description: parameters for gatk_cnv_call_copy_ratio_segments
     type: object
     properties:
       benchmark_repeats:
@@ -206,6 +218,7 @@ properties:
         description: parameters that should be forwarded to gatk_cnv_call_copy_ratio_segments
 
   gatk_cnv_collect_allelic_counts:
+    description: parameters for gatk_cnv_collect_allelic_counts
     type: object
     properties:
       benchmark_repeats:
@@ -222,6 +235,7 @@ properties:
         description: parameters that should be forwarded to gatk_cnv_collect_allelic_counts
 
   gatk_cnv_vcf:
+    description: parameters for gatk_cnv_vcf
     type: object
     properties:
       benchmark_repeats:
@@ -241,6 +255,7 @@ properties:
         description: copy number threshold for duplication
 
   generate_pindel_config:
+    description: parameters for generate_pindel_config
     type: object
     properties:
       benchmark_repeats:
@@ -251,6 +266,7 @@ properties:
         description: name or path to docker/singularity container
 
   manta_run_workflow_t:
+    description: parameters for manta_run_workflow_t
     type: object
     properties:
       benchmark_repeats:
@@ -261,6 +277,7 @@ properties:
         description: name or path to docker/singularity container
 
   manta_run_workflow_tn:
+    description: parameters for manta_run_workflow_tn
     type: object
     properties:
       benchmark_repeats:
@@ -270,7 +287,22 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  picard_update_vcf_sequence_dictionary:
+    description: parameters for picard_update_vcf_sequence_dictionary
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   pindel_call:
+    description: parameters for pindel_call
     type: object
     properties:
       bedfile:
@@ -287,6 +319,7 @@ properties:
         description: parameters that should be forwarded to pindel
 
   pindel2vcf:
+    description: parameters for pindel2vcf
     type: object
     properties:
       benchmark_repeats:
@@ -306,6 +339,7 @@ properties:
         description: parameters that should be forwarded to pindel2vcf
 
   svdb_merge:
+    description: parameters for svdb_merge
     type: object
     properties:
       benchmark_repeats:
@@ -327,6 +361,7 @@ properties:
         description: parameters that should be forwarded to svdb_merge
 
   svdb_query:
+    description: parameters for svdb_query
     type: object
     properties:
       benchmark_repeats:

@@ -11,3 +11,5 @@ exomedepth:
   bedfile: ""
   reference_count: ""
 
+picard_update_vcf_sequence_dictionary:
+  container: "docker://hydragenetics/picard:2.25.0"

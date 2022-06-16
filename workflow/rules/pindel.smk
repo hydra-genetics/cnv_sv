@@ -74,16 +74,16 @@ rule pindel2vcf:
         ),
         ref=config["reference"]["fasta"],
     output:
-        vcf=temp("cnv_sv/pindel/{sample}.vcf"),
+        vcf=temp("cnv_sv/pindel/{sample}.no_contig.vcf"),
     params:
         refname=config.get("pindel2vcf", {}).get("refname", "'Genome Reference Consortium Human Build 38'"),
         refdate=config.get("pindel2vcf", {}).get("refdate", "20131217"),
         extra=config.get("pindel2vcf", {}).get("extra", ""),
     log:
-        "cnv_sv/pindel/{sample}.vcf.log",
+        "cnv_sv/pindel/{sample}.no_contig.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/pindel/{sample}.vcf.benchmark.tsv",
+            "cnv_sv/pindel/{sample}.no_contig.vcf.benchmark.tsv",
             config.get("pindel2vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pindel2vcf", {}).get("threads", config["default_resources"]["threads"])
@@ -98,6 +98,6 @@ rule pindel2vcf:
     conda:
         "../envs/pindel.yaml"
     message:
-        "{rule}: Convert pindel output to vcf for {wildcards.sample}"
+        "{rule}: Convert pindel output to vcf for {wildcards.sample}.no_contig"
     wrapper:
         "v1.2.0/bio/pindel/pindel2vcf"
