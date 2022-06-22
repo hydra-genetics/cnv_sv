@@ -14,6 +14,8 @@ library(rlang)
   my.bam <- snakemake@input[["bam"]]
   load(snakemake@input[["ref_count"]])
 
+  x = load(snakemake@input[["ref_count"]])
+  RefCount.mat = get(x)
 
   # Probes as bed.frame no header
   bed.hg19 <- read.csv(bedfile, header = F, sep = "\t")
@@ -23,28 +25,35 @@ library(rlang)
 
   ExomeCount.dafr <- as(my.counts[, colnames(my.counts)], "data.frame")  #Samma??
 
+  if (names(ExomeCount.dafr[1])=="space"){
+  	names(ExomeCount.dafr)[1] <- "chromosome"
+  }
+  if (names(ExomeCount.dafr[5])=="names"){
+    names(ExomeCount.dafr)[5] <- "exon"
+  }
+
   # Remove chr from chromosome column
   ExomeCount.dafr$chromosome <- gsub(as.character(ExomeCount.dafr$chromosome),
     pattern = "chr", replacement = "")
-
 
   # Prepare the main matrix of read count data
   ExomeCount.mat <- as.matrix(ExomeCount.dafr[, grep(names(ExomeCount.dafr), pattern = ".bam$")])  #bara antal counts
 
   # Create the aggregate reference set for this sample
-  my.choice <- select.reference.set(test.counts = ExomeCount.mat[, 1], reference.counts = CPRefCount.mat,
+  my.choice <- select.reference.set(test.counts = ExomeCount.mat[, 1], reference.counts = RefCount.mat,
     bin.length = (ExomeCount.dafr$end - ExomeCount.dafr$start)/1000, n.bins.reduced = 10000)
-  my.reference.selected <- apply(X = CPRefCount.mat[, my.choice$reference.choice,
+
+  my.reference.selected <- apply(X = RefCount.mat[, my.choice$reference.choice,
     drop = FALSE], MAR = 1, FUN = sum)
 
   message("Now creating the ExomeDepth object")
   all.exons <- new("ExomeDepth", test = ExomeCount.mat[, 1], reference = my.reference.selected,
     formula = "cbind(test, reference) ~ 1")
 
-
-  # Call CNVs
+# Call CNVs
   all.exons <- CallCNVs(x = all.exons, transition.probability = 10^-4, chromosome = ExomeCount.dafr$chromosome,
     start = ExomeCount.dafr$start, end = ExomeCount.dafr$end, name = ExomeCount.dafr$exon)
+
 
   # Annotate the ExomeDepth object with Exons
   exons.hg19.GRanges <- GenomicRanges::GRanges(seqnames = exons.hg19$chromosome,
@@ -61,10 +70,10 @@ library(rlang)
 
   # Prepare output data frame
   output_df = data.frame(all.exons@CNV.calls[order(all.exons@CNV.calls$BF, decreasing = TRUE),])
-  
 
   # Txt file
   write.table(file = snakemake@input[["result"]], x = output_df, row.names = FALSE, sep = "\t")
+
 
   # NexusSV .SV.txt file
   nexus <- c("id", "type")
@@ -75,6 +84,7 @@ library(rlang)
   names(nexus_df) <- c("Chromosome Region", "Event")
 
   write.table(nexus_df, file = snakemake@input[["result_aggregated"]], row.names = FALSE, quote = FALSE, sep = "\t")
+
 
   # AED file
   keep <- c("chromosome", "start", "end", "gene", "nexons", "reads.ratio", "type",
