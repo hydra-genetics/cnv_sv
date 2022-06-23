@@ -72,7 +72,7 @@ library(rlang)
   output_df = data.frame(all.exons@CNV.calls[order(all.exons@CNV.calls$BF, decreasing = TRUE),])
 
   # Txt file
-  write.table(file = snakemake@input[["result"]], x = output_df, row.names = FALSE, sep = "\t")
+  write.table(file = snakemake@output[["result"]], x = output_df, row.names = FALSE, sep = "\t")
 
 
   # NexusSV .SV.txt file
@@ -83,7 +83,7 @@ library(rlang)
 
   names(nexus_df) <- c("Chromosome Region", "Event")
 
-  write.table(nexus_df, file = snakemake@input[["aggregated_result"]], row.names = FALSE, quote = FALSE, sep = "\t")
+  write.table(nexus_df, file = snakemake@output[["aggregated_result"]], row.names = FALSE, quote = FALSE, sep = "\t")
 
 
   # AED file
@@ -118,5 +118,5 @@ library(rlang)
     "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")
   aed_df <- rbind(header1, aed_df)
 
-  write.table(aed_df, file = snakemake@input[["aed"]], row.names = FALSE, quote = FALSE, sep = "\t")
+  write.table(aed_df, file = snakemake@output[["aed"]], row.names = FALSE, quote = FALSE, sep = "\t")
 }
