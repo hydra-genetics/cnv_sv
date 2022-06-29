@@ -42,7 +42,7 @@ rule exomedepth:
 
 rule_ed_filter:
     input:
-        exon=temp("cnv_sv/exomedepth/{sample}_{type}.RData"),
+        exon="cnv_sv/exomedepth/{sample}_{type}.RData",
         ED_common=config.get("exomedepth", {}).get("ED_common", ""),
         WW25=config.get("exomedepth", {}).get("WW25", ""),
         conifer=config.get("exomedepth", {}).get("conifer", ""),
