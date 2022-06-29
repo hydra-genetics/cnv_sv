@@ -68,6 +68,8 @@ library(rlang)
   all.exons <- AnnotateExtra(x = all.exons, reference.annotation = genes.hg19.GRanges,
     min.overlap = 1e-04, column.name = "gene")
 
+  save(all.exons, file = snakemake@output[["exon"]])
+
   # Prepare output data frame
   output_df = data.frame(all.exons@CNV.calls[order(all.exons@CNV.calls$BF, decreasing = TRUE),])
 
