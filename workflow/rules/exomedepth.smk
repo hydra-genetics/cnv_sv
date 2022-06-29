@@ -40,7 +40,7 @@ rule exomedepth:
         "../scripts/exomedepth.R"
 
 
-rule_ed_filer:
+rule_ed_filter:
     input:
         exon=temp("cnv_sv/exomedepth/{sample}_{type}.RData"),
         ED_common=config.get("exomedepth", {}).get("ED_common", ""),
