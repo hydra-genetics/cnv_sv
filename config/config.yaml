@@ -7,9 +7,12 @@ units: "units.tsv"
 default_container: "docker://gmsuppsala/somatic:develop"
 
 exomedepth:
-  container: ""
   bedfile: ""
+  conifer: ""
+  container: ""
+  ED_common: ""
   reference_count: ""
+  WW25: ""
 
 picard_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
