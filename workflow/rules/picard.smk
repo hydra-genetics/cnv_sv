@@ -33,7 +33,7 @@ rule picard_update_vcf_sequence_dictionary:
     container:
         config.get("picard_update_vcf_sequence_dictionary", {}).get("container", config["default_container"])
     conda:
-        "../envs/picard_update_vcf_sequence_dictionary.yaml"
+        "../envs/picard.yaml"
     message:
         "{rule}: Update cnv_sv/pindel/{wildcards.sample}.no_contig.vcf to include contigs."
     shell:
