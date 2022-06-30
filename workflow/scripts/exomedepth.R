@@ -54,71 +54,79 @@ library(rlang)
   all.exons <- CallCNVs(x = all.exons, transition.probability = 10^-4, chromosome = ExomeCount.dafr$chromosome,
     start = ExomeCount.dafr$start, end = ExomeCount.dafr$end, name = ExomeCount.dafr$exon)
 
+  if (length(all.exons@CNV.calls) > 0) {
+    # Annotate the ExomeDepth object with Exons
+    exons.hg19.GRanges <- GenomicRanges::GRanges(seqnames = exons.hg19$chromosome,
+      IRanges::IRanges(start = exons.hg19$start, end = exons.hg19$end), names = exons.hg19$exon)
 
-  # Annotate the ExomeDepth object with Exons
-  exons.hg19.GRanges <- GenomicRanges::GRanges(seqnames = exons.hg19$chromosome,
-    IRanges::IRanges(start = exons.hg19$start, end = exons.hg19$end), names = exons.hg19$exon)
+    all.exons <- AnnotateExtra(x = all.exons, reference.annotation = exons.hg19.GRanges,
+      min.overlap = 1e-04, column.name = "exons")
 
-  all.exons <- AnnotateExtra(x = all.exons, reference.annotation = exons.hg19.GRanges,
-    min.overlap = 1e-04, column.name = "exons")
+    # Annotate the ExomeDepth object with Genes
+    genes.hg19.GRanges <- GenomicRanges::GRanges(seqnames = genes.hg19$chromosome,
+      IRanges::IRanges(start = genes.hg19$start, end = genes.hg19$end), names = genes.hg19$name)
+    all.exons <- AnnotateExtra(x = all.exons, reference.annotation = genes.hg19.GRanges,
+      min.overlap = 1e-04, column.name = "gene")
 
-  # Annotate the ExomeDepth object with Genes
-  genes.hg19.GRanges <- GenomicRanges::GRanges(seqnames = genes.hg19$chromosome,
-    IRanges::IRanges(start = genes.hg19$start, end = genes.hg19$end), names = genes.hg19$name)
-  all.exons <- AnnotateExtra(x = all.exons, reference.annotation = genes.hg19.GRanges,
-    min.overlap = 1e-04, column.name = "gene")
+    save(all.exons, file = snakemake@output[["exon"]])
 
-  save(all.exons, file = snakemake@output[["exon"]])
+    # Prepare output data frame
+    output_df = data.frame(all.exons@CNV.calls[order(all.exons@CNV.calls$BF, decreasing = TRUE),])
 
-  # Prepare output data frame
-  output_df = data.frame(all.exons@CNV.calls[order(all.exons@CNV.calls$BF, decreasing = TRUE),])
-
-  # Txt file
-  write.table(file = snakemake@output[["result"]], x = output_df, row.names = FALSE, sep = "\t")
-
-
-  # NexusSV .SV.txt file
-  nexus <- c("id", "type")
-  nexus_df = output_df[nexus]
-  nexus_df$type[nexus_df$type == "duplication"] <- "CN Gain"
-  nexus_df$type[nexus_df$type == "deletion"] <- "CN Loss"
-
-  names(nexus_df) <- c("Chromosome Region", "Event")
-
-  write.table(nexus_df, file = snakemake@output[["aggregated_result"]], row.names = FALSE, quote = FALSE, sep = "\t")
+    # Txt file
+    write.table(file = snakemake@output[["result"]], x = output_df, row.names = FALSE, sep = "\t")
 
 
-  # AED file
-  keep <- c("chromosome", "start", "end", "gene", "nexons", "reads.ratio", "type",
-    "type")
-  aed_df = output_df[keep]
-  aed_df$chromosome <- sub("^", "chr", aed_df$chromosome)
-  aed_df$type[aed_df$type == "duplication"] <- "copynumber/gain"
-  aed_df$type[aed_df$type == "deletion"] <- "copynumber/loss"
-  aed_df$type.1[aed_df$type.1 == "duplication"] <- "rgb(0,0,255)"
-  aed_df$type.1[aed_df$type.1 == "deletion"] <- "rgb(255,0,0)"
+    # NexusSV .SV.txt file
+    nexus <- c("id", "type")
+    nexus_df = output_df[nexus]
+    nexus_df$type[nexus_df$type == "duplication"] <- "CN Gain"
+    nexus_df$type[nexus_df$type == "deletion"] <- "CN Loss"
 
-  aed_df$new <- NA  # blank column
-  NewNames <- c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
-    "aed:name(aed:String)", "bio:markerCount(aed:Integer)", "bio:state(aed:Rational)",
-    "aed:category(aed:String)", "style:color(aed:Color)", "aed:value(aed:String)")
-  names(aed_df) <- NewNames
-  aed_df <- aed_df[, c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
-    "aed:name(aed:String)", "aed:value(aed:String)", "bio:markerCount(aed:Integer)",
-    "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")]
+    names(nexus_df) <- c("Chromosome Region", "Event")
 
-  header2 <- data.frame("", "", "", "affx:ucscGenomeVersion(aed:String)", "hg19",
-    "", "", "", "", stringsAsFactors = FALSE)
-  names(header2) <- c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
-    "aed:name(aed:String)", "aed:value(aed:String)", "bio:markerCount(aed:Integer)",
-    "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")
-  aed_df <- rbind(header2, aed_df)
-  header1 <- data.frame("", "", "", "namespace:affx(aed:URI)", "http://affymetrix.com/ontology/",
-    "", "", "", "", stringsAsFactors = FALSE)
-  names(header1) <- c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
-    "aed:name(aed:String)", "aed:value(aed:String)", "bio:markerCount(aed:Integer)",
-    "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")
-  aed_df <- rbind(header1, aed_df)
+    write.table(nexus_df, file = snakemake@output[["aggregated_result"]], row.names = FALSE, quote = FALSE, sep = "\t")
 
-  write.table(aed_df, file = snakemake@output[["aed"]], row.names = FALSE, quote = FALSE, sep = "\t")
+
+    # AED file
+    keep <- c("chromosome", "start", "end", "gene", "nexons", "reads.ratio", "type",
+      "type")
+    aed_df = output_df[keep]
+    aed_df$chromosome <- sub("^", "chr", aed_df$chromosome)
+    aed_df$type[aed_df$type == "duplication"] <- "copynumber/gain"
+    aed_df$type[aed_df$type == "deletion"] <- "copynumber/loss"
+    aed_df$type.1[aed_df$type.1 == "duplication"] <- "rgb(0,0,255)"
+    aed_df$type.1[aed_df$type.1 == "deletion"] <- "rgb(255,0,0)"
+
+    aed_df$new <- NA  # blank column
+    NewNames <- c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
+      "aed:name(aed:String)", "bio:markerCount(aed:Integer)", "bio:state(aed:Rational)",
+      "aed:category(aed:String)", "style:color(aed:Color)", "aed:value(aed:String)")
+    names(aed_df) <- NewNames
+    aed_df <- aed_df[, c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
+      "aed:name(aed:String)", "aed:value(aed:String)", "bio:markerCount(aed:Integer)",
+      "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")]
+
+    header2 <- data.frame("", "", "", "affx:ucscGenomeVersion(aed:String)", "hg19",
+      "", "", "", "", stringsAsFactors = FALSE)
+    names(header2) <- c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
+      "aed:name(aed:String)", "aed:value(aed:String)", "bio:markerCount(aed:Integer)",
+      "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")
+    aed_df <- rbind(header2, aed_df)
+    header1 <- data.frame("", "", "", "namespace:affx(aed:URI)", "http://affymetrix.com/ontology/",
+      "", "", "", "", stringsAsFactors = FALSE)
+    names(header1) <- c("bio:sequence(aed:String)", "bio:start(aed:Integer)", "bio:end(aed:Integer)",
+      "aed:name(aed:String)", "aed:value(aed:String)", "bio:markerCount(aed:Integer)",
+      "bio:state(aed:Rational)", "aed:category(aed:String)", "style:color(aed:Color)")
+    aed_df <- rbind(header1, aed_df)
+
+    write.table(aed_df, file = snakemake@output[["aed"]], row.names = FALSE, quote = FALSE, sep = "\t")
+  } else {
+    message("No result found")
+    message(snakemake@output[["result"]])
+    writeLines("\"start.p\"\t\"end.p\"\t\"type\"\t\"nexons\"\t\"start\"\t\"end\"\t\"chromosome\"\t\"id\"\t\"BF\"\t\"reads.expected\"\t\"reads.observed\"\t\"reads.ratio\"\t\"exons\"\t\"gene\"", snakemake@output[["result"]])
+    writeLines("Chromosome\tRegion\tEvent", snakemake@output[["aggregated_result"]])
+    writeLines("", snakemake@output[["aed"]])
+    writeLines("", snakemake@output[["exon"]])
+  }
 }
