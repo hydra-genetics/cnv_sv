@@ -56,6 +56,9 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvkit_scatter": [
             "png",
         ],
+        "cnv_sv/cnvkit_scatter_regions": [
+            "regions.pdf",
+        ],
         "cnv_sv/cnvkit_vcf": [
             "vcf",
         ],

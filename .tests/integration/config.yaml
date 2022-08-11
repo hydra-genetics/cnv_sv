@@ -23,6 +23,10 @@ cnvkit_diagram:
 cnvkit_scatter:
   container: "docker://marrip/cnvkit:0.9.9"
 
+cnvkit_scatter_regions:
+  container: "docker://marrip/cnvkit:0.9.9"
+  region_file: "reference/cnvkit_scatter_regions.txt"
+
 cnvkit_vcf:
   container: "docker://hydragenetics/common:0.1.0"
 

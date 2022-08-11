@@ -133,10 +133,10 @@ rule cnvkit_scatter:
     params:
         extra=config.get("cnvkit_scatter", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_scatter/{sample}_{type}.log",
+        "cnv_sv/cnvkit_scatter/{sample}_{type}.png.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_scatter/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/cnvkit_scatter/{sample}_{type}.png.benchmark.tsv",
             config.get("cnvkit_scatter", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_scatter", {}).get("threads", config["default_resources"]["threads"])
@@ -156,5 +156,44 @@ rule cnvkit_scatter:
         "(cnvkit.py scatter {input.segment_regions} "
         "-s {input.segments} "
         "-v {input.vcf} "
+        "-o {output.plot} "
+        "{params.extra}) &> {log}"
+
+
+rule cnvkit_scatter_regions:
+    input:
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment_regions="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
+        region_file=config.get("cnvkit_scatter_regions", {}).get("region_file", ""),
+    output:
+        plot=temp("cnv_sv/cnvkit_scatter_regions/{sample}_{type}.regions.pdf"),
+    params:
+        extra=config.get("cnvkit_scatter_regions", {}).get("extra", ""),
+    log:
+        "cnv_sv/cnvkit_scatter_regions/{sample}_{type}.regions.pdf.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_scatter_regions/{sample}_{type}.regions.pdf.benchmark.tsv",
+            config.get("cnvkit_scatter_regions", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvkit_scatter_regions", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("cnvkit_scatter_regions", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_scatter_regions", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("cnvkit_scatter_regions", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_scatter_regions", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_scatter_regions", {}).get("partition", config["default_resources"]["partition"]),
+    container:
+        config.get("cnvkit_scatter_regions", {}).get("container", config["default_container"])
+    conda:
+        "../envs/cnvkit.yaml"
+    message:
+        "{rule}: Plot cnvs regions into cnv_sv/cnvkit_scatter_regions/{wildcards.sample}_{wildcards.type}.regions.pdf"
+    shell:
+        "(cnvkit.py scatter {input.segment_regions} "
+        "-s {input.segments} "
+        "-v {input.vcf} "
+        "-l {input.region_file} "
         "-o {output.plot} "
         "{params.extra}) &> {log}"

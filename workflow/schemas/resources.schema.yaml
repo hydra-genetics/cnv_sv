@@ -107,6 +107,26 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_scatter'
 
+  cnvkit_scatter_regions:
+    description: resource definitions for cnvkit_scatter_regions
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by 'cnvkit_scatter_regions'
+      time:
+        type: string
+        description: default max execution time for 'cnvkit_scatter_regions'
+      mem_mb:
+        type: integer
+        description: memory used for 'cnvkit_scatter_regions'
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for 'cnvkit_scatter_regions'
+      partition:
+        type: string
+        description: partition to use on the cluster for 'cnvkit_scatter_regions'
+
   cnvkit_vcf:
     description: resource definitions for cnvkit_vcf
     type: object

@@ -116,6 +116,23 @@ properties:
         type: string
         description: extra parameters sent to cnvkit_scatter
 
+  cnvkit_scatter_regions:
+    description: parameters for cnvkit_scatter_regions
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvkit_scatter_regions
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      region_file:
+        type: string
+        description: file with regions for which each a cnv scatter plot is created
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_scatter_regions
+
   cnvkit_vcf:
     description: parameters for cnvkit_vcf
     type: object
