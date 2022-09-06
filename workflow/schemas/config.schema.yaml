@@ -62,6 +62,9 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to config_manta_t
 
   config_manta_tn:
     description: parameters for config_manta_tn
@@ -73,6 +76,9 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to config_manta_tn
 
   cnvkit_call:
     description: parameters for cnvkit_call

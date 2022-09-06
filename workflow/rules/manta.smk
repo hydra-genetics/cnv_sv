@@ -13,6 +13,8 @@ rule config_manta_tn:
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py"),
+    params:
+        extra=config.get("config_manta_tn", {}).get("extra", ""),
     log:
         "cnv_sv/config_manta_tn/{sample}/runWorkflow.py.log",
     benchmark:
@@ -38,6 +40,7 @@ rule config_manta_tn:
         "--tumorBam={input.bam_t} "
         "--normalBam={input.bam_n} "
         "--referenceFasta={input.ref} "
+        "{params.extra} "
         "--runDir=cnv_sv/manta_run_workflow_tn/{wildcards.sample} &> {log}"
 
 
@@ -92,6 +95,8 @@ rule config_manta_t:
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py"),
+    params:
+        extra=config.get("config_manta_t", {}).get("extra", ""),
     log:
         "cnv_sv/config_manta_t/{sample}/runWorkflow.py.log",
     benchmark:
@@ -116,6 +121,7 @@ rule config_manta_t:
         "configManta.py "
         "--tumorBam={input.bam_t} "
         "--referenceFasta={input.ref} "
+        "{params.extra} "
         "--runDir=cnv_sv/manta_run_workflow_t/{wildcards.sample} &> {log}"
 
 
