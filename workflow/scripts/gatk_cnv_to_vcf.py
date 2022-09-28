@@ -3,7 +3,7 @@ from datetime import date
 
 seg_in = open(snakemake.input.segment)
 vcf_out = open(snakemake.output.vcf, "w")
-TC = snakemake.params.TC
+TC = snakemake.params.tc
 hom_del_limit = snakemake.params.hom_del_limit
 het_del_limit = snakemake.params.het_del_limit
 dup_limit = snakemake.params.dup_limit
