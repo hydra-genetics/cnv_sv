@@ -51,33 +51,15 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     files = {
-        "cnv_sv/cnvkit_call": [
-            "loh.cns",
-        ],
-        "cnv_sv/cnvkit_diagram": [
-            "pdf",
-        ],
-        "cnv_sv/cnvkit_scatter": [
-            "png",
-        ],
-        "cnv_sv/cnvkit_vcf": [
-            "vcf",
-        ],
-        "cnv_sv/gatk_vcf": [
-            "vcf",
-        ],
-        "cnv_sv/svdb_merge": [
-            "merged.vcf",
-        ],
-        "cnv_sv/svdb_query": [
-            "svdb_query.vcf",
-        ],
-        "cnv_sv/exomedepth_call": [
-            "SV.txt",
-        ],
-        "cnv_sv/pindel_vcf": [
-            "vcf",
-        ],
+        "cnv_sv/cnvkit_call": ["loh.cns"],
+        "cnv_sv/cnvkit_diagram": ["pdf"],
+        "cnv_sv/cnvkit_scatter": ["png"],
+        "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/gatk_vcf": ["vcf"],
+        "cnv_sv/svdb_merge": ["merged.vcf"],
+        "cnv_sv/svdb_query": ["svdb_query.vcf"],
+        "cnv_sv/exomedepth_call": ["SV.txt"],
+        "cnv_sv/pindel_vcf": ["vcf"],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
