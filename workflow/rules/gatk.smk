@@ -78,7 +78,7 @@ rule gatk_collect_allelic_counts:
         "-L {input.interval} "
         "-I {input.bam} "
         "-R {input.ref} "
-        "-O {output}"
+        "-O {output} "
         "{params.extra}) &> {log}"
 
 
@@ -164,7 +164,7 @@ rule gatk_model_segments:
         "--denoised-copy-ratios {input.denoisedCopyRatio} "
         "--allelic-counts {input.allelicCounts} "
         "--output {params.outdir} "
-        "--output-prefix {params.outprefix}"
+        "--output-prefix {params.outprefix} "
         "{params.extra}) &> {log}"
 
 
@@ -172,8 +172,8 @@ rule gatk_call_copy_ratio_segments:
     input:
         "cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg",
     output:
-        segments=temp("cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg"),
         igv_segments=temp("cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.igv.seg"),
+        segments=temp("cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg"),
     params:
         extra=config.get("gatk_call_copy_ratio_segments", {}).get("extra", ""),
     log:
