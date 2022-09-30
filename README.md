@@ -1,4 +1,4 @@
-# <img src="https://github.com/hydra-genetics/cnv_sv/blob/develop/images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
+# <img src="images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
 
 #### Snakemake module containing steps to call copy number variants and structural variants
 
