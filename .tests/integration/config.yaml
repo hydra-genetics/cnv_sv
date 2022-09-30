@@ -5,9 +5,9 @@ units: "units.tsv"
 default_container: "docker://hydragenetics/common:0.1.8"
 
 reference:
-  fasta: "reference/HES45.fna"
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
+  fasta: "reference/HES45.fna"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -28,8 +28,8 @@ cnvkit_vcf:
 
 exomedepth_call:
   bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
-  ref_count: "reference/ref_count.txt"
   container: "docker://hydragenetics/exomedepth:1.1.15"
+  ref_count: "reference/ref_count.txt"
 
 gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
@@ -70,18 +70,18 @@ pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
 
 pindel_call:
-  container: "docker://hydragenetics/pindel:0.2.5b9"
   bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
+  container: "docker://hydragenetics/pindel:0.2.5b9"
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
 
 svdb_merge:
-  container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
     - "gatk"
     - "pindel"
+  container: "docker://hydragenetics/svdb:2.6.0"
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
