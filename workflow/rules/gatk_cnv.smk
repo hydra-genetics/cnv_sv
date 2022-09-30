@@ -15,8 +15,8 @@ rule gatk_cnv_collect_read_counts:
     output:
         temp("cnv_sv/gatk_cnv_collect_read_counts/{sample}_{type}.counts.hdf5"),
     params:
-        mergingRule="OVERLAPPING_ONLY",
         extra=config.get("gatk_cnv_collect_read_counts", {}).get("extra", ""),
+        mergingRule="OVERLAPPING_ONLY",
     log:
         "cnv_sv/gatk_cnv_collect_read_counts/{sample}_{type}.counts.hdf5.log",
     benchmark:
@@ -83,7 +83,7 @@ rule gatk_cnv_collect_allelic_counts:
         "-L {input.interval} "
         "-I {input.bam} "
         "-R {input.ref} "
-        "-O {output}"
+        "-O {output} "
         "{params.extra}) &> {log}"
 
 
@@ -127,10 +127,9 @@ rule gatk_cnv_denoise_read_counts:
 
 rule gatk_cnv_model_segments:
     input:
-        denoisedCopyRatio="cnv_sv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
         allelicCounts="cnv_sv/gatk_cnv_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv",
+        denoisedCopyRatio="cnv_sv/gatk_cnv_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
     output:
-        temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.modelFinal.seg"),
         temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.cr.seg"),
         temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.af.igv.seg"),
         temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.cr.igv.seg"),
@@ -140,10 +139,11 @@ rule gatk_cnv_model_segments:
         temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.modelBegin.seg"),
         temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.modelFinal.af.param"),
         temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.modelFinal.cr.param"),
+        temp("cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.modelFinal.seg"),
     params:
+        extra=config.get("gatk_cnv_model_segments", {}).get("extra", ""),
         outdir=lambda wildcards, output: os.path.dirname(output[0]),
         outprefix="{sample}_{type}.clean",
-        extra=config.get("gatk_cnv_model_segments", {}).get("extra", ""),
     log:
         "cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.modelFinal.seg.log",
     benchmark:
@@ -169,7 +169,7 @@ rule gatk_cnv_model_segments:
         "--denoised-copy-ratios {input.denoisedCopyRatio} "
         "--allelic-counts {input.allelicCounts} "
         "--output {params.outdir} "
-        "--output-prefix {params.outprefix}"
+        "--output-prefix {params.outprefix} "
         "{params.extra}) &> {log}"
 
 
@@ -177,8 +177,8 @@ rule gatk_cnv_call_copy_ratio_segments:
     input:
         "cnv_sv/gatk_cnv_model_segments/{sample}_{type}.clean.cr.seg",
     output:
-        segments=temp("cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg"),
         igv_segments=temp("cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.igv.seg"),
+        segments=temp("cnv_sv/gatk_cnv_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg"),
     params:
         extra=config.get("gatk_cnv_call_copy_ratio_segments", {}).get("extra", ""),
     log:
