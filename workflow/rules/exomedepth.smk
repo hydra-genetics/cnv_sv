@@ -47,8 +47,8 @@ rule exomedepth_ed_filter:
         exon="cnv_sv/exomedepth_call/{sample}_{type}.RData",
         WW25=config.get("exomedepth_ed_filter", {}).get("WW25", ""),
     output:
-        aggregated_result=temp("cnv_sv/exomedepth_ed_filter/{sample}_{type}.SV.filter.txt"),
         aed=temp("cnv_sv/exomedepth_ed_filter/{sample}_{type}.filter.aed"),
+        aggregated_result=temp("cnv_sv/exomedepth_ed_filter/{sample}_{type}.SV.filter.txt"),
     params:
         extra=config.get("exomedepth_ed_filter", {}).get("extra", ""),
     log:
