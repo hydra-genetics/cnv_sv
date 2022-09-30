@@ -100,7 +100,8 @@ The following output files should be targeted via another rule:
 |---|---|
 | `cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf` | vcf with merged CNV and SV |
 | `cnv_sv/{caller}_VCF/{sample}_{type}.vcf` | vcf file for each caller |
-| `cnv_sv/exomedepth_ed_filter/{sample}_{type}.SV.filter.txt` |  |
+| `cnv_sv/exomedepth_ed_filter/{sample}_{type}.SV.filter.txt` | filtered cnv calls from exomedepth |
+| `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz´ | vcf file with CNV and SV calls from Manta |
 
 ## :judge: Rule Graph
 
