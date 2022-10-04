@@ -167,6 +167,26 @@ properties:
         type: string
         description: partition to use on the cluster for 'config_manta_tn'
 
+  expansionhunter:
+    description: resource definitions expansionhunter
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: default number of threads that will be used by a expansionhunter
+      time:
+        type: string
+        description: default max execution time for a expansionhunter
+      mem_mb:
+        type: integer
+        description: default memory used for a expansionhunter
+      mem_per_cpu:
+        type: integer
+        description: default memory used per cpu for a expansionhunter
+      partition:
+        type: string
+        description: default partition to use on the cluser for a expansionhunter
+
   gatk_cnv_denoise_read_counts:
     description: resource definitions for gatk_cnv_denoise_read_counts
     type: object

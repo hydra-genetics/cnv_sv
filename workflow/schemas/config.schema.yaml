@@ -159,6 +159,20 @@ properties:
         type: string
         description: path to reference count file (normal pool)
 
+  expansionhunter:
+    description: parameters for expansionhunter
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for expansionhunter
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to expansionhunter
+
   gatk_cnv_denoise_read_counts:
     description: parameters for gatk_cnv_denoise_read_counts
     type: object
