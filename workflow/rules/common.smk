@@ -6,6 +6,7 @@ __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import json
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -43,6 +44,14 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
+
+
+def get_locus_str(wildcards):
+    catalog = config.get("expansionhunter", {}).get("variant_catalog", "")
+    with open(catalog, 'r') as cc:
+        cat_dict = json.load(cc)
+        loc_str = ','.join([key['LocusId'] for key in cat_dict])
+    return loc_str
 
 
 def compile_output_list(wildcards):
