@@ -16,8 +16,8 @@ rule svdb_merge:
     output:
         vcf=temp("cnv_sv/svdb_merge/{sample}_{type}.merged.vcf"),
     params:
-        overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
         extra=config.get("svdb_merge", {}).get("extra", ""),
+        overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
     log:
         "cnv_sv/svdb_merge/{sample}_{type}.merged.vcf.log",
     benchmark:
@@ -50,9 +50,9 @@ rule svdb_query:
     output:
         vcf=temp("cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf"),
     params:
-        prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
         db_string=config.get("svdb_query", {}).get("db_string", ""),
         extra=config.get("svdb_query", {}).get("extra", ""),
+        prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
     log:
         "cnv_sv/svdb_query/{sample}_{type}.svdb_query.log",
     benchmark:
