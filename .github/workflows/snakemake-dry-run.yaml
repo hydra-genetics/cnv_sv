@@ -18,13 +18,13 @@ on:
 jobs:
   snakemake-dry-run:
     name: Run snakemake dry run
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04:20220828.1
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.9
+      - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.8
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
