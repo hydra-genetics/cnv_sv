@@ -169,5 +169,4 @@ rule pindel_update_vcf_sequence_dictionary:
         "(picard UpdateVcfSequenceDictionary "
         "INPUT={input.vcf} "
         "SD={input.fasta} "
-        "OUTPUT={output}) "
-        "&> {log}"
+        "OUTPUT={output}) &> {log}"
