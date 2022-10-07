@@ -166,4 +166,8 @@ rule pindel_update_vcf_sequence_dictionary:
     message:
         "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs."
     shell:
-        "(picard UpdateVcfSequenceDictionary INPUT={input.vcf} SD={input.fasta} OUTPUT={output}) &> {log}"
+        "(picard UpdateVcfSequenceDictionary "
+        "INPUT={input.vcf} "
+        "SD={input.fasta} "
+        "OUTPUT={output}) "
+        "&> {log}"
