@@ -46,11 +46,9 @@ wildcard_constraints:
     type="N|T|R",
 
 
-def get_locus_str(wildcards):
-    catalog = config.get("expansionhunter", {}).get("variant_catalog", "")
-    with open(catalog, 'r') as cc:
-        cat_dict = json.load(cc)
-        loc_str = ','.join([key['LocusId'] for key in cat_dict])
+def get_locus_str(loci):
+    with open(loci, 'r') as catfile:
+        loc_str = catfile.readline().rstrip()
     return loc_str
 
 
@@ -98,5 +96,10 @@ def compile_output_list(wildcards):
     output_files.append(
         ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
+    output_files += [
+        "cnv_sv/expansionhunter/reviewer/%s_%s/" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        ]
 
     return output_files

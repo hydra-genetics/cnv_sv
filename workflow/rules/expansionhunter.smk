@@ -13,7 +13,7 @@ rule expansionhunter:
     output:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
         json="cnv_sv/expansionhunter/{sample}_{type}.json",
-        bam=temp("cnv_sv/expansionhunter/{sample}_{type}.realigned.bam"),
+        bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.bam"),
     params:
         prefix = lambda wildcards, output: os.path.split(output.vcf)[0],
         extra=config.get("expansionhunter", {}).get("extra", ""),
@@ -43,83 +43,52 @@ rule expansionhunter:
         "--output-prefix {params.prefix}/{wildcards.sample}_{wildcards.type} &> {log}"
 
 
-rule samtools_sort:
+rule generate_reviewer_locus_list:
     input:
-        "cnv_sv/expansionhunter/{sample}_{type}.realigned.bam",
+        vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
-        temp("cnv_sv/expansionhunter/{sample}_{type}.realigned.sorted.bam"),
-    params:
-        extra=config.get("samtools_sort", {}).get("extra", ""),
+        txt=temp("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt")
     log:
-        "cnv_sv/expansionhunter/{sample}_{type}.bam.sort.log",
+        "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.log"
     benchmark:
-        repeat(
-            "cnv_sv/expansionhunter/{sample}_{type}.bam.sort.benchmark.tsv",
-            config.get("samtools_sort", {}).get("benchmark_repeats", 1),
-        )
-    threads: config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"])
+        repeat("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.benchmark.tsv",
+        config.get("generate_reviewer_locus_list", {}).get("benchmark_repeats", 1))
+    threads: config.get("generate_reviewer_locus_list", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("samtools_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("samtools_sort", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("samtools_sort", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("samtools_sort", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_sort", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("generate_reviewer_locus_list", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("generate_reviewer_locus_list", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("generate_reviewer_locus_list", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("generate_reviewer_locus_list", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("generate_reviewer_locus_list", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("samtools_sort", {}).get("container", config["default_container"])
-    # conda:
-    #     "../envs/samtools.yaml"
+        config.get("generate_reviewer_locus_list", {}).get("container", config["default_container"])
+    conda:
+        "../envs/generate_reviewer_locus_list.yaml"
     message:
-        "{rule}: sort bam file {input} using samtools"
-    wrapper:
-        "v1.3.2/bio/samtools/sort"
-
-rule samtools_index:
-    input:
-        "cnv_sv/expansionhunter/{sample}_{type}.realigned.sorted.bam",
-    output:
-        "cnv_sv/expansionhunter/{sample}_{type}.realigned.sorted.bam.bai",
-    params:
-        extra=config.get("samtools_index", {}).get("extra", ""),
-    log:
-        "cnv_sv/expansionhunter/{sample}_{type}.bam.bai.log",
-    benchmark:
-        repeat(
-            "cnv_sv/expansionhunter/{sample}_{type}.bam.bai.benchmark.tsv",
-            config.get("samtools_index", {}).get("benchmark_repeats", 1),
-        )
-    container:
-        config.get("samtools_index", {}).get("container", config["default_container"])
-    threads: config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("samtools_index", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("samtools_index", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("samtools_index", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("samtools_index", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("samtools_index", {}).get("time", config["default_resources"]["time"]),
-    # conda:
-    #     "../envs/samtools.yaml"
-    message:
-        "{rule}: create index for cnv_sv/expansionhunter/{wildcards.sample}_{wildcards.type}_realigned.sorted.bam"
-    wrapper:
-        "v1.1.0/bio/samtools/index"
+       "{rule}: Generate a locus list for REViewer from cnv_sv/expansionhunter/{wildcards.sample}_{wildcards.type}.vcf"
+    script:
+        "../scripts/generate_reviewer_locus_list.py"
 
 rule reviewer:
     input:
-        bam="cnv_sv/expansionhunter/{sample}_{type}.realigned.sorted.bam",
-        bai="cnv_sv/expansionhunter/{sample}_{type}.realigned.sorted.bam.bai",
+        bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam",
+        bai="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.bai",
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
         ref=config.get("reference", {}).get("fasta", ""),
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        loci="cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt"
     output:
-        directory("cnv_sv/expansionhunter/reviewer/{sample}_{type}")
+        directory("cnv_sv/expansionhunter/reviewer/{sample}_{type}/"),
+        "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv",
+        "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv",
     params:
         prefix = lambda wildcards, input: os.path.split(input.vcf)[0],
         extra=config.get("reviewer", {}).get("extra", ""),
-        in_locus=get_locus_str,
+        in_locus=lambda wildcards, input: get_locus_str(input.loci),
     log:
-        "cnv_sv/reviewer/{sample}_{type}.output.log"
+        "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.log"
     benchmark:
-        repeat("cnv_sv/reviewer/{sample}_{type}.output.benchmark.tsv",
+        repeat("cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
         config.get("reviewer", {}).get("benchmark_repeats", 1))
     threads: config.get("reviewer", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -130,14 +99,14 @@ rule reviewer:
         time=config.get("reviewer", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("reviewer", {}).get("container", config["default_container"])
-    # conda:
-    #     "../envs/reviewer.yaml"
+    conda:
+        "../envs/reviewer.yaml"
     message:
        "{rule}: Run reviewer on {wildcards.sample}_{wildcards.type}"
     shell:
         "REViewer --reads {input.bam} "
         "--vcf {input.vcf} "
         "--reference {input.ref} "
-        "--catalog {input.cat} "
+        "--catalog  {input.cat} "
         "--locus {params.in_locus} "
-        "--output-prefix {params.prefix}/reviewer/{wildcards.sample}_{wildcards.type} &> {log}"
+        "--output-prefix {params.prefix}/reviewer/{wildcards.sample}_{wildcards.type}/{wildcards.sample}_{wildcards.type} &> {log}"
