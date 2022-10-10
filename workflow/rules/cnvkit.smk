@@ -1,6 +1,3 @@
-# vim: syntax=python tabstop=4 expandtab
-# coding: utf-8
-
 __author__ = "Jonas Almlöf, Martin Rippin"
 __copyright__ = "Copyright 2022, Jonas Almlöf, Martin Rippin"
 __email__ = "jonas.almlof@scilifelab.uu.se, martin.rippin@scilifelab.uu.se"
@@ -13,36 +10,36 @@ rule cnvkit_batch:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
     output:
+        antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
+        bins=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.bintest.cns"),
         regions=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr"),
         segments=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns"),
         segments_called=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns"),
-        bins=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.bintest.cns"),
         target_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.targetcoverage.cnn"),
-        antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
     params:
-        outdir=lambda wildcards, output: os.path.dirname(output[0]),
-        method=config.get("cnvkit_batch", {}).get("method", "hybrid"),
         extra=config.get("cnvkit_batch", {}).get("extra", ""),
+        method=config.get("cnvkit_batch", {}).get("method", "hybrid"),
+        outdir=lambda wildcards, output: os.path.dirname(output[0]),
     log:
-        "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.log",
+        "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns.benchmark.tsv",
             config.get("cnvkit_batch", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_batch", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("cnvkit_batch", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvkit_batch", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("cnvkit_batch", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("cnvkit_batch", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("cnvkit_batch", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_batch", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_batch", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_batch", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvkit.yaml"
     message:
-        "{rule}: Use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
+        "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
     shell:
         "(cnvkit.py batch {input.bam} "
         "-r {input.cnv_reference} "
@@ -58,8 +55,8 @@ rule cnvkit_call:
     output:
         segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.loh.cns"),
     params:
-        TC=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         extra=config.get("cnvkit_call", {}).get("extra", ""),
+        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
     log:
         "cnv_sv/cnvkit_call/{sample}_{type}.loh.cns.log",
     benchmark:
@@ -69,22 +66,22 @@ rule cnvkit_call:
         )
     threads: config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("cnvkit_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_call", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvkit.yaml"
     message:
-        "{rule}: Call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
+        "{rule}: call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
     shell:
         "(cnvkit.py call {input.segment} "
         "-v {input.vcf} "
         "-o {output.segment} "
-        "--purity {params.TC} "
+        "--purity {params.tc} "
         "{params.extra}) &> {log}"
 
 
@@ -105,11 +102,11 @@ rule cnvkit_diagram:
         )
     threads: config.get("cnvkit_diagram", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("cnvkit_diagram", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvkit_diagram", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("cnvkit_diagram", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("cnvkit_diagram", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("cnvkit_diagram", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_diagram", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_diagram", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_diagram", {}).get("container", config["default_container"])
     conda:
@@ -133,28 +130,62 @@ rule cnvkit_scatter:
     params:
         extra=config.get("cnvkit_scatter", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_scatter/{sample}_{type}.log",
+        "cnv_sv/cnvkit_scatter/{sample}_{type}.png.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_scatter/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/cnvkit_scatter/{sample}_{type}.png.benchmark.tsv",
             config.get("cnvkit_scatter", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_scatter", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("cnvkit_scatter", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvkit_scatter", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("cnvkit_scatter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("cnvkit_scatter", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("cnvkit_scatter", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_scatter", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_scatter", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_scatter", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvkit.yaml"
     message:
-        "{rule}: Plot cnvs into cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.png"
+        "{rule}: plot cnvs into cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.png"
     shell:
         "(cnvkit.py scatter {input.segment_regions} "
         "-s {input.segments} "
         "-v {input.vcf} "
         "-o {output.plot} "
         "{params.extra}) &> {log}"
+
+
+rule cnvkit_vcf:
+    input:
+        segment="cnv_sv/cnvkit_call/{sample}_{type}.loh.cns",
+    output:
+        vcf=temp("cnv_sv/cnvkit_vcf/{sample}_{type}.vcf"),
+    params:
+        sample_name="{sample}_{type}",
+        hom_del_limit=config.get("cnvkit_vcf", {}).get("hom_del_limit", 0.5),
+        het_del_limit=config.get("cnvkit_vcf", {}).get("het_del_limit", 1.5),
+        dup_limit=config.get("cnvkit_vcf", {}).get("dup_limit", 2.5),
+    log:
+        "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf.benchmark.tsv",
+            config.get("cnvkit_vcf", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvkit_vcf", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("cnvkit_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_vcf", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_vcf", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_vcf", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_vcf", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("cnvkit_vcf", {}).get("container", config["default_container"])
+    conda:
+        "../envs/cnvkit_vcf.yaml"
+    message:
+        "{rule}: export cnvkit segments into vcf in cnv_sv/cnvkit_vcf/{wildcards.sample}_{wildcards.type}.vcf"
+    script:
+        "../scripts/cnvkit_vcf.py"

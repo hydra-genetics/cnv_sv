@@ -2,85 +2,86 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.0"
+default_container: "docker://hydragenetics/common:0.1.8"
 
 reference:
-  fasta: "reference/HES45.fna"
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
+  fasta: "reference/HES45.fna"
 
 cnvkit_batch:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
   method: "hybrid"
   normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"
 
 cnvkit_call:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_diagram:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_scatter:
-  container: "docker://marrip/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_vcf:
-  container: "docker://hydragenetics/common:0.1.0"
+  container: "docker://hydragenetics/cnvkit:0.9.9"
 
-config_manta_t:
-  container: "docker://marrip/manta:v1.6.0"
-
-config_manta_tn:
-  container: "docker://marrip/manta:v1.6.0"
-
-exomedepth:
+exomedepth_call:
   bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
-  ref_count: "reference/ref_count.txt"
   container: "docker://hydragenetics/exomedepth:1.1.15"
+  ref_count: "reference/ref_count.txt"
 
-gatk_cnv_collect_read_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_collect_read_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-gatk_cnv_denoise_read_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_denoise_read_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
   normal_reference: "reference/twist_DNA_solid.HES45.GATK_cnv.PoN.hdf5"
 
-gatk_cnv_collect_allelic_counts:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_collect_allelic_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
   SNP_interval: "reference/gnomad_SNP_0.001_target.annotated.interval_list"
 
-gatk_cnv_model_segments:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_model_segments:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-gatk_cnv_call_copy_ratio_segments:
-  container: "docker://gmsuppsala/somatic:develop"
+gatk_call_copy_ratio_segments:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-gatk_cnv_vcf:
+gatk_seq_to_vcf:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+pindel_generate_config:
   container: "docker://hydragenetics/common:0.1.0"
 
-generate_pindel_config:
-  container: "docker://hydragenetics/common:0.1.0"
+manta_config_t:
+  container: "docker://hydragenetics/manta:1.6.0"
+
+manta_config_tn:
+  container: "docker://hydragenetics/manta:1.6.0"
 
 manta_run_workflow_t:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
 manta_run_workflow_tn:
-  container: "docker://marrip/manta:v1.6.0"
+  container: "docker://hydragenetics/manta:1.6.0"
 
-picard_update_vcf_sequence_dictionary:
+pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
 
 pindel_call:
-  container: "docker://hydragenetics/pindel:0.2.5b9"
   bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
+  container: "docker://hydragenetics/pindel:0.2.5b9"
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
 
 svdb_merge:
-  container: "docker://hydragenetics/svdb:2.6.0"
   cnv_callers:
     - "cnvkit"
-    - "gatk_cnv"
+    - "gatk"
+    - "pindel"
+  container: "docker://hydragenetics/svdb:2.6.0"
 
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"

@@ -5,3 +5,4 @@ channels:
 dependencies:
   - cnvkit=0.9.9
   - openssl=1.0
+  - python=3.9

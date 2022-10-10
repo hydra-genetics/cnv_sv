@@ -4,7 +4,7 @@ __email__ = "martin.rippin@scilifelab.uu.se, jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule config_manta_tn:
+rule manta_config_tn:
     input:
         bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
         bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
@@ -14,27 +14,27 @@ rule config_manta_tn:
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py"),
     params:
-        extra=config.get("config_manta_tn", {}).get("extra", ""),
+        extra=config.get("manta_config_tn", {}).get("extra", ""),
     log:
-        "cnv_sv/config_manta_tn/{sample}/runWorkflow.py.log",
+        "cnv_sv/manta_config_tn/{sample}/runWorkflow.py.log",
     benchmark:
         repeat(
-            "cnv_sv/config_manta_tn/{sample}/runWorkflow.py.benchmark.tsv",
-            config.get("config_manta_tn", {}).get("benchmark_repeats", 1),
+            "cnv_sv/manta_config_tn/{sample}/runWorkflow.py.benchmark.tsv",
+            config.get("manta_config_tn", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("config_manta_tn", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("manta_config_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("config_manta_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("config_manta_tn", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("config_manta_tn", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("config_manta_tn", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("config_manta_tn", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("manta_config_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("manta_config_tn", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("manta_config_tn", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("manta_config_tn", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("manta_config_tn", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("config_manta_tn", {}).get("container", config["default_container"])
+        config.get("manta_config_tn", {}).get("container", config["default_container"])
     conda:
         "../envs/manta.yaml"
     message:
-        "{rule}: Generate manta runWorkflow.py for {wildcards.sample}"
+        "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
         "configManta.py "
         "--tumorBam={input.bam_t} "
@@ -81,14 +81,14 @@ rule manta_run_workflow_tn:
     conda:
         "../envs/manta.yaml"
     message:
-        "{rule}: Use manta to call sv in {wildcards.sample}"
+        "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
         "{input.scrpt} "
         "-j {threads} "
         "-g unlimited &> {log}"
 
 
-rule config_manta_t:
+rule manta_config_t:
     input:
         bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
         bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
@@ -96,27 +96,27 @@ rule config_manta_t:
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py"),
     params:
-        extra=config.get("config_manta_t", {}).get("extra", ""),
+        extra=config.get("manta_config_t", {}).get("extra", ""),
     log:
-        "cnv_sv/config_manta_t/{sample}/runWorkflow.py.log",
+        "cnv_sv/manta_config_t/{sample}/runWorkflow.py.log",
     benchmark:
         repeat(
-            "cnv_sv/config_manta_t/{sample}/runWorkflow.py.benchmark.tsv",
-            config.get("config_manta_t", {}).get("benchmark_repeats", 1),
+            "cnv_sv/manta_config_t/{sample}/runWorkflow.py.benchmark.tsv",
+            config.get("manta_config_t", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("config_manta_t", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("manta_config_t", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("config_manta_t", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("config_manta_t", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("config_manta_t", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("config_manta_t", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("config_manta_t", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("manta_config_t", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("manta_config_t", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("manta_config_t", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("manta_config_t", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("manta_config_t", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("config_manta_t", {}).get("container", config["default_container"])
+        config.get("manta_config_t", {}).get("container", config["default_container"])
     conda:
         "../envs/manta.yaml"
     message:
-        "{rule}: Generate manta runWorkflow.py for {wildcards.sample}"
+        "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
         "configManta.py "
         "--tumorBam={input.bam_t} "
@@ -156,7 +156,7 @@ rule manta_run_workflow_t:
     conda:
         "../envs/manta.yaml"
     message:
-        "{rule}: Use manta to call sv in {wildcards.sample}"
+        "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
         "{input.scrpt} "
         "-j {threads} "

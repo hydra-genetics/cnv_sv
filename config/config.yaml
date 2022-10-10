@@ -4,7 +4,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://gmsuppsala/somatic:develop"
+default_container: "docker://hydragenetics/common:0.1.8"
 
 exomedepth:
   bedfile: ""
@@ -14,5 +14,5 @@ exomedepth:
   reference_count: ""
   WW25: ""
 
-picard_update_vcf_sequence_dictionary:
+pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"

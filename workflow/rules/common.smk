@@ -34,7 +34,11 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pandas.read_table(config["units"], dtype=str).set_index(["sample", "type", "flowcell", "lane"], drop=False).sort_index()
+units = (
+    pandas.read_table(config["units"], dtype=str)
+    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
+    .sort_index()
+)
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -47,30 +51,15 @@ wildcard_constraints:
 
 def compile_output_list(wildcards):
     files = {
-        "cnv_sv/cnvkit_call": [
-            "loh.cns",
-        ],
-        "cnv_sv/cnvkit_diagram": [
-            "pdf",
-        ],
-        "cnv_sv/cnvkit_scatter": [
-            "png",
-        ],
-        "cnv_sv/cnvkit_vcf": [
-            "vcf",
-        ],
-        "cnv_sv/gatk_cnv_vcf": [
-            "vcf",
-        ],
-        "cnv_sv/svdb_merge": [
-            "merged.vcf",
-        ],
-        "cnv_sv/svdb_query": [
-            "svdb_query.vcf",
-        ],
-        "cnv_sv/exomedepth": [
-            "SV.txt",
-        ],
+        "cnv_sv/cnvkit_call": ["loh.cns"],
+        "cnv_sv/cnvkit_diagram": ["pdf"],
+        "cnv_sv/cnvkit_scatter": ["png"],
+        "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/gatk_vcf": ["vcf"],
+        "cnv_sv/svdb_merge": ["merged.vcf"],
+        "cnv_sv/svdb_query": ["svdb_query.vcf"],
+        "cnv_sv/exomedepth_call": ["SV.txt"],
+        "cnv_sv/pindel_vcf": ["vcf"],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
@@ -79,7 +68,6 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
         for suffix in files[prefix]
     ]
-    output_files.append(["cnv_sv/pindel/%s.vcf" % (sample) for sample in get_samples(samples)])
     output_files.append(
         ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
