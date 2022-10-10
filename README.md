@@ -47,13 +47,24 @@ The following information need to be added to these files:
 | barcode | sequence library barcode/index, connect forward and reverse indices by `+`, e.g. `ATGC+ATGC` |
 | fastq1/2 | absolute path to forward and reverse reads |
 | adapter | adapter sequences to be trimmed, separated by comma |
-## :white_check_mark: Testing
 
 ### Reference data
 
 A reference .fasta-file should be specified in config.yaml in the section reference and fasta. In addition,
 the file should be indexed using samtools faidx and the path of the resulting file added to the stanza fai.
 A bed file containing the covered regions shall be added to design_bed.
+
+### Panel of normals (PoN) and read count 
+
+PoN must be configured to be able to run CNVkit and gatk CNV, workflows for this can be found at [hydra-genetics/references](
+https://github.com/hydra-genetics/references). Instructions for the tools can be found at.
+ * [CNVkit](https://cnvkit.readthedocs.io/en/stable/quickstart.html?highlight=panel%20of%20normal#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios)
+ * [GATK CNV](https://gatk.broadinstitute.org/hc/en-us/articles/360035531092--How-to-part-I-Sensitively-detect-copy-ratio-alterations-and-allelic-segments#2)
+
+For exomdepth read count data must be generated. more information can be found at [ExomeDepth repo](https://github.com/vplagnol/ExomeDepth/blob/80da0cb76d6a9a0ad4c422ea5a9ff3b82f9f6279/vignette/vignette.Rnw#L114)
+
+### VCF used to calculate variant allele frequencies
+Could be a gnomeAD vcf file filtered on population allele frequences above 0.001
 
 ## :white_check_mark: Testing
 
@@ -99,9 +110,9 @@ The following output files should be targeted via another rule:
 | File | Description |
 |---|---|
 | `cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf` | vcf with merged CNV and SV |
-| `cnv_sv/{caller}_VCF/{sample}_{type}.vcf` | vcf file for each caller |
-| `cnv_sv/exomedepth_ed_filter/{sample}_{type}.SV.filter.txt` | filtered cnv calls from exomedepth |
-| `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz´ | vcf file with CNV and SV calls from Manta |
+| `cnv_sv/{caller}_vcf/{sample}_{type}.vcf` | vcf file for each caller |
+| `cnv_sv/exomedepth/{sample}_{type}.SV.txt` | cnv calls from exomedepth |
+| `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
 
 ## :judge: Rule Graph
 
