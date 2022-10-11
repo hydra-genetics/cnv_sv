@@ -6,6 +6,9 @@ units: "units.tsv"
 
 default_container: "docker://gmsuppsala/somatic:develop"
 
+cnvpytor:
+  container: "docker://kristinebilgrav/cnvpytor"
+
 expansionhunter:
     container: "docker://hydragenetics/expansionhunter:5.0.0"
 
@@ -19,3 +22,6 @@ exomedepth:
 
 picard_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
+
+tiddit:
+  constraints: "docker://jemten/tiddit"

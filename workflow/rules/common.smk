@@ -81,6 +81,9 @@ def compile_output_list(wildcards):
         "cnv_sv/expansionhunter": [
             "vcf",
         ],
+        "cnv_sv/cnvpytor": [
+            "pytor",
+        ],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
