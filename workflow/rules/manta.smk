@@ -161,3 +161,78 @@ rule manta_run_workflow_t:
         "{input.scrpt} "
         "-j {threads} "
         "-g unlimited &> {log}"
+
+
+rule config_manta_n:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_N.bam",
+        bai="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        ref=config["reference"]["fasta"],
+    output:
+        scrpt=temp("cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py"),
+    params:
+        extra=config.get("config_manta_n", {}).get("extra", ""),
+    log:
+        "cnv_sv/config_manta_n/{sample}/runWorkflow.py.log",
+    benchmark:
+        repeat(
+            "cnv_sv/config_manta_n/{sample}/runWorkflow.py.benchmark.tsv",
+            config.get("config_manta_n", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("config_manta_n", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("config_manta_n", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("config_manta_n", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("config_manta_n", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("config_manta_n", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("config_manta_n", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("config_manta_n", {}).get("container", config["default_container"])
+    conda:
+        "../envs/manta.yaml"
+    message:
+        "{rule}: Generate manta runWorkflow.py for {wildcards.sample}"
+    shell:
+        "configManta.py "
+        "--bam={input.bam} "
+        "--referenceFasta={input.ref} "
+        "{params.extra} "
+        "--runDir=cnv_sv/manta_run_workflow_n/{wildcards.sample} &> {log}"
+
+
+rule manta_run_workflow_n:
+    input:
+        ref=config["reference"]["fasta"],
+        scrpt="cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py",
+    output:
+        cand_si_vcf=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSmallIndels.vcf.gz"),
+        cand_si_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSmallIndels.vcf.gz.tbi"),
+        cand_sv_vcf=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz"),
+        cand_sv_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz.tbi"),
+        tum_sv_vcf=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/tumorSV.vcf.gz"),
+        tum_sv_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/tumorSV.vcf.gz.tbi"),
+        wrk_dir=temp(directory("cnv_sv/manta_run_workflow_n/{sample}/workspace")),
+    log:
+        "cnv_sv/manta_run_workflow_n/{sample}/manta_n.log",
+    benchmark:
+        repeat(
+            "cnv_sv/manta_run_workflow_n/{sample}/manta_n.benchmark.tsv",
+            config.get("manta_run_workflow_n", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("manta_run_workflow_n", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("manta_run_workflow_n", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("manta_run_workflow_n", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("manta_run_workflow_n", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("manta_run_workflow_n", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("manta_run_workflow_n", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("manta_run_workflow_n", {}).get("container", config["default_container"])
+    conda:
+        "../envs/manta.yaml"
+    message:
+        "{rule}: Use manta to call sv in {wildcards.sample}"
+    shell:
+        "{input.scrpt} "
+        "-j {threads} "
+        "-g unlimited &> {log}"
