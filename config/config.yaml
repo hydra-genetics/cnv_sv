@@ -10,7 +10,8 @@ cnvpytor:
   container: "docker://kristinebilgrav/cnvpytor"
 
 expansionhunter:
-    container: "docker://hydragenetics/expansionhunter:5.0.0"
+  container: "docker://hydragenetics/expansionhunter:5.0.0"
+  variant_catalog: ""/beegfs-storage/projects/wp4/nobackup/WGS_utveckling/expansionhunter/padraic_testing/RepeatCatalogs-1.0.0/hg38/variant_catalog.json"
 
 exomedepth:
   bedfile: ""
