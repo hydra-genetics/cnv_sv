@@ -82,7 +82,7 @@ def compile_output_list(wildcards):
             "vcf",
         ],
         "cnv_sv/cnvpytor": [
-            "pytor",
+            "vcf",
         ],
         "cnv_sv/tiddit": [
             "vcf",
