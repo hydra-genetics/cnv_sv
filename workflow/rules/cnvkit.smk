@@ -184,7 +184,7 @@ rule cnvkit_vcf:
     container:
         config.get("cnvkit_vcf", {}).get("container", config["default_container"])
     conda:
-        "../envs/cnvkit_vcf.yaml"
+        "../envs/cnvkit.yaml"
     message:
         "{rule}: export cnvkit segments into vcf in cnv_sv/cnvkit_vcf/{wildcards.sample}_{wildcards.type}.vcf"
     script:
