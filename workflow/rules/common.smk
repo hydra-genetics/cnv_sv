@@ -84,6 +84,9 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvpytor": [
             "pytor",
         ],
+        "cnv_sv/tiddit": [
+            "vcf",
+        ],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)

@@ -17,6 +17,7 @@ include: "rules/generate_pindel_config.smk"
 include: "rules/manta.smk"
 include: "rules/pindel.smk"
 include: "rules/svdb.smk"
+include: "rules/tiddit.smk"
 
 
 rule all:
