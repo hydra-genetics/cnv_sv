@@ -7,7 +7,8 @@ units: "units.tsv"
 default_container: "docker://gmsuppsala/somatic:develop"
 
 cnvpytor:
-  container: "docker://kristinebilgrav/cnvpytor"
+  container: "/projects/wp3/nobackup/WGS/WGS_pilot_CGU202111/UJ-3091/cnvpytor_latest.sif "
+#  container: "docker://kristinebilgrav/cnvpytor"
 
 expansionhunter:
     container: "docker://hydragenetics/expansionhunter:5.0.0"
