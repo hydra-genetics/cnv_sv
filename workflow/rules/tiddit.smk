@@ -4,11 +4,11 @@ __email__ = "jessika.nordin@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule tiddit_readdepth:
+rule tiddit:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     output:
-        dir=directory("cnv_sv/tiddit/{sample}"),
+        dir=directory("cnv_sv/tiddit/{sample}_{type}"),
         vcf="cnv_sv/tiddit/{sample}_{type}.vcf"
     params:
         extra=config.get("tiddit", {}).get("extra", ""),
