@@ -189,3 +189,38 @@ rule cnvkit_vcf:
         "{rule}: export cnvkit segments into vcf in cnv_sv/cnvkit_vcf/{wildcards.sample}_{wildcards.type}.vcf"
     script:
         "../scripts/cnvkit_vcf.py"
+
+
+rule cnvkit_seg:
+    input:
+        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+    output:
+        seg=temp("cnv_sv/cnvkit_seg/{sample}_{type}.seg"),
+    params:
+        extra=config.get("cnvkit_seg", {}).get("extra", ""),
+    log:
+        "cnv_sv/cnvkit_seg/{sample}_{type}.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvkit_seg/{sample}_{type}.benchmark.tsv",
+            config.get("cnvkit_seg", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvkit_seg", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("cnvkit_seg", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_seg", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("cnvkit_seg", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_seg", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_seg", {}).get("partition", config["default_resources"]["partition"]),
+    container:
+        config.get("cnvkit_seg", {}).get("container", config["default_container"])
+    conda:
+        "../envs/cnvkit.yaml"
+    message:
+        "{rule}: export cnvkit segments into seg in cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.seg"
+    shell:
+        "(cnvkit.py export seg "
+        "{input.segments} "
+        "--enumerate-chroms "
+        "-o {output.seg} "
+        "{params.extra}) &> {log}"
