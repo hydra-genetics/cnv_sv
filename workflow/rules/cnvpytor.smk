@@ -7,15 +7,15 @@ __license__ = "GPL-3"
 rule cnvpytor_readdepth:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        vcf="parabricks/pbrun_deepvariant/{sample}.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",
     output:
-        pytor=temp("cnv_sv/cnvpytor/{sample}.pytor"),
+        pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor"),
     params:
         extra=config.get("cnvpytor", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvpytor/{sample}_rd.log"
+        "cnv_sv/cnvpytor/{sample}_{type}_rd.log"
     benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_rd.output.benchmark.tsv",
+        repeat("cnv_sv/cnvpytor/{sample}_{type}_rd.output.benchmark.tsv",
         config.get("cnvpytor", {}).get("benchmark_repeats", 1))
     threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -35,7 +35,7 @@ rule cnvpytor_readdepth:
         cnvpytor -root {output.pytor} -his 1000 10000 100000 &&
         cnvpytor -root {output.pytor} -partition 1000 10000 100000 &&
         cnvpytor -root {output.pytor} -call 1000 10000 100000 &&
-        cnvpytor -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_N &&
+        cnvpytor -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_{wildcars.type} &&
         cnvpytor -root {output.pytor} -mask_snps &&
         cnvpytor -root {output.pytor} -baf 1000 10000 100000 &&
         cnvpytor -root {output.pytor} -call combined 1000 10000 100000
@@ -46,16 +46,16 @@ rule cnvpytor_readdepth:
 
 rule cnvpytor_filter:
     input:
-        pytor=temp("cnv_sv/cnvpytor/{sample}.pytor")
+        pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor")
     output:
-        vcf="cnv_sv/cnvpytor/{sample}.vcf",
-        filtvcf="cnv_sv/cnvpytor/{sample}_filtered.vcf",
+        vcf="cnv_sv/cnvpytor/{sample}_{type}.vcf",
+        filtvcf="cnv_sv/cnvpytor/{sample}_{type}_filtered.vcf",
     params:
         extra=config.get("cnvpytor", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvpytor/{sample}_filter.log"
+        "cnv_sv/cnvpytor/{sample}_{type}_filter.log"
     benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_filter.output.benchmark.tsv",
+        repeat("cnv_sv/cnvpytor/{sample}_{type}_filter.output.benchmark.tsv",
         config.get("cnvpytor", {}).get("benchmark_repeats", 1))
     threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -69,7 +69,7 @@ rule cnvpytor_filter:
     conda:
         "../envs/cnvpytor.yaml"
     message:
-       "{rule}: Filter cnvpytor calls for {wildcards.sample}"
+       "{rule}: Filter cnvpytor calls for {wildcards.sample}_{wildcards.type}"
     shell:
         """singularity run cnvpytor_latest.sif cnvpytor -root {input.pytor} -view 1000 <<ENDL
         set print_filename {output.vcf}
