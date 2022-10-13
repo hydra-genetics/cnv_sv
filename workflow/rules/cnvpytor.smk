@@ -83,46 +83,10 @@ rule cnvpytor_filter:
         ENDL &> {log}"""
 
 
-rule cnvpytor_annotate:
-    input:
-        xls="cnv_sv/cnvpytor/{sample}.xls",
-        vcf="cnv_sv/cnvpytor/{sample}.vcf",
-    output:
-        tsv="cnv_sv/cnvpytor/{sample}.tsv",
-    params:
-        extra=config.get("cnvpytor", {}).get("extra", ""),
-    log:
-        "cnv_sv/cnvpytor/{sample}_annotate.log"
-    benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_annotate.output.benchmark.tsv",
-        config.get("cnvpytor", {}).get("benchmark_repeats", 1))
-    threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("cnvpytor", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvpytor", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvpytor", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvpytor", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvpytor.yaml"
-    message:
-       "{rule}: Annotate cnvpytor calls for {wildcards.sample}"
-    shell:
-        """cnvpytor -root {input.pytor} -view 100000 &&
-        set Q0_range 0 0.5 &&
-        set size_range 100000 inf &&
-        set print_filename {output.tsv} &&
-        set annotate &&
-        print calls &&
-        &> {log}"""
-
-
 rule cnvpytor_plot:
     input:
         tsv="cnv_sv/cnvpytor/{sample}.tsv",
-        pytor=temp("cnv_sv/cnvpytor/{sample}.pytor")
+        pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
     output:
         tsv="cnv_sv/cnvpytor/{sample}.png",
     params:
