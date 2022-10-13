@@ -46,7 +46,7 @@ rule cnvpytor_readdepth:
 
 rule cnvpytor_filter:
     input:
-        pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor")
+        pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
     output:
         vcf="cnv_sv/cnvpytor/{sample}_{type}.vcf",
         filtvcf="cnv_sv/cnvpytor/{sample}_{type}_filtered.vcf",
