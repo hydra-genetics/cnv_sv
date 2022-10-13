@@ -37,7 +37,9 @@ rule cnvpytor_readdepth:
         cnvpytor -root {output.pytor} -call 1000 10000 100000 &&
         cnvpytor -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_N &&
         cnvpytor -root {output.pytor} -mask_snps &&
-        cnvpytor -root {output.pytor} -baf 10000 100000 &> {log}"""
+        cnvpytor -root {output.pytor} -baf 1000 10000 100000 &&
+        cnvpytor -root {output.pytor} -call combined 1000 10000 100000
+        &> {log}"""
 
 # Joint segmentation & caller
 # cnvpytor -root file.pytor -call combined 10000
@@ -46,8 +48,8 @@ rule cnvpytor_filter:
     input:
         pytor=temp("cnv_sv/cnvpytor/{sample}.pytor")
     output:
-        xls="cnv_sv/cnvpytor/{sample}.xls",
         vcf="cnv_sv/cnvpytor/{sample}.vcf",
+        filtvcf="cnv_sv/cnvpytor/{sample}_filtered.vcf",
     params:
         extra=config.get("cnvpytor", {}).get("extra", ""),
     log:
@@ -69,17 +71,17 @@ rule cnvpytor_filter:
     message:
        "{rule}: Filter cnvpytor calls for {wildcards.sample}"
     shell:
-        """cnvpytor -root {input.pytor} -view 100000  &&
-        print calls &&
-        set Q0_range 0 0.5 &&
-        set size_range 100000 inf &&
-        print calls &&
-        set p_range 0 0.00001 &&
-        set print_filename {output.xls} &&
-        print calls &&
-        set print_filename {output.vcf} &&
-        print calls &&
-        &> {log}"""
+        """singularity run cnvpytor_latest.sif cnvpytor -root {input.pytor} -view 1000 <<ENDL
+        set print_filename {output.vcf}
+        print calls
+        set Q0_range 0 0.5
+        set p_range 0 0.01
+        set pN_range 0 0.05
+        set dG_range 100000 inf
+        set print_filename {output.filtvcf}
+        print calls
+        ENDL &> {log}"""
+
 
 rule cnvpytor_annotate:
     input:
