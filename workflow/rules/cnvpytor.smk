@@ -38,9 +38,7 @@ rule cnvpytor_readdepth:
         cnvpytor -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_{wildcards.type} &&
         cnvpytor -root {output.pytor} -mask_snps &&
         cnvpytor -root {output.pytor} -baf 1000 10000 100000 &&
-        cnvpytor -root {output.pytor} -call combined 1000 &&
-        cnvpytor -root {output.pytor} -call combined 10000 &&
-        cnvpytor -root {output.pytor} -call combined 100000 &&
+        cnvpytor -root {output.pytor} -call combined 1000 10000 100000
         &> {log}"""
 
 # Joint segmentation & caller
