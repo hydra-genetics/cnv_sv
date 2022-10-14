@@ -2,10 +2,10 @@
 
 #### Snakemake module containing steps to call copy number variants and structural variants
 
-![Lint](https://github.com/hydra-genetics/cnv_sv/actions/workflows/lint.yaml/badge.svg?branch=develop)
-![Snakefmt](https://github.com/hydra-genetics/cnv_sv/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
-![snakemake dry run](https://github.com/hydra-genetics/cnv_sv/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=develop)
-![integration test](https://github.com/hydra-genetics/cnv_sv/actions/workflows/integration.yaml/badge.svg?branch=develop)
+![Lint](https://github.com/hydra-genetics/cnv_sv/actions/workflows/lint.yaml/badge.svg?branch=master)
+![Snakefmt](https://github.com/hydra-genetics/cnv_sv/actions/workflows/snakefmt.yaml/badge.svg?branch=master)
+![snakemake dry run](https://github.com/hydra-genetics/cnv_sv/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=master)
+![integration test](https://github.com/hydra-genetics/cnv_sv/actions/workflows/integration.yaml/badge.svg?branch=master)
 
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
