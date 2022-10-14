@@ -1,8 +1,18 @@
 ---
 
- resources: "resources.yaml"
- samples: "samples.tsv"
- units: "units.tsv"
+resources: "resources.yaml"
+samples: "samples.tsv"
+units: "units.tsv"
 
- tools:
-   common: "docker://hydra/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.1.8"
+
+exomedepth:
+  bedfile: ""
+  conifer: ""
+  container: ""
+  ED_common: ""
+  reference_count: ""
+  WW25: ""
+
+pindel_update_vcf_sequence_dictionary:
+  container: "docker://hydragenetics/picard:2.25.0"
