@@ -80,7 +80,7 @@ rule cnvpytor_filter:
         set dG_range 100000 inf
         set print_filename {output.filtvcf}
         print calls
-        ENDL &> {log}"""
+        ENDL"""
 
 
 rule cnvpytor_plot:
