@@ -199,10 +199,10 @@ rule cnvkit_seg:
     params:
         extra=config.get("cnvkit_seg", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_seg/{sample}_{type}.log",
+        "cnv_sv/cnvkit_seg/{sample}_{type}.seg.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_seg/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/cnvkit_seg/{sample}_{type}.seg.benchmark.tsv",
             config.get("cnvkit_seg", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_seg", {}).get("threads", config["default_resources"]["threads"])
