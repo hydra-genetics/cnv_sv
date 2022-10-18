@@ -115,6 +115,7 @@ def compile_output_list(wildcards):
             f"cnv_sv/cnvkit_diagram/{sample}_{unit_type}.pdf",
             f"cnv_sv/cnvkit_scatter/{sample}_{unit_type}.png",
             f"cnv_sv/cnvkit_vcf/{sample}_{unit_type}.vcf",
+            f"cnv_sv/cnvkit_seg/{sample}_{unit_type}.seg",
             f"cnv_sv/gatk_vcf/{sample}_{unit_type}.vcf",
             f"cnv_sv/svdb_merge/{sample}_{unit_type}.merged.vcf",
             f"cnv_sv/svdb_query/{sample}_{unit_type}.svdb_query.vcf",
