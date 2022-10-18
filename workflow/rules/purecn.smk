@@ -17,7 +17,7 @@ rule purecn_coverage:
                     "_coverage_loess.txt.gz",
                     "_coverage_loess.png",
                     "_coverage_loess_qc.txt",
-                ]
+                ],
             )
         ),
     params:
@@ -71,7 +71,7 @@ rule purecn:
                     "_local_optima.pdf",
                     "_variants.csv",
                     "_loh.csv",
-                ]
+                ],
             )
         ),
     params:

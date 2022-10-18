@@ -49,10 +49,7 @@ wildcard_constraints:
 
 
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
-    inputs = {
-        k: v for k, v in config.get("purecn", {}).items()
-        if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]
-    }
+    inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":
@@ -60,24 +57,25 @@ def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
             {
                 "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_T_coverage_loess.txt.gz",
                 "intervals": config.get("purecn", {}).get("intervals"),
-                "normaldb": config.get("purecn", {}).get("normaldb")
+                "normaldb": config.get("purecn", {}).get("normaldb"),
             }
         )
     elif segmentation_method == "GATK4":
         inputs.update(
             {
                 "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_T.counts.hdf5",
-                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_T.clean.modelFinal.seg", 
+                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_T.clean.modelFinal.seg",
                 "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_T.clean.denoisedCR.tsv",
             }
         )
     elif segmentation_method == "cnvkit":
         inputs.update(
-            {   
-                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_T.cnr", 
+            {
+                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_T.cnr",
                 "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_T.seg",
             }
         )
+
     return inputs
 
 
@@ -101,13 +99,13 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
             f" --parallel --cores={threads}" if threads > 1 else "",
         ]
     )
-    
+
     return extra
 
 
 def compile_output_list(wildcards):
     output_files = {
-        path 
+        path
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         for path in [
