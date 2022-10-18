@@ -405,6 +405,7 @@ properties:
           required:
             - genome
             - segmentation_method
+            - fun_segmentation
             - interval_padding
             - normaldb
             - intervals
@@ -431,6 +432,7 @@ properties:
         required:
           - genome
           - segmentation_method
+          - fun_segmentation
           - interval_padding
       
 
