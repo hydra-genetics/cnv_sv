@@ -32,11 +32,11 @@ rule purecn_coverage:
         )
     threads: config.get("purecn_coverage", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("purecn_coverage", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("purecn_coverage", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("purecn_coverage", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("purecn_coverage", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("purecn_coverage", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("purecn_coverage", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("purecn_coverage", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_coverage", {}).get("container", config["default_container"])
     conda:
@@ -88,11 +88,11 @@ rule purecn:
         )
     threads: config.get("purecn", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        threads=config.get("purecn", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("purecn", {}).get("time", config["default_resources"]["time"]),
         mem_mb=config.get("purecn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
         mem_per_cpu=config.get("purecn", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("purecn", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("purecn", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("purecn", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn", {}).get("container", config["default_container"])
     conda:
