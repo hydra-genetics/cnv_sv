@@ -121,17 +121,8 @@ def compile_output_list(wildcards):
             f"cnv_sv/exomedepth_call/{sample}_{unit_type}.SV.txt",
             f"cnv_sv/pindel_vcf/{sample}.vcf",
             f"cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz",
-            f"cnv_sv/purecn_coverage{sample}_{unit_type}_coverage.txt.gz",
             f"cnv_sv/purecn_coverage{sample}_{unit_type}_coverage_loess.txt.gz",
-            f"cnv_sv/purecn_coverage{sample}_{unit_type}_coverage_loess.png",
-            f"cnv_sv/purecn_coverage{sample}_{unit_type}_coverage_loess_qc.txt",
             f"cnv_sv/purecn/{sample}_T.csv",
-            f"cnv_sv/purecn/{sample}_T.rds",
-            f"cnv_sv/purecn/{sample}_T_dnacopy.seg",
-            f"cnv_sv/purecn/{sample}_T_chromosomes.pdf",
-            f"cnv_sv/purecn/{sample}_T_segmentation.pdf",
-            f"cnv_sv/purecn/{sample}_T_local_optima.pdf",
-            f"cnv_sv/purecn/{sample}_T_loh.csv",
         ]
     }
 
