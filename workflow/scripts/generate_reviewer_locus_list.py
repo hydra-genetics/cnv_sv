@@ -18,7 +18,7 @@ def get_vcf_locus_list(vcf, catalog_list):
                 if locus_id not in locus_list:
                     locus_list.append(locus_id)
 
-    # filter out any loci that have str0 as alt allele as reviewer cannot throw and error for them
+    # filter out any loci that have str0 as alt allele, as reviewer throws an error for them
     locus_list = [loc for loc in locus_list if loc not in str0_loci]
     print(locus_list)
     return locus_list
