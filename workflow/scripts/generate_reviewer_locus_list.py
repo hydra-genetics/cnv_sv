@@ -1,6 +1,5 @@
 from pysam import VariantFile
 import json
-import sys
 
 def get_vcf_locus_list(vcf, catalog_list):
     locus_list = []
