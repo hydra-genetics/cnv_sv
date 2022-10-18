@@ -17,7 +17,7 @@ rule expansionhunter:
         bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.bam"),
     params:
         prefix = lambda wildcards, output: os.path.split(output.vcf)[0],
-        sex = lambda wildards, input: get_peddy_sex(input.sex),
+        sex = lambda wildards, input: get_peddy_sex(wildards,input.sex),
         extra=config.get("expansionhunter", {}).get("extra", ""),
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log"
@@ -50,6 +50,7 @@ rule expansionhunter:
 rule generate_reviewer_locus_list:
     input:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
+        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
     output:
         txt=temp("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt")
     log:
