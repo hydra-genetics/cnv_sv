@@ -71,7 +71,7 @@ rule cnvpytor_filter:
     message:
        "{rule}: Filter cnvpytor calls for {wildcards.sample}_{wildcards.type}"
     shell:
-        """singularity run cnvpytor_latest.sif cnvpytor -root {input.pytor} -view 1000 <<ENDL
+        """singularity run cnvpytor_latest.sif cnvpytor -root {input.pytor} -view 1000 <<'    ENDL'
         set print_filename {output.vcf}
         print calls
         set Q0_range 0 0.5
@@ -80,7 +80,8 @@ rule cnvpytor_filter:
         set dG_range 100000 inf
         set print_filename {output.filtvcf}
         print calls
-        ENDL"""
+        ENDL
+        &> {log}"""
 
 
 ## Might be added later, code not tested ##
