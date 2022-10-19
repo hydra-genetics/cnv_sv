@@ -118,9 +118,9 @@ def compile_output_list(wildcards):
             f"cnv_sv/svdb_merge/{sample}_{unit_type}.merged.vcf",
             f"cnv_sv/svdb_query/{sample}_{unit_type}.svdb_query.vcf",
             f"cnv_sv/exomedepth_call/{sample}_{unit_type}.SV.txt",
-            f"cnv_sv/pindel_vcf/{sample}.vcf",
+            f"cnv_sv/pindel_vcf/{sample}_{unit_type}.vcf",
             f"cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz",
-            f"cnv_sv/purecn_coverage{sample}_{unit_type}_coverage_loess.txt.gz",
+            f"cnv_sv/purecn_coverage/{sample}_{unit_type}_coverage_loess.txt.gz",
             f"cnv_sv/purecn/{sample}_T.csv",
         ]
     }
