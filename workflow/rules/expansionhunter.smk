@@ -1,4 +1,3 @@
-
 __author__ = "Padraic Corcoran"
 __copyright__ = "Copyright 2022, Padraic Corcoran"
 __email__ = "padraic.corcoran@scilifelab.uu.se"
@@ -10,12 +9,14 @@ rule expansionhunter:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         ref=config.get("reference", {}).get("fasta", ""),
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        sex="qc/peddy/peddy.sex_check.csv"
     output:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
         json="cnv_sv/expansionhunter/{sample}_{type}.json",
         bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.bam"),
     params:
         prefix = lambda wildcards, output: os.path.split(output.vcf)[0],
+        sex = lambda wildards, input: get_peddy_sex(wildards,input.sex),
         extra=config.get("expansionhunter", {}).get("extra", ""),
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log"
@@ -31,21 +32,24 @@ rule expansionhunter:
         time=config.get("expansionhunter", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("expansionhunter", {}).get("container", config["default_container"])
-    # conda:
-    #     "../envs/expansionhunter.yaml"
+    conda:
+        "../envs/expansionhunter.yaml"
     message:
        "{rule}: Run ExpansionHunter on {wildcards.sample}_{wildcards.type}"
     shell:
         "ExpansionHunter --reads {input.bam} "
         "--reference {input.ref} "
         "--threads {threads} "
+        "--sex {params.sex} "
         "--variant-catalog {input.cat} "
+        "{params.extra} "
         "--output-prefix {params.prefix}/{wildcards.sample}_{wildcards.type} &> {log}"
 
 
 rule generate_reviewer_locus_list:
     input:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
+        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
     output:
         txt=temp("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt")
     log:
