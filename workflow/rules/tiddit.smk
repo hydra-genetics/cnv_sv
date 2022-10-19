@@ -8,10 +8,10 @@ rule tiddit:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     output:
-        out="cnv_sv/tiddit/",
         vcf="cnv_sv/tiddit/{sample}_{type}.vcf"
     params:
         extra=config.get("tiddit", {}).get("extra", ""),
+        outdir=lambda wildcards, output: os.path.dirname(output[0]),
     log:
         "cnv_sv/tiddit/{sample}_{type}.log"
     benchmark:
@@ -31,4 +31,4 @@ rule tiddit:
     message:
        "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
     shell:
-        "TIDDIT.py --sv --bam {input.bam} -o {output.dir} &> {log}"""
+        "TIDDIT.py --sv --bam {input.bam} -o {params.outdir} &> {log}"""
