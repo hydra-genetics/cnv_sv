@@ -31,4 +31,4 @@ rule tiddit:
     message:
        "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
     shell:
-        "python TIDDIT.py --sv --bam {input.bam} -o {output.dir} &> {log}"""
+        "TIDDIT.py --sv --bam {input.bam} -o {output.dir} &> {log}"""
