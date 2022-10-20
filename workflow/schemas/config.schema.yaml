@@ -311,9 +311,16 @@ properties:
     description: parameters for pindel_call
     type: object
     properties:
-      bedfile:
+      include_bed:
         type: string
-        description: bedfile to restrict pindel call
+        description: >
+          bedfile of regions to restrict calling to, incompatible
+          with `exclude_bed`
+      exclude_bed:
+        type: string
+        description: >
+          bedfile of regions to exclude from calling, incompatible
+          with `include_bed`
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated

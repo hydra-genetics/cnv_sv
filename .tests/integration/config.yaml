@@ -70,7 +70,7 @@ pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
 
 pindel_call:
-  bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
+  include_bed: "reference/twist_DNA_solid.chr1.annotated.bed"
   container: "docker://hydragenetics/pindel:0.2.5b9"
 
 pindel2vcf:
