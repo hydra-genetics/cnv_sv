@@ -13,7 +13,7 @@ rule tiddit:
         extra=config.get("tiddit", {}).get("extra", ""),
         outprefix="cnv_sv/tiddit/{sample}_{type}",
     log:
-        "cnv_sv/tiddit/{sample}_{type}.vcf.log"
+        "cnv_sv/tiddit/{sample}_{type}.vcf.log",
     benchmark:
         repeat("cnv_sv/tiddit/{sample}_{type}.vcf.benchmark.tsv", config.get("tiddit", {}).get("benchmark_repeats", 1))
     threads: config.get("tiddit", {}).get("threads", config["default_resources"]["threads"])
