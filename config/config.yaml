@@ -11,7 +11,7 @@ cnvpytor:
 
 config_manta_t:
   container: "docker://hydragenetics/manta:1.6.0"
-  extra: "--exome --callRegions /projects/wp1/nobackup/ngs/utveckling/Twist_DNA_DATA/bed/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.210608.bed.gz"
+  extra: ""
 
 expansionhunter:
   container: "docker://hydragenetics/expansionhunter:5.0.0"
