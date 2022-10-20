@@ -8,7 +8,7 @@ rule tiddit:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     output:
-        vcf="cnv_sv/tiddit/{sample}_{type}.vcf"
+        vcf="cnv_sv/tiddit/{sample}_{type}.vcf",
     params:
         extra=config.get("tiddit", {}).get("extra", ""),
         outprefix="cnv_sv/tiddit/{sample}_{type}",
