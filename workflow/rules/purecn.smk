@@ -40,7 +40,7 @@ rule purecn_coverage:
     container:
         config.get("purecn_coverage", {}).get("container", config["default_container"])
     conda:
-        "../envs/purecn_coverage.yaml"
+        "../envs/purecn.yaml"
     message:
         "{rule}: Calculate coverage for {wildcards.sample}"
     shell:
