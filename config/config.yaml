@@ -9,7 +9,7 @@ default_container: "docker://gmsuppsala/somatic:develop"
 cnvpytor:
   container: "docker://kristinebilgrav/cnvpytor"
 
-config_manta_t:
+config_manta_n:
   container: "docker://hydragenetics/manta:1.6.0"
   extra: ""
 
