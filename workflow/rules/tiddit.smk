@@ -28,7 +28,7 @@ rule tiddit:
     conda:
         "../envs/tiddit.yaml"
     message:
-       "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
+        "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
     shell:
         "TIDDIT.py "
         "--sv "
