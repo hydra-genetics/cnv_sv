@@ -209,8 +209,6 @@ rule manta_run_workflow_n:
         cand_si_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSmallIndels.vcf.gz.tbi"),
         cand_sv_vcf=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz"),
         cand_sv_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz.tbi"),
-        tum_sv_vcf=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/tumorSV.vcf.gz"),
-        tum_sv_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/tumorSV.vcf.gz.tbi"),
         wrk_dir=temp(directory("cnv_sv/manta_run_workflow_n/{sample}/workspace")),
     log:
         "cnv_sv/manta_run_workflow_n/{sample}/manta_n.log",

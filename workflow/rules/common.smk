@@ -112,7 +112,7 @@ def compile_output_list(wildcards):
         ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
     output_files.append(
-        ["cnv_sv/manta_run_workflow_n/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+        ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
     output_files += [
         "cnv_sv/expansionhunter/reviewer/%s_%s/" % (sample, unit_type)
