@@ -11,7 +11,7 @@ rule tiddit:
         vcf="cnv_sv/tiddit/{sample}_{type}.vcf"
     params:
         extra=config.get("tiddit", {}).get("extra", ""),
-        outdir="cnv_sv/tiddit/{sample}_{type}",
+        outprefix="cnv_sv/tiddit/{sample}_{type}",
     log:
         "cnv_sv/tiddit/{sample}_{type}.vcf.log"
     benchmark:
