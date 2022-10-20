@@ -21,6 +21,9 @@ exomedepth:
   reference_count: ""
   WW25: ""
 
+manta_run_workflow_n:
+  container: "docker://hydragenetics/manta:1.6.0"
+
 picard_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
 
