@@ -30,4 +30,7 @@ rule tiddit:
     message:
        "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
     shell:
-        "TIDDIT.py --sv --bam {input.bam} -o {params.outdir} &> {log}"
+        "TIDDIT.py "
+        "--sv "
+        "--bam {input.bam} "
+        "-o {params.outprefix} &> {log}"
