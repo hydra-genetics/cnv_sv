@@ -313,14 +313,10 @@ properties:
     properties:
       include_bed:
         type: string
-        description: >
-          bedfile of regions to restrict calling to, incompatible
-          with `exclude_bed`
+        description: bedfile of regions to restrict calling to, incompatible with `exclude_bed`
       exclude_bed:
         type: string
-        description: >
-          bedfile of regions to exclude from calling, incompatible
-          with `include_bed`
+        description: bedfile of regions to exclude from calling, incompatible with `include_bed`
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated
