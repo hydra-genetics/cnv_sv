@@ -16,3 +16,6 @@ exomedepth:
 
 pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
+
+tiddit:
+  container: "shub://J35P312/TIDDIT:latest"
