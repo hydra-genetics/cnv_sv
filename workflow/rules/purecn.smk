@@ -42,7 +42,7 @@ rule purecn_coverage:
     conda:
         "../envs/purecn.yaml"
     message:
-        "{rule}: Calculate coverage for {wildcards.sample}"
+        "{rule}: calculate coverage for {wildcards.sample}"
     shell:
         "(Rscript $PURECN/Coverage.R "
         "--out-dir=cnv_sv/purecn_coverage "

@@ -364,7 +364,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for purecn
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -442,7 +442,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for purecn_coverage
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
