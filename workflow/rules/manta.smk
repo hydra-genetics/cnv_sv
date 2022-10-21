@@ -1,4 +1,4 @@
-__author__ = "Martin Rippin, Jonas Almlöf"
+__author__ = "Martin Rippin, Jonas Almlöf, Jessika Nordin"
 __copyright__ = "Copyright 2021, Martin Rippin, Jonas Almlöf"
 __email__ = "martin.rippin@scilifelab.uu.se, jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
@@ -182,7 +182,7 @@ rule manta_config_n:
     threads: config.get("manta_config_n", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_config_n", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("manta_config_nt", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        mem_per_cpu=config.get("manta_config_n", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("manta_config_n", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_config_n", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_config_n", {}).get("time", config["default_resources"]["time"]),
