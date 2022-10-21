@@ -37,6 +37,10 @@ exomedepth:
   ref_count: "reference/ref_count.txt"
   container: "docker://hydragenetics/exomedepth:1.1.15"
 
+expansionhunter:
+  container: "docker://hydragenetics/expansionhunter:5.0.0"
+  variant_catalog: "reference/variant_catalog.json"
+
 gatk_cnv_collect_read_counts:
   container: "docker://gmsuppsala/somatic:develop"
 
@@ -75,6 +79,9 @@ pindel_call:
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
+
+reviewer:
+  container: "docker://hydragenetics/reviewer:0.2.7"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.6.0"
