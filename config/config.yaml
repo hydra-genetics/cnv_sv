@@ -6,6 +6,10 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
+config_manta_n:
+  container: "docker://hydragenetics/manta:1.6.0"
+  extra: ""
+
 exomedepth:
   bedfile: ""
   conifer: ""
@@ -13,6 +17,9 @@ exomedepth:
   ED_common: ""
   reference_count: ""
   WW25: ""
+
+manta_run_workflow_n:
+  container: "docker://hydragenetics/manta:1.6.0"
 
 pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
