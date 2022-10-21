@@ -1,8 +1,8 @@
-
 __author__ = "Padraic Corcoran"
 __copyright__ = "Copyright 2022, Padraic Corcoran"
 __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
+
 
 rule expansionhunter:
     input:
@@ -10,20 +10,20 @@ rule expansionhunter:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         ref=config.get("reference", {}).get("fasta", ""),
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
-        sex="qc/peddy/peddy.sex_check.csv"
+        sex="qc/peddy/peddy.sex_check.csv",
     output:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
         json="cnv_sv/expansionhunter/{sample}_{type}.json",
         bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.bam"),
     params:
-        prefix = lambda wildcards, output: os.path.split(output.vcf)[0],
-        sex = lambda wildards, input: get_peddy_sex(wildards,input.sex),
+        prefix=lambda wildcards, output: os.path.split(output.vcf)[0],
+        sex=lambda wildards, input: get_peddy_sex(wildards,input.sex),
         extra=config.get("expansionhunter", {}).get("extra", ""),
     log:
-        "cnv_sv/expansionhunter/{sample}_{type}.output.log"
+        "cnv_sv/expansionhunter/{sample}_{type}.output.log",
     benchmark:
         repeat("cnv_sv/expansionhunter/{sample}_{type}.output.benchmark.tsv",
-        config.get("expansionhunter", {}).get("benchmark_repeats", 1))
+        config.get("expansionhunter", {}).get("benchmark_repeats", 1)),
     threads: config.get("expansionhunter", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("expansionhunter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -36,7 +36,7 @@ rule expansionhunter:
     conda:
         "../envs/expansionhunter.yaml"
     message:
-       "{rule}: Run ExpansionHunter on {wildcards.sample}_{wildcards.type}"
+        "{rule}: Run ExpansionHunter on {wildcards.sample}_{wildcards.type}"
     shell:
         "ExpansionHunter --reads {input.bam} "
         "--reference {input.ref} "
@@ -57,7 +57,7 @@ rule generate_reviewer_locus_list:
         "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.log"
     benchmark:
         repeat("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.benchmark.tsv",
-        config.get("generate_reviewer_locus_list", {}).get("benchmark_repeats", 1))
+        config.get("generate_reviewer_locus_list", {}).get("benchmark_repeats", 1)),
     threads: config.get("generate_reviewer_locus_list", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("generate_reviewer_locus_list", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -70,7 +70,7 @@ rule generate_reviewer_locus_list:
     conda:
         "../envs/generate_reviewer_locus_list.yaml"
     message:
-       "{rule}: Generate a locus list for REViewer from cnv_sv/expansionhunter/{wildcards.sample}_{wildcards.type}.vcf"
+        "{rule}: Generate a locus list for REViewer from cnv_sv/expansionhunter/{wildcards.sample}_{wildcards.type}.vcf"
     script:
         "../scripts/generate_reviewer_locus_list.py"
 
@@ -81,7 +81,7 @@ rule reviewer:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
         ref=config.get("reference", {}).get("fasta", ""),
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
-        loci="cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt"
+        loci="cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt",
     output:
         directory("cnv_sv/expansionhunter/reviewer/{sample}_{type}/"),
         "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv",
@@ -91,10 +91,10 @@ rule reviewer:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),
     log:
-        "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.log"
+        "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
         repeat("cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
-        config.get("reviewer", {}).get("benchmark_repeats", 1))
+        config.get("reviewer", {}).get("benchmark_repeats", 1)),
     threads: config.get("reviewer", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("reviewer", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -107,7 +107,7 @@ rule reviewer:
     conda:
         "../envs/reviewer.yaml"
     message:
-       "{rule}: Run reviewer on {wildcards.sample}_{wildcards.type}"
+        "{rule}: Run reviewer on {wildcards.sample}_{wildcards.type}"
     shell:
         "REViewer --reads {input.bam} "
         "--vcf {input.vcf} "
