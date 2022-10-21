@@ -1,18 +1,18 @@
 ---
 
-resources: resources.yaml
-samples: samples.tsv
-units: units.tsv
+resources: "resources.yaml"
+samples: "samples.tsv"
+units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
 exomedepth:
-  ED_common: ""
-  WW25: ""
   bedfile: ""
   conifer: ""
   container: ""
+  ED_common: ""
   reference_count: ""
+  WW25: ""
 
 manta_config_n:
   container: "docker://hydragenetics/manta:1.6.0"
