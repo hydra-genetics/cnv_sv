@@ -6,7 +6,6 @@ __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
-import json
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
