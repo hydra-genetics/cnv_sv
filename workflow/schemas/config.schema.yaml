@@ -382,3 +382,17 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+
+  tiddit:
+    description: parameters for tiddit
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for tiddit
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to tiddit

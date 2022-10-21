@@ -86,3 +86,6 @@ svdb_merge:
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
   db_string: "--db reference/normal_26_svdb_0.8.vcf"
+
+tiddit:
+  container: "shub://J35P312/TIDDIT:latest"

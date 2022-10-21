@@ -60,6 +60,7 @@ def compile_output_list(wildcards):
         "cnv_sv/svdb_query": ["svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
         "cnv_sv/pindel_vcf": ["vcf"],
+        "cnv_sv/tiddit": ["vcf"],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
