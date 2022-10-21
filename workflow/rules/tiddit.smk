@@ -8,7 +8,11 @@ rule tiddit:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
     output:
-        vcf="cnv_sv/tiddit/{sample}_{type}.vcf",
+        bam=temp("cnv_sv/tiddit/{sample}_{type}.sample.bam"),
+        ploidy=temp("cnv_sv/tiddit/{sample}_{type}.ploidy.tab"),
+        signals=temp("cnv_sv/tiddit/{sample}_{type}.signals.tab"),
+        vcf=temp("cnv_sv/tiddit/{sample}_{type}.vcf"),
+        wig=temp("cnv_sv/tiddit/{sample}_{type}.wig"),
     params:
         extra=config.get("tiddit", {}).get("extra", ""),
         outprefix="cnv_sv/tiddit/{sample}_{type}",
