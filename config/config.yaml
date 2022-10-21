@@ -6,10 +6,6 @@ units: units.tsv
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
-config_manta_n:
-  container: "docker://hydragenetics/manta:1.6.0"
-  extra: ""
-
 exomedepth:
   ED_common: ""
   WW25: ""
@@ -17,6 +13,10 @@ exomedepth:
   conifer: ""
   container: ""
   reference_count: ""
+
+manta_config_n:
+  container: "docker://hydragenetics/manta:1.6.0"
+  extra: ""
 
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
