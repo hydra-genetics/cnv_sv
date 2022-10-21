@@ -20,7 +20,6 @@ def get_vcf_locus_list(vcf, catalog_list):
 
     # filter out any loci that have str0 as alt allele, as reviewer throws an error for them
     locus_list = [loc for loc in locus_list if loc not in str0_loci]
-    print(locus_list)
     return locus_list
 
 def write_locus_file(output, locus_list):
