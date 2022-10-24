@@ -77,6 +77,7 @@ rule generate_reviewer_locus_list:
         "{rule}: Generate a locus list for REViewer from {input.vcf}"
     script:
         "../scripts/generate_reviewer_locus_list.py"
+        
 
 rule reviewer:
     input:

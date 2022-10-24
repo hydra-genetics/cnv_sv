@@ -47,6 +47,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
+    
 
 def get_peddy_sex(wildcards, peddy_sex_check):
     sample = '{}_{}'.format(wildcards.sample, wildcards.type)
