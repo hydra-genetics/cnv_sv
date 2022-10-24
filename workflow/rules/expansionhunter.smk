@@ -17,15 +17,15 @@ rule expansionhunter:
         vcf=temp("cnv_sv/expansionhunter/{sample}_{type}.vcf"),
     params:
         extra=config.get("expansionhunter", {}).get("extra", ""),
-        prefix = lambda wildcards, output: '{}/{}_{}'.format(
-            os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
+        prefix = lambda wildcards, output: '{}/{}_{}'.format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
         sex=lambda wildards, input: get_peddy_sex(wildards,input.sex),
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log",
     benchmark:
-        repeat("cnv_sv/expansionhunter/{sample}_{type}.output.benchmark.tsv",
-            config.get("expansionhunter", {}).get("benchmark_repeats", 1)
-        ),
+        repeat(
+            "cnv_sv/expansionhunter/{sample}_{type}.output.benchmark.tsv",
+            config.get("expansionhunter", {}).get("benchmark_repeats", 1),
+        )
     threads: config.get("expansionhunter", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("expansionhunter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -58,9 +58,10 @@ rule generate_reviewer_locus_list:
     log:
         "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.log",
     benchmark:
-        repeat("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.benchmark.tsv",
-            config.get("generate_reviewer_locus_list", {}).get("benchmark_repeats", 1)
-        ),
+        repeat(
+            "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.benchmark.tsv",
+            config.get("generate_reviewer_locus_list", {}).get("benchmark_repeats", 1),
+        )
     threads: config.get("generate_reviewer_locus_list", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("generate_reviewer_locus_list", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -92,15 +93,16 @@ rule reviewer:
     params:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),
-        prefix = lambda wildcards, input: '{}/{}/{}_{}/{}_{}'.format(
-            os.path.split(input.vcf)[0], 'reviewer', wildcards.sample, wildcards.type,
-            wildcards.sample, wildcards.type),
+        prefix = lambda wildcards, input: '{}/{}/   {}_{}/{}_{}'.format(
+            os.path.split(input.vcf)[0], 'reviewer', wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
+        ),
     log:
         "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
-        repeat("cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
-            config.get("reviewer", {}).get("benchmark_repeats", 1)
-        ),
+        repeat(
+            "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
+            config.get("reviewer", {}).get("benchmark_repeats", 1),
+        )
     threads: config.get("reviewer", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("reviewer", {}).get("mem_mb", config["default_resources"]["mem_mb"]),

@@ -22,16 +22,19 @@ def get_vcf_locus_list(vcf, catalog_list):
     locus_list = [loc for loc in locus_list if loc not in str0_loci]
     return locus_list
 
+
 def write_locus_file(output, locus_list):
     locus_str = ','.join(locus_list)
     with open(output, 'w') as outfile:
         print(locus_str, file=outfile)
+
 
 def get_catalog_loci(catalog):
     with open(catalog, 'r') as cc:
         catalog = json.load(cc)
         locus_list = [j['LocusId'] for j in catalog]
     return locus_list
+
 
 if __name__ == '__main__':
     catalog_list = get_catalog_loci(snakemake.input.cat)
