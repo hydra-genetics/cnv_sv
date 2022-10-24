@@ -271,6 +271,20 @@ properties:
         type: string
         description: extra parameters sent to manta_config_tn
 
+  manta_config_n:
+    description: parameters for manta_config_n
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to manta_config_n
+
   manta_run_workflow_t:
     description: parameters for manta_run_workflow_t
     type: object
@@ -284,6 +298,17 @@ properties:
 
   manta_run_workflow_tn:
     description: parameters for manta_run_workflow_tn
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  manta_run_workflow_n:
+    description: parameters for manta_run_workflow_n
     type: object
     properties:
       benchmark_repeats:

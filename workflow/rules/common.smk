@@ -75,4 +75,7 @@ def compile_output_list(wildcards):
     output_files.append(
         ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
     return output_files
