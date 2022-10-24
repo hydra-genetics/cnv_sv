@@ -93,7 +93,7 @@ rule reviewer:
     params:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),
-        prefix = lambda wildcards, input: '{}/{}/   {}_{}/{}_{}'.format(
+        prefix = lambda wildcards, input: '{}/{}/{}_{}/{}_{}'.format(
             os.path.split(input.vcf)[0], 'reviewer', wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
         ),
     log:
