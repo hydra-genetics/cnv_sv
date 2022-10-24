@@ -211,10 +211,10 @@ rule manta_run_workflow_n:
         cand_sv_tbi=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz.tbi"),
         wrk_dir=temp(directory("cnv_sv/manta_run_workflow_n/{sample}/workspace")),
     log:
-        "cnv_sv/manta_run_workflow_n/{sample}/manta_n.log",
+        "cnv_sv/manta_run_workflow_n/{sample}/manta_run_workflow_n.output.log",
     benchmark:
         repeat(
-            "cnv_sv/manta_run_workflow_n/{sample}/manta_n.benchmark.tsv",
+            "cnv_sv/manta_run_workflow_n/{sample}/manta_run_workflow_n.output.benchmark.tsv",
             config.get("manta_run_workflow_n", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("manta_run_workflow_n", {}).get("threads", config["default_resources"]["threads"])

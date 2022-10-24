@@ -313,19 +313,19 @@ manta_config_n:
   properties:
     threads:
       type: integer
-      description: default number of threads that will be used by 'config_manta_n'
+      description: number of threads that will be used
     time:
       type: string
-      description: default max execution time for 'config_manta_n'
+      description: max execution time
     mem_mb:
       type: integer
-      description: memory used for 'config_manta_n'
+      description: memory used
     mem_per_cpu:
       type: integer
-      description: memory used per cpu for 'config_manta_n'
+      description: memory used per cpu
     partition:
       type: string
-      description: partition to use on the cluster for 'config_manta_n'
+      description: partition to use on the cluster
 
   manta_run_workflow_t:
     description: resource definitions for manta_run_workflow_t
