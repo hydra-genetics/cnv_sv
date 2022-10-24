@@ -17,7 +17,7 @@ rule expansionhunter:
         vcf=temp("cnv_sv/expansionhunter/{sample}_{type}.vcf"),
     params:
         extra=config.get("expansionhunter", {}).get("extra", ""),
-        prefix = lambda wildcards, output: '{}/{}_{}'.format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
+        prefix=lambda wildcards, output: '{}/{}_{}'.format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
         sex=lambda wildards, input: get_peddy_sex(wildards,input.sex),
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log",
