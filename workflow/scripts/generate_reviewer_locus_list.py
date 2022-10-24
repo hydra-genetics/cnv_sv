@@ -1,6 +1,7 @@
 from pysam import VariantFile
 import json
 
+
 def get_vcf_locus_list(vcf, catalog_list):
     locus_list = []
     str0_loci = []
@@ -11,7 +12,7 @@ def get_vcf_locus_list(vcf, catalog_list):
             continue
         if rec.filter.get('PASS') is not None:
             if locus_id not in catalog_list:
-                locus_id = locus_id.split('_')[0] # extract the locus id from rep id
+                locus_id = locus_id.split('_')[0]  # extract the locus id from rep id
                 if locus_id in catalog_list and locus_id not in locus_list:
                     locus_list.append(locus_id)
             else:
