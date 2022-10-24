@@ -126,7 +126,7 @@ properties:
       partition:
         type: string
         description: partition to use on the cluster for 'cnvkit_vcf'
-        
+
   expansionhunter:
     description: resource definitions expansionhunter
     type: object
@@ -269,6 +269,26 @@ properties:
 
   generate_pindel_config:
     description: resource definitions for generate_pindel_config
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  generate_reviewer_locus_list:
+    description: resource definitions for generate_reviewer_locus_list
     type: object
     properties:
       mem_mb:
@@ -466,6 +486,26 @@ manta_config_n:
       time:
         type: string
         description: max execution time
+
+  reviewer:
+    description: resource definitions reviewer
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by reviewer
+      time:
+        type: string
+        description: max execution time for reviewer
+      mem_mb:
+        type: integer
+        description: memory used for reviewer
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for reviewer
+      partition:
+        type: string
+        description: partition to use on the cluser for reviewer
 
   svdb_merge:
     description: resource definitions for svdb_merge
