@@ -18,7 +18,7 @@ rule expansionhunter:
     params:
         extra=config.get("expansionhunter", {}).get("extra", ""),
         prefix=lambda wildcards, output: '{}/{}_{}'.format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
-        sex=lambda wildards, input: get_peddy_sex(wildards,input.sex),
+        sex=lambda wildards, input: get_peddy_sex(wildards, input.sex),
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log",
     benchmark:
@@ -93,7 +93,7 @@ rule reviewer:
     params:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),
-        prefix = lambda wildcards, input: '{}/{}/{}_{}/{}_{}'.format(
+        prefix=lambda wildcards, input: '{}/{}/{}_{}/{}_{}'.format(
             os.path.split(input.vcf)[0], 'reviewer', wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
         ),
     log:
