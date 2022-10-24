@@ -8,8 +8,8 @@ rule expansionhunter:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        ref=config.get("reference", {}).get("fasta", ""),
         sex="qc/peddy/peddy.sex_check.csv",
     output:
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
