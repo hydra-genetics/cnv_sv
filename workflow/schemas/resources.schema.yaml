@@ -126,47 +126,7 @@ properties:
       partition:
         type: string
         description: partition to use on the cluster for 'cnvkit_vcf'
-
-  config_manta_t:
-    description: resource definitions for config_manta_t
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'config_manta_t'
-      time:
-        type: string
-        description: default max execution time for 'config_manta_t'
-      mem_mb:
-        type: integer
-        description: memory used for 'config_manta_t'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'config_manta_t'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'config_manta_t'
-
-  config_manta_tn:
-    description: resource definitions for config_manta_tn
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'config_manta_tn'
-      time:
-        type: string
-        description: default max execution time for 'config_manta_tn'
-      mem_mb:
-        type: integer
-        description: memory used for 'config_manta_tn'
-      mem_per_cpu:
-        type: integer
-        description: memory used per cpu for 'config_manta_tn'
-      partition:
-        type: string
-        description: partition to use on the cluster for 'config_manta_tn'
-
+        
   expansionhunter:
     description: resource definitions expansionhunter
     type: object
@@ -187,145 +147,225 @@ properties:
         type: string
         description: partition to use on the cluser for expansionhunter
 
-  gatk_cnv_denoise_read_counts:
-    description: resource definitions for gatk_cnv_denoise_read_counts
+  gatk_denoise_read_counts:
+    description: resource definitions for gatk_denoise_read_counts
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'gatk_cnv_denoise_read_counts'
-      time:
-        type: string
-        description: default max execution time for 'gatk_cnv_denoise_read_counts'
       mem_mb:
         type: integer
-        description: memory used for 'gatk_cnv_denoise_read_counts'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'gatk_cnv_denoise_read_counts'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'gatk_cnv_denoise_read_counts'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
-  gatk_cnv_collect_read_counts:
-    description: resource definitions for gatk_cnv_collect_read_counts
+  gatk_collect_read_counts:
+    description: resource definitions for gatk_collect_read_counts
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'gatk_cnv_collect_read_counts'
-      time:
-        type: string
-        description: default max execution time for 'gatk_cnv_collect_read_counts'
       mem_mb:
         type: integer
-        description: memory used for 'gatk_cnv_collect_read_counts'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'gatk_cnv_collect_read_counts'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'gatk_cnv_collect_read_counts'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
-  gatk_cnv_collect_allelic_counts:
-    description: resource definitions for gatk_cnv_collect_allelic_counts
+  gatk_denoise_read_counts:
+    description: resource definitions for gatk_denoise_read_counts
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'gatk_cnv_collect_allelic_counts'
-      time:
-        type: string
-        description: default max execution time for 'gatk_cnv_collect_allelic_counts'
       mem_mb:
         type: integer
-        description: memory used for 'gatk_cnv_collect_allelic_counts'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'gatk_cnv_collect_allelic_counts'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'gatk_cnv_collect_allelic_counts'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
-  gatk_cnv_model_segments:
-    description: resource definitions for gatk_cnv_model_segments
+  gatk_model_segments:
+    description: resource definitions for gatk_model_segments
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'gatk_cnv_model_segments'
-      time:
-        type: string
-        description: default max execution time for 'gatk_cnv_model_segments'
       mem_mb:
         type: integer
-        description: memory used for 'gatk_cnv_model_segments'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'gatk_cnv_model_segments'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'gatk_cnv_model_segments'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
-  gatk_cnv_call_copy_ratio_segments:
-    description: resource definitions for gatk_cnv_call_copy_ratio_segments
+  gatk_call_copy_ratio_segments:
+    description: resource definitions for gatk_call_copy_ratio_segments
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'gatk_cnv_call_copy_ratio_segments'
-      time:
-        type: string
-        description: default max execution time for 'gatk_cnv_call_copy_ratio_segments'
       mem_mb:
         type: integer
-        description: memory used for 'gatk_cnv_call_copy_ratio_segments'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'gatk_cnv_call_copy_ratio_segments'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'gatk_cnv_call_copy_ratio_segments'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   gatk_cnv_vcf:
     description: resource definitions for gatk_cnv_vcf
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'gatk_cnv_vcf'
-      time:
-        type: string
-        description: default max execution time for 'gatk_cnv_vcf'
       mem_mb:
         type: integer
-        description: memory used for 'gatk_cnv_vcf'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'gatk_cnv_vcf'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'gatk_cnv_vcf'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   generate_pindel_config:
     description: resource definitions for generate_pindel_config
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'generate_pindel_config'
-      time:
-        type: string
-        description: default max execution time for 'generate_pindel_config'
       mem_mb:
         type: integer
-        description: memory used for 'generate_pindel_config'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'generate_pindel_config'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'generate_pindel_config'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+manta_config_t:
+  description: resource definitions for config_manta_t
+  type: object
+  properties:
+    threads:
+      type: integer
+      description: default number of threads that will be used by 'config_manta_t'
+    time:
+      type: string
+      description: default max execution time for 'config_manta_t'
+    mem_mb:
+      type: integer
+      description: memory used for 'config_manta_t'
+    mem_per_cpu:
+      type: integer
+      description: memory used per cpu for 'config_manta_t'
+    partition:
+      type: string
+      description: partition to use on the cluster for 'config_manta_t'
+
+manta_config_tn:
+  description: resource definitions for config_manta_tn
+  type: object
+  properties:
+    threads:
+      type: integer
+      description: default number of threads that will be used by 'config_manta_tn'
+    time:
+      type: string
+      description: default max execution time for 'config_manta_tn'
+    mem_mb:
+      type: integer
+      description: memory used for 'config_manta_tn'
+    mem_per_cpu:
+      type: integer
+      description: memory used per cpu for 'config_manta_tn'
+    partition:
+      type: string
+      description: partition to use on the cluster for 'config_manta_tn'
+
+manta_config_n:
+  description: resource definitions for config_manta_n
+  type: object
+  properties:
+    threads:
+      type: integer
+      description: number of threads that will be used
+    time:
+      type: string
+      description: max execution time
+    mem_mb:
+      type: integer
+      description: memory used
+    mem_per_cpu:
+      type: integer
+      description: memory used per cpu
+    partition:
+      type: string
+      description: partition to use on the cluster
+
+  manta_run_workflow_t:
+    description: resource definitions for manta_run_workflow_t
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   manta_run_workflow_tn:
     description: resource definitions for manta_run_workflow_tn
@@ -333,119 +373,159 @@ properties:
     properties:
       mem_mb:
         type: integer
-        description: memory used for 'manta_run_workflow_tn'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'manta_run_workflow_tn'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'manta_run_workflow_tn'
+        description: partition to use on cluster
       threads:
         type: integer
-        description: default number of threads that will be used by 'manta_run_workflow_tn'
-      time:
-        type: string
-        description: default max execution time for 'manta_run_workflow_tn'
-
-  picard_update_vcf_sequence_dictionary:
-    description: resource definitions for picard_update_vcf_sequence_dictionary
-    type: object
-    properties:
-      threads:
-        type: integer
-        description: number of threads
+        description: number of threads to be available
       time:
         type: string
         description: max execution time
+
+    manta_run_workflow_n:
+      description: resource definitions for manta_run_workflow_n
+      type: object
+      properties:
+        mem_mb:
+          type: integer
+          description: max memory in MB to be available
+        mem_per_cpu:
+          type: integer
+          description: memory in MB used per cpu
+        partition:
+          type: string
+          description: partition to use on cluster
+        threads:
+          type: integer
+          description: number of threads to be available
+        time:
+          type: string
+          description: max execution time
+
+  pindel_update_vcf_sequence_dictionary:
+    description: resource definitions for pindel_update_vcf_sequence_dictionary
+    type: object
+    properties:
       mem_mb:
         type: integer
-        description: memory used
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   pindel_call:
     description: resource definitions for pindel_call
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'pindel'
-      time:
-        type: string
-        description: default max execution time for 'pindel'
       mem_mb:
         type: integer
-        description: memory used for 'pindel'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'pindel'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'pindel'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   pindel2vcf:
     description: resource definitions for pindel2vcf
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'pindel2vcf'
-      time:
-        type: string
-        description: default max execution time for 'pindel2vcf'
       mem_mb:
         type: integer
-        description: memory used for 'pindel2vcf'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'pindel2vcf'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'pindel2vcf'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   svdb_merge:
     description: resource definitions for svdb_merge
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'svdb_merge'
-      time:
-        type: string
-        description: default max execution time for 'svdb_merge'
       mem_mb:
         type: integer
-        description: memory used for 'svdb_merge'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'svdb_merge'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'svdb_merge'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   svdb_query:
     description: resource definitions for svdb_query
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'svdb_query'
-      time:
-        type: string
-        description: default max execution time for 'svdb_query'
       mem_mb:
         type: integer
-        description: memory used for 'svdb_query'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'svdb_query'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'svdb_query'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  tiddit:
+    description: resource definitions for svdb_query
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   required:
     - default_resources

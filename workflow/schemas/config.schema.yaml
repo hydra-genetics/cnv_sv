@@ -36,49 +36,21 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_batch
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       method:
         type: string
-        description: One of three methods (wgs, amplicon, hybrid) to use for cnvkit_batch
+        description: One of three methods (wgs, amplicon, hybrid) to use
       normal_reference:
         type: string
-        description: path to normal reference panel for cnvkit_batch
+        description: path to normal reference panel
       extra:
         type: string
-        description: extra parameters sent to cnvkit_batch
+        description: parameters that should be forwarded
     required:
       - method
-
-  config_manta_t:
-    description: parameters for config_manta_t
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for 'config_manta_t'
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: extra parameters sent to config_manta_t
-
-  config_manta_tn:
-    description: parameters for config_manta_tn
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated for 'config_manta_tn'
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: extra parameters sent to config_manta_tn
 
   cnvkit_call:
     description: parameters for cnvkit_call
@@ -86,13 +58,13 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_call
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: extra parameters sent to cnvkit_call
+        description: parameters that should be forwarded
 
   cnvkit_diagram:
     description: parameters for cnvkit_diagram
@@ -100,13 +72,13 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_diagram
+        description: set number of times benchmark should
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: extra parameters sent to cnvkit_diagram
+        description: parameters that should be forwarded
 
   cnvkit_scatter:
     description: parameters for cnvkit_scatter
@@ -114,13 +86,13 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_scatter
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: extra parameters sent to cnvkit_scatter
+        description: parameters that should be forwarded
 
   cnvkit_vcf:
     description: parameters for cnvkit_vcf
@@ -128,7 +100,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvkit_vcf
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -148,7 +120,7 @@ properties:
     properties:
       benchmark_repeats:
           type: integer
-          description: set number of times benchmark should be repeated for cnvkit_vcf
+          description: set number of times benchmark should be repeated
       container:
           type: string
           description: name or path to docker/singularity container
@@ -173,13 +145,13 @@ properties:
         type: string
         description: extra parameters
 
-  gatk_cnv_denoise_read_counts:
-    description: parameters for gatk_cnv_denoise_read_counts
+  gatk_denoisereadcounts:
+    description: parameters for gatk_denoisereadcounts
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_denoise_read_counts
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -188,17 +160,17 @@ properties:
         description: path to normal reference panel for gatk DenoiseReadCounts
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_denoise_read_counts
+        description: parameters that should be forwarded
     required:
       - normal_reference
 
-  gatk_cnv_collect_read_counts:
-    description: parameters for gatk_cnv_collect_read_counts
+  gatk_collect_read_counts:
+    description: parameters for gatk_collect_read_counts
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_collect_read_counts
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -207,43 +179,43 @@ properties:
         description: picard interval file for the target bed file
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_collect_read_counts
+        description: parameters that should be forwarded
 
-  gatk_cnv_model_segments:
-    description: parameters for gatk_cnv_model_segments
+  gatk_model_segments:
+    description: parameters for gatk_model_segments
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_model_segments
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_model_segments
+        description: parameters that should be forwarded
 
-  gatk_cnv_call_copy_ratio_segments:
-    description: parameters for gatk_cnv_call_copy_ratio_segments
+  gatk_call_copy_ratio_segments:
+    description: parameters for gatk_call_copy_ratio_segments
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_call_copy_ratio_segments
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_call_copy_ratio_segments
+        description: parameters that should be forwarded
 
-  gatk_cnv_collect_allelic_counts:
-    description: parameters for gatk_cnv_collect_allelic_counts
+  gatk_denoise_read_counts:
+    description: parameters for gatk_denoise_read_counts
     type: object
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_collect_allelic_counts
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -252,7 +224,7 @@ properties:
         description: picard interval file for the germline SNPs
       extra:
         type: string
-        description: parameters that should be forwarded to gatk_cnv_collect_allelic_counts
+        description: parameters that should be forwarded
 
   gatk_cnv_vcf:
     description: parameters for gatk_cnv_vcf
@@ -260,7 +232,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for gatk_cnv_vcf
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -280,10 +252,52 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for generate_pindel_config
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
+
+  manta_config_t:
+    description: parameters for manta_config_t
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to manta_config_t
+
+  manta_config_tn:
+    description: parameters for manta_config_tn
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to manta_config_tn
+
+  manta_config_n:
+    description: parameters for manta_config_n
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to manta_config_n
 
   manta_run_workflow_t:
     description: parameters for manta_run_workflow_t
@@ -291,7 +305,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for 'config_manta_t'
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -302,13 +316,24 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for 'config_manta_tn'
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
 
-  picard_update_vcf_sequence_dictionary:
-    description: parameters for picard_update_vcf_sequence_dictionary
+  manta_run_workflow_n:
+    description: parameters for manta_run_workflow_n
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  pindel_update_vcf_sequence_dictionary:
+    description: parameters for pindel_update_vcf_sequence_dictionary
     type: object
     properties:
       benchmark_repeats:
@@ -330,7 +355,7 @@ properties:
         description: bedfile to restrict pindel call
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for pindel
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -344,7 +369,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for pindel2vcf
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -356,7 +381,7 @@ properties:
         description: date of the version of the reference genome used
       extra:
         type: string
-        description: parameters that should be forwarded to pindel2vcf
+        description: parameters that should be forwarded
 
   svdb_merge:
     description: parameters for svdb_merge
@@ -364,7 +389,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for svdb_merge
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -378,7 +403,7 @@ properties:
         description: minimum overlap between regions for merging
       extra:
         type: string
-        description: parameters that should be forwarded to svdb_merge
+        description: parameters that should be forwarded
 
   svdb_query:
     description: parameters for svdb_query
@@ -386,7 +411,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for svdb_query
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
@@ -395,4 +420,18 @@ properties:
         description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq)
       extra:
         type: string
-        description: parameters that should be forwarded to svdb_query
+        description: parameters that should be forwarded
+
+  tiddit:
+    description: parameters for tiddit
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for tiddit
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to tiddit
