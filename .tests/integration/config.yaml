@@ -60,10 +60,16 @@ manta_config_t:
 manta_config_tn:
   container: "docker://hydragenetics/manta:1.6.0"
 
+manta_config_n:
+  container: "docker://hydragenetics/manta:1.6.0"
+
 manta_run_workflow_t:
   container: "docker://hydragenetics/manta:1.6.0"
 
 manta_run_workflow_tn:
+  container: "docker://hydragenetics/manta:1.6.0"
+
+manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
 pindel_update_vcf_sequence_dictionary:
