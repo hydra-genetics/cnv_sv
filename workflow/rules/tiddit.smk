@@ -7,12 +7,11 @@ __license__ = "GPL-3"
 rule tiddit:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ref=config["reference"]["fasta"],
     output:
-        bam=temp("cnv_sv/tiddit/{sample}_{type}.sample.bam"),
-        ploidy=temp("cnv_sv/tiddit/{sample}_{type}.ploidy.tab"),
-        signals=temp("cnv_sv/tiddit/{sample}_{type}.signals.tab"),
+        folder=temp(directory("cnv_sv/tiddit/{sample}_{type}_tiddit")),
+        ploidies=temp("cnv_sv/tiddit/{sample}_{type}.ploidies.tab"),
         vcf=temp("cnv_sv/tiddit/{sample}_{type}.vcf"),
-        wig=temp("cnv_sv/tiddit/{sample}_{type}.wig"),
     params:
         extra=config.get("tiddit", {}).get("extra", ""),
         outprefix="cnv_sv/tiddit/{sample}_{type}",
@@ -34,7 +33,8 @@ rule tiddit:
     message:
         "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
     shell:
-        "TIDDIT.py "
+        "tiddit "
         "--sv "
         "--bam {input.bam} "
+        "--ref {input.ref} "
         "-o {params.outprefix} &> {log}"
