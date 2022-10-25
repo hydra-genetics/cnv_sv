@@ -46,7 +46,7 @@ rule cnvpytor_filter:
         pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
     output:
         vcf="cnv_sv/cnvpytor/{sample}_{type}.vcf",
-        filtvcf="cnv_sv/cnvpytor/{sample}_{type}_filtered.vcf",
+        filtvcf="cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf",
     params:
         extra=config.get("cnvpytor", {}).get("extra", ""),
     log:
