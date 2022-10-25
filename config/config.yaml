@@ -6,6 +6,9 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
+expansionhunter:
+    container: "docker://hydragenetics/expansionhunter:5.0.0"
+
 exomedepth:
   bedfile: ""
   conifer: ""

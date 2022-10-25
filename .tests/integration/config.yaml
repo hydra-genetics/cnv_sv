@@ -31,6 +31,10 @@ exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   ref_count: "reference/ref_count.txt"
 
+expansionhunter:
+  container: "docker://hydragenetics/expansionhunter:5.0.0"
+  variant_catalog: "reference/variant_catalog.json"
+
 gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
@@ -79,6 +83,9 @@ pindel_call:
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
+
+reviewer:
+  container: "docker://hydragenetics/reviewer:0.2.7"
 
 svdb_merge:
   cnv_callers:

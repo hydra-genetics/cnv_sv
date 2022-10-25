@@ -127,6 +127,26 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_vcf'
 
+  expansionhunter:
+    description: resource definitions expansionhunter
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   gatk_denoise_read_counts:
     description: resource definitions for gatk_denoise_read_counts
     type: object
@@ -249,6 +269,26 @@ properties:
 
   generate_pindel_config:
     description: resource definitions for generate_pindel_config
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  generate_reviewer_locus_list:
+    description: resource definitions for generate_reviewer_locus_list
     type: object
     properties:
       mem_mb:
@@ -429,6 +469,26 @@ manta_config_n:
 
   pindel2vcf:
     description: resource definitions for pindel2vcf
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  reviewer:
+    description: resource definitions reviewer
     type: object
     properties:
       mem_mb:

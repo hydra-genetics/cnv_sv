@@ -131,6 +131,20 @@ properties:
         type: string
         description: path to reference count file (normal pool)
 
+  expansionhunter:
+    description: parameters for expansionhunter
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters
+
   gatk_denoisereadcounts:
     description: parameters for gatk_denoisereadcounts
     type: object
@@ -235,6 +249,16 @@ properties:
   generate_pindel_config:
     description: parameters for generate_pindel_config
     type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  generate_reviewer_locus_list:
+    description: parameter for generate_reviewer_locus_list
     properties:
       benchmark_repeats:
         type: integer
@@ -365,6 +389,20 @@ properties:
       refdate:
         type: string
         description: date of the version of the reference genome used
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  reviewer:
+    description: parameters for reviewer
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
       extra:
         type: string
         description: parameters that should be forwarded

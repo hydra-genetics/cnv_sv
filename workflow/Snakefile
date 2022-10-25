@@ -6,6 +6,7 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/exomedepth.smk"
+include: "rules/expansionhunter.smk"
 include: "rules/cnvkit.smk"
 include: "rules/gatk.smk"
 include: "rules/manta.smk"
