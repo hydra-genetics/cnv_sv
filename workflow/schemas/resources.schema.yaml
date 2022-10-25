@@ -131,21 +131,21 @@ properties:
     description: resource definitions expansionhunter
     type: object
     properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by expansionhunter
-      time:
-        type: string
-        description: max execution time for expansionhunter
       mem_mb:
         type: integer
-        description: memory used for expansionhunter
+        description: memory in MB used per cpu
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for expansionhunter
+        description: memory used per cpu
       partition:
         type: string
-        description: partition to use on the cluser for expansionhunter
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   gatk_denoise_read_counts:
     description: resource definitions for gatk_denoise_read_counts
@@ -491,21 +491,21 @@ manta_config_n:
     description: resource definitions reviewer
     type: object
     properties:
-      threads:
-        type: integer
-        description: number of threads that will be used by reviewer
-      time:
-        type: string
-        description: max execution time for reviewer
       mem_mb:
         type: integer
-        description: memory used for reviewer
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for reviewer
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluser for reviewer
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   svdb_merge:
     description: resource definitions for svdb_merge
