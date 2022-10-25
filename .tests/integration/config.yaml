@@ -51,8 +51,6 @@ gatk_call_copy_ratio_segments:
 gatk_seq_to_vcf:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-pindel_generate_config:
-  container: "docker://hydragenetics/common:0.1.8"
 
 manta_config_t:
   container: "docker://hydragenetics/manta:1.6.0"
@@ -95,4 +93,3 @@ svdb_query:
 
 tiddit:
   container: "docker://hydragenetics/tiddit:3.3.2"
-  #extra: "--skip_assembly"
