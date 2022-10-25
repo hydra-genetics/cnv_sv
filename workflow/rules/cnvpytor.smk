@@ -72,7 +72,7 @@ rule cnvpytor_filter:
        "{rule}: Filter cnvpytor calls for {wildcards.sample}_{wildcards.type}"
     shell:
         """
-        cnvpytor -root {input.pytor} -view 1000 <<-ENDL &> {log}
+        cnvpytor -root {input.pytor} -view 1000 <<-ENDL  &> {log}
         set print_filename {output.vcf}
         print calls
         set Q0_range 0 0.5
