@@ -6,12 +6,14 @@ __license__ = "GPL-3"
 
 include: "rules/common.smk"
 include: "rules/exomedepth.smk"
+include: "rules/expansionhunter.smk"
 include: "rules/cnvkit.smk"
 include: "rules/gatk.smk"
 include: "rules/manta.smk"
 include: "rules/pindel.smk"
 include: "rules/svdb.smk"
 include: "rules/purecn.smk"
+include: "rules/tiddit.smk"
 
 
 rule all:

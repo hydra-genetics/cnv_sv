@@ -145,6 +145,20 @@ properties:
         type: string
         description: path to reference count file (normal pool)
 
+  expansionhunter:
+    description: parameters for expansionhunter
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters
+
   gatk_denoisereadcounts:
     description: parameters for gatk_denoisereadcounts
     type: object
@@ -257,6 +271,16 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  generate_reviewer_locus_list:
+    description: parameter for generate_reviewer_locus_list
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   manta_config_t:
     description: parameters for manta_config_t
     type: object
@@ -285,6 +309,20 @@ properties:
         type: string
         description: extra parameters sent to manta_config_tn
 
+  manta_config_n:
+    description: parameters for manta_config_n
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to manta_config_n
+
   manta_run_workflow_t:
     description: parameters for manta_run_workflow_t
     type: object
@@ -298,6 +336,17 @@ properties:
 
   manta_run_workflow_tn:
     description: parameters for manta_run_workflow_tn
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  manta_run_workflow_n:
+    description: parameters for manta_run_workflow_n
     type: object
     properties:
       benchmark_repeats:
@@ -455,6 +504,20 @@ properties:
     required:
       - intervals
 
+  reviewer:
+    description: parameters for reviewer
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   svdb_merge:
     description: parameters for svdb_merge
     type: object
@@ -493,3 +556,17 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+
+  tiddit:
+    description: parameters for tiddit
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for tiddit
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to tiddit

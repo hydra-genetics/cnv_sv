@@ -103,26 +103,63 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
     return extra
 
 
+def get_peddy_sex(wildcards, peddy_sex_check):
+    sample = '{}_{}'.format(wildcards.sample, wildcards.type)
+    sex_df = pd.read_table(peddy_sex_check, sep=',').set_index("sample_id", drop=False)
+
+    sample_sex = sex_df.at[sample, 'predicted_sex']
+
+    return sample_sex
+
+
+def get_locus_str(loci):
+    with open(loci, 'r') as catfile:
+        loc_str = catfile.readline().rstrip()
+    return loc_str
+
+
 def compile_output_list(wildcards):
-    output_files = {
-        path
+    files = {
+        "cnv_sv/cnvkit_call": ["loh.cns"],
+        "cnv_sv/cnvkit_diagram": ["pdf"],
+        "cnv_sv/cnvkit_scatter": ["png"],
+        "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/expansionhunter": ["vcf"],
+        "cnv_sv/gatk_vcf": ["vcf"],
+        "cnv_sv/svdb_merge": ["merged.vcf"],
+        "cnv_sv/svdb_query": ["svdb_query.vcf"],
+        "cnv_sv/exomedepth_call": ["SV.txt"],
+        "cnv_sv/pindel_vcf": ["vcf"],
+        "cnv_sv/tiddit": ["vcf"],
+    }
+    output_files = [
+        "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
-        for path in [
-            f"cnv_sv/cnvkit_call/{sample}_{unit_type}.loh.cns",
-            f"cnv_sv/cnvkit_diagram/{sample}_{unit_type}.pdf",
-            f"cnv_sv/cnvkit_scatter/{sample}_{unit_type}.png",
-            f"cnv_sv/cnvkit_vcf/{sample}_{unit_type}.vcf",
-            f"cnv_sv/cnvkit_seg/{sample}_{unit_type}.seg",
-            f"cnv_sv/gatk_vcf/{sample}_{unit_type}.vcf",
-            f"cnv_sv/svdb_merge/{sample}_{unit_type}.merged.vcf",
-            f"cnv_sv/svdb_query/{sample}_{unit_type}.svdb_query.vcf",
-            f"cnv_sv/exomedepth_call/{sample}_{unit_type}.SV.txt",
-            f"cnv_sv/pindel_vcf/{sample}_{unit_type}.vcf",
-            f"cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz",
-            f"cnv_sv/purecn_coverage/{sample}_{unit_type}_coverage_loess.txt.gz",
-            f"cnv_sv/purecn/{sample}_T.csv",
+        for suffix in files[prefix]
+    ]
+    output_files += [
+        "cnv_sv/expansionhunter/reviewer/%s_%s/" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
+    output_files.append(
+        [
+            "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
         ]
-    }
+    )
+    output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
 
-    return [*output_files]
+    return output_files

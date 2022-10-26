@@ -45,6 +45,10 @@ exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   ref_count: "reference/ref_count.txt"
 
+expansionhunter:
+  container: "docker://hydragenetics/expansionhunter:5.0.0"
+  variant_catalog: "reference/variant_catalog.json"
+
 gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
@@ -65,8 +69,6 @@ gatk_call_copy_ratio_segments:
 gatk_seq_to_vcf:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-pindel_generate_config:
-  container: "docker://hydragenetics/common:0.1.0"
 
 manta_config_t:
   container: "docker://hydragenetics/manta:1.6.0"
@@ -74,10 +76,16 @@ manta_config_t:
 manta_config_tn:
   container: "docker://hydragenetics/manta:1.6.0"
 
+manta_config_n:
+  container: "docker://hydragenetics/manta:1.6.0"
+
 manta_run_workflow_t:
   container: "docker://hydragenetics/manta:1.6.0"
 
 manta_run_workflow_tn:
+  container: "docker://hydragenetics/manta:1.6.0"
+
+manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
 pindel_update_vcf_sequence_dictionary:
@@ -90,6 +98,9 @@ pindel_call:
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
 
+reviewer:
+  container: "docker://hydragenetics/reviewer:0.2.7"
+
 svdb_merge:
   cnv_callers:
     - "cnvkit"
@@ -100,3 +111,6 @@ svdb_merge:
 svdb_query:
   container: "docker://hydragenetics/svdb:2.6.0"
   db_string: "--db reference/normal_26_svdb_0.8.vcf"
+
+tiddit:
+  container: "docker://hydragenetics/tiddit:3.3.2"

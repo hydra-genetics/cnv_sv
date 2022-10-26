@@ -1,6 +1,6 @@
 # <img src="images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
 
-#### Snakemake module containing steps to call copy number variants and structural variants
+Snakemake module containing steps to call copy number variants and structural variants
 
 ![Lint](https://github.com/hydra-genetics/cnv_sv/actions/workflows/lint.yaml/badge.svg?branch=develop)
 ![Snakefmt](https://github.com/hydra-genetics/cnv_sv/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)

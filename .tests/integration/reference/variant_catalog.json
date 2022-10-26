@@ -1,0 +1,633 @@
+[
+    {
+        "LocusId": "chr1_1010481_1010497",
+        "LocusStructure": "(TTAT)*",
+        "ReferenceRegion": "chr1:1010481-1010497",
+        "VariantId": "chr1_1010481_1010497",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1052371_1052381",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:1052371-1052381",
+        "VariantId": "chr1_1052371_1052381",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1052514_1052528",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:1052514-1052528",
+        "VariantId": "chr1_1052514_1052528",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1063661_1063681",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:1063661-1063681",
+        "VariantId": "chr1_1063661_1063681",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1074956_1074970",
+        "LocusStructure": "(CA)*",
+        "ReferenceRegion": "chr1:1074956-1074970",
+        "VariantId": "chr1_1074956_1074970",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1224281_1224291",
+        "LocusStructure": "(TTTTA)*",
+        "ReferenceRegion": "chr1:1224281-1224291",
+        "VariantId": "chr1_1224281_1224291",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1265603_1265649",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:1265603-1265649",
+        "VariantId": "chr1_1265603_1265649",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1273803_1273818",
+        "LocusStructure": "(CGC)*",
+        "ReferenceRegion": "chr1:1273803-1273818",
+        "VariantId": "chr1_1273803_1273818",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1359713_1359728",
+        "LocusStructure": "(ACCCC)*",
+        "ReferenceRegion": "chr1:1359713-1359728",
+        "VariantId": "chr1_1359713_1359728",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1366030_1366038",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:1366030-1366038",
+        "VariantId": "chr1_1366030_1366038",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1403240_1403256",
+        "LocusStructure": "(CTTT)*",
+        "ReferenceRegion": "chr1:1403240-1403256",
+        "VariantId": "chr1_1403240_1403256",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1431026_1431058",
+        "LocusStructure": "(CACCCCCT)*",
+        "ReferenceRegion": "chr1:1431026-1431058",
+        "VariantId": "chr1_1431026_1431058",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1433012_1433044",
+        "LocusStructure": "(GCTGCCCCTCACCGCC)*",
+        "ReferenceRegion": "chr1:1433012-1433044",
+        "VariantId": "chr1_1433012_1433044",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1477677_1477717",
+        "LocusStructure": "(TTTTA)*",
+        "ReferenceRegion": "chr1:1477677-1477717",
+        "VariantId": "chr1_1477677_1477717",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1504666_1504672",
+        "LocusStructure": "(AG)*",
+        "ReferenceRegion": "chr1:1504666-1504672",
+        "VariantId": "chr1_1504666_1504672",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1504928_1504950",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:1504928-1504950",
+        "VariantId": "chr1_1504928_1504950",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_151101_151105",
+        "LocusStructure": "(CT)*",
+        "ReferenceRegion": "chr1:151101-151105",
+        "VariantId": "chr1_151101_151105",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1557495_1557509",
+        "LocusStructure": "(AT)*",
+        "ReferenceRegion": "chr1:1557495-1557509",
+        "VariantId": "chr1_1557495_1557509",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1574032_1574044",
+        "LocusStructure": "(AAG)*",
+        "ReferenceRegion": "chr1:1574032-1574044",
+        "VariantId": "chr1_1574032_1574044",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1585290_1585318",
+        "LocusStructure": "(TTTG)*",
+        "ReferenceRegion": "chr1:1585290-1585318",
+        "VariantId": "chr1_1585290_1585318",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1585949_1585976",
+        "LocusStructure": "(AAT)*",
+        "ReferenceRegion": "chr1:1585949-1585976",
+        "VariantId": "chr1_1585949_1585976",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1592518_1592542",
+        "LocusStructure": "(AAAT)*",
+        "ReferenceRegion": "chr1:1592518-1592542",
+        "VariantId": "chr1_1592518_1592542",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1653825_1653863",
+        "LocusStructure": "(AC)*",
+        "ReferenceRegion": "chr1:1653825-1653863",
+        "VariantId": "chr1_1653825_1653863",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1655886_1655910",
+        "LocusStructure": "(AAAC)*",
+        "ReferenceRegion": "chr1:1655886-1655910",
+        "VariantId": "chr1_1655886_1655910",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_165954_165962",
+        "LocusStructure": "(AATA)*",
+        "ReferenceRegion": "chr1:165954-165962",
+        "VariantId": "chr1_165954_165962",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_167134_167150",
+        "LocusStructure": "(TTTA)*",
+        "ReferenceRegion": "chr1:167134-167150",
+        "VariantId": "chr1_167134_167150",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1708834_1708870",
+        "LocusStructure": "(TCC)*",
+        "ReferenceRegion": "chr1:1708834-1708870",
+        "VariantId": "chr1_1708834_1708870",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1752908_1752935",
+        "LocusStructure": "(CCT)*",
+        "ReferenceRegion": "chr1:1752908-1752935",
+        "VariantId": "chr1_1752908_1752935",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1762759_1762791",
+        "LocusStructure": "(AATG)*",
+        "ReferenceRegion": "chr1:1762759-1762791",
+        "VariantId": "chr1_1762759_1762791",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1769969_1770011",
+        "LocusStructure": "(AAAACA)*",
+        "ReferenceRegion": "chr1:1769969-1770011",
+        "VariantId": "chr1_1769969_1770011",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1776461_1776473",
+        "LocusStructure": "(AAAC)*",
+        "ReferenceRegion": "chr1:1776461-1776473",
+        "VariantId": "chr1_1776461_1776473",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1779667_1779691",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:1779667-1779691",
+        "VariantId": "chr1_1779667_1779691",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1808642_1808662",
+        "LocusStructure": "(TTTG)*",
+        "ReferenceRegion": "chr1:1808642-1808662",
+        "VariantId": "chr1_1808642_1808662",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1812407_1812429",
+        "LocusStructure": "(AC)*",
+        "ReferenceRegion": "chr1:1812407-1812429",
+        "VariantId": "chr1_1812407_1812429",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1828894_1828912",
+        "LocusStructure": "(AC)*",
+        "ReferenceRegion": "chr1:1828894-1828912",
+        "VariantId": "chr1_1828894_1828912",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1845824_1845872",
+        "LocusStructure": "(AC)*",
+        "ReferenceRegion": "chr1:1845824-1845872",
+        "VariantId": "chr1_1845824_1845872",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1857305_1857317",
+        "LocusStructure": "(GGCT)*",
+        "ReferenceRegion": "chr1:1857305-1857317",
+        "VariantId": "chr1_1857305_1857317",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1876492_1876514",
+        "LocusStructure": "(GA)*",
+        "ReferenceRegion": "chr1:1876492-1876514",
+        "VariantId": "chr1_1876492_1876514",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1891654_1891658",
+        "LocusStructure": "(AG)*",
+        "ReferenceRegion": "chr1:1891654-1891658",
+        "VariantId": "chr1_1891654_1891658",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1904424_1904448",
+        "LocusStructure": "(AAAT)*",
+        "ReferenceRegion": "chr1:1904424-1904448",
+        "VariantId": "chr1_1904424_1904448",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1948412_1948428",
+        "LocusStructure": "(AT)*",
+        "ReferenceRegion": "chr1:1948412-1948428",
+        "VariantId": "chr1_1948412_1948428",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_1952590_1952614",
+        "LocusStructure": "(AAAG)*",
+        "ReferenceRegion": "chr1:1952590-1952614",
+        "VariantId": "chr1_1952590_1952614",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2003928_2003940",
+        "LocusStructure": "(GGGCCG)*",
+        "ReferenceRegion": "chr1:2003928-2003940",
+        "VariantId": "chr1_2003928_2003940",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2012279_2012309",
+        "LocusStructure": "(AAAAT)*",
+        "ReferenceRegion": "chr1:2012279-2012309",
+        "VariantId": "chr1_2012279_2012309",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2016851_2016871",
+        "LocusStructure": "(AAAG)*",
+        "ReferenceRegion": "chr1:2016851-2016871",
+        "VariantId": "chr1_2016851_2016871",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2018334_2018389",
+        "LocusStructure": "(ATAAC)*",
+        "ReferenceRegion": "chr1:2018334-2018389",
+        "VariantId": "chr1_2018334_2018389",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2066358_2066370",
+        "LocusStructure": "(TC)*",
+        "ReferenceRegion": "chr1:2066358-2066370",
+        "VariantId": "chr1_2066358_2066370",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2074426_2074442",
+        "LocusStructure": "(TGTGGGTC)*",
+        "ReferenceRegion": "chr1:2074426-2074442",
+        "VariantId": "chr1_2074426_2074442",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2112675_2112691",
+        "LocusStructure": "(TTGG)*",
+        "ReferenceRegion": "chr1:2112675-2112691",
+        "VariantId": "chr1_2112675_2112691",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2160238_2160272",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:2160238-2160272",
+        "VariantId": "chr1_2160238_2160272",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2173095_2173103",
+        "LocusStructure": "(CCAC)*",
+        "ReferenceRegion": "chr1:2173095-2173103",
+        "VariantId": "chr1_2173095_2173103",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2207909_2207955",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:2207909-2207955",
+        "VariantId": "chr1_2207909_2207955",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2219851_2219871",
+        "LocusStructure": "(AAAAC)*",
+        "ReferenceRegion": "chr1:2219851-2219871",
+        "VariantId": "chr1_2219851_2219871",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2241949_2241971",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:2241949-2241971",
+        "VariantId": "chr1_2241949_2241971",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2243956_2243976",
+        "LocusStructure": "(TTTC)*",
+        "ReferenceRegion": "chr1:2243956-2243976",
+        "VariantId": "chr1_2243956_2243976",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2254733_2254749",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:2254733-2254749",
+        "VariantId": "chr1_2254733_2254749",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2335828_2335843",
+        "LocusStructure": "(AGCCC)*",
+        "ReferenceRegion": "chr1:2335828-2335843",
+        "VariantId": "chr1_2335828_2335843",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2345829_2345855",
+        "LocusStructure": "(CA)*",
+        "ReferenceRegion": "chr1:2345829-2345855",
+        "VariantId": "chr1_2345829_2345855",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2371211_2371241",
+        "LocusStructure": "(ACA)*",
+        "ReferenceRegion": "chr1:2371211-2371241",
+        "VariantId": "chr1_2371211_2371241",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2422271_2422287",
+        "LocusStructure": "(AAAC)*",
+        "ReferenceRegion": "chr1:2422271-2422287",
+        "VariantId": "chr1_2422271_2422287",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2423169_2423189",
+        "LocusStructure": "(TTTG)*",
+        "ReferenceRegion": "chr1:2423169-2423189",
+        "VariantId": "chr1_2423169_2423189",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2431330_2431346",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:2431330-2431346",
+        "VariantId": "chr1_2431330_2431346",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2435454_2435489",
+        "LocusStructure": "(GGCTGGA)*",
+        "ReferenceRegion": "chr1:2435454-2435489",
+        "VariantId": "chr1_2435454_2435489",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_2449499_2449535",
+        "LocusStructure": "(AACC)*",
+        "ReferenceRegion": "chr1:2449499-2449535",
+        "VariantId": "chr1_2449499_2449535",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_370632_370648",
+        "LocusStructure": "(TTTC)*",
+        "ReferenceRegion": "chr1:370632-370648",
+        "VariantId": "chr1_370632_370648",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_371008_371033",
+        "LocusStructure": "(TTTTG)*",
+        "ReferenceRegion": "chr1:371008-371033",
+        "VariantId": "chr1_371008_371033",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_371274_371292",
+        "LocusStructure": "(TG)*",
+        "ReferenceRegion": "chr1:371274-371292",
+        "VariantId": "chr1_371274_371292",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_416289_416299",
+        "LocusStructure": "(AC)*",
+        "ReferenceRegion": "chr1:416289-416299",
+        "VariantId": "chr1_416289_416299",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_44835_44867",
+        "LocusStructure": "(AAAT)*",
+        "ReferenceRegion": "chr1:44835-44867",
+        "VariantId": "chr1_44835_44867",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_525730_525746",
+        "LocusStructure": "(TTTA)*",
+        "ReferenceRegion": "chr1:525730-525746",
+        "VariantId": "chr1_525730_525746",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_652036_652046",
+        "LocusStructure": "(AC)*",
+        "ReferenceRegion": "chr1:652036-652046",
+        "VariantId": "chr1_652036_652046",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_773934_773942",
+        "LocusStructure": "(AACT)*",
+        "ReferenceRegion": "chr1:773934-773942",
+        "VariantId": "chr1_773934_773942",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_776604_776629",
+        "LocusStructure": "(AAAAC)*",
+        "ReferenceRegion": "chr1:776604-776629",
+        "VariantId": "chr1_776604_776629",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_827587_827602",
+        "LocusStructure": "(GGGCC)*",
+        "ReferenceRegion": "chr1:827587-827602",
+        "VariantId": "chr1_827587_827602",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_832736_832781",
+        "LocusStructure": "(GTTTT)*",
+        "ReferenceRegion": "chr1:832736-832781",
+        "VariantId": "chr1_832736_832781",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_902173_902179",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:902173-902179",
+        "VariantId": "chr1_902173_902179",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_932613_932621",
+        "LocusStructure": "(TTTC)*",
+        "ReferenceRegion": "chr1:932613-932621",
+        "VariantId": "chr1_932613_932621",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_969673_969681",
+        "LocusStructure": "(GT)*",
+        "ReferenceRegion": "chr1:969673-969681",
+        "VariantId": "chr1_969673_969681",
+        "VariantType": "Repeat"
+    },
+
+    {
+        "LocusId": "chr1_975140_975150",
+        "LocusStructure": "(AGAGA)*",
+        "ReferenceRegion": "chr1:975140-975150",
+        "VariantId": "chr1_975140_975150",
+        "VariantType": "Repeat"
+    }
+]

@@ -1,0 +1,2 @@
+sample_id,ped_sex,hom_ref_count,het_count,hom_alt_count,het_ratio,predicted_sex,error
+HD832.HES45_T,male,8027,27,1689,0.01599,male,False
