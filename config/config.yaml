@@ -6,7 +6,6 @@ units: "units.tsv"
 default_container: "docker://hydragenetics/common:0.1.8"
 
 cnvpytor_filter:
-
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   dG_range: ""
   p_range: ""
