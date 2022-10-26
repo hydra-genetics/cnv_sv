@@ -114,6 +114,20 @@ properties:
         type: string
         description: copy number threshold for duplication
 
+  cnvpytor:
+    description: parameters for cnvpytor
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated for cnvpytor
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to cnvpytor
+
   exomedepth:
     description: parameters for exomedepth
     type: object
