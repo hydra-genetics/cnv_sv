@@ -1,32 +1,21 @@
 ---
+
 resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
-cnvpytor_filter:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
-  dG_range: ""
-  p_range: ""
-  pN_range: ""
-  Q0_range: ""
-  view: ""
-
-cnvpytor_readdepth:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
-  length_list: ""
+expansionhunter:
+    container: "docker://hydragenetics/expansionhunter:5.0.0"
 
 exomedepth:
-  ED_common: ""
-  WW25: ""
   bedfile: ""
   conifer: ""
-  container: "docker://hydragenetics/exomedepth:1.1.15"
+  container: ""
+  ED_common: ""
   reference_count: ""
-
-expansionhunter:
-  container: "docker://hydragenetics/expansionhunter:5.0.0"
+  WW25: ""
 
 manta_config_n:
   container: "docker://hydragenetics/manta:1.6.0"

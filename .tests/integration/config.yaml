@@ -26,18 +26,6 @@ cnvkit_scatter:
 cnvkit_vcf:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-cnvpytor_readdepth:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
-  length_list: "10000"
-
-cnvpytor_filter:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
-  dG_range: "100000 inf"
-  p_range: "0 0.01"
-  pN_range: "0 0.5"
-  Q0_range: "0 0.05"
-  view: "10000"
-
 exomedepth_call:
   bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
   container: "docker://hydragenetics/exomedepth:1.1.15"
