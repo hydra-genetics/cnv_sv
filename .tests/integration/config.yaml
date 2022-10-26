@@ -67,7 +67,6 @@ gatk_call_copy_ratio_segments:
 gatk_seq_to_vcf:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-
 manta_config_t:
   container: "docker://hydragenetics/manta:1.6.0"
 
