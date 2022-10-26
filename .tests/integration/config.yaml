@@ -26,10 +26,6 @@ cnvkit_scatter:
 cnvkit_vcf:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-cnvpytor_readdepth:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
-  length_list: "10000"
-
 cnvpytor_filter:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   dG_range: "100000 inf"
@@ -37,6 +33,10 @@ cnvpytor_filter:
   pN_range: "0 0.5"
   Q0_range: "0 0.05"
   view: "10000"
+
+cnvpytor_readdepth:
+  container: "docker://hydragenetics/cnvpytor:1.2.1"
+  length_list: "10000"
 
 exomedepth_call:
   bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
@@ -47,6 +47,13 @@ expansionhunter:
   container: "docker://hydragenetics/expansionhunter:5.0.0"
   variant_catalog: "reference/variant_catalog.json"
 
+gatk_call_copy_ratio_segments:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+gatk_collect_allelic_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+  SNP_interval: "reference/gnomad_SNP_0.001_target.annotated.interval_list"
+
 gatk_collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
@@ -54,18 +61,14 @@ gatk_denoise_read_counts:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
   normal_reference: "reference/twist_DNA_solid.HES45.GATK_cnv.PoN.hdf5"
 
-gatk_collect_allelic_counts:
-  container: "docker://hydragenetics/gatk4:4.2.2.0"
-  SNP_interval: "reference/gnomad_SNP_0.001_target.annotated.interval_list"
-
 gatk_model_segments:
-  container: "docker://hydragenetics/gatk4:4.2.2.0"
-
-gatk_call_copy_ratio_segments:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 gatk_seq_to_vcf:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+manta_config_n:
+  container: "docker://hydragenetics/manta:1.6.0"
 
 manta_config_t:
   container: "docker://hydragenetics/manta:1.6.0"
@@ -73,7 +76,7 @@ manta_config_t:
 manta_config_tn:
   container: "docker://hydragenetics/manta:1.6.0"
 
-manta_config_n:
+manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
 manta_run_workflow_t:
@@ -82,18 +85,15 @@ manta_run_workflow_t:
 manta_run_workflow_tn:
   container: "docker://hydragenetics/manta:1.6.0"
 
-manta_run_workflow_n:
-  container: "docker://hydragenetics/manta:1.6.0"
-
-pindel_update_vcf_sequence_dictionary:
-  container: "docker://hydragenetics/picard:2.25.0"
+pindel2vcf:
+  container: "docker://hydragenetics/pindel:0.2.5b9"
 
 pindel_call:
   bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   container: "docker://hydragenetics/pindel:0.2.5b9"
 
-pindel2vcf:
-  container: "docker://hydragenetics/pindel:0.2.5b9"
+pindel_update_vcf_sequence_dictionary:
+  container: "docker://hydragenetics/picard:2.25.0"
 
 reviewer:
   container: "docker://hydragenetics/reviewer:0.2.7"
