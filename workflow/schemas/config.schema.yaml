@@ -126,7 +126,7 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to cnvpytor
+        description: parameters that should be forwarded
 
   exomedepth:
     description: parameters for exomedepth
