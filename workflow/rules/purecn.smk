@@ -52,28 +52,14 @@ rule purecn_coverage:
         "{params.extra}) &> {log}"
 
 
-rule purecn:
+checkpoint purecn:
     input:
         unpack(get_purecn_inputs),
         vcf="snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz",
         tbi="snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.tbi",
     output:
-        temp(
-            expand(
-                "cnv_sv/purecn/{{sample}}_{{type}}{ext}",
-                ext=[
-                    ".csv",
-                    ".rds",
-                    ".pdf",
-                    "_dnacopy.seg",
-                    "_chromosomes.pdf",
-                    "_segmentation.pdf",
-                    "_local_optima.pdf",
-                    "_variants.csv",
-                    "_loh.csv",
-                ],
-            )
-        ),
+        csv=temp("cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}.csv"),
+        outdir=temp(directory("cnv_sv/purecn/temp/{sample}_{type}/")),
     params:
         fun_segmentation=config.get("purecn", {}).get("fun_segmentation", ""),
         genome=config.get("purecn", {}).get("genome", ""),
@@ -106,7 +92,38 @@ rule purecn:
         "--genome={params.genome} "
         "--fun-segmentation={params.fun_segmentation} "
         "--interval-padding={params.interval_padding} "
-        "--sampleid={wildcards.sample} "
-        "--out=cnv_sv/purecn/{wildcards.sample}_{wildcards.type} "
+        "--sampleid={wildcards.sample}_{wildcards.type} "
+        "--out={output.outdir} "
         "--force --seed=1337 "
-        "{params.extra}) &> {log}"
+        "{params.extra} || touch {output.csv}) &> {log}"
+
+
+rule purecn_copy_output:
+    input:
+        lambda wildcards: checkpoints.purecn.get(**wildcards).output.outdir,
+        file=lambda wildcards: f"{checkpoints.purecn.get(**wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
+    output:
+        temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
+    wildcard_constraints:
+        suffix="|".join(
+            f"({s})"
+            for s in [
+                ".csv",
+                ".rds",
+                ".pdf",
+                "_dnacopy.seg",
+                "_chromosomes.pdf",
+                "_segmentation.pdf",
+                "_local_optima.pdf",
+                "_variants.csv",
+                "_loh.csv",
+            ]
+        ),
+    log:
+        "cnv_sv/purecn/{sample}_{type}{suffix}.output.log",
+    container:
+        config["default_container"]
+    message:
+        "{rule}: Copy {input} to {output}"
+    shell:
+        "ln {input.file} {output} || cp {input.file} {output}"
