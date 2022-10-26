@@ -114,7 +114,7 @@ properties:
         type: string
         description: copy number threshold for duplication
 
-  cnvpytor:
+  cnvpytor_readdepth:
     description: parameters for cnvpytor
     type: object
     properties:
@@ -127,6 +127,38 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+      length_list:
+        type: string
+        description: one or several numbers for which it create lists with variants above the length to be viewed in cnvpytor_filter
+
+  cnvpytor_filter:
+    description: parameters for cnvpytor
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      dG_range: ""
+        type: string
+        description: parameters with start and stop range (e.g. 100000 inf)
+      p_range: ""
+        type: string
+        description: parameters with start and stop range (e.g. 0 0.01)
+      pN_range: ""
+        type: string
+        description: parameters with start and stop range (e.g. 0 0.5)
+      Q0_range: ""
+        type: string
+        description: parameters with start and stop range (e.g. 0 0.5)
+      view: ""
+        type: integer
+        description: paramter for minimum size of variant to be saved into vcf
 
   exomedepth:
     description: parameters for exomedepth

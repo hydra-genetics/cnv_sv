@@ -6,8 +6,17 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
-cnvpytor:
+cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
+  length_list: ""
+
+cnvpytor_filter:
+  container: "docker://hydragenetics/cnvpytor:1.2.1"
+  dG_range: ""
+  p_range: ""
+  pN_range: ""
+  Q0_range: ""
+  view: ""
 
 expansionhunter:
     container: "docker://hydragenetics/expansionhunter:5.0.0"

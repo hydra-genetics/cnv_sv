@@ -11,7 +11,8 @@ rule cnvpytor_readdepth:
     output:
         pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor"),
     params:
-        extra=config.get("cnvpytor", {}).get("extra", ""),
+        extra=config.get("cnvpytor_readdepth", {}).get("extra", ""),
+        length=config.get("cnvpytor_readdepth", {}).get("length_list", ""),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_rd.log",
     benchmark:
@@ -24,20 +25,20 @@ rule cnvpytor_readdepth:
         threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("cnvpytor", {}).get("container", config["default_container"])
+        config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvpytor.yaml"
     message:
         "{rule}: Run cnvpytor calls based on read depth for {wildcards.sample}_{wildcards.type}"
     shell:
         """cnvpytor -root {output.pytor} -rd {input.bam} &&
-        cnvpytor -root {output.pytor} -his 1000 10000 100000 &&
-        cnvpytor -root {output.pytor} -partition 1000 10000 100000 &&
-        cnvpytor -root {output.pytor} -call 1000 10000 100000 &&
+        cnvpytor -root {output.pytor} -his {params.length} &&
+        cnvpytor -root {output.pytor} -partition {params.length} &&
+        cnvpytor -root {output.pytor} -call {params.length} &&
         cnvpytor -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_{wildcards.type} &&
         cnvpytor -root {output.pytor} -mask_snps &&
-        cnvpytor -root {output.pytor} -baf 1000 10000 100000 &&
-        cnvpytor -root {output.pytor} -call combined 1000 10000 100000
+        cnvpytor -root {output.pytor} -baf {params.length} &&
+        cnvpytor -root {output.pytor} -call combined {params.length}
         &> {log}"""
 
 
@@ -48,7 +49,12 @@ rule cnvpytor_filter:
         vcf="cnv_sv/cnvpytor/{sample}_{type}.vcf",
         filtvcf="cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf",
     params:
-        extra=config.get("cnvpytor", {}).get("extra", ""),
+        extra=config.get("cnvpytor_filter", {}).get("extra", ""),
+        dgrange=config.get("cnvpytor_filter", {}).get("dG_range", ""),
+        prange=config.get("cnvpytor_filter", {}).get("p_range", ""),
+        pnrange=config.get("cnvpytor_filter", {}).get("pN_range", ""),
+        q0range=config.get("cnvpytor_filter", {}).get("Q0_range", ""),
+        view=config.get("cnvpytor_filter", {}).get("view", ""),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_filter.log",
     benchmark:
@@ -61,20 +67,20 @@ rule cnvpytor_filter:
         threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("cnvpytor", {}).get("container", config["default_container"])
+        config.get("cnvpytor_filter", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvpytor.yaml"
     message:
         "{rule}: Filter cnvpytor calls for {wildcards.sample}_{wildcards.type}"
     shell:
         """
-        cnvpytor -root {input.pytor} -view 1000 <<-ENDL  &> {log}
+        cnvpytor -root {input.pytor} -view {params.view} <<-ENDL  &> {log}
         set print_filename {output.vcf}
         print calls
-        set Q0_range 0 0.5
-        set p_range 0 0.01
-        set pN_range 0 0.05
-        set dG_range 100000 inf
+        set Q0_range {params.q0range}
+        set p_range {params.prange}
+        set pN_range {params.pnrange}
+        set dG_range {params.dgrange}
         set print_filename {output.filtvcf}
         print calls
         ENDL
