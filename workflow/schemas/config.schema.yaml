@@ -120,7 +120,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for cnvpytor
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container
