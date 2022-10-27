@@ -46,8 +46,8 @@ rule cnvpytor_filter:
     input:
         pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
     output:
-        vcf="cnv_sv/cnvpytor/{sample}_{type}.vcf",
-        filtvcf="cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf",
+        vcf=temp("cnv_sv/cnvpytor/{sample}_{type}.vcf"),
+        filtvcf=temp("cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf"),
     params:
         extra=config.get("cnvpytor_filter", {}).get("extra", ""),
         dgrange=config.get("cnvpytor_filter", {}).get("dG_range", ""),
