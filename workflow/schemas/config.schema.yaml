@@ -126,7 +126,52 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded
+
+  cnvpytor_readdepth:
+    description: parameters for tiddit
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to tiddit
+      lengthlist:
+        type: string
+        description: different variant length thresholds (e.g. 1000 10000 100000)  
+
+  cnvpytor_filter:
+    description: parameters for tiddit
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      dG_range:
+        type: string
+        description: parameters for dG range (e.g. 100000 inf)
+      extra:
+        type: string
+        description: parameters that should be forwarded to tiddit
+      p_range:
+        type: string
+        description: parameters for p range (e.g. 0 0.01)
+      pN_range:
+        type: string
+        description: parameters for pN range (e.g. 0 0.5)
+      Q0_range:
+        type: string
+        description: parameters for pN range (e.g. 0 0.5)
+      view:
+        type: string
+        description: parameter for minimum variant size (e.g. 1000)
 
   exomedepth:
     description: parameters for exomedepth
@@ -374,9 +419,12 @@ properties:
     description: parameters for pindel_call
     type: object
     properties:
-      bedfile:
+      include_bed:
         type: string
-        description: bedfile to restrict pindel call
+        description: bedfile of regions to restrict calling to, incompatible with `exclude_bed`
+      exclude_bed:
+        type: string
+        description: bedfile of regions to exclude from calling, incompatible with `include_bed`
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated
@@ -563,7 +611,7 @@ properties:
     properties:
       benchmark_repeats:
         type: integer
-        description: set number of times benchmark should be repeated for tiddit
+        description: set number of times benchmark should be repeated
       container:
         type: string
         description: name or path to docker/singularity container

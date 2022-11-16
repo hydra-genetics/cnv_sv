@@ -40,6 +40,8 @@ rule pindel_call:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         config="cnv_sv/pindel/{sample}_{type}.cfg",
         ref=config["reference"]["fasta"],
+        include_bed=config.get("pindel_call", {}).get("include_bed", []),
+        exclude_bed=config.get("pindel_call", {}).get("exclude_bed", []),
     output:
         pindel=temp(
             expand(
@@ -58,10 +60,7 @@ rule pindel_call:
             )
         ),
     params:
-        prefix=lambda wildcards: "cnv_sv/pindel/%s_%s" % (wildcards.sample, wildcards.type),
-        extra=" %s %s " % ("-j", config["pindel_call"]["bedfile"])
-        if "bedfile" in config.get("pindel_call", {})
-        else " %s %s" % ("", config.get("pindel_call", {}).get("extra", "")),
+        extra=config.get("pindel_call", {}).get("extra", ""),
     log:
         "cnv_sv/pindel/{sample}_{type}_pindel_call.log",
     benchmark:
@@ -83,7 +82,7 @@ rule pindel_call:
     message:
         "{rule}: detect breakpoints in {wildcards.sample} {wildcards.type}"
     wrapper:
-        "v1.2.0/bio/pindel/call"
+        "v1.17.2/bio/pindel/call"
 
 
 rule pindel2vcf:

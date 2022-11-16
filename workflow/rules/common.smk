@@ -124,6 +124,7 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
         "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/cnvpytor": ["vcf"],
         "cnv_sv/expansionhunter": ["vcf"],
         "cnv_sv/gatk_vcf": ["vcf"],
         "cnv_sv/svdb_merge": ["merged.vcf"],
@@ -150,7 +151,6 @@ def compile_output_list(wildcards):
     output_files.append(
         ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
-
     output_files.append(
         ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
