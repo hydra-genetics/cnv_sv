@@ -125,7 +125,8 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvkit_scatter": ["png"],
         "cnv_sv/cnvkit_vcf": ["vcf"],
         "cnv_sv/cnvpytor": ["vcf"],
-        "cnv_sv/expansionhunter": ["vcf"],
+        # Can be run with singularity only
+        # "cnv_sv/expansionhunter": ["vcf"],
         "cnv_sv/gatk_vcf": ["vcf"],
         "cnv_sv/svdb_merge": ["merged.vcf"],
         "cnv_sv/svdb_query": ["svdb_query.vcf"],
