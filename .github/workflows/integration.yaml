@@ -24,6 +24,20 @@ jobs:
       - name: Add conda to system path
         run: |
           echo $CONDA/bin >> $GITHUB_PATH
+      - name: Install dep for expansionhunter
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y wget ca-certificates curl
+      - name: Install REViewer
+        run: wget -nv https://github.com/Illumina/REViewer/releases/download/v0.2.7/REViewer-v0.2.7-linux_x86_64.gz && gunzip REViewer-v0.2.7-linux_x86_64.gz && chmod +x REViewer-v0.2.7-linux_x86_64 && sudo mkdir -p /REViewer-v0.2.7-linux_x86_64/bin && sudo mv REViewer-v0.2.7-linux_x86_64 /REViewer-v0.2.7-linux_x86_64/bin/REViewer
+      - name: add reviewer to path
+        run: |
+          echo "/REViewer-v0.2.7-linux_x86_64/bin" >> $GITHUB_PATH
+      - name: Install expansionhunter
+        run: wget -nv https://github.com/Illumina/ExpansionHunter/releases/download/v5.0.0/ExpansionHunter-v5.0.0-linux_x86_64.tar.gz && tar -xvf ExpansionHunter-v5.0.0-linux_x86_64.tar.gz && rm ExpansionHunter-v5.0.0-linux_x86_64.tar.gz && sudo mv ExpansionHunter-v5.0.0-linux_x86_64 /ExpansionHunter-v5.0.0-linux_x86_64
+      - name: ls
+        run: ls /ExpansionHunter-v5.0.0-linux_x86_64/bin
+      - name: add expansionhunter to path
+        run: |
+          echo "/ExpansionHunter-v5.0.0-linux_x86_64/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: |
           conda config --set channel_priority strict

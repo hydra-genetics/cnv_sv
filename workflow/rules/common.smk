@@ -104,16 +104,16 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
 
 
 def get_peddy_sex(wildcards, peddy_sex_check):
-    sample = '{}_{}'.format(wildcards.sample, wildcards.type)
-    sex_df = pd.read_table(peddy_sex_check, sep=',').set_index("sample_id", drop=False)
+    sample = "{}_{}".format(wildcards.sample, wildcards.type)
+    sex_df = pd.read_table(peddy_sex_check, sep=",").set_index("sample_id", drop=False)
 
-    sample_sex = sex_df.at[sample, 'predicted_sex']
+    sample_sex = sex_df.at[sample, "predicted_sex"]
 
     return sample_sex
 
 
 def get_locus_str(loci):
-    with open(loci, 'r') as catfile:
+    with open(loci, "r") as catfile:
         loc_str = catfile.readline().rstrip()
     return loc_str
 
@@ -154,13 +154,14 @@ def compile_output_list(wildcards):
     output_files.append(
         ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
-    output_files.append(
-        [
-            "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
-            for sample in get_samples(samples)
-            for unit_type in get_unit_types(units, sample)
-        ]
-    )
-    output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
-
+    # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files.append(
+    #   [
+    #       "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
+    #       for sample in get_samples(samples)
+    #       for unit_type in get_unit_types(units, sample)
+    #   ]
+    # )
+    # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
     return output_files
