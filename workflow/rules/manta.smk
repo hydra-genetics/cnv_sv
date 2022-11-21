@@ -127,6 +127,8 @@ rule manta_config_t:
 
 rule manta_run_workflow_t:
     input:
+        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
+        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
         ref=config["reference"]["fasta"],
         scrpt="cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py",
     output:
@@ -202,6 +204,8 @@ rule manta_config_n:
 
 rule manta_run_workflow_n:
     input:
+        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
+        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
         scrpt="cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py",
     output:
