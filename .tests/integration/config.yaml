@@ -30,16 +30,6 @@ cnvkit_vcf:
 cnvkit_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-purecn:
-  container: "docker://hydragenetics/purecn:2.2.0"
-  genome: "hg19"
-  segmentation_method: "GATK4"
-  fun_segmentation: "Hclust"
-  interval_padding: 100
-
-purecn_coverage:
-  container: "docker://hydragenetics/purecn:2.2.0"
-  intervals: "reference/purecn_dummy_intervals.txt"
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   length_list: "10000"
@@ -108,6 +98,17 @@ pindel_call:
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
+  
+purecn:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  genome: "hg19"
+  segmentation_method: "GATK4"
+  fun_segmentation: "Hclust"
+  interval_padding: 100
+
+purecn_coverage:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  intervals: "reference/purecn_dummy_intervals.txt"
 
 reviewer:
   container: "docker://hydragenetics/reviewer:0.2.7"
