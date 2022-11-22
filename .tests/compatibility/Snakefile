@@ -1,0 +1,96 @@
+from hydra_genetics.utils.resources import load_resources
+
+import re
+
+
+configfile: "config.yaml"
+
+
+config = load_resources(config, config["resources"])
+
+
+def extract_module_version_from_readme(modulename):
+    search_string = modulename + ":(.+)\n$"
+    with open("../../README.md", "r") as reader:
+        for line in reader:
+            result = re.search(search_string, line)
+            if result:
+                return result[1]
+
+
+module alignment:
+    snakefile:
+        github(
+            "hydra-genetics/alignment",
+            path="workflow/Snakefile",
+            tag=extract_module_version_from_readme("alignment"),
+        )
+    config:
+        config
+
+
+use rule * from alignment as alignment_*
+
+
+module cnv_sv:
+    snakefile:
+        "../../workflow/Snakefile"
+    config:
+        config
+
+
+use rule * from alignment as alignment_*
+
+
+def compile_output_list(wildcards):
+    files = {
+        "cnv_sv/cnvkit_call": ["loh.cns"],
+        "cnv_sv/cnvkit_diagram": ["pdf"],
+        "cnv_sv/cnvkit_scatter": ["png"],
+        "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/cnvpytor": ["vcf"],
+        "cnv_sv/expansionhunter": ["vcf"],
+        "cnv_sv/gatk_vcf": ["vcf"],
+        "cnv_sv/svdb_merge": ["merged.vcf"],
+        "cnv_sv/svdb_query": ["svdb_query.vcf"],
+        "cnv_sv/exomedepth_call": ["SV.txt"],
+        "cnv_sv/pindel_vcf": ["vcf"],
+        "cnv_sv/tiddit": ["vcf"],
+    }
+    output_files = [
+        "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for suffix in files[prefix]
+    ]
+    output_files += [
+        "cnv_sv/expansionhunter/reviewer/%s_%s/" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
+    output_files.append(
+        ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+    )
+    # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files.append(
+    #   [
+    #       "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
+    #       for sample in get_samples(samples)
+    #       for unit_type in get_unit_types(units, sample)
+    #   ]
+    # )
+    # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
+    return output_files
+
+
+rule all:
+    input:
+        unpack(compile_output_list),
