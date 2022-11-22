@@ -1,6 +1,6 @@
 # <img src="images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
 
-#### Snakemake module containing steps to call copy number variants and structural variants
+Snakemake module containing steps to call copy number variants and structural variants
 
 ![Lint](https://github.com/hydra-genetics/cnv_sv/actions/workflows/lint.yaml/badge.svg?branch=master)
 ![Snakefmt](https://github.com/hydra-genetics/cnv_sv/actions/workflows/snakefmt.yaml/badge.svg?branch=master)
@@ -54,7 +54,7 @@ A reference .fasta-file should be specified in config.yaml in the section refere
 the file should be indexed using samtools faidx and the path of the resulting file added to the stanza fai.
 A bed file containing the covered regions shall be added to design_bed.
 
-### Panel of normals (PoN) and read count 
+### Panel of normals (PoN) and read count
 
 PoN must be configured to be able to run CNVkit and gatk CNV, workflows for this can be found at [hydra-genetics/references](
 https://github.com/hydra-genetics/references). Instructions for the tools can be found at.
@@ -117,3 +117,10 @@ The following output files should be targeted via another rule:
 ## :judge: Rule Graph
 
 ![rule_graph](images/cnv_sv.svg)
+
+### Disclaimer
+
+Running Expansion Hunter and REViewer with conda is only possible if Expansion Hunter and REViewer with dependencies are installed locally on the server, as they cannot be installed using conda.
+
+Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
+ testing and we can not guarantee that it will work. 

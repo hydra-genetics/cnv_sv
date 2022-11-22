@@ -127,45 +127,45 @@ properties:
         type: string
         description: partition to use on the cluster for 'cnvkit_vcf'
 
-  config_manta_t:
-    description: resource definitions for config_manta_t
+  cnvpytor:
+    description: resource definitions for cnvpytor
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'config_manta_t'
-      time:
-        type: string
-        description: default max execution time for 'config_manta_t'
       mem_mb:
         type: integer
-        description: memory used for 'config_manta_t'
+        description: max memory in MB to be available
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'config_manta_t'
+        description: memory in MB used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'config_manta_t'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
-  config_manta_tn:
-    description: resource definitions for config_manta_tn
+  expansionhunter:
+    description: resource definitions expansionhunter
     type: object
     properties:
-      threads:
-        type: integer
-        description: default number of threads that will be used by 'config_manta_tn'
-      time:
-        type: string
-        description: default max execution time for 'config_manta_tn'
       mem_mb:
         type: integer
-        description: memory used for 'config_manta_tn'
+        description: memory in MB used per cpu
       mem_per_cpu:
         type: integer
-        description: memory used per cpu for 'config_manta_tn'
+        description: memory used per cpu
       partition:
         type: string
-        description: partition to use on the cluster for 'config_manta_tn'
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   gatk_denoise_read_counts:
     description: resource definitions for gatk_denoise_read_counts
@@ -307,8 +307,128 @@ properties:
         type: string
         description: max execution time
 
+  generate_reviewer_locus_list:
+    description: resource definitions for generate_reviewer_locus_list
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  manta_config_t:
+    description: resource definitions for config_manta_t
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  manta_config_tn:
+    description: resource definitions for config_manta_tn
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  manta_config_n:
+    description: resource definitions for config_manta_n
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  manta_run_workflow_t:
+    description: resource definitions for manta_run_workflow_t
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   manta_run_workflow_tn:
     description: resource definitions for manta_run_workflow_tn
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  manta_run_workflow_n:
+    description: resource definitions for manta_run_workflow_n
     type: object
     properties:
       mem_mb:
@@ -387,6 +507,26 @@ properties:
         type: string
         description: max execution time
 
+  reviewer:
+    description: resource definitions reviewer
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   svdb_merge:
     description: resource definitions for svdb_merge
     type: object
@@ -409,6 +549,26 @@ properties:
 
   svdb_query:
     description: resource definitions for svdb_query
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  tiddit:
+    description: resource definitions for tiddit
     type: object
     properties:
       mem_mb:
