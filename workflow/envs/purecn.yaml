@@ -3,4 +3,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - purecn=2.2.0
+  - bioconductor-purecn=2.4.0
