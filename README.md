@@ -99,7 +99,7 @@ use rule * from cnv_sv as cnv_sv_*
 ### Compatibility
 
 Latest:
- - alignment:v0.2.0
+ - alignment:v0.3.0
 
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 
@@ -123,4 +123,4 @@ The following output files should be targeted via another rule:
 Running Expansion Hunter and REViewer with conda is only possible if Expansion Hunter and REViewer with dependencies are installed locally on the server, as they cannot be installed using conda.
 
 Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
- testing and we can not guarantee that it will work. 
+ testing and we can not guarantee that it will work.
