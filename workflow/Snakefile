@@ -12,8 +12,8 @@ include: "rules/expansionhunter.smk"
 include: "rules/gatk.smk"
 include: "rules/manta.smk"
 include: "rules/pindel.smk"
-include: "rules/svdb.smk"
 include: "rules/purecn.smk"
+include: "rules/svdb.smk"
 include: "rules/tiddit.smk"
 
 
