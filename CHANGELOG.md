@@ -5,6 +5,44 @@
 
 ### Features
 
+* add compatibility action ([324ff90](https://www.github.com/hydra-genetics/cnv_sv/commit/324ff9086b23f78a08d240186a46a417ff7e00fb))
+* Initial PureCN implementation ([827ecd5](https://www.github.com/hydra-genetics/cnv_sv/commit/827ecd59ce1f38d50e75eae16f58dcd5fdc3e906))
+* run expansionhunter with sex from peddy ([96248bf](https://www.github.com/hydra-genetics/cnv_sv/commit/96248bfb2dd5f6625905d53de20c87ed4be9955d))
+* update pindel call wrapper ([deca8ee](https://www.github.com/hydra-genetics/cnv_sv/commit/deca8eedbf4effddaafe51964d9760f9245e18e2))
+
+
+### Bug Fixes
+
+* Add cnvkit_seg output ([6b2bc02](https://www.github.com/hydra-genetics/cnv_sv/commit/6b2bc024ebd445f0a44ae10c9e09b8f0b5c4682c))
+* Add dummy intervals file for dry-run ([c36efa8](https://www.github.com/hydra-genetics/cnv_sv/commit/c36efa8e753df8b3875ad766b69099d400e41ca8))
+* Add mutect2 VCFs for PureCN ([58c4784](https://www.github.com/hydra-genetics/cnv_sv/commit/58c4784727c27977ffa6683a198197da35caa68a))
+* Add required parameters for purecn ([a6771a6](https://www.github.com/hydra-genetics/cnv_sv/commit/a6771a635b97209d17356e59e65d7d9182c56c82))
+* fix integration test problem ([139c948](https://www.github.com/hydra-genetics/cnv_sv/commit/139c948a7a3ab963abcd6b4d83f914b35ba22fc6))
+* fun_segmentation is a required property for purecn ([2376c99](https://www.github.com/hydra-genetics/cnv_sv/commit/2376c995fccc36dd3bae807ad12c098d60cd0877))
+* make run step of manta require bam as input to prevent bam files from being cleaned away ([5918c73](https://www.github.com/hydra-genetics/cnv_sv/commit/5918c739006e1b7e4b25b11428ffd5e90801bad9))
+* Minor language tweaks ([aebacab](https://www.github.com/hydra-genetics/cnv_sv/commit/aebacabd1f309d4d39699c298144e6dc28f3f3bd))
+* Re-order resources in rules ([1c889d4](https://www.github.com/hydra-genetics/cnv_sv/commit/1c889d4bdbd71df099d8af5485ddbff8e74406e9))
+* Rename cnvkit_seg log and benchmark ([c9f2808](https://www.github.com/hydra-genetics/cnv_sv/commit/c9f2808ee711a00a95ad766481e334d6cb3b2e13))
+* Resolve snakefmt warnings ([fa7651e](https://www.github.com/hydra-genetics/cnv_sv/commit/fa7651e8b4d37db4b9e4d38ffea0cc1c75094773))
+* Resolve snakefmt warnings ([b738559](https://www.github.com/hydra-genetics/cnv_sv/commit/b738559ec662e794f834b731b581afc633f41ea3))
+* Separate PureCN output rule ([ef80f60](https://www.github.com/hydra-genetics/cnv_sv/commit/ef80f603a6d5068ad3ebb5c9fde82df7edc38b0e))
+* Simplify expected PureCN output ([22fb008](https://www.github.com/hydra-genetics/cnv_sv/commit/22fb0089163a29416462ec60c2e3d7dce9dcbcb8))
+* **tiddit:** fix env and bam to work with tiddit ([6803a15](https://www.github.com/hydra-genetics/cnv_sv/commit/6803a150934b149925919ce1f6bfdc19f49c83d6))
+* Typos in output definitions ([106edaa](https://www.github.com/hydra-genetics/cnv_sv/commit/106edaabd90bd589140743aed519c175f4eff89c))
+* Use dummy intervals ([8bcdae0](https://www.github.com/hydra-genetics/cnv_sv/commit/8bcdae0300b7ff849b5bd5015939d2c2595bf2dc))
+* Use hydragenetics container for cnvkit_seg ([65bd30b](https://www.github.com/hydra-genetics/cnv_sv/commit/65bd30b030d8774190e488fdaaad5b37ebf17985))
+* Use same conda env for all PureCN rules ([a795870](https://www.github.com/hydra-genetics/cnv_sv/commit/a795870b2c0628e9baeb2e331d13540376e43f36))
+
+
+### Documentation
+
+* **README:** change header to regular text ([d0e74d4](https://www.github.com/hydra-genetics/cnv_sv/commit/d0e74d4fa7dad72523c41d3a8209d40aceeaf0bf))
+
+## [0.2.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.1.0...v0.2.0) (2022-11-22)
+
+
+### Features
+
 * Initial PureCN implementation ([827ecd5](https://www.github.com/hydra-genetics/cnv_sv/commit/827ecd59ce1f38d50e75eae16f58dcd5fdc3e906))
 * run expansionhunter with sex from peddy ([96248bf](https://www.github.com/hydra-genetics/cnv_sv/commit/96248bfb2dd5f6625905d53de20c87ed4be9955d))
 * update pindel call wrapper ([deca8ee](https://www.github.com/hydra-genetics/cnv_sv/commit/deca8eedbf4effddaafe51964d9760f9245e18e2))
