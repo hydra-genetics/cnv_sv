@@ -47,4 +47,3 @@ rule expansionhunter:
         "--variant-catalog {input.cat} "
         "{params.extra} "
         "--output-prefix {params.prefix} &> {log}"
-
