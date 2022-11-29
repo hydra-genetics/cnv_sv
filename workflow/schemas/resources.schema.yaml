@@ -307,8 +307,8 @@ properties:
         type: string
         description: max execution time
 
-  generate_reviewer_locus_list:
-    description: resource definitions for generate_reviewer_locus_list
+  reviewer_generate_locus_list:
+    description: resource definitions for reviewer_generate_locus_list
     type: object
     properties:
       mem_mb:
