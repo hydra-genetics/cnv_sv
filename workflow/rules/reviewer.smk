@@ -50,7 +50,7 @@ rule reviewer:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),
         prefix=lambda wildcards, output: "{}/{}_{}/{}_{}".format(
-            os.path.split(output[0])[0] wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
+            os.path.split(output[0])[0], wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
         ),
     log:
         "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.log",
