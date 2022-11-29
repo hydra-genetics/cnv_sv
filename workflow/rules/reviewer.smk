@@ -15,23 +15,23 @@ rule reviewer_genrate_locus_list:
     benchmark:
         repeat(
             "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.benchmark.tsv",
-            config.get("generate_reviewer_locus_list", {}).get("benchmark_repeats", 1),
+            config.get("reviewer_generate_locus_list", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("generate_reviewer_locus_list", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("reviewer_generate_locus_list", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("generate_reviewer_locus_list", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("generate_reviewer_locus_list", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("generate_reviewer_locus_list", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("generate_reviewer_locus_list", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("generate_reviewer_locus_list", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("reviewer_generate_locus_list", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("reviewer_generate_locus_list", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("reviewer_generate_locus_list", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("reviewer_generate_locus_list", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("reviewer_generate_locus_list", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("generate_reviewer_locus_list", {}).get("container", config["default_container"])
+        config.get("reviewer_generate_locus_list", {}).get("container", config["default_container"])
     conda:
-        "../envs/generate_reviewer_locus_list.yaml"
+        "../envs/reviewer_generate_locus_list.yaml"
     message:
         "{rule}: Generate a locus list for REViewer from {input.vcf}"
     script:
-        "../scripts/generate_reviewer_locus_list.py"
+        "../scripts/reviewer_generate_locus_list.py"
 
 
 rule reviewer:
@@ -43,9 +43,9 @@ rule reviewer:
         ref=config.get("reference", {}).get("fasta", ""),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
-        temp(directory("cnv_sv/expansionhunter/reviewer/{sample}_{type}/")),
-        temp("cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv"),
-        temp("cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv"),
+        temp(directory("cnv_sv/reviewer/{sample}_{type}/")),
+        temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv"),
+        temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv"),
     params:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),
@@ -53,10 +53,10 @@ rule reviewer:
             os.path.split(input.vcf)[0], "reviewer", wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
         ),
     log:
-        "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.log",
+        "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
         repeat(
-            "cnv_sv/expansionhunter/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
+            "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
             config.get("reviewer", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("reviewer", {}).get("threads", config["default_resources"]["threads"])
