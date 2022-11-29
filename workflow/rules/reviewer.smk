@@ -39,7 +39,7 @@ rule reviewer:
         bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam",
         bai="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.bai",
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
-        loci="cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt",
+        loci="cnv_sv/reviewer/{sample}_{type}_locus_list.txt",
         ref=config.get("reference", {}).get("fasta", ""),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
