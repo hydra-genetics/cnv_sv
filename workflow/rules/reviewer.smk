@@ -9,12 +9,12 @@ rule reviewer_genrate_locus_list:
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
-        txt=temp("cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt"),
+        txt=temp("cnv_sv/reviewer/{sample}_{type}_locus_list.txt"),
     log:
-        "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.log",
+        "cnv_sv/reviewer/{sample}_{type}_locus_list.txt.log",
     benchmark:
         repeat(
-            "cnv_sv/expansionhunter/{sample}_{type}_locus_list.txt.benchmark.tsv",
+            "cnv_sv/reviewer/{sample}_{type}_locus_list.txt.benchmark.tsv",
             config.get("reviewer_generate_locus_list", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("reviewer_generate_locus_list", {}).get("threads", config["default_resources"]["threads"])
