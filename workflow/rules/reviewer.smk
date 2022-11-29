@@ -31,7 +31,7 @@ rule reviewer_genrate_locus_list:
     message:
         "{rule}: Generate a locus list for REViewer from {input.vcf}"
     script:
-        "../scripts/generate_reviewer_locus_list.py"
+        "../scripts/reviewer_generate_locus_list.py"
 
 
 rule reviewer:
