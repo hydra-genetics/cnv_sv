@@ -141,7 +141,7 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
     output_files += [
-        "cnv_sv/expansionhunter/reviewer/%s_%s/" % (sample, unit_type)
+        "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
