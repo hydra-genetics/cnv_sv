@@ -307,26 +307,6 @@ properties:
         type: string
         description: max execution time
 
-  generate_reviewer_locus_list:
-    description: resource definitions for generate_reviewer_locus_list
-    type: object
-    properties:
-      mem_mb:
-        type: integer
-        description: max memory in MB to be available
-      mem_per_cpu:
-        type: integer
-        description: memory in MB used per cpu
-      partition:
-        type: string
-        description: partition to use on cluster
-      threads:
-        type: integer
-        description: number of threads to be available
-      time:
-        type: string
-        description: max execution time
-
   manta_config_t:
     description: resource definitions for config_manta_t
     type: object
@@ -509,6 +489,26 @@ properties:
 
   reviewer:
     description: resource definitions reviewer
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  reviewer_generate_locus_list:
+    description: resource definitions for reviewer_generate_locus_list
     type: object
     properties:
       mem_mb:

@@ -316,16 +316,6 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  generate_reviewer_locus_list:
-    description: parameter for generate_reviewer_locus_list
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-
   manta_config_t:
     description: parameters for manta_config_t
     type: object
@@ -565,6 +555,16 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+  
+  reviewer_generate_locus_list:
+    description: parameter for reviewer_generate_locus_list
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   svdb_merge:
     description: parameters for svdb_merge
