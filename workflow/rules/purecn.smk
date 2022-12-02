@@ -55,8 +55,8 @@ rule purecn_coverage:
 checkpoint purecn:
     input:
         unpack(get_purecn_inputs),
-        vcf="snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz",
-        tbi="snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.tbi",
+        vcf="snv_indels/gatk_mutect2/{sample}_{type}.merged.unfiltered.bcftools_annotated.vcf.gz",
+        tbi="snv_indels/gatk_mutect2/{sample}_{type}.merged.unfiltered.bcftools_annotated.vcf.gz.tbi",
     output:
         csv=temp("cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}.csv"),
         outdir=temp(directory("cnv_sv/purecn/temp/{sample}_{type}/")),
