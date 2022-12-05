@@ -566,6 +566,35 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  smn_caller:
+    description: parameter for smn_caller
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to smn_caller
+      genome_version:
+        type: string
+        description: genome version to use with smn_caller
+  
+  smn_charts:
+    description: parameter for smn_charts
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to smn_charts
+    
   svdb_merge:
     description: parameters for svdb_merge
     type: object

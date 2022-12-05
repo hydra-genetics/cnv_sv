@@ -127,6 +127,8 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvpytor": ["vcf"],
         "cnv_sv/expansionhunter": ["vcf"],
         "cnv_sv/gatk_vcf": ["vcf"],
+        "cnv_sv/smn_caller": ["tsv"],
+        "cnv_sv/smn_charts": ["pdf"],
         "cnv_sv/svdb_merge": ["merged.vcf"],
         "cnv_sv/svdb_query": ["svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
