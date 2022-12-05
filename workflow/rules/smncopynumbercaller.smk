@@ -14,7 +14,7 @@ rule smn_caller:
     params:
         extra=config.get("smn_caller", {}).get("extra", ""),
         genome=config.get("smn_caller", {}).get("genome_version", ""),
-        outdir=lambda wildcards, output: "{}/{}_{}/{}_{}".format(os.path.split(output.tsv)[0]),
+        outdir=lambda wildcards, output: "{}".format(os.path.split(output.tsv)[0]),
         prefix=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
     log:
         "cnv_sv/smn_caller/{sample}_{type}.tsv.log",
@@ -54,7 +54,7 @@ rule smn_charts:
     params:
         extra=config.get("smn_charts", {}).get("extra", ""),
         genome=config.get("smn_charts", {}).get("genome_version", ""),
-        outdir=lambda wildcards, output: "{}/{}_{}/{}_{}".format(os.path.split(output.pdf)[0]),
+        outdir=lambda wildcards, output: "{}".format(os.path.split(output.pdf)[0]),
     log:
         "cnv_sv/smn_charts/{sample}_{type}.pdf.log",
     benchmark:
