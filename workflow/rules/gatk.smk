@@ -203,36 +203,36 @@ rule gatk_call_copy_ratio_segments:
         "{params.extra}) &> {log}"
 
 
-rule gatk_cnv_to_vcf:
+rule gatk_to_vcf:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
     output:
         vcf=temp("cnv_sv/gatk_vcf/{sample}_{type}.vcf"),
     params:
-        dup_limit=config.get("gatk_cnv_vcf", {}).get("dup_limit", 2.5),
-        het_del_limit=config.get("gatk_cnv_vcf", {}).get("het_del_limit", 1.5),
-        hom_del_limit=config.get("gatk_cnv_vcf", {}).get("hom_del_limit", 0.5),
+        dup_limit=config.get("gatk_vcf", {}).get("dup_limit", 2.5),
+        het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
+        hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
         sample_id="{sample}_{type}",
         tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
     log:
-        "cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf.log",
+        "cnv_sv/gatk_vcf/{sample}_{type}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/gatk_cnv_vcf/{sample}_{type}.vcf.benchmark.tsv",
-            config.get("gatk_cnv_vcf", {}).get("benchmark_repeats", 1),
+            "cnv_sv/gatk_vcf/{sample}_{type}.vcf.benchmark.tsv",
+            config.get("gatk_vcf", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("gatk_cnv_vcf", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("gatk_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("gatk_cnv_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("gatk_cnv_vcf", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("gatk_cnv_vcf", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("gatk_cnv_vcf", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("gatk_cnv_vcf", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("gatk_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("gatk_vcf", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("gatk_vcf", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("gatk_vcf", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("gatk_vcf", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("gatk_cnv_vcf", {}).get("container", config["default_container"])
+        config.get("gatk_vcf", {}).get("container", config["default_container"])
     conda:
         "../envs/gatk.yaml"
     message:
-        "{rule}: export gatk cnv segments into vcf in cnv_sv/gatk_cnv_vcf/{wildcards.sample}_{wildcards.type}.vcf"
+        "{rule}: export gatk cnv segments into vcf in cnv_sv/gatk_vcf/{wildcards.sample}_{wildcards.type}.vcf"
     script:
-        "../scripts/gatk_cnv_to_vcf.py"
+        "../scripts/gatk_to_vcf.py"
