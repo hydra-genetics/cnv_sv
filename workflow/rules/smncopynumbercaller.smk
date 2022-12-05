@@ -47,7 +47,7 @@ rule smn_caller:
 
 rule smn_charts:
     input:
-        json="cnv_sv/smn_caller{sample}_{type}.json"
+        json="cnv_sv/smn_caller/{sample}_{type}.json"
     output:
         outdir=temp(directory("cnv_sv/smn_charts/{sample}_{type}")),
         pdf=temp("cnv_sv/smn_charts/{sample}_{type}.pdf"),
