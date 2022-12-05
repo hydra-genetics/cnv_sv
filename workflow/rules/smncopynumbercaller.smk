@@ -9,12 +9,12 @@ rule smn_caller:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
     output:
-        outdir=temp(directory("cnv_sv/smn_caller/{sample}_{type}")),
         json=temp("cnv_sv/smn_caller/{sample}_{type}.json"),
         tsv=temp("cnv_sv/smn_caller/{sample}_{type}.tsv"),
     params:
         extra=config.get("smn_caller", {}).get("extra", ""),
         genome=config.get("smn_caller", {}).get("genome_version", ""),
+        outdir=lambda wildcards, output: "{}/{}_{}/{}_{}".format(os.path.split(output.tsv)[0]),
         prefix=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
     log:
         "cnv_sv/smn_caller/{sample}_{type}.tsv.log",
@@ -41,8 +41,8 @@ rule smn_caller:
         "smn_caller.py --manifest {input.bam}.manifest.txt "
         "--genome {params.genome} "
         "--prefix {params.prefix} "     
-        "--outDir {output.outdir} "      
-        "--threads {resources.threads} "      
+        "--outDir {params.outdir} "      
+        "--threads {resources.threads} &> {log}"      
 
 
 rule smn_charts:
@@ -54,7 +54,7 @@ rule smn_charts:
     params:
         extra=config.get("smn_charts", {}).get("extra", ""),
         genome=config.get("smn_charts", {}).get("genome_version", ""),
-        prefix=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
+        outdir=lambda wildcards, output: "{}/{}_{}/{}_{}".format(os.path.split(output.pdf)[0]),
     log:
         "cnv_sv/smn_charts/{sample}_{type}.pdf.log",
     benchmark:
@@ -77,4 +77,4 @@ rule smn_charts:
         "{rule}: Visualisation of SMNCopyNumberCaller result in {input.json}"
     shell:
         "python smn_charts.py -s {input.json} " 
-        "-o {output.outdir} "        
+        "-o {params.outdir} &> {log}"        
