@@ -10,7 +10,7 @@ rule smn_caller:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
     output:
         outdir=temp(directory("cnv_sv/smn_caller/{sample}_{type}")),
-        json=temp("cnv_sv/smn_caller{sample}_{type}.json"),
+        json=temp("cnv_sv/smn_caller/{sample}_{type}.json"),
         tsv=temp("cnv_sv/smn_caller/{sample}_{type}.tsv"),
     params:
         extra=config.get("smn_caller", {}).get("extra", ""),
