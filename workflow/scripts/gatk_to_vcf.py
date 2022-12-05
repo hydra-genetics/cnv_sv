@@ -77,7 +77,7 @@ for line in seg_in:
             gt = "0/1"
         else:
             gt = "0/0"
-        info1 = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=gatk_cnv;CN=%s;CORR_CN=%s" % (
+        info1 = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=gatk;CN=%s;CORR_CN=%s" % (
             alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn), str(ccn)
         )
         info2 = ";PROBES=%s;BAF=%s;BAF_PROBES=%s" % (nr_probes, baf, nr_baf_probes)
