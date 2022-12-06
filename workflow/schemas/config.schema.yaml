@@ -114,8 +114,8 @@ properties:
         type: string
         description: copy number threshold for duplication
 
-  cnvkit_seg:
-    description: parameters for cnvkit_seg
+  cnvkit_export_seg:
+    description: parameters for cnvkit_export_seg
     type: object
     properties:
       benchmark_repeats:

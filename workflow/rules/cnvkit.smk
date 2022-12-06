@@ -191,33 +191,33 @@ rule cnvkit_vcf:
         "../scripts/cnvkit_vcf.py"
 
 
-rule cnvkit_seg:
+rule cnvkit_export_seg:
     input:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
     output:
-        seg=temp("cnv_sv/cnvkit_seg/{sample}_{type}.seg"),
+        seg=temp("cnv_sv/cnvkit_export_seg/{sample}_{type}.seg"),
     params:
-        extra=config.get("cnvkit_seg", {}).get("extra", ""),
+        extra=config.get("cnvkit_export_seg", {}).get("extra", ""),
     log:
-        "cnv_sv/cnvkit_seg/{sample}_{type}.seg.log",
+        "cnv_sv/cnvkit_export_seg/{sample}_{type}.seg.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_seg/{sample}_{type}.seg.benchmark.tsv",
-            config.get("cnvkit_seg", {}).get("benchmark_repeats", 1),
+            "cnv_sv/cnvkit_export_seg/{sample}_{type}.seg.benchmark.tsv",
+            config.get("cnvkit_export_seg", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("cnvkit_seg", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("cnvkit_export_seg", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("cnvkit_seg", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvkit_seg", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvkit_seg", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvkit_seg", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvkit_seg", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("cnvkit_export_seg", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvkit_export_seg", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvkit_export_seg", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvkit_export_seg", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_export_seg", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("cnvkit_seg", {}).get("container", config["default_container"])
+        config.get("cnvkit_export_seg", {}).get("container", config["default_container"])
     conda:
         "../envs/cnvkit.yaml"
     message:
-        "{rule}: export cnvkit segments into seg in cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.seg"
+        "{rule}: export cnvkit segments into seg in {output.seg}"
     shell:
         "(cnvkit.py export seg "
         "{input.segments} "
