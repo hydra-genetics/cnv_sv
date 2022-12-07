@@ -76,5 +76,5 @@ rule smn_charts:
     message:
         "{rule}: Visualisation of SMNCopyNumberCaller result in {input.json}"
     shell:
-        "python $(whereis smn_charts.py | awk '{print $2}') -s {input.json} " 
+        "python $(whereis smn_charts.py | awk '{{print $2}}') -s {input.json} " 
         "-o {params.outdir} &> {log}"        
