@@ -37,7 +37,7 @@ rule smn_caller:
     message:
         "{rule}: Call SMN1 and SMN2 copynumber on {input.bam} using SMNCopyNumberCaller"
     shell:
-        "find $(pwd)/{input.bam} > {input.bam}.manifest.txt && "
+        "find $(pwd)/{input.bam} > {params.outdir}/{input.bam}.manifest.txt && "
         "smn_caller.py --manifest {input.bam}.manifest.txt "
         "--genome {params.genome} "
         "--prefix {params.prefix} "     
