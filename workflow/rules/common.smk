@@ -128,7 +128,6 @@ def compile_output_list(wildcards):
         "cnv_sv/expansionhunter": ["vcf"],
         "cnv_sv/gatk_vcf": ["vcf"],
         "cnv_sv/smn_caller": ["tsv"],
-        "cnv_sv/smn_charts": ["pdf"],
         "cnv_sv/svdb_merge": ["merged.vcf"],
         "cnv_sv/svdb_query": ["svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
@@ -144,6 +143,11 @@ def compile_output_list(wildcards):
     ]
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
+    output_files += [
+        "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]

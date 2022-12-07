@@ -4,10 +4,41 @@ __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule smn_caller:
+rule smn_manifest:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+    output:
+        manifest=temp("cnv_sv/smn_caller/{sample}_{type}_manifest.txt")
+    params:
+        extra=config.get("smn_caller", {}).get("extra", ""),
+    log:
+        "cnv_sv/smn_caller/{sample}_{type}_manifest.txt.log",
+    benchmark:
+        repeat(
+            "cnv_sv/smn_caller/{sample}_{type}_manifest.txt.benchmark.tsv",
+            config.get("smn_caller", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("smn_manifest", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("smn_manifest", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("smn_manifest", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("smn_manifest", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("smn_manifest", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("smn_manifest", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("smn_manifest", {}).get("container", config["default_container"])
+    conda:
+        "../envs/smncopynumbercaller.yaml"
+    message:
+        "{rule}: Generate the manifest file for SMNCopyNumberCaller"
+    script:
+        "../scripts/smncopynumbercaller_manifest.py"      
+
+
+rule smn_caller:
+    input:
+        manifest="cnv_sv/smn_caller/{sample}_{type}_manifest.txt",
     output:
         json=temp("cnv_sv/smn_caller/{sample}_{type}.json"),
         tsv=temp("cnv_sv/smn_caller/{sample}_{type}.tsv"),
@@ -35,10 +66,9 @@ rule smn_caller:
     conda:
         "../envs/smncopynumbercaller.yaml"
     message:
-        "{rule}: Call SMN1 and SMN2 copynumber on {input.bam} using SMNCopyNumberCaller"
+        "{rule}: Call SMN1 and SMN2 copynumber on {input.manifest} using SMNCopyNumberCaller"
     shell:
-        "find $(pwd)/{input.bam} > {params.outdir}/{input.bam}.manifest.txt && "
-        "smn_caller.py --manifest {input.bam}.manifest.txt "
+        "smn_caller.py --manifest {input.manifest} "
         "--genome {params.genome} "
         "--prefix {params.prefix} "     
         "--outDir {params.outdir} "      
