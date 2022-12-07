@@ -49,7 +49,7 @@ rule smn_charts:
     input:
         json="cnv_sv/smn_caller/{sample}_{type}.json"
     output:
-        pdf=temp("cnv_sv/smn_chart/smn_{sample}_{type}.pdf"),
+        pdf=temp("cnv_sv/smn_charts/smn_{sample}_{type}.pdf"),
     params:
         extra=config.get("smn_charts", {}).get("extra", ""),
         genome=config.get("smn_charts", {}).get("genome_version", ""),
