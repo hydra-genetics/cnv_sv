@@ -30,4 +30,4 @@ jobs:
       - name: Linting
         working-directory: .tests/integration
         run: |
-          snakemake --lint -n -s ../../workflow/Snakefile --configfile config/config.yaml
+          snakemake --lint -n -s ../../workflow/Snakefile --configfile config.yaml
