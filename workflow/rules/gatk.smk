@@ -204,7 +204,7 @@ rule gatk_call_copy_ratio_segments:
 
 
 def get_tc(wildcards):
-    tc_method = config.get("tc_method", "")
+    tc_method = config.get("tc_method", "purecn")
     if tc_method == "purecn":
         tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
