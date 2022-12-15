@@ -142,7 +142,7 @@ properties:
         description: parameters that should be forwarded to tiddit
       lengthlist:
         type: string
-        description: different variant length thresholds (e.g. 1000 10000 100000)  
+        description: different variant length thresholds (e.g. 1000 10000 100000)
 
   cnvpytor_filter:
     description: parameters for tiddit
@@ -500,7 +500,7 @@ properties:
           segmentation_method:
             type: string
             description: method used for generating segmentation for PureCN.R
-            enum: 
+            enum:
               - GATK4
               - cnvkit
           fun_segmentation:
@@ -521,7 +521,17 @@ properties:
           - segmentation_method
           - fun_segmentation
           - interval_padding
-      
+
+  purecn_copy_output:
+    description: parameters for purecn_copy_output
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
 
   purecn_coverage:
     description: parameters for purecn_coverage
@@ -542,6 +552,23 @@ properties:
     required:
       - intervals
 
+  purecn_purity_file:
+    description: parameters for purecn_purity_file
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      min_purity:
+        type: number
+        description: set min purity in percent that should be reported from purecn
+      missing_purity_value:
+        type: number
+        description: purity in percent reported if purecn has failed
+
   reviewer:
     description: parameters for reviewer
     type: object
@@ -555,7 +582,7 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-  
+
   reviewer_generate_locus_list:
     description: parameter for reviewer_generate_locus_list
     properties:
