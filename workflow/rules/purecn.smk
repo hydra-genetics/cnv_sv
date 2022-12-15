@@ -159,7 +159,7 @@ rule purecn_purity_file:
         "{rule}: Extract purity value for {wildcards.sample}_{wildcards.type}"
     shell:
         """
-        (awk -F',' 'FNR==2 {{ print ($2 > {params.min_purity} ? $2 : {params.min_purity}) }}
-        END{{if (NR==1) {{ print {params.missing_purity_value} }} }}'
+        (awk -F',' 'FNR==2 {{ print ($2 > {params.min_purity} ? $2 : {params.min_purity}) }} \
+        END{{if (NR==1) {{ print {params.missing_purity_value} }} }}' \
         {input.csv} > {output.purity}) &> {log}
         """
