@@ -203,6 +203,18 @@ rule gatk_call_copy_ratio_segments:
         "{params.extra}) &> {log}"
 
 
+def get_tc(wildcards):
+    tc_method = config.get("tc_method", "")
+    if tc_method == "purecn":
+        tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if not os.path.exists(tc_file):
+            return -1
+        else:
+            with open(tc_file, "r") as f:
+                tc = f.read()
+            return tc
+
+
 rule gatk_to_vcf:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
@@ -213,7 +225,8 @@ rule gatk_to_vcf:
         het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
         hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
         sample_id="{sample}_{type}",
-        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=get_tc,
     log:
         "cnv_sv/gatk_vcf/{sample}_{type}.vcf.log",
     benchmark:
