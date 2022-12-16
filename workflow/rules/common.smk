@@ -52,7 +52,7 @@ wildcard_constraints:
 def get_tc(wildcards):
     tc_method = {wildcards.tc_method}
     if tc_method == "pathology":
-        return get_sample(samples, wildcards)["tumor_content"],
+        return get_sample(samples, wildcards)["tumor_content"]
     else:
         tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
