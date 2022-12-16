@@ -137,7 +137,7 @@ rule pindel_update_vcf_sequence_dictionary:
         fasta=config["reference"]["fasta"],
         vcf="cnv_sv/pindel_vcf/{sample}_{type}.no_contig.vcf",
     output:
-        temp("cnv_sv/pindel_vcf/{sample}_{type}.vcf"),
+        temp("cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf"),
     params:
         extra=config.get("pindel_update_vcf_sequence_dictionary", {}).get("extra", ""),
     log:

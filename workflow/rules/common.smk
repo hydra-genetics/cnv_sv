@@ -132,19 +132,32 @@ def get_locus_str(loci):
     return loc_str
 
 
+def get_vcfs_for_svdb_merge(wildcards):
+    vcf_dict = {}
+    for v in config.get("svdb_merge", {}).get("tc_method"):
+        tc_method = v["name"]
+        callers = v["cnv_caller"]
+        for caller in callers:
+            if tc_method in vcf_dict:
+                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf")
+            else:
+                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
+    return vcf_dict[wildcards.tc_method]
+
+
 def compile_output_list(wildcards):
     files = {
-        "cnv_sv/cnvkit_call": ["loh.cns"],
+        "cnv_sv/cnvkit_call": ["purecn.loh.cns", "pathology.loh.cns"],
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
-        "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/cnvkit_vcf": ["purecn.vcf", "pathology.vcf"],
         "cnv_sv/cnvpytor": ["vcf"],
         "cnv_sv/expansionhunter": ["vcf"],
-        "cnv_sv/gatk_vcf": ["vcf"],
-        "cnv_sv/svdb_merge": ["merged.vcf"],
-        "cnv_sv/svdb_query": ["svdb_query.vcf"],
+        "cnv_sv/gatk_vcf": ["purecn.vcf", "pathology.vcf"],
+        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "purecn.merged.vcf", "pathology.merged.vcf"],
+        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "purecn.svdb_query.vcf", "pathology.svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
-        "cnv_sv/pindel_vcf": ["vcf"],
+        "cnv_sv/pindel_vcf": ["no_tc.vcf"],
         "cnv_sv/tiddit": ["vcf"],
     }
     output_files = [

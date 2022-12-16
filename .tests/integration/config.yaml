@@ -4,10 +4,6 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.9"
 
-tc_method:
-  - "pathology"
-  - "purecn"
-
 reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
@@ -117,10 +113,18 @@ reviewer:
   container: "docker://hydragenetics/reviewer:0.2.7"
 
 svdb_merge:
-  cnv_callers:
-    - "cnvkit"
-    - "gatk"
-    - "pindel"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: no_tc
+      cnv_caller:
+        - pindel
   container: "docker://hydragenetics/svdb:2.6.0"
 
 svdb_query:
