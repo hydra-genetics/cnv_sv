@@ -142,6 +142,7 @@ def get_vcfs_for_svdb_merge(wildcards):
                 vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf")
             else:
                 vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
+    print(vcf_dict[wildcards.tc_method])
     return vcf_dict[wildcards.tc_method]
 
 
