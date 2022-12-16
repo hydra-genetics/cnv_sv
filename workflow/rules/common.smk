@@ -49,6 +49,20 @@ wildcard_constraints:
     type="N|T|R",
 
 
+def get_tc(wildcards):
+    tc_method = {wildcards.tc_method}
+    if tc_method == "pathology":
+        return get_sample(samples, wildcards)["tumor_content"],
+    else:
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if not os.path.exists(tc_file):
+            return -1
+        else:
+            with open(tc_file, "r") as f:
+                tc = f.read()
+            return tc
+
+
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")

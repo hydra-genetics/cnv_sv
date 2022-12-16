@@ -203,25 +203,11 @@ rule gatk_call_copy_ratio_segments:
         "{params.extra}) &> {log}"
 
 
-def get_tc(wildcards):
-    tc_method = config.get("tc_method", "pathology")
-    if tc_method == "purecn":
-        tc_file = f"cnv_sv/purecn_purity_file/{wildcards.sample}_{wildcards.type}.purecn.purity.txt"
-        if not os.path.exists(tc_file):
-            return -1
-        else:
-            with open(tc_file, "r") as f:
-                tc = f.read()
-            return tc
-    elif tc_method == "pathology":
-        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
-
-
 rule gatk_to_vcf:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
     output:
-        vcf=temp("cnv_sv/gatk_vcf/{sample}_{type}.vcf"),
+        vcf=temp("cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
         dup_limit=config.get("gatk_vcf", {}).get("dup_limit", 2.5),
         het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
@@ -230,10 +216,10 @@ rule gatk_to_vcf:
         #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         tc=get_tc,
     log:
-        "cnv_sv/gatk_vcf/{sample}_{type}.vcf.log",
+        "cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/gatk_vcf/{sample}_{type}.vcf.benchmark.tsv",
+            "cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf.benchmark.tsv",
             config.get("gatk_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("gatk_vcf", {}).get("threads", config["default_resources"]["threads"])

@@ -30,6 +30,12 @@ properties:
     - resources
     - default_container
 
+  tc_method:
+    description: choice of method to determine purity or tumor content
+    type: array
+    items:
+        type: string
+
   cnvkit_batch:
     description: parameters for cnvkit_batch
     type: object
