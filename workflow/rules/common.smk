@@ -50,7 +50,7 @@ wildcard_constraints:
 
 
 def get_tc(wildcards):
-    tc_method = {wildcards.tc_method}
+    tc_method = wildcards.tc_method
     if tc_method == "pathology":
         return get_sample(samples, wildcards)["tumor_content"]
     else:
@@ -142,7 +142,6 @@ def get_vcfs_for_svdb_merge(wildcards):
                 vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf")
             else:
                 vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
-    print(vcf_dict[wildcards.tc_method])
     return vcf_dict[wildcards.tc_method]
 
 

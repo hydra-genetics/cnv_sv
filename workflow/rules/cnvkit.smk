@@ -56,7 +56,6 @@ rule cnvkit_call:
         segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
     params:
         extra=config.get("cnvkit_call", {}).get("extra", ""),
-        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         tc=get_tc,
     log:
         "cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.log",
