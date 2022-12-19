@@ -53,15 +53,15 @@ rule cnvkit_call:
         segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
-        segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.loh.cns"),
+        segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
     params:
         extra=config.get("cnvkit_call", {}).get("extra", ""),
-        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=get_tc,
     log:
-        "cnv_sv/cnvkit_call/{sample}_{type}.loh.cns.log",
+        "cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_call/{sample}_{type}.loh.cns.benchmark.tsv",
+            "cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.benchmark.tsv",
             config.get("cnvkit_call", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
@@ -159,19 +159,19 @@ rule cnvkit_scatter:
 
 rule cnvkit_vcf:
     input:
-        segment="cnv_sv/cnvkit_call/{sample}_{type}.loh.cns",
+        segment="cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns",
     output:
-        vcf=temp("cnv_sv/cnvkit_vcf/{sample}_{type}.vcf"),
+        vcf=temp("cnv_sv/cnvkit_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
         sample_name="{sample}_{type}",
         hom_del_limit=config.get("cnvkit_vcf", {}).get("hom_del_limit", 0.5),
         het_del_limit=config.get("cnvkit_vcf", {}).get("het_del_limit", 1.5),
         dup_limit=config.get("cnvkit_vcf", {}).get("dup_limit", 2.5),
     log:
-        "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf.log",
+        "cnv_sv/cnvkit_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvkit_vcf/{sample}_{type}.vcf.benchmark.tsv",
+            "cnv_sv/cnvkit_vcf/{sample}_{type}.{tc_method}.vcf.benchmark.tsv",
             config.get("cnvkit_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvkit_vcf", {}).get("threads", config["default_resources"]["threads"])

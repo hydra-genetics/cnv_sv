@@ -603,10 +603,17 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      cnv_callers:
+      tc_method:
         type: array
         items:
-            type: string
+          type: object
+          properties:
+            name:
+              type: string
+            cnv_callers:
+              type: array
+              items:
+                type: string
         description: list of cnv callers that are included in the vcf merging
       overlap:
         type: number

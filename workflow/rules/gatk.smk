@@ -207,18 +207,19 @@ rule gatk_to_vcf:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
     output:
-        vcf=temp("cnv_sv/gatk_vcf/{sample}_{type}.vcf"),
+        vcf=temp("cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
         dup_limit=config.get("gatk_vcf", {}).get("dup_limit", 2.5),
         het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
         hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
         sample_id="{sample}_{type}",
-        tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
+        tc=get_tc,
     log:
-        "cnv_sv/gatk_vcf/{sample}_{type}.vcf.log",
+        "cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/gatk_vcf/{sample}_{type}.vcf.benchmark.tsv",
+            "cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf.benchmark.tsv",
             config.get("gatk_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("gatk_vcf", {}).get("threads", config["default_resources"]["threads"])

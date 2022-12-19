@@ -2,7 +2,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.8"
+default_container: "docker://hydragenetics/common:0.1.9"
 
 reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
@@ -25,7 +25,6 @@ cnvkit_scatter:
 
 cnvkit_vcf:
   container: "docker://hydragenetics/cnvkit:0.9.9"
-
 
 cnvkit_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -98,7 +97,7 @@ pindel_call:
 
 pindel2vcf:
   container: "docker://hydragenetics/pindel:0.2.5b9"
-  
+
 purecn:
   container: "docker://hydragenetics/purecn:2.2.0"
   genome: "hg19"
@@ -114,10 +113,18 @@ reviewer:
   container: "docker://hydragenetics/reviewer:0.2.7"
 
 svdb_merge:
-  cnv_callers:
-    - "cnvkit"
-    - "gatk"
-    - "pindel"
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
+    - name: no_tc
+      cnv_caller:
+        - pindel
   container: "docker://hydragenetics/svdb:2.6.0"
 
 svdb_query:
