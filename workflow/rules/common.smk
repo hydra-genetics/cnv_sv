@@ -68,7 +68,7 @@ def get_tc_file(wildcards):
     if tc_method == "pathology":
         return "samples.tsv"
     else:
-        return tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
 
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
