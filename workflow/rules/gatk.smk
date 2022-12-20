@@ -206,6 +206,7 @@ rule gatk_call_copy_ratio_segments:
 rule gatk_to_vcf:
     input:
         segment="cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg",
+        tc_file=get_tc_file,
     output:
         vcf=temp("cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
