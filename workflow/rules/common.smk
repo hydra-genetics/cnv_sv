@@ -77,7 +77,7 @@ def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     if segmentation_method == "internal":
         inputs.update(
             {
-                "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_T_coverage_loess.txt.gz",
+                "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_{wildcards.type}_coverage_loess.txt.gz",
                 "intervals": config.get("purecn", {}).get("intervals"),
                 "normaldb": config.get("purecn", {}).get("normaldb"),
             }
@@ -85,16 +85,16 @@ def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     elif segmentation_method == "GATK4":
         inputs.update(
             {
-                "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_T.counts.hdf5",
-                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_T.clean.modelFinal.seg",
-                "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_T.clean.denoisedCR.tsv",
+                "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_{wildcards.type}.counts.hdf5",
+                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_{wildcards.type}.clean.modelFinal.seg",
+                "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_{wildcards.type}.clean.denoisedCR.tsv",
             }
         )
     elif segmentation_method == "cnvkit":
         inputs.update(
             {
-                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_T.cnr",
-                "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_T.seg",
+                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_{wildcards.type}.cnr",
+                "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_{wildcards.type}.seg",
             }
         )
 
