@@ -155,15 +155,15 @@ def get_vcfs_for_svdb_merge(wildcards):
 
 def compile_output_list(wildcards):
     files = {
-        "cnv_sv/cnvkit_call": ["purecn.loh.cns", "pathology.loh.cns"],
+        "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
-        "cnv_sv/cnvkit_vcf": ["purecn.vcf", "pathology.vcf"],
+        "cnv_sv/cnvkit_vcf": ["pathology.vcf"],
         "cnv_sv/cnvpytor": ["vcf"],
         "cnv_sv/expansionhunter": ["vcf"],
-        "cnv_sv/gatk_vcf": ["purecn.vcf", "pathology.vcf"],
-        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "purecn.merged.vcf", "pathology.merged.vcf"],
-        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "purecn.svdb_query.vcf", "pathology.svdb_query.vcf"],
+        "cnv_sv/gatk_vcf": ["pathology.vcf"],
+        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
+        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
         "cnv_sv/pindel_vcf": ["no_tc.vcf"],
         "cnv_sv/tiddit": ["vcf"],
