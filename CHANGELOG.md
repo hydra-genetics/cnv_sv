@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.2.0...v0.3.0) (2023-01-27)
+
+
+### Features
+
+* added default in function ([bf4f3f2](https://www.github.com/hydra-genetics/cnv_sv/commit/bf4f3f2399494742c9ed38ab24cd2fa619dde4d5))
+* added function that extracts purity for purecn ([9cf298e](https://www.github.com/hydra-genetics/cnv_sv/commit/9cf298e8eda05dc02280a84aa440dafc5f59082f))
+* added pathology option ([4b3adc5](https://www.github.com/hydra-genetics/cnv_sv/commit/4b3adc52718494c0673b1a8bf7252e9bcedc0295))
+* added rule purecn_purity_file ([2bed973](https://www.github.com/hydra-genetics/cnv_sv/commit/2bed973dd8e9e2420d630978fe24571fec36a388))
+* added tags for purity method ([b9f3d3d](https://www.github.com/hydra-genetics/cnv_sv/commit/b9f3d3d6b3a8ffbd39f32071d4eed12907703d6d))
+* svdb is now configurable to tc method ([c3eb2e1](https://www.github.com/hydra-genetics/cnv_sv/commit/c3eb2e17e04eed00e8c0ea8314e59035560c4e4f))
+
+
+### Bug Fixes
+
+* added backslash in cmd ([994fa78](https://www.github.com/hydra-genetics/cnv_sv/commit/994fa783459192db0d6b039023a16a85907a4a13))
+* allow purecn to run on all sample types ([6947acf](https://www.github.com/hydra-genetics/cnv_sv/commit/6947acf0a3e91aa3de0080cb9a907fe8af10b880))
+* bugfx ([ff30237](https://www.github.com/hydra-genetics/cnv_sv/commit/ff30237dec88ebf163dffea7f8d55e930968c6e4))
+* corrected get_tc function output ([3c89633](https://www.github.com/hydra-genetics/cnv_sv/commit/3c89633a26be3a315774b112640d467d5bb15705))
+* input file now with germline annotation ([bb7e5dd](https://www.github.com/hydra-genetics/cnv_sv/commit/bb7e5ddb7c1bbb0305d4df546cd8d43002a8bc21))
+* output files ([97fb714](https://www.github.com/hydra-genetics/cnv_sv/commit/97fb714803894e91600badb34b9a89b4483992b0))
+* rename caller from gatk_cnv to gatk ([6c0d00f](https://www.github.com/hydra-genetics/cnv_sv/commit/6c0d00f149419c883935b80faa30d17ca483ecce))
+* rule name and output folder ([003f415](https://www.github.com/hydra-genetics/cnv_sv/commit/003f4159f3a3a681ef393a94cde2ec1b5012784c))
+* tc files only in params and does not trigger purecn ([28bdbe4](https://www.github.com/hydra-genetics/cnv_sv/commit/28bdbe4e99c6569b20cd33eaf71ad6d9be00205d))
+
+
+### Documentation
+
+* update CODEOWNERS ([c20ccbc](https://www.github.com/hydra-genetics/cnv_sv/commit/c20ccbcdee442834e139f5e510f92425b7cdad68))
+* update compatibility ([6bb06a5](https://www.github.com/hydra-genetics/cnv_sv/commit/6bb06a5624d813f0a67b06bc4642a007c2bc4ffa))
+
 ## [0.2.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.1.0...v0.2.0) (2022-11-22)
 
 
