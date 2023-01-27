@@ -103,7 +103,7 @@ use rule * from cnv_sv as cnv_sv_*
 ### Compatibility
 
 Latest:
- - alignment:v0.3.0
+ - alignment:v0.3.1
 
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 
