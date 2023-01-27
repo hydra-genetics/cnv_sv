@@ -49,13 +49,35 @@ wildcard_constraints:
     type="N|T|R",
 
 
+def get_tc(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return get_sample(samples, wildcards)["tumor_content"]
+    else:
+        tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+        if not os.path.exists(tc_file):
+            return -1
+        else:
+            with open(tc_file, "r") as f:
+                tc = f.read()
+            return tc
+
+
+def get_tc_file(wildcards):
+    tc_method = wildcards.tc_method
+    if tc_method == "pathology":
+        return "samples.tsv"
+    else:
+        return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
+
+
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":
         inputs.update(
             {
-                "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_T_coverage_loess.txt.gz",
+                "tumor": f"cnv_sv/purecn_coverage/{wildcards.sample}_{wildcards.type}_coverage_loess.txt.gz",
                 "intervals": config.get("purecn", {}).get("intervals"),
                 "normaldb": config.get("purecn", {}).get("normaldb"),
             }
@@ -63,16 +85,16 @@ def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     elif segmentation_method == "GATK4":
         inputs.update(
             {
-                "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_T.counts.hdf5",
-                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_T.clean.modelFinal.seg",
-                "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_T.clean.denoisedCR.tsv",
+                "tumor": f"cnv_sv/gatk_collect_read_counts/{wildcards.sample}_{wildcards.type}.counts.hdf5",
+                "seg_file": f"cnv_sv/gatk_model_segments/{wildcards.sample}_{wildcards.type}.clean.modelFinal.seg",
+                "log_ratio_file": f"cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_{wildcards.type}.clean.denoisedCR.tsv",
             }
         )
     elif segmentation_method == "cnvkit":
         inputs.update(
             {
-                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_T.cnr",
-                "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_T.seg",
+                "tumor": f"cnv_sv/cnvkit_batch/{wildcards.sample}/{wildcards.sample}_{wildcards.type}.cnr",
+                "seg_file": f"cnv_sv/cnvkit_export_seg/{wildcards.sample}_{wildcards.type}.seg",
             }
         )
 
@@ -118,19 +140,32 @@ def get_locus_str(loci):
     return loc_str
 
 
+def get_vcfs_for_svdb_merge(wildcards):
+    vcf_dict = {}
+    for v in config.get("svdb_merge", {}).get("tc_method"):
+        tc_method = v["name"]
+        callers = v["cnv_caller"]
+        for caller in callers:
+            if tc_method in vcf_dict:
+                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf")
+            else:
+                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
+    return vcf_dict[wildcards.tc_method]
+
+
 def compile_output_list(wildcards):
     files = {
-        "cnv_sv/cnvkit_call": ["loh.cns"],
+        "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
-        "cnv_sv/cnvkit_vcf": ["vcf"],
+        "cnv_sv/cnvkit_vcf": ["pathology.vcf"],
         "cnv_sv/cnvpytor": ["vcf"],
         "cnv_sv/expansionhunter": ["vcf"],
-        "cnv_sv/gatk_vcf": ["vcf"],
-        "cnv_sv/svdb_merge": ["merged.vcf"],
-        "cnv_sv/svdb_query": ["svdb_query.vcf"],
+        "cnv_sv/gatk_vcf": ["pathology.vcf"],
+        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
+        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
-        "cnv_sv/pindel_vcf": ["vcf"],
+        "cnv_sv/pindel_vcf": ["no_tc.vcf"],
         "cnv_sv/tiddit": ["vcf"],
     }
     output_files = [
@@ -141,7 +176,7 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
     output_files += [
-        "cnv_sv/expansionhunter/reviewer/%s_%s/" % (sample, unit_type)
+        "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]

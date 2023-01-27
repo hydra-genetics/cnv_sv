@@ -66,6 +66,10 @@ For exomdepth read count data must be generated. more information can be found a
 ### VCF used to calculate variant allele frequencies
 Could be a gnomeAD vcf file filtered on population allele frequences above 0.001
 
+### Purecn
+Purecn is used to estimate tumor purity from the data. Purecn can be run with different kinds of segmentation methods in conjunction with different variant files as input, see further purecn in the [schemas](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/schemas/config.schema.yaml). 
+Purecn is not currently inculded in the testing as there is no conda installation that is working.
+
 ## :white_check_mark: Testing
 
 The workflow repository contains a small test dataset `.tests/integration` which can be run like so:
@@ -113,6 +117,7 @@ The following output files should be targeted via another rule:
 | `cnv_sv/{caller}_vcf/{sample}_{type}.vcf` | vcf file for each caller |
 | `cnv_sv/exomedepth/{sample}_{type}.SV.txt` | cnv calls from exomedepth |
 | `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
+| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn | 
 
 ## :judge: Rule Graph
 

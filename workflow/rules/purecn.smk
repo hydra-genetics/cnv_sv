@@ -55,8 +55,8 @@ rule purecn_coverage:
 checkpoint purecn:
     input:
         unpack(get_purecn_inputs),
-        vcf="snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz",
-        tbi="snv_indels/gatk_mutect2/{sample}_{type}.merged.softfiltered.vcf.gz.tbi",
+        vcf="snv_indels/gatk_mutect2/{sample}_{type}.merged.unfiltered.bcftools_annotated.vcf.gz",
+        tbi="snv_indels/gatk_mutect2/{sample}_{type}.merged.unfiltered.bcftools_annotated.vcf.gz.tbi",
     output:
         csv=temp("cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}.csv"),
         outdir=temp(directory("cnv_sv/purecn/temp/{sample}_{type}/")),
@@ -127,3 +127,39 @@ rule purecn_copy_output:
         "{rule}: Copy {input} to {output}"
     shell:
         "ln {input.file} {output} || cp {input.file} {output}"
+
+
+rule purecn_purity_file:
+    input:
+        csv="cnv_sv/purecn/{sample}_{type}.csv",
+    output:
+        purity=temp("cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt"),
+    params:
+        min_purity=config.get("purecn_purity_file", {}).get("min_purity", "0.2"),
+        missing_purity_value=config.get("purecn_purity_file", {}).get("missing_purity_value", "1"),
+    log:
+        "cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt.log",
+    benchmark:
+        repeat(
+            "cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt.benchmark.tsv",
+            config.get("purecn_purity_file", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("purecn_purity_file", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("purecn_purity_file", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("purecn_purity_file", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("purecn_purity_file", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("purecn_purity_file", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("purecn_purity_file", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("purecn_purity_file", {}).get("container", config["default_container"])
+    conda:
+        "../envs/purecn.yaml"
+    message:
+        "{rule}: Extract purity value for {wildcards.sample}_{wildcards.type}"
+    shell:
+        """
+        (awk -F',' 'FNR==2 {{ print ($2 > {params.min_purity} ? $2 : {params.min_purity}) }} \
+        END{{if (NR==1) {{ print {params.missing_purity_value} }} }}' \
+        {input.csv} > {output.purity}) &> {log}
+        """

@@ -9,20 +9,17 @@ __license__ = "GPL-3"
 
 rule svdb_merge:
     input:
-        vcfs=expand(
-            "cnv_sv/{cnv_caller}_vcf/{{sample}}_{{type}}.vcf",
-            cnv_caller=config.get("svdb_merge", {}).get("cnv_callers", []),
-        ),
+        vcfs=get_vcfs_for_svdb_merge,
     output:
-        vcf=temp("cnv_sv/svdb_merge/{sample}_{type}.merged.vcf"),
+        vcf=temp("cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf"),
     params:
         extra=config.get("svdb_merge", {}).get("extra", ""),
         overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
     log:
-        "cnv_sv/svdb_merge/{sample}_{type}.merged.vcf.log",
+        "cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/svdb_merge/{sample}_{type}.merged.benchmark.tsv",
+            "cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.benchmark.tsv",
             config.get("svdb_merge", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("svdb_merge", {}).get("threads", config["default_resources"]["threads"])
@@ -46,18 +43,18 @@ rule svdb_merge:
 
 rule svdb_query:
     input:
-        vcf="cnv_sv/svdb_merge/{sample}_{type}.merged.vcf",
+        vcf="cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf",
     output:
-        vcf=temp("cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf"),
+        vcf=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf"),
     params:
         db_string=config.get("svdb_query", {}).get("db_string", ""),
         extra=config.get("svdb_query", {}).get("extra", ""),
         prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
     log:
-        "cnv_sv/svdb_query/{sample}_{type}.svdb_query.log",
+        "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.log",
     benchmark:
         repeat(
-            "cnv_sv/svdb_query/{sample}_{type}.svdb_query.benchmark.tsv",
+            "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.benchmark.tsv",
             config.get("svdb_query", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("svdb_query", {}).get("threads", config["default_resources"]["threads"])
