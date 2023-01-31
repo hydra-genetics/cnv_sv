@@ -121,6 +121,18 @@ rule purecn_copy_output:
         ),
     log:
         "cnv_sv/purecn/{sample}_{type}{suffix}.output.log",
+    benchmark:
+        repeat(
+            "cnv_sv/purecn/{sample}_{type}{suffix}}.purecn_copy_output.benchmark.tsv",
+            config.get("purecn_copy_output", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("purecn_copy_output", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("purecn_copy_output", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("purecn_copy_output", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("purecn_copy_output", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("purecn_copy_output", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("purecn_copy_output", {}).get("time", config["default_resources"]["time"]),
     container:
         config["default_container"]
     message:
