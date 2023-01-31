@@ -123,7 +123,7 @@ rule purecn_copy_output:
         "cnv_sv/purecn/{sample}_{type}{suffix}.output.log",
     benchmark:
         repeat(
-            "cnv_sv/purecn/{sample}_{type}.output.benchmark.tsv",
+            "cnv_sv/purecn/{sample}_{type}{suffix}}.purecn_copy_output.benchmark.tsv",
             config.get("purecn_copy_output", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("purecn_copy_output", {}).get("threads", config["default_resources"]["threads"])
