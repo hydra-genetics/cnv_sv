@@ -1,5 +1,17 @@
 # Changelog
 
+### [0.3.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.3.0...v0.3.1) (2023-01-31)
+
+
+### Bug Fixes
+
+* **purecn_copy_output:** add missing benchmark and params ([c10d758](https://www.github.com/hydra-genetics/cnv_sv/commit/c10d7587ac96403dbfbee6df4cd3436a08377df3))
+
+
+### Documentation
+
+* update compatibility file ([b9fd87d](https://www.github.com/hydra-genetics/cnv_sv/commit/b9fd87d767499226c34dedc11aebf73fa95d2152))
+
 ## [0.3.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.2.0...v0.3.0) (2023-01-27)
 
 
