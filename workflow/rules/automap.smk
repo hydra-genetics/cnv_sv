@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule automap:
     input:
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",,
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",
     output:
         pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf"),
         pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
