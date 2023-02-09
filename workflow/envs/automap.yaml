@@ -3,4 +3,6 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - cnvpytor=1.2.1
+  - bcftools=1.16
+  - bedtools=2.30.0
+  - perl=5.32.1

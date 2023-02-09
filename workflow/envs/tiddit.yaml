@@ -1,6 +1,6 @@
 channels:
-        - conda-forge
-        - bioconda
-        - defaults
+  - conda-forge
+  - bioconda
+  - defaults
 dependencies:
-        - tiddit=3.3.2
+  - tiddit=3.3.2
