@@ -9,7 +9,7 @@ rule automap:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",
     output:
         pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf"),
-        pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
+        tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
         dir=temp("cnv_sv/automap/{sample}_{type}/"),
     params:
         extra=config.get("automap", {}).get("extra", ""),
