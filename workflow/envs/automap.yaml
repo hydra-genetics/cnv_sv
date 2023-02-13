@@ -6,3 +6,4 @@ dependencies:
   - bcftools=1.16
   - bedtools=2.30.0
   - perl=5.32.1
+# How to add R (>= v3.2.0) here?
