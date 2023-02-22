@@ -8,11 +8,13 @@ rule automap:
     input:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",
     output:
+        tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf"),
         tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
         dir=temp(directory("cnv_sv/automap/{sample}_{type}/")),
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
+        out_dir=config.get("automap", {}).get("out_dir", ""),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
@@ -34,4 +36,4 @@ rule automap:
     message:
         "{rule}: Finding ROH regions cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     shell:
-        "automap --vcf {input.vcf} --out {output.dir} --genome {params.build} {params.extra}"
+        "automap --vcf {input.vcf} --out {params.out_dir} --genome {params.build} {params.extra}"
