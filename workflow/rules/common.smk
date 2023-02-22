@@ -181,7 +181,7 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
     ]
     output_files += [
-        "cnv_sv/automap/%s_%s/" % (sample, unit_type)
+        "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
