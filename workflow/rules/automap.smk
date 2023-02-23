@@ -14,7 +14,7 @@ rule automap:
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
-        outdir=config.get("automap", {}).get("out_dir", ""),
+        outdir=config.get("automap", {}).get("outdir", ""),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
@@ -36,4 +36,4 @@ rule automap:
     message:
         "{rule}: Finding ROH regions cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     shell:
-        "automap --vcf {input.vcf} --out {params.dir} --genome {params.build} {params.extra}"
+        "automap --vcf {input.vcf} --out {params.outdir} --genome {params.build} {params.extra}"
