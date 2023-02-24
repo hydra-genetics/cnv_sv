@@ -46,9 +46,6 @@ properties:
       build:
         type: string
         description: which genome build that should be used (hg19/hg38)
-      outdir:
-        type: string
-        description: directory where the folders for each sample should be
 
   cnvkit_batch:
     description: parameters for cnvkit_batch

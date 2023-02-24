@@ -12,7 +12,6 @@ reference:
 automap:
   build: "hg38"
   extra: "--DP 10 --minsize 3 --chrX"
-  outdir: "cnv_sv/automap/"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"

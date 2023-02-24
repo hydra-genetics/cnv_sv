@@ -14,7 +14,6 @@ rule automap:
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
-        outdir=config.get("automap", {}).get("outdir", ""),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:

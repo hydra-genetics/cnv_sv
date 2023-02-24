@@ -13,7 +13,6 @@ automap:
   container: "docker://hydragenetics/automap:1.2"
   build: "hg38"
   extra: "--DP 10 --minsize 3 --chrX"
-  outdir: "cnv_sv/automap/"
 
 bwa_mem:
   amb: "reference/WASH7P.fna.amb"
