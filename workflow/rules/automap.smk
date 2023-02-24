@@ -18,10 +18,7 @@ rule automap:
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
-        repeat(
-            "cnv_sv/automap/{sample}_{type}.output.benchmark.tsv",
-            config.get("automap", {}).get("benchmark_repeats", 1)
-        )
+        repeat("cnv_sv/automap/{sample}_{type}.output.benchmark.tsv", config.get("automap", {}).get("benchmark_repeats", 1))
     threads: config.get("automap", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("automap", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
