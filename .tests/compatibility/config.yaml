@@ -9,6 +9,12 @@ reference:
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
   fasta: "reference/WASH7P.fna"
 
+automap:
+  container: "docker://hydragenetics/automap:1.2"
+  build: "hg38"
+  extra: "--DP 10 --minsize 3 --chrX"
+  outdir: "cnv_sv/automap/"
+
 bwa_mem:
   amb: "reference/WASH7P.fna.amb"
   ann: "reference/WASH7P.fna.ann"

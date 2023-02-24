@@ -9,6 +9,11 @@ reference:
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
   fasta: "reference/HES45.fna"
 
+automap:
+  build: "hg38"
+  extra: "--DP 10 --minsize 3 --chrX"
+  outdir: "cnv_sv/automap/"
+
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
   method: "hybrid"
