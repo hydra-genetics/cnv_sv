@@ -10,6 +10,7 @@ reference:
   fasta: "reference/HES45.fna"
 
 automap:
+  container: "docker://hydragenetics/automap:1.2"
   build: "hg38"
   extra: "--DP 10 --minsize 3 --chrX"
 
