@@ -14,7 +14,7 @@ rule exomedepth_call:
         txt=temp("cnv_sv/exomedepth_call/{sample}_{type}.txt"),
     params:
         extra=config.get("exomedepth_call", {}).get("extra", ""),
-        ref_count=lambda wildcards, input: get_exomedepth_ref(wildcards, input.sex)
+        ref_count=lambda wildcards, input: get_exomedepth_ref(wildcards, input.sex),
     log:
         "cnv_sv/exomedepth_call/{sample}_{type}.txt.log",
     benchmark:

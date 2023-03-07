@@ -148,7 +148,6 @@ def get_exomedepth_ref(wildcards, peddy_sex_check):
     return ref
 
 
-
 def get_locus_str(loci):
     with open(loci, "r") as catfile:
         loc_str = catfile.readline().rstrip()
