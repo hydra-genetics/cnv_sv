@@ -41,7 +41,7 @@ targets_bed <- read.csv(bedfile, header = FALSE, sep = "\t")
 # Create counts dataframe from the BAM file
 ExomeCount.dafr  <- getBamCounts(bed.frame = targets_bed, bam.files = my.bam,
                                  include.chr = FALSE)
-save.image('test.Rdata')
+
 ## Check that the ExomeCount.dafr and reference df are ordered exactly the same
 ## by comparing chromosome, start and end. Coordinates are 1-based in both
 if (!all.equal(ExomeCount.dafr[,1:3], refcount_df[, 1:3])) {
