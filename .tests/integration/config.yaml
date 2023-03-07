@@ -42,9 +42,10 @@ cnvpytor_filter:
   view: "10000"
 
 exomedepth_call:
-  bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
   container: "docker://hydragenetics/exomedepth:1.1.15"
-  ref_count: "reference/ref_count.txt"
+  bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
+  genome_version: "hg19"
+  male_reference: "reference/RefCount_male.Rdata"
 
 expansionhunter:
   container: "docker://hydragenetics/expansionhunter:5.0.0"
