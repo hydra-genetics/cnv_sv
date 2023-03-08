@@ -178,7 +178,7 @@ def compile_output_list(wildcards):
         "cnv_sv/gatk_vcf": ["pathology.vcf"],
         "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
         "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
-        "cnv_sv/exomedepth_call": ["txt", 'RData'],
+        "cnv_sv/exomedepth_call": ["txt", "RData"],
         "cnv_sv/pindel_vcf": ["no_tc.vcf"],
         "cnv_sv/tiddit": ["vcf"],
     }
