@@ -3,4 +3,5 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - cnvpytor=1.2.1
+  - click=8.0.4
+  - coloredlogs=15.0.1
