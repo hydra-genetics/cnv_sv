@@ -32,4 +32,8 @@ rule automap:
     message:
         "{rule}: Finding ROH regions cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     shell:
-        "automap --vcf {input.vcf} --out $(dirname {output.dir}) --genome {params.build} {params.extra}"
+        "automap "
+        "--vcf {input.vcf} "
+        "--out $(dirname {output.dir}) "
+        "--genome {params.build} "
+        "{params.extra} &> {log}"
