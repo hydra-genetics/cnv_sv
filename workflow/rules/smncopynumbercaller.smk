@@ -9,7 +9,7 @@ rule smn_manifest:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
     output:
-        manifest=temp("cnv_sv/smn_caller/{sample}_{type}_manifest.txt")
+        manifest=temp("cnv_sv/smn_caller/{sample}_{type}_manifest.txt"),
     params:
         extra=config.get("smn_caller", {}).get("extra", ""),
     log:
@@ -33,12 +33,12 @@ rule smn_manifest:
     message:
         "{rule}: Generate the manifest file for SMNCopyNumberCaller"
     script:
-        "../scripts/smncopynumbercaller_manifest.py"      
+        "../scripts/smncopynumbercaller_manifest.py"
 
 
 rule smn_caller:
     input:
-       "cnv_sv/smn_caller/{sample}_{type}_manifest.txt",
+        "cnv_sv/smn_caller/{sample}_{type}_manifest.txt",
     output:
         json=temp("cnv_sv/smn_caller/{sample}_{type}.json"),
         tsv=temp("cnv_sv/smn_caller/{sample}_{type}.tsv"),
@@ -70,14 +70,14 @@ rule smn_caller:
     shell:
         "smn_caller.py --manifest {input} "
         "--genome {params.genome} "
-        "--prefix {params.prefix} "     
-        "--outDir {params.outdir} "      
-        "--threads {resources.threads} &> {log}"      
+        "--prefix {params.prefix} "
+        "--outDir {params.outdir} "
+        "--threads {resources.threads} &> {log}"
 
 
 rule smn_charts:
     input:
-        json="cnv_sv/smn_caller/{sample}_{type}.json"
+        json="cnv_sv/smn_caller/{sample}_{type}.json",
     output:
         pdf=temp("cnv_sv/smn_charts/smn_{sample}_{type}.pdf"),
     params:
@@ -105,5 +105,5 @@ rule smn_charts:
     message:
         "{rule}: Visualisation of SMNCopyNumberCaller result in {input.json}"
     shell:
-        "python $(whereis smn_charts.py | awk '{{print $2}}') -s {input.json} " 
-        "-o {params.outdir} &> {log}"        
+        "python $(whereis smn_charts.py | awk '{{print $2}}') -s {input.json} "
+        "-o {params.outdir} &> {log}"
