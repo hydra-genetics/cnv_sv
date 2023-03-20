@@ -127,7 +127,6 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvpytor": ["vcf"],
         "cnv_sv/expansionhunter": ["vcf"],
         "cnv_sv/gatk_vcf": ["vcf"],
-        "cnv_sv/smn_caller": ["tsv"],
         "cnv_sv/svdb_merge": ["merged.vcf"],
         "cnv_sv/svdb_query": ["svdb_query.vcf"],
         "cnv_sv/exomedepth_call": ["SV.txt"],
@@ -146,11 +145,7 @@ def compile_output_list(wildcards):
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
-    output_files += [
-        "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
-        for sample in get_samples(samples)
-        for unit_type in get_unit_types(units, sample)
-    ]
+    
     output_files.append(
         ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
@@ -170,4 +165,18 @@ def compile_output_list(wildcards):
     #   ]
     # )
     # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
+
+    # Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files += [
+    #     ""cnv_sv/smn_caller"" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+    # output_files += [
+    #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+
     return output_files
