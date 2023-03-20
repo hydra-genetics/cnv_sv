@@ -122,4 +122,4 @@ The following output files should be targeted via another rule:
 
 Running Expansion Hunter and REViewer with conda is only possible if Expansion Hunter and REViewer with dependencies are installed locally on the server, as they cannot be installed using conda.
 
-It is not possible to perform integrations tests without a full datasets for purecn and SMNCopyNumberCaller. Therfore, these have not been subjected to integration testing and we can not guarantee that they will work.
+It is not possible to perform integrations tests without full datasets for purecn and SMNCopyNumberCaller. Therefore, these have not been subjected to integration testing and we can not guarantee that they will work.
