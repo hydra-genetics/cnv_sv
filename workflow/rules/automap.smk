@@ -30,7 +30,7 @@ rule automap:
     conda:
         "../envs/automap.yaml"
     message:
-        "{rule}: Finding ROH regions cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
+        "{rule}: Finding ROH regions {output.tsv}"
     shell:
         "automap "
         "--vcf {input.vcf} "
