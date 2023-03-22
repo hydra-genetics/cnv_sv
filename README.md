@@ -67,8 +67,13 @@ For exomdepth read count data must be generated. more information can be found a
 Could be a gnomeAD vcf file filtered on population allele frequences above 0.001
 
 ### Purecn
-Purecn is used to estimate tumor purity from the data. Purecn can be run with different kinds of segmentation methods in conjunction with different variant files as input, see further purecn in the [schemas](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/schemas/config.schema.yaml). 
+Purecn is used to estimate tumor purity from the data. Purecn can be run with different kinds of segmentation methods in conjunction with different variant files as input, see further purecn in the [schemas](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/schemas/config.schema.yaml).
 Purecn is not currently inculded in the testing as there is no conda installation that is working.
+
+### Uniparental disomy analysis (UPD)
+We use https://github.com/bjhall/upd UPD analysis.
+For this, you need a vcf-file with one or more trios to analyse in the same file and a list with which the trios are: index, mother and father. GQ must be present in genotype fields and the vcf must be annotated with some sort of population frequency (e.g. use hydras module annotation and rule vep). This can also be in the CSQ annotation (default: MAX_AF), if so use --vep
+For best results, use hydras module filtering and rule bcftools_view to get biallelic SNPs with PASS filter flag. You get this by using extra: “-m2 -M2 -v snps --apply-filters PASS”
 
 ## :white_check_mark: Testing
 
@@ -86,7 +91,7 @@ To use this module in your workflow, follow the description in the
 Add the module to your `Snakefile` like so:
 
 ```bash
-module cns_sv:
+module cnv_sv:
     snakefile:
         github(
             "hydra-genetics/cnv_sv",
@@ -117,7 +122,7 @@ The following output files should be targeted via another rule:
 | `cnv_sv/{caller}_vcf/{sample}_{type}.vcf` | vcf file for each caller |
 | `cnv_sv/exomedepth/{sample}_{type}.SV.txt` | cnv calls from exomedepth |
 | `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
-| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn | 
+| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn |
 
 ## :judge: Rule Graph
 

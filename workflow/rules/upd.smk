@@ -1,64 +1,43 @@
-__author__ = "Jessika Nordin"
-__copyright__ = "Copyright 2023, Jessika Nordin"
-__email__ = "jessika.nordin@scilifelab.uu.se"
+__author__ = "Padraic Corcoran, Jessika Nordin"
+__copyright__ = "Copyright 2023, Padraic Corcoran"
+__email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule bcftools_biallelic:
+rule upd:
     input:
-        vcf="{file}.vep_annotated.vcf",
+        father=""
+        index=""
+        mother=""
+        vcf="{trio_id}.vep_annotated.vcf.gz",
     output:
-        vcf=temp("{file}.biallelic.vcf.gz"),
+        bed=temp("{trio_id}.upd_regions.bed"),
     params:
-        extra=config.get("bcftools_biallelic", {}).get("extra", ""),
+        extra=config.get("upd", {}).get("extra", ""),
     log:
-        "{file}.biallelic.log",
+        "{file}.upd.log",
     benchmark:
-        repeat("{file}.biallelic.benchmark.tsv", config.get("cnvpytor", {}).get("benchmark_repeats", 1))
-    threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
+        repeat("{file}.upd.tsv", config.get("upd", {}).get("benchmark_repeats", 1))
+    threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("cnvpytor", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvpytor", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvpytor", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("upd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("upd", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("upd", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("upd", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("upd", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
+        config.get("upd", {}).get("container", config["default_container"])
     conda:
-        "../envs/cnvpytor.yaml"
+        "../envs/upd.yaml"
     message:
-        "{rule}: Get biallelic variants from {input.vcf}"
+        "{rule}: Use a trio vcf {input.vcf} to find uniparental disomy"
     shell:
-        "(bcftools view --min-alleles 2 --max-alleles 2  "
-        "--types snps {input.vcf} --apply-filters PASS "
-        "--output-type z --output-file {output.vcf}) &> {log}"
-
-
-rule bcftools_biallelic:
-    input:
-        vcf="{file}.vep_annotated.vcf",
-    output:
-        vcf=temp("{file}.biallelic.vcf.gz"),
-    params:
-        extra=config.get("bcftools_biallelic", {}).get("extra", ""),
-    log:
-        "{file}.biallelic.log",
-    benchmark:
-        repeat("{file}.biallelic.benchmark.tsv", config.get("cnvpytor", {}).get("benchmark_repeats", 1))
-    threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("cnvpytor", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvpytor", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvpytor", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvpytor.yaml"
-    message:
-        "{rule}: Get biallelic variants from {input.vcf}"
-    shell:
-        "(bcftools view --min-alleles 2 --max-alleles 2  "
-        "--types snps {input.vcf} --apply-filters PASS "
-        "--output-type z --output-file {output.vcf}) &> {log}"
+        "(upd "
+        "--vcf {input.vcf} "
+        "--proband {input.index} "
+        "--mother {input.mother} "
+        "--father {input.father} "
+        "{params.extra} "
+        "regions "
+        "--out {output.bed}) "
+        "&> {log}"
