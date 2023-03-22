@@ -30,6 +30,23 @@ properties:
     - resources
     - default_container
 
+  automap:
+    description: parameters for automap
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded to automap
+      build:
+        type: string
+        description: which genome build that should be used (hg19/hg38)
+
   cnvkit_batch:
     description: parameters for cnvkit_batch
     type: object

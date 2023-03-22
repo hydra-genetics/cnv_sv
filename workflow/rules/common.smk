@@ -180,7 +180,11 @@ def compile_output_list(wildcards):
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
-
+    output_files += [
+        "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
     output_files.append(
         ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )

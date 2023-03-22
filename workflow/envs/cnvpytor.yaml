@@ -1,6 +1,6 @@
 channels:
-        - conda-forge
-        - bioconda
-        - defaults
+  - conda-forge
+  - bioconda
+  - defaults
 dependencies:
-        - cnvpytor=1.2.1
+  - cnvpytor=1.2.1
