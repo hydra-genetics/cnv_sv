@@ -66,7 +66,7 @@ def get_tc(wildcards):
 def get_tc_file(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology":
-        return "samples.tsv"
+        return config.get("samples")
     else:
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
