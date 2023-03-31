@@ -6,18 +6,21 @@ __license__ = "GPL-3"
 
 rule upd:
     input:
-        father=""
-        index=""
-        mother=""
-        vcf="{trio_id}.vep_annotated.vcf.gz",
+        vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
-        bed=temp("{trio_id}.upd_regions.bed"),
+        bed=temp("cnv_sv/upd/{sample}_{type}.upd_regions.bed"),
     params:
+        father=lambda wildcards: get_parent_samples(wildcards, "father"),
+        mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
+        proband="{sample}_{type}",
         extra=config.get("upd", {}).get("extra", ""),
     log:
-        "{file}.upd.log",
+        "cnv_sv/upd/{sample}_{type}.upd_regions.bed.log",
     benchmark:
-        repeat("{file}.upd.tsv", config.get("upd", {}).get("benchmark_repeats", 1))
+        repeat(
+            "cnv_sv/upd/{sample}_{type}.upd_regions.bed.benchmark.tsv", 
+            config.get("upd", {}).get("benchmark_repeats", 1),
+            )
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("upd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -34,10 +37,9 @@ rule upd:
     shell:
         "(upd "
         "--vcf {input.vcf} "
-        "--proband {input.index} "
-        "--mother {input.mother} "
-        "--father {input.father} "
+        "--proband {params.proband} "
+        "--mother {params.mother} "
+        "--father {params.father} "
         "{params.extra} "
-        "regions "
         "--out {output.bed}) "
         "&> {log}"

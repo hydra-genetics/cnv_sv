@@ -167,6 +167,16 @@ def get_vcfs_for_svdb_merge(wildcards):
     return vcf_dict[wildcards.tc_method]
 
 
+def get_parent_samples(wildcards, trio_member):
+
+    proband_sample = samples[samples.index == wildcards.sample]
+    trio_id = proband_sample.at[wildcards.sample,'trioid']
+
+    parent_sample = samples[(samples.trio_member == trio_member) & (samples.trioid == trio_id)].index[0]
+   
+    return parent_sample
+
+
 def compile_output_list(wildcards):
     files = {
         "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
@@ -208,6 +218,18 @@ def compile_output_list(wildcards):
     output_files.append(
         ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
     )
+
+    files = {
+        "upd": ["upd_regions.bed"],
+    }
+    output_files += [
+        "cnv_sv/%s/%s.%s" % (prefix, trio_id, suffix)
+        for prefix in files.keys()
+        for trio_id in samples.trioid.dropna().tolist()
+        for suffix in files[prefix]
+    ]
+
+
     # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
     # testing and we can not guarantee that it will work
     # output_files.append(
