@@ -8,7 +8,7 @@ rule upd_regions:
     input:
         vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
-        bed=temp("cnv_sv/upd/{sample}_{type}.upd_regions.bed"),
+        regions=temp("cnv_sv/upd/{sample}_{type}.upd_regions.bed"),
     params:
         father=lambda wildcards: get_parent_samples(wildcards, "father"),
         mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
@@ -42,7 +42,7 @@ rule upd_regions:
         "--father {params.father} "
         "{params.extra} "
         "regions "
-        "--out {output.bed}) "
+        "--out {output.regions}) "
         "&> {log}"
 
 
@@ -50,17 +50,17 @@ rule upd_sites:
     input:
         vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
-        sites=temp("cnv_sv/upd/{sample}_{type}.upd_informative_sites.txt"),
+        sites=temp("cnv_sv/upd/{sample}_{type}.upd_sites.bed"),
     params:
         father=lambda wildcards: get_parent_samples(wildcards, "father"),
         mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
         proband="{sample}_{type}",
         extra=config.get("upd", {}).get("extra", ""),
     log:
-        "cnv_sv/upd/{sample}_{type}.upd_informative_sites.txt.log",
+        "cnv_sv/upd/{sample}_{type}.upd_informative_sites.bed.log",
     benchmark:
         repeat(
-            "cnv_sv/upd/{sample}_{type}.upd_informative_sites.txt.benchmark.tsv", 
+            "cnv_sv/upd/{sample}_{type}.upd_informative_sites.bed.benchmark.tsv", 
             config.get("upd", {}).get("benchmark_repeats", 1),
             )
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
