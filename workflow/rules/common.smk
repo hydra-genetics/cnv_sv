@@ -173,8 +173,10 @@ def get_parent_samples(wildcards, trio_member):
     trio_id = proband_sample.at[wildcards.sample,'trioid']
 
     parent_sample = samples[(samples.trio_member == trio_member) & (samples.trioid == trio_id)].index[0]
+
+    parent_sample_id = f"{parent_sample}_{wildcards.type}"
    
-    return parent_sample
+    return parent_sample_id
 
 
 def compile_output_list(wildcards):
