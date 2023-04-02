@@ -57,10 +57,10 @@ rule upd_sites:
         proband="{sample}_{type}",
         extra=config.get("upd", {}).get("extra", ""),
     log:
-        "cnv_sv/upd/{sample}_{type}.upd_informative_sites.bed.log",
+        "cnv_sv/upd/{sample}_{type}.upd_sites.bed.log",
     benchmark:
         repeat(
-            "cnv_sv/upd/{sample}_{type}.upd_informative_sites.bed.benchmark.tsv", 
+            "cnv_sv/upd/{sample}_{type}.upd_sites.bed.benchmark.tsv", 
             config.get("upd", {}).get("benchmark_repeats", 1),
             )
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
