@@ -28,8 +28,6 @@ rule smn_manifest:
         time=config.get("smn_manifest", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("smn_manifest", {}).get("container", config["default_container"])
-    conda:
-        "../envs/smncopynumbercaller.yaml"
     message:
         "{rule}: Generate the manifest file for SMNCopyNumberCaller"
     script:
@@ -63,8 +61,6 @@ rule smn_caller:
         time=config.get("smn_caller", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("smn_caller", {}).get("container", config["default_container"])
-    conda:
-        "../envs/smncopynumbercaller.yaml"
     message:
         "{rule}: Call SMN1 and SMN2 copynumber on {input} using SMNCopyNumberCaller"
     shell:
@@ -100,8 +96,6 @@ rule smn_charts:
         time=config.get("smn_charts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("smn_charts", {}).get("container", config["default_container"])
-    conda:
-        "../envs/smncopynumbercaller.yaml"
     message:
         "{rule}: Visualisation of SMNCopyNumberCaller result in {input.json}"
     shell:

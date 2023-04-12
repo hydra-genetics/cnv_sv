@@ -26,8 +26,6 @@ rule pindel_generate_config:
         time=config.get("pindel_generate_config", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("pindel_generate_config", {}).get("container", config["default_container"])
-    conda:
-        "../envs/pindel.yaml"
     message:
         "{rule}: produce config for {wildcards.sample} {wildcards.type}"
     script:
@@ -77,8 +75,6 @@ rule pindel_call:
         time=config.get("pindel_call", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("pindel_call", {}).get("container", config["default_container"])
-    conda:
-        "../envs/pindel.yaml"
     message:
         "{rule}: detect breakpoints in {wildcards.sample} {wildcards.type}"
     wrapper:
@@ -124,8 +120,6 @@ rule pindel2vcf:
         time=config.get("pindel2vcf", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("pindel2vcf", {}).get("container", config["default_container"])
-    conda:
-        "../envs/pindel.yaml"
     message:
         "{rule}: convert pindel output to vcf for {wildcards.sample}_{wildcards.type}.no_contig"
     wrapper:
@@ -160,8 +154,6 @@ rule pindel_update_vcf_sequence_dictionary:
         time=config.get("pindel_update_vcf_sequence_dictionary", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("pindel_update_vcf_sequence_dictionary", {}).get("container", config["default_container"])
-    conda:
-        "../envs/pindel.yaml"
     message:
         "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs."
     shell:

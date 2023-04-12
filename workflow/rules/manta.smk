@@ -31,8 +31,6 @@ rule manta_config_tn:
         time=config.get("manta_config_tn", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("manta_config_tn", {}).get("container", config["default_container"])
-    conda:
-        "../envs/manta.yaml"
     message:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
@@ -78,8 +76,6 @@ rule manta_run_workflow_tn:
         time=config.get("manta_run_workflow_tn", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("manta_run_workflow_tn", {}).get("container", config["default_container"])
-    conda:
-        "../envs/manta.yaml"
     message:
         "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
@@ -113,8 +109,6 @@ rule manta_config_t:
         time=config.get("manta_config_t", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("manta_config_t", {}).get("container", config["default_container"])
-    conda:
-        "../envs/manta.yaml"
     message:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
@@ -155,8 +149,6 @@ rule manta_run_workflow_t:
         time=config.get("manta_run_workflow_t", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("manta_run_workflow_t", {}).get("container", config["default_container"])
-    conda:
-        "../envs/manta.yaml"
     message:
         "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
@@ -190,8 +182,6 @@ rule manta_config_n:
         time=config.get("manta_config_n", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("manta_config_n", {}).get("container", config["default_container"])
-    conda:
-        "../envs/manta.yaml"
     message:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
@@ -230,8 +220,6 @@ rule manta_run_workflow_n:
         time=config.get("manta_run_workflow_n", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("manta_run_workflow_n", {}).get("container", config["default_container"])
-    conda:
-        "../envs/manta.yaml"
     message:
         "{rule}: use manta to call sv in {wildcards.sample}"
     shell:

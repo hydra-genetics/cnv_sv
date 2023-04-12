@@ -26,8 +26,6 @@ rule reviewer_genrate_locus_list:
         time=config.get("reviewer_generate_locus_list", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("reviewer_generate_locus_list", {}).get("container", config["default_container"])
-    conda:
-        "../envs/reviewer_generate_locus_list.yaml"
     message:
         "{rule}: Generate a locus list for REViewer from {input.vcf}"
     script:
@@ -68,8 +66,6 @@ rule reviewer:
         time=config.get("reviewer", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("reviewer", {}).get("container", config["default_container"])
-    conda:
-        "../envs/reviewer.yaml"
     message:
         "{rule}: Run reviewer on {wildcards.sample}_{wildcards.type}"
     shell:

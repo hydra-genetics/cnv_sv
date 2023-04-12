@@ -26,8 +26,6 @@ rule cnvpytor_readdepth:
         time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvpytor.yaml"
     message:
         "{rule}: Run cnvpytor calls based on read depth for {wildcards.sample}_{wildcards.type}"
     shell:
@@ -68,8 +66,6 @@ rule cnvpytor_filter:
         time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvpytor_filter", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvpytor.yaml"
     message:
         "{rule}: Filter cnvpytor calls for {wildcards.sample}_{wildcards.type}"
     shell:
@@ -110,8 +106,6 @@ rule cnvpytor_filter:
 #        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
 #    container:
 #        config.get("cnvpytor", {}).get("container", config["default_container"])
-#    conda:
-#        "../envs/cnvpytor.yaml"
 #    message:
 ##    shell:
 #        """echo "rdstat" | cnvpytor -root {input.pytor} -view 100000 -o {output.png} &&

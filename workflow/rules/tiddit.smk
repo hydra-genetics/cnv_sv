@@ -28,8 +28,6 @@ rule tiddit:
         time=config.get("tiddit", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("tiddit", {}).get("container", config["default_container"])
-    conda:
-        "../envs/tiddit.yaml"
     message:
         "{rule}: Run tiddit on {wildcards.sample}_{wildcards.type}"
     shell:

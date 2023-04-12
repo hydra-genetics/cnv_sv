@@ -12,61 +12,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  integration-small-conda:
-    name: integration small data set conda
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-            miniforge-variant: Mambaforge
-            miniforge-version: latest
-            activate-environment: my-env
-            use-mamba: true
-      - name: Set strict channel
-        run: |
-          conda config --set channel_priority strict
-      - name: Add conda to system path
-        run: |
-          echo $CONDA/bin >> $GITHUB_PATH
-      - name: Install dep for expansionhunter
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y wget ca-certificates curl
-      - name: Install REViewer
-        run: wget -nv https://github.com/Illumina/REViewer/releases/download/v0.2.7/REViewer-v0.2.7-linux_x86_64.gz && gunzip REViewer-v0.2.7-linux_x86_64.gz && chmod +x REViewer-v0.2.7-linux_x86_64 && sudo mkdir -p /REViewer-v0.2.7-linux_x86_64/bin && sudo mv REViewer-v0.2.7-linux_x86_64 /REViewer-v0.2.7-linux_x86_64/bin/REViewer
-      - name: add reviewer to path
-        run: |
-          echo "/REViewer-v0.2.7-linux_x86_64/bin" >> $GITHUB_PATH
-      - name: Install expansionhunter
-        run: wget -nv https://github.com/Illumina/ExpansionHunter/releases/download/v5.0.0/ExpansionHunter-v5.0.0-linux_x86_64.tar.gz && tar -xvf ExpansionHunter-v5.0.0-linux_x86_64.tar.gz && rm ExpansionHunter-v5.0.0-linux_x86_64.tar.gz && sudo mv ExpansionHunter-v5.0.0-linux_x86_64 /ExpansionHunter-v5.0.0-linux_x86_64
-      - name: ls
-        run: ls /ExpansionHunter-v5.0.0-linux_x86_64/bin
-      - name: add expansionhunter to path
-        run: |
-          echo "/ExpansionHunter-v5.0.0-linux_x86_64/bin" >> $GITHUB_PATH
-      - name: Install requirements.txt
-        run: |
-          pip install -r requirements.txt
-      - name: Install requirements.test.txt
-        run: |
-          pip install -r requirements.test.txt
-      - name: Integration test - small dataset
-        working-directory: .tests/integration
-        run: |
-          snakemake -s ../../workflow/Snakefile -j 1 --use-conda --configfile config.yaml  --show-failed-logs
   integration-small-singularity:
     name: integration small data set singularity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v3
         with:
-          python-version: 3.9
+          python-version: 3.8
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:

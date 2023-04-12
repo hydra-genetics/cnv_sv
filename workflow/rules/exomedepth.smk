@@ -31,8 +31,6 @@ rule exomedepth_call:
         time=config.get("exomedepth_call", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("exomedepth_call", {}).get("container", config["default_container"])
-    conda:
-        "../envs/exomedepth.yaml"
     message:
         "{rule}: run exomedepth cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     script:

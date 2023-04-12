@@ -68,7 +68,6 @@ Could be a gnomeAD vcf file filtered on population allele frequences above 0.001
 
 ### Purecn
 Purecn is used to estimate tumor purity from the data. Purecn can be run with different kinds of segmentation methods in conjunction with different variant files as input, see further purecn in the [schemas](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/schemas/config.schema.yaml). 
-Purecn is not currently inculded in the testing as there is no conda installation that is working.
 
 ## :white_check_mark: Testing
 
@@ -122,9 +121,3 @@ The following output files should be targeted via another rule:
 ## :judge: Rule Graph
 
 ![rule_graph](images/cnv_sv.svg)
-
-### Disclaimer
-
-Running Expansion Hunter and REViewer with conda is only possible if Expansion Hunter and REViewer with dependencies are installed locally on the server, as they cannot be installed using conda.
-
-It is not possible to perform integrations tests without full datasets for purecn and SMNCopyNumberCaller. Therefore, these have not been subjected to integration testing and we can not guarantee that they will work.

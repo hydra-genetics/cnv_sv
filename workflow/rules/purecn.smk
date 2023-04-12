@@ -39,8 +39,6 @@ rule purecn_coverage:
         time=config.get("purecn_coverage", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_coverage", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: calculate coverage for {wildcards.sample}"
     shell:
@@ -81,8 +79,6 @@ checkpoint purecn:
         time=config.get("purecn", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: Quantify purity/ploidy for {wildcards.sample}_{wildcards.type}"
     shell:
@@ -165,8 +161,6 @@ rule purecn_purity_file:
         time=config.get("purecn_purity_file", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_purity_file", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: Extract purity value for {wildcards.sample}_{wildcards.type}"
     shell:
