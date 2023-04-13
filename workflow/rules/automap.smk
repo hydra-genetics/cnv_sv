@@ -13,7 +13,7 @@ rule automap:
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
-        dir=temp(directory("cnv_sv/automap/")),
+        dir=temp(directory(lambda w, output: os.path.dirname(os.path.dirname(output[0])))),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
