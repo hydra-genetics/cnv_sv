@@ -12,7 +12,7 @@ reference:
 automap:
   container: "docker://hydragenetics/automap:1.2"
   build: "hg38"
-  extra: "--DP 10 --minsize 3 --chrX"
+  extra: "--DP 2 --minsize 3 --chrX --binomial 0.0 --percaltlow 0.05 --percalthigh 0.95"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"

@@ -6,14 +6,14 @@ __license__ = "GPL-3"
 
 rule automap:
     input:
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
     output:
         pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf"),
         tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
-        dir=temp(directory("cnv_sv/automap/{sample}_{type}/")),
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
+        dir=temp(directory("cnv_sv/automap/")),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
@@ -34,6 +34,6 @@ rule automap:
     shell:
         "automap "
         "--vcf {input.vcf} "
-        "--out $(dirname {output.dir}) "
+        "--out {params.dir} "
         "--genome {params.build} "
         "{params.extra} &> {log}"
