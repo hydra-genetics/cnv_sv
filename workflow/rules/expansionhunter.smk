@@ -35,8 +35,6 @@ rule expansionhunter:
         time=config.get("expansionhunter", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("expansionhunter", {}).get("container", config["default_container"])
-    conda:
-        "../envs/expansionhunter.yaml"
     message:
         "{rule}: Run ExpansionHunter on {wildcards.sample}_{wildcards.type}"
     shell:

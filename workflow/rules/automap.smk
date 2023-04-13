@@ -27,8 +27,6 @@ rule automap:
         time=config.get("automap", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("automap", {}).get("container", config["default_container"])
-    conda:
-        "../envs/automap.yaml"
     message:
         "{rule}: Finding ROH regions {output.tsv}"
     shell:
