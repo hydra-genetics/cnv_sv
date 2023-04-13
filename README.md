@@ -112,11 +112,20 @@ The following output files should be targeted via another rule:
 
 | File | Description |
 |---|---|
-| `cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf` | vcf with merged CNV and SV |
-| `cnv_sv/{caller}_vcf/{sample}_{type}.vcf` | vcf file for each caller |
-| `cnv_sv/exomedepth/{sample}_{type}.SV.txt` | cnv calls from exomedepth |
+| `cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf` | vcf with merged CNV and SV |
+| `cnv_sv/{caller}_vcf/{sample}_{type}.{tc_method}.vcf` | vcf file for each caller |
+| `cnv_sv/exomedepth_call/{sample}_{type}.txt` | CNV calls from exomedepth |
+| `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf` | SV calls from pindel |
+| `cnv_sv/tiddit/{sample}_{type}.vcf` | SV calls from tiddit |
+| `cnv_sv/cnvpytor/{sample}_{type}.vcf` | SV calls from cnvpyter |
 | `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
-| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn | 
+| `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
+| `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
+| `cnv_sv/smn_caller/{sample}_{type}.tsv` | cnv calling in the SMN gene with smncopynumbercaller | 
+| `cnv_sv/expansionhunter/{sample}_{type}.vcf` | vcf file with repeat expansions from expansionhunter | 
+| `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.vcf` | vcf file with repeat expansions from reviewer | 
+| `cnv_sv/automap/{sample}_{type}/{sample}_{type}.vcf` | vcf file with regions of homozygosity (ROHs) from automap | 
+| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn |
 
 ## :judge: Rule Graph
 
