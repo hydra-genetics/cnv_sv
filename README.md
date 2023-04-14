@@ -130,3 +130,8 @@ The following output files should be targeted via another rule:
 ## :judge: Rule Graph
 
 ![rule_graph](images/cnv_sv.svg)
+
+### Disclaimer
+
+Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration testing 
+and we can not guarantee that it will work.
