@@ -138,9 +138,9 @@ def get_exomedepth_ref(wildcards, peddy_sex_check):
 
     sex = get_peddy_sex(wildcards, peddy_sex_check)
 
-    if sex == 'male':
+    if sex == "male":
         ref = config.get("exomedepth_call", {}).get("male_reference", "")
-    elif sex == 'female':
+    elif sex == "female":
         ref = config.get("exomedepth_call", {}).get("female_reference", "")
     else:
         sys.exit("Sex should be either 'male' or 'female'")
@@ -170,7 +170,7 @@ def get_vcfs_for_svdb_merge(wildcards):
 def get_parent_samples(wildcards, trio_member):
 
     proband_sample = samples[samples.index == wildcards.sample]
-    trio_id = proband_sample.at[wildcards.sample,'trioid']
+    trio_id = proband_sample.at[wildcards.sample, "trioid"]
 
     parent_sample = samples[(samples.trio_member == trio_member) & (samples.trioid == trio_id)].index[0]
 
@@ -212,24 +212,30 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
     ]
     output_files.append(
-        ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) 
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])]
+        [
+            "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        ]
     )
     output_files.append(
-        ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) 
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])]
+        [
+            "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        ]
     )
     output_files.append(
-        ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) 
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])]
+        [
+            "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        ]
     )
     files = {
         "upd": ["upd_regions.bed", "upd_sites.bed"],
     }
     output_files += [
-        "cnv_sv/%s/%s_%s.%s" % (prefix, sample, unit_type,suffix)
+        "cnv_sv/%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
-        for sample in samples[samples.trio_member == 'proband'].index
+        for sample in samples[samples.trio_member == "proband"].index
         for unit_type in get_unit_types(units, sample)
         for suffix in files[prefix]
     ]

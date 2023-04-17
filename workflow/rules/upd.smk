@@ -18,9 +18,9 @@ rule upd_regions:
         "cnv_sv/upd/{sample}_{type}.upd_regions.bed.log",
     benchmark:
         repeat(
-            "cnv_sv/upd/{sample}_{type}.upd_regions.bed.benchmark.tsv", 
+            "cnv_sv/upd/{sample}_{type}.upd_regions.bed.benchmark.tsv",
             config.get("upd", {}).get("benchmark_repeats", 1),
-            )
+        )
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("upd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -58,9 +58,9 @@ rule upd_sites:
         "cnv_sv/upd/{sample}_{type}.upd_sites.bed.log",
     benchmark:
         repeat(
-            "cnv_sv/upd/{sample}_{type}.upd_sites.bed.benchmark.tsv", 
+            "cnv_sv/upd/{sample}_{type}.upd_sites.bed.benchmark.tsv",
             config.get("upd", {}).get("benchmark_repeats", 1),
-            )
+        )
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("upd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
