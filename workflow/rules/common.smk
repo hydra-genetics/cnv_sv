@@ -140,9 +140,8 @@ def get_exomedepth_ref(wildcards, peddy_sex_check):
 
     if sex == 'male':
         ref = config.get("exomedepth_call", {}).get("male_reference", "")
-    else: # use female ref in the case of female or NA
+    else:  # use female ref in the case of female or NA
         ref = config.get("exomedepth_call", {}).get("female_reference", "")
-
 
     return ref
 
