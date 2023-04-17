@@ -1,2 +1,5 @@
-sample	tumor_content
-HD832.HES45	0.5
+sample	tumor_content	sex	trioid	trio_member
+HD832.HES45	1	NA	NA	NA
+sample2	0	male	Trio1	proband
+sample3	0	male	Trio1	mother
+sample4	0	female	Trio1	father
