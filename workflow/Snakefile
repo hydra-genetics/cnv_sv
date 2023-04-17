@@ -18,6 +18,7 @@ include: "rules/reviewer.smk"
 include: "rules/smncopynumbercaller.smk"
 include: "rules/svdb.smk"
 include: "rules/tiddit.smk"
+include: "rules/upd.smk"
 
 
 rule all:
