@@ -123,9 +123,11 @@ The following output files should be targeted via another rule:
 | `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
 | `cnv_sv/smn_caller/{sample}_{type}.tsv` | cnv calling in the SMN gene with smncopynumbercaller | 
 | `cnv_sv/expansionhunter/{sample}_{type}.vcf` | vcf file with repeat expansions from expansionhunter | 
-| `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.vcf` | vcf file with repeat expansions from reviewer | 
+| `cnv_sv/reviewer/{sample}_{type}/*.svg` |direcotory of svg files of read pileups from reviewer | 
 | `cnv_sv/automap/{sample}_{type}/{sample}_{type}.vcf` | vcf file with regions of homozygosity (ROHs) from automap | 
 | `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn |
+| `cnv_sv/upd/{sample}_{type}.upd_regions.bed` | bed file of upd regions |
+| `cnv_sv/upd/{sample}_{type}.upd_sites.bed` | bed file of upd informative sites |
 
 ## :judge: Rule Graph
 
