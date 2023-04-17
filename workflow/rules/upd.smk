@@ -30,8 +30,6 @@ rule upd_regions:
         time=config.get("upd", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("upd", {}).get("container", config["default_container"])
-    conda:
-        "../envs/upd.yaml"
     message:
         "{rule}: Use upd on a trio vcf {input.vcf} to find regions of uniparental disomy"
     shell:
@@ -72,8 +70,6 @@ rule upd_sites:
         time=config.get("upd", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("upd", {}).get("container", config["default_container"])
-    conda:
-        "../envs/upd.yaml"
     message:
         "{rule}: Use upd on a trio vcf {input.vcf} to find uniparental disomy informative sites"
     shell:

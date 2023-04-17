@@ -1,7 +1,0 @@
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - click=8.0.4
-  - coloredlogs=15.0.1
