@@ -7,7 +7,7 @@ __license__ = "GPL-3"
 rule exomedepth_call:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bedfile=config.get("exomedepth_call", {}).get("bedfile", ""),
+        bedfile=config["exomedepth_call"]["bedfile"],
         sex="qc/peddy/peddy.sex_check.csv",
     output:
         exon=temp("cnv_sv/exomedepth_call/{sample}_{type}.RData"),
