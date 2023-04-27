@@ -7,9 +7,9 @@ library(ExomeDepth)
 
 bedfile <- snakemake@input[["bedfile"]]
 my.bam <- snakemake@input[["bam"]]
-load(snakemake@params[["ref_count"]]) # load refcount_df
+load(snakemake@input[["ref_count"]]) # load refcount_df
 
-message(paste('Exomedepth reference:', snakemake@params[["ref_count"]]))
+message(paste('Exomedepth reference:', snakemake@input[["ref_count"]]))
 
 genome_version <- snakemake@config[["exomedepth_call"]][["genome_version"]]
 if (genome_version == "hg38") {

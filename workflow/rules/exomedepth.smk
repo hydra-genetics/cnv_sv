@@ -9,12 +9,12 @@ rule exomedepth_call:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bedfile=config["exomedepth_call"]["bedfile"],
         sex="qc/peddy/peddy.sex_check.csv",
+        ref_count=lambda wildcards: get_exomedepth_ref(wildcards, "qc/peddy/peddy.sex_check.csv"),
     output:
         exon=temp("cnv_sv/exomedepth_call/{sample}_{type}.RData"),
         txt=temp("cnv_sv/exomedepth_call/{sample}_{type}.txt"),
     params:
         extra=config.get("exomedepth_call", {}).get("extra", ""),
-        ref_count=lambda wildcards, input: get_exomedepth_ref(wildcards, input.sex),
     log:
         "cnv_sv/exomedepth_call/{sample}_{type}.txt.log",
     benchmark:
@@ -32,6 +32,6 @@ rule exomedepth_call:
     container:
         config.get("exomedepth_call", {}).get("container", config["default_container"])
     message:
-        "{rule}: run exomedepth cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
+        "{rule}: run exomedepth_call with {input.bam}, and ref count {input.ref_count}"
     script:
         "../scripts/exomedepth.R"
