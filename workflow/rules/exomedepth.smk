@@ -6,9 +6,9 @@ __license__ = "GPL-3"
 
 checkpoint exomedepth_sex:
     input:
-        "qc/peddy/peddy.sex_check.csv"
+        "qc/peddy/peddy.sex_check.csv",
     output:
-        "qc/peddy/peddy.sex_check-checkpoint.csv"
+        "qc/peddy/peddy.sex_check-checkpoint.csv",
     params:
         extra=config.get("exomedepth_sex", {}).get("extra", ""),
     log:
