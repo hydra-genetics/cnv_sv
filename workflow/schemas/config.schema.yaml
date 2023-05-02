@@ -203,9 +203,24 @@ properties:
       bedfile:
         type: string
         description: path to bedfile
-      ref_count:
+      male_reference:
         type: string
-        description: path to reference count file (normal pool)
+        description: path to ref_count of male reference samples (normal pool)
+      female_reference:
+        type: string
+        description: path to ref_count of female reference samples (normal pool)
+      genome_version:
+        type: string
+        pattern: "hg38|hg19"
+        description: name of reference genome
+      genesfile:
+        type: string
+        description: path to genename file if not using hg19
+      exonsfile:
+        type: string
+        description: path to genename file if not using hg19
+    required:
+      - bedfile
 
   expansionhunter:
     description: parameters for expansionhunter

@@ -134,9 +134,9 @@ def get_peddy_sex(wildcards, peddy_sex_check):
     return sample_sex
 
 
-def get_exomedepth_ref(wildcards, peddy_sex_check):
+def get_exomedepth_ref(wildcards):
 
-    sex = get_peddy_sex(wildcards, peddy_sex_check)
+    sex = get_peddy_sex(wildcards, checkpoints.exomedepth_sex.get().output[0])
 
     if sex == "male":
         ref = config.get("exomedepth_call", {}).get("male_reference", "")
