@@ -2,12 +2,17 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.9"
+default_container: "docker://hydragenetics/common:0.2.0"
 
 reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
   fasta: "reference/HES45.fna"
+
+automap:
+  container: "docker://hydragenetics/automap:1.2"
+  build: "hg38"
+  extra: "--DP 2 --minsize 3 --chrX --binomial 0.0 --percaltlow 0.05 --percalthigh 0.95"
 
 cnvkit_batch:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -42,9 +47,10 @@ cnvpytor_filter:
   view: "10000"
 
 exomedepth_call:
-  bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
   container: "docker://hydragenetics/exomedepth:1.1.15"
-  ref_count: "reference/ref_count.txt"
+  bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"
+  genome_version: "hg19"
+  male_reference: "reference/RefCount_male.Rdata"
 
 expansionhunter:
   container: "docker://hydragenetics/expansionhunter:5.0.0"
@@ -112,6 +118,13 @@ purecn_coverage:
 reviewer:
   container: "docker://hydragenetics/reviewer:0.2.7"
 
+smn_caller:
+  container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
+  genome_version: '38'
+
+smn_charts:
+  container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
+
 svdb_merge:
   tc_method:
     - name: purecn
@@ -133,3 +146,7 @@ svdb_query:
 
 tiddit:
   container: "docker://hydragenetics/tiddit:3.3.2"
+
+upd:
+  container: "docker://hydragenetics/upd:0.1.1"
+  extra: "--vep "

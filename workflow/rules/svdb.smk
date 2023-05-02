@@ -31,8 +31,6 @@ rule svdb_merge:
         time=config.get("svdb_merge", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("svdb_merge", {}).get("container", config["default_container"])
-    conda:
-        "../envs/svdb.yaml"
     message:
         "{rule}: merges vcf files from different cnv callers into {output.vcf}"
     shell:
@@ -66,8 +64,6 @@ rule svdb_query:
         time=config.get("svdb_query", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("svdb_query", {}).get("container", config["default_container"])
-    conda:
-        "../envs/svdb.yaml"
     message:
         "{rule}: use svdb database to filter cnvs into {output.vcf}"
     shell:

@@ -27,6 +27,26 @@ properties:
       - mem_per_cpu
       - partition
 
+  automap:
+    description: resource definitions for automap
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   cnvkit_batch:
     description: resource definitions for cnvkit_batch
     type: object
@@ -626,6 +646,46 @@ properties:
       time:
         type: string
         description: max execution time
+  
+  smn_caller:
+    description: resource definitions for smn_caller
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  smn_charts:
+    description: resource definitions for smn_charts
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   svdb_merge:
     description: resource definitions for svdb_merge
@@ -687,5 +747,25 @@ properties:
         type: string
         description: max execution time
 
+  upd:
+    description: resource definitions for upd
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+        
   required:
     - default_resources

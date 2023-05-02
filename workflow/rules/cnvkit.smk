@@ -36,8 +36,6 @@ rule cnvkit_batch:
         time=config.get("cnvkit_batch", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_batch", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvkit.yaml"
     message:
         "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
     shell:
@@ -74,8 +72,6 @@ rule cnvkit_call:
         time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_call", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvkit.yaml"
     message:
         "{rule}: call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
     shell:
@@ -110,8 +106,6 @@ rule cnvkit_diagram:
         time=config.get("cnvkit_diagram", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_diagram", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvkit.yaml"
     message:
         "{rule}: chromosome plot cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.pdf"
     shell:
@@ -146,8 +140,6 @@ rule cnvkit_scatter:
         time=config.get("cnvkit_scatter", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_scatter", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvkit.yaml"
     message:
         "{rule}: plot cnvs into cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.png"
     shell:
@@ -184,8 +176,6 @@ rule cnvkit_vcf:
         time=config.get("cnvkit_vcf", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_vcf", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvkit.yaml"
     message:
         "{rule}: export cnvkit segments into vcf in cnv_sv/cnvkit_vcf/{wildcards.sample}_{wildcards.type}.vcf"
     script:
@@ -215,8 +205,6 @@ rule cnvkit_export_seg:
         time=config.get("cnvkit_export_seg", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvkit_export_seg", {}).get("container", config["default_container"])
-    conda:
-        "../envs/cnvkit.yaml"
     message:
         "{rule}: export cnvkit segments into seg in {output.seg}"
     shell:

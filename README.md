@@ -68,7 +68,6 @@ Could be a gnomeAD vcf file filtered on population allele frequences above 0.001
 
 ### Purecn
 Purecn is used to estimate tumor purity from the data. Purecn can be run with different kinds of segmentation methods in conjunction with different variant files as input, see further purecn in the [schemas](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/schemas/config.schema.yaml). 
-Purecn is not currently inculded in the testing as there is no conda installation that is working.
 
 ## :white_check_mark: Testing
 
@@ -103,7 +102,7 @@ use rule * from cnv_sv as cnv_sv_*
 ### Compatibility
 
 Latest:
- - alignment:v0.3.1
+ - alignment:v0.4.0
 
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 
@@ -113,11 +112,22 @@ The following output files should be targeted via another rule:
 
 | File | Description |
 |---|---|
-| `cnv_sv/svdb_query/{sample}_{type}.svdb_query.vcf` | vcf with merged CNV and SV |
-| `cnv_sv/{caller}_vcf/{sample}_{type}.vcf` | vcf file for each caller |
-| `cnv_sv/exomedepth/{sample}_{type}.SV.txt` | cnv calls from exomedepth |
+| `cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf` | vcf with merged CNV and SV |
+| `cnv_sv/{caller}_vcf/{sample}_{type}.{tc_method}.vcf` | vcf file for each caller |
+| `cnv_sv/exomedepth_call/{sample}_{type}.txt` | CNV calls from exomedepth |
+| `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf` | SV calls from pindel |
+| `cnv_sv/tiddit/{sample}_{type}.vcf` | SV calls from tiddit |
+| `cnv_sv/cnvpytor/{sample}_{type}.vcf` | SV calls from cnvpyter |
 | `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
-| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn | 
+| `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
+| `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
+| `cnv_sv/smn_caller/{sample}_{type}.tsv` | cnv calling in the SMN gene with smncopynumbercaller | 
+| `cnv_sv/expansionhunter/{sample}_{type}.vcf` | vcf file with repeat expansions from expansionhunter | 
+| `cnv_sv/reviewer/{sample}_{type}/*.svg` |direcotory of svg files of read pileups from reviewer | 
+| `cnv_sv/automap/{sample}_{type}/{sample}_{type}.vcf` | vcf file with regions of homozygosity (ROHs) from automap | 
+| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn |
+| `cnv_sv/upd/{sample}_{type}.upd_regions.bed` | bed file of upd regions |
+| `cnv_sv/upd/{sample}_{type}.upd_sites.bed` | bed file of upd informative sites |
 
 ## :judge: Rule Graph
 
@@ -125,7 +135,8 @@ The following output files should be targeted via another rule:
 
 ### Disclaimer
 
-Running Expansion Hunter and REViewer with conda is only possible if Expansion Hunter and REViewer with dependencies are installed locally on the server, as they cannot be installed using conda.
+Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration testing 
+and we can not guarantee that it will work.
 
-Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
- testing and we can not guarantee that it will work.
+Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
+testing and we can not guarantee that it will work

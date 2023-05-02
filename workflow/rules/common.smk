@@ -66,7 +66,7 @@ def get_tc(wildcards):
 def get_tc_file(wildcards):
     tc_method = wildcards.tc_method
     if tc_method == "pathology":
-        return "samples.tsv"
+        return config.get("samples")
     else:
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
@@ -134,6 +134,18 @@ def get_peddy_sex(wildcards, peddy_sex_check):
     return sample_sex
 
 
+def get_exomedepth_ref(wildcards):
+
+    sex = get_peddy_sex(wildcards, checkpoints.exomedepth_sex.get().output[0])
+
+    if sex == "male":
+        ref = config.get("exomedepth_call", {}).get("male_reference", "")
+    else:  # use female ref in the case of female or NA
+        ref = config.get("exomedepth_call", {}).get("female_reference", "")
+
+    return ref
+
+
 def get_locus_str(loci):
     with open(loci, "r") as catfile:
         loc_str = catfile.readline().rstrip()
@@ -153,6 +165,18 @@ def get_vcfs_for_svdb_merge(wildcards):
     return vcf_dict[wildcards.tc_method]
 
 
+def get_parent_samples(wildcards, trio_member):
+
+    proband_sample = samples[samples.index == wildcards.sample]
+    trio_id = proband_sample.at[wildcards.sample, "trioid"]
+
+    parent_sample = samples[(samples.trio_member == trio_member) & (samples.trioid == trio_id)].index[0]
+
+    parent_sample_id = f"{parent_sample}_{wildcards.type}"
+
+    return parent_sample_id
+
+
 def compile_output_list(wildcards):
     files = {
         "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
@@ -164,31 +188,55 @@ def compile_output_list(wildcards):
         "cnv_sv/gatk_vcf": ["pathology.vcf"],
         "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
         "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
-        "cnv_sv/exomedepth_call": ["SV.txt"],
+        "cnv_sv/exomedepth_call": ["txt", "RData"],
         "cnv_sv/pindel_vcf": ["no_tc.vcf"],
         "cnv_sv/tiddit": ["vcf"],
     }
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
-        for sample in get_samples(samples)
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
         for suffix in files[prefix]
     ]
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
-        for sample in get_samples(samples)
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for unit_type in get_unit_types(units, sample)
+    ]
+    output_files += [
+        "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
     ]
     output_files.append(
-        ["cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+        [
+            "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        ]
     )
     output_files.append(
-        ["cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+        [
+            "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        ]
     )
     output_files.append(
-        ["cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample) for sample in get_samples(samples)]
+        [
+            "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        ]
     )
+    files = {
+        "upd": ["upd_regions.bed", "upd_sites.bed"],
+    }
+    output_files += [
+        "cnv_sv/%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in samples[samples.trio_member == "proband"].index
+        for unit_type in get_unit_types(units, sample)
+        for suffix in files[prefix]
+    ]
     # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
     # testing and we can not guarantee that it will work
     # output_files.append(
@@ -199,4 +247,18 @@ def compile_output_list(wildcards):
     #   ]
     # )
     # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
+
+    # Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files += [
+    #     ""cnv_sv/smn_caller"" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+    # output_files += [
+    #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+
     return output_files

@@ -30,8 +30,6 @@ rule gatk_collect_read_counts:
         time=config.get("gatk_collect_read_counts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_collect_read_counts", {}).get("container", config["default_container"])
-    conda:
-        "../envs/gatk.yaml"
     message:
         "{rule}: use gatk_cnv to obtain cnv_sv/gatk_collect_read_counts/{wildcards.sample}_{wildcards.type}.counts.hdf5"
     shell:
@@ -69,8 +67,6 @@ rule gatk_collect_allelic_counts:
         time=config.get("gatk_collect_allelic_counts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_collect_allelic_counts", {}).get("container", config["default_container"])
-    conda:
-        "../envs/gatk.yaml"
     message:
         "{rule}: use gatk_cnv to obtain cnv_sv/gatk_collect_allelic_counts/{wildcards.sample}_{wildcards.type}.clean.allelicCounts.tsv"
     shell:
@@ -107,8 +103,6 @@ rule gatk_denoise_read_counts:
         time=config.get("gatk_denoise_read_counts", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_denoise_read_counts", {}).get("container", config["default_container"])
-    conda:
-        "../envs/gatk.yaml"
     message:
         "{rule}: use gatk_cnv to obtain cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_{wildcards.type}.clean.denoisedCR.tsv"
     shell:
@@ -155,8 +149,6 @@ rule gatk_model_segments:
         time=config.get("gatk_model_segments", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_model_segments", {}).get("container", config["default_container"])
-    conda:
-        "../envs/gatk.yaml"
     message:
         "{rule}: use gatk to obtain cnv_sv/gatk_model_segments/{wildcards.sample}_{wildcards.type}.clean.modelFinal.seg"
     shell:
@@ -192,8 +184,6 @@ rule gatk_call_copy_ratio_segments:
         time=config.get("gatk_call_copy_ratio_segments", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_call_copy_ratio_segments", {}).get("container", config["default_container"])
-    conda:
-        "../envs/gatk.yaml"
     message:
         "{rule}: use gatk_to obtain cnv_sv/gatk_call_copy_ratio_segments/{wildcards.sample}_{wildcards.type}.clean.calledCNVs.seg"
     shell:
@@ -232,8 +222,6 @@ rule gatk_to_vcf:
         time=config.get("gatk_vcf", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("gatk_vcf", {}).get("container", config["default_container"])
-    conda:
-        "../envs/gatk.yaml"
     message:
         "{rule}: export gatk cnv segments into vcf in cnv_sv/gatk_vcf/{wildcards.sample}_{wildcards.type}.vcf"
     script:

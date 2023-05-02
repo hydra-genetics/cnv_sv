@@ -6,6 +6,11 @@ units: "units.tsv"
 
 default_container: "docker://hydragenetics/common:0.1.8"
 
+automap:
+  container: "docker://hydragenetics/automap:1.2"
+  build: "hg38"
+  extra: "--DP 10 --minsize 3 --chrX"
+
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   length_list: ""
@@ -39,5 +44,16 @@ manta_run_workflow_n:
 pindel_update_vcf_sequence_dictionary:
   container: "docker://hydragenetics/picard:2.25.0"
 
+smn_caller:
+  container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
+  genome_version: ""
+
+smn_charts:
+  container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
+
 tiddit:
   container: "docker://hydragenetics/tiddit:3.3.2"
+
+upd:
+  container: "docker://hydragenetics/upd:0.1.1"
+  extra: "--vep "
