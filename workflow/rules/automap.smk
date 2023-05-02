@@ -28,7 +28,7 @@ rule automap:
     container:
         config.get("automap", {}).get("container", config["default_container"])
     message:
-        "{rule}: Finding ROH regions {output.tsv}"
+        "{rule}: finding ROH regions {output.tsv}"
     shell:
         "automap "
         "--vcf {input.vcf} "

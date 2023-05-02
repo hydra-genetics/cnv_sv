@@ -29,7 +29,7 @@ rule smn_manifest:
     container:
         config.get("smn_manifest", {}).get("container", config["default_container"])
     message:
-        "{rule}: Generate the manifest file for SMNCopyNumberCaller"
+        "{rule}: generate the manifest file for SMNCopyNumberCaller"
     script:
         "../scripts/smncopynumbercaller_manifest.py"
 
@@ -62,7 +62,7 @@ rule smn_caller:
     container:
         config.get("smn_caller", {}).get("container", config["default_container"])
     message:
-        "{rule}: Call SMN1 and SMN2 copynumber on {input} using SMNCopyNumberCaller"
+        "{rule}: call SMN1 and SMN2 copynumber on {input} using SMNCopyNumberCaller"
     shell:
         "smn_caller.py --manifest {input} "
         "--genome {params.genome} "
@@ -97,7 +97,7 @@ rule smn_charts:
     container:
         config.get("smn_charts", {}).get("container", config["default_container"])
     message:
-        "{rule}: Visualisation of SMNCopyNumberCaller result in {input.json}"
+        "{rule}: visualisation of SMNCopyNumberCaller result in {input.json}"
     shell:
         "python $(whereis smn_charts.py | awk '{{print $2}}') -s {input.json} "
         "-o {params.outdir} &> {log}"
