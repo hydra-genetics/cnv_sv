@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.3.1...v0.4.0) (2023-05-02)
+
+
+### Features
+
+* add upd ([cc5a660](https://www.github.com/hydra-genetics/cnv_sv/commit/cc5a660a61d0f6d9b4a8a4bc6559cadfcf26f741))
+* **exomedepth:** add checkpoint rule to allow reference file as input ([a75d1e5](https://www.github.com/hydra-genetics/cnv_sv/commit/a75d1e5939e994ba44e665d8f6ae537228e71b5c))
+* **exomedepth:** Add option to run exomedepth with hg38 ([179bab3](https://www.github.com/hydra-genetics/cnv_sv/commit/179bab3da18e62a927b6b93d2daef7727ebdd0b6))
+* remove conda support and testing ([0a3610d](https://www.github.com/hydra-genetics/cnv_sv/commit/0a3610d881bd6c5a95dc13754140220b6adf3c13))
+
+
+### Bug Fixes
+
+* automap input and integration test ([20ec062](https://www.github.com/hydra-genetics/cnv_sv/commit/20ec062be15dce5a3766f50254d3fdd73b86361e))
+* **exomedepth:** chosse female ref when the peddy sex is NA ([4357702](https://www.github.com/hydra-genetics/cnv_sv/commit/4357702e36f4b472b57bf6643ea19f26bf6356b0))
+* get output ([fb11ed2](https://www.github.com/hydra-genetics/cnv_sv/commit/fb11ed2415ae8e281adb6000b531eb7974ed1bea))
+* get samples filename from config, close [#135](https://www.github.com/hydra-genetics/cnv_sv/issues/135) ([46b53c6](https://www.github.com/hydra-genetics/cnv_sv/commit/46b53c6f51a040ff12e2a3f6c74ff55a1e5379ff))
+* linting ([e28d277](https://www.github.com/hydra-genetics/cnv_sv/commit/e28d27753c0373190050474ecee1b5637151f596))
+* out_dir ([55a13f0](https://www.github.com/hydra-genetics/cnv_sv/commit/55a13f040a0ccf8a8ab24e02e3af3efa9e08bb82))
+* output ([8b8af48](https://www.github.com/hydra-genetics/cnv_sv/commit/8b8af48e9e0b47224fb028eeff34850431ad7df9))
+* tests for sutomap ([33a384e](https://www.github.com/hydra-genetics/cnv_sv/commit/33a384e5634d93a67cdb9b910ecfb632d40a38c1))
+* tsv to pdf ([3aa56c7](https://www.github.com/hydra-genetics/cnv_sv/commit/3aa56c72aa6d2d626b08de057310cc264fec7235))
+* typo ([d5cb0ca](https://www.github.com/hydra-genetics/cnv_sv/commit/d5cb0ca43f30e8b923a21dadc96c04b7c44b09f3))
+
+
+### Documentation
+
+* update compatibility ([0e1e381](https://www.github.com/hydra-genetics/cnv_sv/commit/0e1e381ac649bb48a0573f932053d48153e86beb))
+* update compatibility ([fe31a4b](https://www.github.com/hydra-genetics/cnv_sv/commit/fe31a4b4b39cb5413c8875947d22156a416ea1e2))
+* update disclaimer ([1d98fea](https://www.github.com/hydra-genetics/cnv_sv/commit/1d98feab3ab2f1c6be40909119c00baee9045a48))
+* update disclaimer ([cbb7592](https://www.github.com/hydra-genetics/cnv_sv/commit/cbb7592ecf98ffb4245e7673bcbefde2a4759a82))
+* update message format ([76eaa0b](https://www.github.com/hydra-genetics/cnv_sv/commit/76eaa0bca03ee6942ee83b63dd68f5bf256f364d))
+* update message format ([4e4f73a](https://www.github.com/hydra-genetics/cnv_sv/commit/4e4f73ad6f3c3e2ba5cd0896475ee63e8ebe5533))
+* updated output files ([d56c8d6](https://www.github.com/hydra-genetics/cnv_sv/commit/d56c8d6282382719dc2ce0c5751a2097f616f8b6))
+
 ### [0.3.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.3.0...v0.3.1) (2023-01-31)
 
 
