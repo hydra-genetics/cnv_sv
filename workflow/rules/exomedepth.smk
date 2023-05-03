@@ -36,7 +36,7 @@ checkpoint exomedepth_sex:
 rule exomedepth_call:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bedfile=config["exomedepth_call"]["bedfile"],
+        bedfile=config.get("exomedepth_call", {}).get("bedfile", ""),
         sex="qc/peddy/peddy.sex_check-checkpoint.csv",
         ref_count=get_exomedepth_ref,
     output:
