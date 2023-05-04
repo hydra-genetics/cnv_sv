@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.4.0...v0.4.1) (2023-05-04)
+
+
+### Bug Fixes
+
+* change to config.get in exomedepth_call ([34f5753](https://www.github.com/hydra-genetics/cnv_sv/commit/34f5753530450e6ae8ba51bd19c5bb0946a45d14))
+
 ## [0.4.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.3.1...v0.4.0) (2023-05-02)
 
 
