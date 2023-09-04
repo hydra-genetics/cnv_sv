@@ -7,6 +7,7 @@ __license__ = "GPL-3"
 rule cnvpytor_readdepth:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf.gz",
     output:
         pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor"),
