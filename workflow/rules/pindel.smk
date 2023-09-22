@@ -78,7 +78,7 @@ rule pindel_call:
     message:
         "{rule}: detect breakpoints in {wildcards.sample} {wildcards.type}"
     wrapper:
-        "v1.17.2/bio/pindel/call"
+        "v2.6.0/bio/pindel/call"
 
 
 rule pindel2vcf:
@@ -123,41 +123,39 @@ rule pindel2vcf:
     message:
         "{rule}: convert pindel output to vcf for {wildcards.sample}_{wildcards.type}.no_contig"
     wrapper:
-        "v1.2.0/bio/pindel/pindel2vcf"
+        "v2.6.0/bio/pindel/pindel2vcf"
 
 
-rule pindel_update_vcf_sequence_dictionary:
+rule pindel_update_vcf:
     input:
         fasta=config["reference"]["fasta"],
         vcf="cnv_sv/pindel_vcf/{sample}_{type}.no_contig.vcf",
     output:
-        temp("cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf"),
+        vcf=temp("cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf"),
+        samplename=temp("cnv_sv/pindel_vcf/{sample}_{type}.samplename.txt"),
     params:
-        extra=config.get("pindel_update_vcf_sequence_dictionary", {}).get("extra", ""),
+        extra=config.get("pindel_update_vcf", {}).get("extra", ""),
     log:
-        "cnv_sv/picard/update_vcf_sequence_dictionary/{sample}_{type}.output.log",
+        "cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/picard/update_vcf_sequence_dictionary/{sample}_{type}.output.benchmark.tsv",
-            config.get("pindel_update_vcf_sequence_dictionary", {}).get("benchmark_repeats", 1),
+            "cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf.benchmark.tsv",
+            config.get("pindel_update_vcf", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("pindel_update_vcf_sequence_dictionary", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("pindel_update_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("pindel_update_vcf_sequence_dictionary", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("pindel_update_vcf_sequence_dictionary", {}).get(
-            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
-        ),
-        partition=config.get("pindel_update_vcf_sequence_dictionary", {}).get(
-            "partition", config["default_resources"]["partition"]
-        ),
-        threads=config.get("pindel_update_vcf_sequence_dictionary", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("pindel_update_vcf_sequence_dictionary", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("pindel_update_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("pindel_update_vcf", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("pindel_update_vcf", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("pindel_update_vcf", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("pindel_update_vcf", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("pindel_update_vcf_sequence_dictionary", {}).get("container", config["default_container"])
+        config.get("pindel_update_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs."
+        "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs and correct samplename"
     shell:
-        "(picard UpdateVcfSequenceDictionary "
-        "INPUT={input.vcf} "
-        "SD={input.fasta} "
-        "OUTPUT={output}) &> {log}"
+        "(echo -e '{wildcards.sample}\n' > {output.samplename} && "
+        "picard UpdateVcfSequenceDictionary "
+        "-INPUT {input.vcf} "
+        "-SD {input.fasta} "
+        "-OUTPUT /dev/stdout | bcftools reheader -s {output.samplename} -o {output.vcf} - )&> {log}"
