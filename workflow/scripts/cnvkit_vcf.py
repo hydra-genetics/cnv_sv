@@ -35,19 +35,21 @@ def write_vcf_header(gatk_version, sample_name):
 header = 0
 gatk_version = ""
 sample_name = ""
+header_map = {}
 for line in seg_in:
     columns = line.strip().split("\t")
     if columns[0] == "chromosome":
+        header_map = {column_name: index for index, column_name in enumerate(columns)}
         write_vcf_header(gatk_version, sample_name)
     else:
-        chrom = columns[0]
-        start_pos = columns[1]
-        end_pos = columns[2]
+        chrom = columns[header_map['chromosome']]
+        start_pos = columns[header_map['start']]
+        end_pos = columns[header_map['stop']]
         svlen = int(end_pos) - int(start_pos) + 1
-        nr_probes = columns[12]
-        log_odds_ratio = columns[4]
-        baf = columns[5]
-        dp = columns[11]
+        nr_probes = columns[header_map['probes']]
+        log_odds_ratio = columns[header_map['log2']]
+        baf = columns[header_map['baf']]
+        dp = columns[header_map['depth']]
         cn = round(2*pow(2, float(log_odds_ratio)), 2)
         ref = "N"
         alt = ""
