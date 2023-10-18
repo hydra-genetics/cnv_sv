@@ -44,7 +44,7 @@ for line in seg_in:
     else:
         chrom = columns[header_map['chromosome']]
         start_pos = columns[header_map['start']]
-        end_pos = columns[header_map['stop']]
+        end_pos = columns[header_map['end']]
         svlen = int(end_pos) - int(start_pos) + 1
         nr_probes = columns[header_map['probes']]
         log_odds_ratio = columns[header_map['log2']]
