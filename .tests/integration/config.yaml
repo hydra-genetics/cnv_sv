@@ -40,10 +40,11 @@ cnvpytor_readdepth:
 
 cnvpytor_filter:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
+  calling_model: "rd_mean_shift"
   dG_range: "100000 inf"
   p_range: "0 0.01"
   pN_range: "0 0.5"
-  Q0_range: "0 0.05"
+  Q0_range: "0 0.5"
   view: "10000"
 
 exomedepth_call:

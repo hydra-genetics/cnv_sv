@@ -14,31 +14,32 @@ rule cnvpytor_readdepth:
     params:
         extra=config.get("cnvpytor_readdepth", {}).get("extra", ""),
         length=config.get("cnvpytor_readdepth", {}).get("length_list", ""),
+        model=config.get("cnvpytor_readdepth", {}).get("calling_model", ""),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_rd.log",
     benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_{type}_rd.benchmark.tsv", config.get("cnvpytor", {}).get("benchmark_repeats", 1))
-    threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
+        repeat("cnv_sv/cnvpytor/{sample}_{type}_rd.benchmark.tsv", config.get("cnvpytor_readdepth", {}).get("benchmark_repeats", 1))
+    threads: config.get("cnvpytor_readdepth", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("cnvpytor", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvpytor", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvpytor", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("cnvpytor_readdepth", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvpytor_readdepth", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvpytor_readdepth", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvpytor_readdepth", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvpytor_readdepth", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
     message:
         "{rule}: Run cnvpytor calls based on read depth for {wildcards.sample}_{wildcards.type}"
     shell:
-        """cnvpytor -root {output.pytor} -rd {input.bam} &&
-        cnvpytor -root {output.pytor} -his {params.length} &&
-        cnvpytor -root {output.pytor} -partition {params.length} &&
-        cnvpytor -root {output.pytor} -call {params.length} &&
-        cnvpytor -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_{wildcards.type} &&
-        cnvpytor -root {output.pytor} -mask_snps &&
-        cnvpytor -root {output.pytor} -baf {params.length} &&
-        cnvpytor -root {output.pytor} -call combined {params.length}
-        &> {log}"""
+        """cnvpytor --max_cores {threads} -root {output.pytor} {params.extra} -rd {input.bam} &> {log} &&
+        cnvpytor --max_cores {threads}  -root {output.pytor} -his {params.length} &>> {log} &&
+        cnvpytor --max_cores {threads}  -root {output.pytor} -partition {params.length} &>> {log} &&
+        cnvpytor --max_cores {threads}  -root {output.pytor} -snp {input.vcf} -sample {wildcards.sample}_{wildcards.type} \
+         &>> {log} &&
+        cnvpytor --max_cores {threads}  -root {output.pytor} -mask_snps &>> {log} &&
+        cnvpytor --max_cores {threads}  -root {output.pytor} -baf {params.length} &>> {log} &&
+        cnvpytor --max_cores {threads}  -root {output.pytor} -call {params.model} {params.length} &>> {log}
+        """
 
 
 rule cnvpytor_filter:
@@ -50,6 +51,7 @@ rule cnvpytor_filter:
     params:
         extra=config.get("cnvpytor_filter", {}).get("extra", ""),
         dgrange=config.get("cnvpytor_filter", {}).get("dG_range", ""),
+        model=config.get("cnvpytor_filter", {}).get("calling_model", "rd_mean_shift"),
         prange=config.get("cnvpytor_filter", {}).get("p_range", ""),
         pnrange=config.get("cnvpytor_filter", {}).get("pN_range", ""),
         q0range=config.get("cnvpytor_filter", {}).get("Q0_range", ""),
@@ -57,14 +59,14 @@ rule cnvpytor_filter:
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_filter.log",
     benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_{type}_filter.benchmark.tsv", config.get("cnvpytor", {}).get("benchmark_repeats", 1))
-    threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
+        repeat("cnv_sv/cnvpytor/{sample}_{type}_filter.benchmark.tsv", config.get("cnvpytor_filter", {}).get("benchmark_repeats", 1))
+    threads: config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("cnvpytor", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvpytor", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvpytor", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("cnvpytor_filter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvpytor_filter", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvpytor_filter", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvpytor_filter", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("cnvpytor_filter", {}).get("container", config["default_container"])
     message:
@@ -72,6 +74,7 @@ rule cnvpytor_filter:
     shell:
         """
         cnvpytor -root {input.pytor} -view {params.view} <<-ENDL  &> {log}
+        set callers {params.model}
         set print_filename {output.vcf}
         print calls
         set Q0_range {params.q0range}
