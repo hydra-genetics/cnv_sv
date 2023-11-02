@@ -18,7 +18,9 @@ rule cnvpytor_readdepth:
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_rd.log",
     benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_{type}_rd.benchmark.tsv", config.get("cnvpytor_readdepth", {}).get("benchmark_repeats", 1))
+        repeat(
+            "cnv_sv/cnvpytor/{sample}_{type}_rd.benchmark.tsv", config.get("cnvpytor_readdepth", {}).get("benchmark_repeats", 1)
+        )
     threads: config.get("cnvpytor_readdepth", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvpytor_readdepth", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -59,7 +61,9 @@ rule cnvpytor_filter:
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_filter.log",
     benchmark:
-        repeat("cnv_sv/cnvpytor/{sample}_{type}_filter.benchmark.tsv", config.get("cnvpytor_filter", {}).get("benchmark_repeats", 1))
+        repeat(
+            "cnv_sv/cnvpytor/{sample}_{type}_filter.benchmark.tsv", config.get("cnvpytor_filter", {}).get("benchmark_repeats", 1)
+        )
     threads: config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvpytor_filter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
