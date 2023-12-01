@@ -1,0 +1,39 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+
+  melt:
+    type: object
+    description: input and output parameters for melt
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: Input de-duplicated bam file
+          ref:
+            type: string
+            description: Reference genome
+          bed_file:
+            type: string
+            description: Name of input file for gene positions on the reference genome
+           mei_file:
+            type: string
+            description: Name of input file listing reference paths           
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          alu:
+            type: string
+            description: Output resulting VCF file ALU
+          sva:
+            type: string
+            description: Output resulting VCF file SVA
+          line1:
+            type: string
+            description: Output resulting VCF file LINE1
+
+  

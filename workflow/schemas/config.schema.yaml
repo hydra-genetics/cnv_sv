@@ -423,6 +423,23 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  melt:
+    description: parameters for melt
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      include_bed:
+        type: string
+        description: input file showing melt where to find the reference fasta files for the repeats it is trying to profile
+      include_mei:
+        type: string
+        description: bed file listing the position of genes for melt so that it can determine the position of repeats in relation to genes       
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   pindel_update_vcf_sequence_dictionary:
     description: parameters for pindel_update_vcf_sequence_dictionary
     type: object
@@ -727,3 +744,5 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded to upd, e.g. "--vep" if population AF had been annotated with vep
+
+
