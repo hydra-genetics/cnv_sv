@@ -139,4 +139,5 @@ Since it is not possible to create integration test without a full dataset purec
 and we can not guarantee that it will work.
 
 Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
-testing and we can not guarantee that it will work
+testing and we can not guarantee that it will work 
+
