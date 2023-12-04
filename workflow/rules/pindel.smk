@@ -156,6 +156,6 @@ rule pindel_update_vcf:
     shell:
         "(echo -e '{wildcards.sample}\n' > {output.samplename} && "
         "picard UpdateVcfSequenceDictionary "
-        "-INPUT {input.vcf} "
+        "-INPUT {input.vcf} -QUIET true"
         "-SD {input.fasta} "
         "-OUTPUT /dev/stdout | bcftools reheader -s {output.samplename} -o {output.vcf} - )&> {log}"
