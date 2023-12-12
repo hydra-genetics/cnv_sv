@@ -36,7 +36,7 @@ rule melt:
     message:
         "{rule}: Do stuff on cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     shell:
-        "(java '-Xmx{resources.mem_mb}m' -jar MELT.jar Single " 
+        "(/melt.sh '-Xmx{resources.mem_mb}m' Single " 
         "-w {params.folder} "
         "-bamfile {input.bam} " 
         "-h {input.ref} "
