@@ -48,8 +48,8 @@ rule melt:
         "-n {input.bed_file} "
         "{params.extra} "
         "> {log} && "       
-        "gzip {output.alu_uz} && "
-        "gzip {output.line1_uz} && "
-        "gzip {output.sva_uz}"
+        "gzip -k {output.alu_uz} && "
+        "gzip -k {output.line1_uz} && "
+        "gzip -k {output.sva_uz}"
 
 
