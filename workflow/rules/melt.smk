@@ -12,9 +12,9 @@ rule melt:
         bed_file=config.get("melt", {}).get("include_bed", ""),
         mei_file=config.get("melt", {}).get("include_mei", ""),
     output:
-        alu="cnv_sv/melt/Results_single_{sample}_{type}/ALU.final_comp.vcf",
-        line1="cnv_sv/melt/Results_single_{sample}_{type}/LINE1.final_comp.vcf",
-        sva="cnv_sv/melt/Results_single_{sample}_{type}/SVA.final_comp.vcf",
+        alu="cnv_sv/melt/Results_single_{sample}_{type}/ALU.final_comp.vcf.gz",
+        line1="cnv_sv/melt/Results_single_{sample}_{type}/LINE1.final_comp.vcf.gz",
+        sva="cnv_sv/melt/Results_single_{sample}_{type}/SVA.final_comp.vcf.gz",
     params:
         folder="cnv_sv/melt/Results_single_{sample}_{type}",  # /melt_res/Results_single_D23-05906_TC83_230818
         extra=config.get("melt", {}).get("extra", ""),
@@ -45,5 +45,8 @@ rule melt:
         "-n {input.bed_file} "
         "{params.extra}) "
         "&> {log}"       
+        gzip {output.alu}
+        gzip {output.line1}
+        gzip {output.sva}
 
 
