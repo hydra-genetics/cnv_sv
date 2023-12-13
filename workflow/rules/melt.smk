@@ -44,9 +44,9 @@ rule melt:
         "-t {input.mei_file} "
         "-n {input.bed_file} "
         "{params.extra}) "
-        "&> {log}"       
-        gzip {output.alu}
-        gzip {output.line1}
-        gzip {output.sva}
+        "&> {log} &&"       
+        "gzip {output.alu} &"
+        "gzip {output.line1} &"
+        "gzip {output.sva}"
 
 
