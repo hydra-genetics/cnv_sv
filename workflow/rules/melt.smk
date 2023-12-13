@@ -40,16 +40,16 @@ rule melt:
     message:
         "{rule}: Do stuff on cnv_sv/{rule}/{wildcards.sample}_{wildcards.type}.input"
     shell:
-        "(java -Xmx{resources.mem_mb}m -jar /usr/bin/MELTv2.2.2/MELT.jar Single " 
+        "java -Xmx{resources.mem_mb}m -jar /usr/bin/MELTv2.2.2/MELT.jar Single " 
         "-w {params.folder} "
         "-bamfile {input.bam} " 
         "-h {input.ref} "
         "-t {input.mei_file} "
         "-n {input.bed_file} "
-        "{params.extra}) "
-        "&> {log} && "       
-        "gzip {output.alu_uz} & "
-        "gzip {output.line1_uz} & "
+        "{params.extra} "
+        "> {log} && "       
+        "gzip {output.alu_uz} && "
+        "gzip {output.line1_uz} && "
         "gzip {output.sva_uz}"
 
 
