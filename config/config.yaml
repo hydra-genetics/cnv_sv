@@ -11,6 +11,9 @@ automap:
   build: "hg38"
   extra: "--DP 10 --minsize 3 --chrX"
 
+cnvkit_export_seg:
+  extra: "--enumerate-chroms"
+
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   length_list: ""
