@@ -43,11 +43,11 @@ rule cnvkit_batch:
 
 rule cnvkit_call:
     input:
-        segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
+        segment="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
         tc_file=get_tc_file,
     output:
-        segments=temp("cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
+        segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
     params:
         extra=config.get("cnvkit_call", {}).get("extra", ""),
         purity=get_tc,
