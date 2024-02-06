@@ -29,7 +29,7 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
+samples = pd.read_table(config["samples"]).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
@@ -50,13 +50,20 @@ wildcard_constraints:
 
 
 def get_tc(wildcards):
+    """
+    Get the tumor cell content of a sample. If the tumor content
+    cannot be identified, return an empty string.
+    """
     tc_method = wildcards.tc_method
     if tc_method == "pathology":
+        sample = get_sample(samples, wildcards)
+        if not "tumor_content" in sample:
+            return ""
         return get_sample(samples, wildcards)["tumor_content"]
     else:
         tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
-            return -1
+            return ""
         else:
             with open(tc_file, "r") as f:
                 tc = f.read()
