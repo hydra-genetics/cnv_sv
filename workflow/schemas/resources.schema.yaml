@@ -467,8 +467,8 @@ properties:
         type: string
         description: max execution time
 
-  pindel_update_vcf_sequence_dictionary:
-    description: resource definitions for pindel_update_vcf_sequence_dictionary
+  pindel_update_vcf:
+    description: resource definitions for pindel_update_vcf
     type: object
     properties:
       mem_mb:
