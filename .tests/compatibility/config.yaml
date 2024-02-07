@@ -102,8 +102,8 @@ manta_run_workflow_tn:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
-pindel_update_vcf_sequence_dictionary:
-  container: "docker://hydragenetics/picard:2.25.0"
+pindel_update_vcf:
+  container: "docker://hydragenetics/picard:2.25.4"
 
 pindel_call:
   include_bed: "reference/twist_DNA_solid.chr1.annotated.bed"

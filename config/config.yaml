@@ -45,8 +45,8 @@ manta_config_n:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
-pindel_update_vcf_sequence_dictionary:
-  container: "docker://hydragenetics/picard:2.25.0"
+pindel_update_vcf:
+  container: "docker://hydragenetics/picard:2.25.4"
 
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"

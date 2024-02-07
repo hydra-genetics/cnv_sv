@@ -423,8 +423,8 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  pindel_update_vcf_sequence_dictionary:
-    description: parameters for pindel_update_vcf_sequence_dictionary
+  pindel_update_vcf:
+    description: parameters for pindel_update_vcf
     type: object
     properties:
       benchmark_repeats:
