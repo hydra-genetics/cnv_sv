@@ -5,8 +5,7 @@ properties:
     type: string
     description: sample id
   tumor_content:
-    type: string
+    type: ["number", "null"]
     description: Tumor content
 required:
   - sample
-  - tumor_content
