@@ -30,7 +30,7 @@ cnvkit_scatter:
 
 cnvkit_vcf:
   container: "docker://hydragenetics/cnvkit:0.9.9"
-  hom_del_limit: "0.5"
+  hom_del_limit: 0.5
 
 
 cnvkit_seg:
