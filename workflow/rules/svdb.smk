@@ -36,6 +36,8 @@ rule svdb_merge:
     shell:
         "(svdb --merge "
         "--vcf {input.vcfs} "
+        "--overlap {params.overlap} "
+        "{params.extra} "
         "> {output.vcf}) 2> {log}"
 
 
