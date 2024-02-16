@@ -159,28 +159,20 @@ def get_locus_str(loci):
     return loc_str
 
 
-def get_vcfs_for_svdb_merge(wildcards):
+def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
     vcf_dict = {}
     for v in config.get("svdb_merge", {}).get("tc_method"):
         tc_method = v["name"]
         callers = v["cnv_caller"]
         for caller in callers:
-            if tc_method in vcf_dict:
-                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf")
+            if add_suffix:
+                caller_suffix = f":{caller}"
             else:
-                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
-    return vcf_dict[wildcards.tc_method]
-
-def name_vcf(wildcards):
-    vcf_dict = {}
-    for v in config.get("svdb_merge", {}).get("tc_method"):
-        tc_method = v["name"]
-        callers = v["cnv_caller"]
-        for caller in callers:
+                caller_suffix = ""
             if tc_method in vcf_dict:
-                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf:{caller}")
+                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}")
             else:
-                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf:{caller}"]
+                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"]
     return vcf_dict[wildcards.tc_method]
 
 
