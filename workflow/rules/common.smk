@@ -171,6 +171,18 @@ def get_vcfs_for_svdb_merge(wildcards):
                 vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
     return vcf_dict[wildcards.tc_method]
 
+def name_vcf(wildcards):
+    vcf_dict = {}
+    for v in config.get("svdb_merge", {}).get("tc_method"):
+        tc_method = v["name"]
+        callers = v["cnv_caller"]
+        for caller in callers:
+            if tc_method in vcf_dict:
+                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf:{caller}")
+            else:
+                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf:{caller}"]
+    return vcf_dict[wildcards.tc_method]
+
 
 def get_parent_samples(wildcards, trio_member):
 
