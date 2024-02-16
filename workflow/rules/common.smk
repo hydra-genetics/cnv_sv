@@ -176,6 +176,15 @@ def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
     return vcf_dict[wildcards.tc_method]
 
 
+def get_priority(wildcards):
+    priority_dict = {}
+    for v in config.get("svdb_merge", {}).get("tc_method"):
+        tc_method = v["name"]
+        priority_dict[tc_method] = v["priority"]
+        
+    return priority_dict[wildcards.tc_method]
+
+
 def get_parent_samples(wildcards, trio_member):
 
     proband_sample = samples[samples.index == wildcards.sample]
