@@ -142,7 +142,6 @@ def get_peddy_sex(wildcards, peddy_sex_check):
 
 
 def get_exomedepth_ref(wildcards):
-
     sex = get_peddy_sex(wildcards, checkpoints.exomedepth_sex.get().output[0])
 
     if sex == "male":
@@ -170,7 +169,9 @@ def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
             else:
                 caller_suffix = ""
             if tc_method in vcf_dict:
-                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}")
+                vcf_dict[tc_method].append(
+                    f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"
+                )
             else:
                 vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"]
     return vcf_dict[wildcards.tc_method]
@@ -181,12 +182,11 @@ def get_priority(wildcards):
     for v in config.get("svdb_merge", {}).get("tc_method"):
         tc_method = v["name"]
         priority_dict[tc_method] = v["priority"]
-        
+
     return priority_dict[wildcards.tc_method]
 
 
 def get_parent_samples(wildcards, trio_member):
-
     proband_sample = samples[samples.index == wildcards.sample]
     trio_id = proband_sample.at[wildcards.sample, "trioid"]
 
