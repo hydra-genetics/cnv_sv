@@ -15,6 +15,9 @@ rule svdb_merge:
     params:
         extra=config.get("svdb_merge", {}).get("extra", ""),
         overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
+        bnd_distance=config.get("svdb_merge", {}).get("bnd_distance", 10000),
+        priority=get_priority,
+        vcfs=lambda wildards: get_vcfs_for_svdb_merge(wildards, add_suffix=True),
     log:
         "cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf.log",
     benchmark:
@@ -35,7 +38,9 @@ rule svdb_merge:
         "{rule}: merges vcf files from different cnv callers into {output.vcf}"
     shell:
         "(svdb --merge "
-        "--vcf {input.vcfs} "
+        "--vcf {params.vcfs} "
+        "--priority {params.priority} "
+        "--bnd_distance {params.bnd_distance} "
         "--overlap {params.overlap} "
         "{params.extra} "
         "> {output.vcf}) 2> {log}"

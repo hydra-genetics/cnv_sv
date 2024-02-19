@@ -133,13 +133,16 @@ svdb_merge:
       cnv_caller:
         - cnvkit
         - gatk
+      priority: "cnvkit,gatk"
     - name: pathology
       cnv_caller:
         - cnvkit
         - gatk
+      priority: "cnvkit,gatk"
     - name: no_tc
       cnv_caller:
         - pindel
+      priority: "pindel"
   container: "docker://hydragenetics/svdb:2.6.0"
 
 svdb_query:
