@@ -188,9 +188,9 @@ def get_priority(wildcards):
 
 def get_parent_samples(wildcards, trio_member):
     proband_sample = samples[samples.index == wildcards.sample]
-    trio_id = proband_sample.at[wildcards.sample, "trioid"]
+    trio_id = proband_sample.at[wildcards.sample, "trio"]
 
-    parent_sample = samples[(samples.trio_member == trio_member) & (samples.trioid == trio_id)].index[0]
+    parent_sample = samples[(samples.trio_member == trio_member) & (samples.trio == trio_id)].index[0]
 
     parent_sample_id = f"{parent_sample}_{wildcards.type}"
 
@@ -215,36 +215,36 @@ def compile_output_list(wildcards):
     output_files = [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for sample in get_samples(samples[pd.isnull(samples["trio"])])
         for unit_type in get_unit_types(units, sample)
         for suffix in files[prefix]
     ]
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for sample in get_samples(samples[pd.isnull(samples["trio"])])
         for unit_type in get_unit_types(units, sample)
     ]
     output_files += [
         "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for sample in get_samples(samples[pd.isnull(samples["trio"])])
         for unit_type in get_unit_types(units, sample)
     ]
     output_files.append(
         [
             "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
-            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for sample in get_samples(samples[pd.isnull(samples["trio"])])
         ]
     )
     output_files.append(
         [
             "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
-            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for sample in get_samples(samples[pd.isnull(samples["trio"])])
         ]
     )
     output_files.append(
         [
             "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
-            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for sample in get_samples(samples[pd.isnull(samples["trio"])])
         ]
     )
     files = {
