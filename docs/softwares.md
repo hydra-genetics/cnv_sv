@@ -161,3 +161,94 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
+## [CNVpytor readdepth](https://github.com/abyzovlab/CNVpytor)
+CNVpytor calls copy number variation in WGS germline samples. This rule calculates read depths and creates a binary 'pytor' file containing copy number data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__cnvpytor__cnvpytor_readdepth#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__cnvpytor__cnvpytor_readdepth#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__cnvpytor_readdepth#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__cnvpytor_readdepth#
+
+---
+
+## [CNVpytor filter](https://github.com/abyzovlab/CNVpytor)
+CNVpytor calls copy number variation in WGS germline samples. This rule creates filtered and unfiltered 'vcf' files with called CNVs.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__cnvpytor__cnvpytor_filter#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__cnvpytor__cnvpytor_filter#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__cnvpytor_filter#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__cnvpytor_filter#
+
+---
+
+## [ExomeDepth sex](https://github.com/abyzovlab/CNVpytor)
+ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panles). This rule only copies the peddy sex file to a copy used by ExomeDepth.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__exomedepth_sex#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__exomedepth_sex#
+
+---
+
+## [ExomeDepth call](https://github.com/abyzovlab/CNVpytor)
+ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panles). This rule calls the CNVs.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__exomedepth_sex#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__exomedepth_sex#
+
+---

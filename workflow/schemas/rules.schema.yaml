@@ -157,7 +157,7 @@ properties:
 
   cnvkit_export_seg:
     type: object
-    description: input and output parameters for cnvkit_scatter
+    description: input and output parameters for cnvkit_export_seg
     properties:
       input:
         type: object
@@ -173,3 +173,100 @@ properties:
           seg:
             type: string
             description: copy number segmentation file in 'vcf' format used in downstream analysis
+
+  cnvpytor_readdepth:
+    type: object
+    description: input and output parameters for cnvpytor_readdepth
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input 'bam' file
+          bai:
+            type: string
+            description: input 'bam' index
+          vcf:
+            type: string
+            description: 'vcf' file with germline SNPs used for BAF information
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pytor:
+            type: string
+            description: candidate copy number calls
+
+  cnvpytor_filter:
+    type: object
+    description: input and output parameters for cnvpytor_filter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          pytor:
+            type: string
+            description: candidate copy number calls
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: candidate copy number calls in 'vcf' file format
+          filtvcf:
+            type: string
+            description: filtered candidate copy number calls in 'vcf' file format
+
+  exomedepth_sex:
+    type: object
+    description: input and output parameters for exomedepth_sex
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          peddy:
+            type: string
+            description: 'peddy' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          peddy:
+            type: string
+            description: 'peddy' file used by exomedepth
+    
+  exomedepth_call:
+    type: object
+    description: input and output parameters for exomedepth_sex
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: 'bam' file
+          bedfile:
+            type: string
+            description: 'bed' file with regions to be analyzed
+          sex:
+            type: string
+            description: 'peddy' file
+          ref_count:
+            type: string
+            description: file with panel of normal reference panel, male or female
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          exon:
+            type: string
+            description: 'RData' file with CNV calls
+          txt:
+            type: string
+            description: 'txt' file with CNV calls
