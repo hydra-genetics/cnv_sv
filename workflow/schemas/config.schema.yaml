@@ -60,9 +60,6 @@ properties:
       method:
         type: string
         description: One of three methods (wgs, amplicon, hybrid) to use
-      normal_reference:
-        type: string
-        description: path to normal reference panel
       extra:
         type: string
         description: parameters that should be forwarded

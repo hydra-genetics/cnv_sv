@@ -1,0 +1,175 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+  automap:
+    type: object
+    description: input and output parameters for automap
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: input 'vcf' with SNVs and INDELs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pdf:
+            type: string
+            description: list of regions of homozygozity in 'pdf' file format
+          tsv:
+            type: string
+            description: list of regions of homozygozity in 'tsv' file format
+
+  cnvkit_batch:
+    type: object
+    description: input and output parameters for cnvkit_batch
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input 'bam' file
+          bai:
+            type: string
+            description: input 'bam' index
+          normal_reference:
+            type: string
+            description: path to normal reference panel
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          antitarget_coverage:
+            type: string
+            description: sequencing coverage for each region outside of the target
+          bins:
+            type: string
+            description: bin size statistics used for target region splitting
+          regions:
+            type: string
+            description: copy number statistics for each region
+          segments:
+            type: string
+            description: copy number segmentation
+          segments_called:
+            type: string
+            description: copy number segmentation with integer copy numbers for each segment
+          target_coverage:
+            type: string
+            description: sequencing coverage for each region in the target regions
+
+  cnvkit_call:
+    type: object
+    description: input and output parameters for cnvkit_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+          vcf:
+            type: string
+            description: 'vcf' file with germline SNPs used for BAF information
+          tc:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          segment:
+            type: string
+            description: called copy number segmentation rescaled based on tumor content
+
+  cnvkit_diagram:
+    type: object
+    description: input and output parameters for cnvkit_diagram
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          cns:
+            type: string
+            description: copy number segmentation file
+          cnr:
+            type: string
+            description: copy number statistics for each region
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pdf:
+            type: string
+            description: plot in 'pdf' format showing an overview of aberrations found in each chromosome
+
+  cnvkit_scatter:
+    type: object
+    description: input and output parameters for cnvkit_scatter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segments:
+            type: string
+            description: copy number segmentation file
+          segment_regions:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+          vcf:
+            type: string
+            description: 'vcf' file with germline SNPs used for BAF plotting
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          plot:
+            type: string
+            description: plot in 'pdf' format of the segmentation over the genome
+
+  cnvkit_vcf:
+    type: object
+    description: input and output parameters for cnvkit_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: copy number segmentation file in 'vcf' format used downstream by for example SVDB
+
+  cnvkit_export_seg:
+    type: object
+    description: input and output parameters for cnvkit_scatter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segments:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          seg:
+            type: string
+            description: copy number segmentation file in 'vcf' format used in downstream analysis
