@@ -167,8 +167,28 @@ properties:
         type: string
         description: max execution time
 
-  cnvpytor:
-    description: resource definitions for cnvpytor
+  cnvpytor_readdepth:
+    description: resource definitions for cnvpytor_readdepth
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  cnvpytor_filter:
+    description: resource definitions for cnvpytor_readdepth
     type: object
     properties:
       mem_mb:
@@ -189,6 +209,46 @@ properties:
 
   expansionhunter:
     description: resource definitions expansionhunter
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  exomedepth_call:
+    description: resource definitions exomedepth_call
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  exomedepth_sex:
+    description: resource definitions exomedepth_sex
     type: object
     properties:
       mem_mb:

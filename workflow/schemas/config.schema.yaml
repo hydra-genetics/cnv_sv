@@ -60,6 +60,9 @@ properties:
       method:
         type: string
         description: One of three methods (wgs, amplicon, hybrid) to use
+      normal_reference:
+        type: string
+        description: path to normal reference panel
       extra:
         type: string
         description: parameters that should be forwarded
@@ -140,9 +143,10 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
+        description: parameters that should be forwarded to cnvkit_export_seg
 
   cnvpytor_readdepth:
-    description: parameters for tiddit
+    description: parameters for cnvpytor_readdepth
     type: object
     properties:
       benchmark_repeats:
@@ -153,13 +157,13 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to tiddit
+        description: parameters that should be forwarded to cnvpytor_readdepth
       lengthlist:
         type: string
         description: different variant length thresholds (e.g. 1000 10000 100000)
 
   cnvpytor_filter:
-    description: parameters for tiddit
+    description: parameters for cnvpytor_filter
     type: object
     properties:
       benchmark_repeats:
@@ -173,7 +177,7 @@ properties:
         description: parameters for dG range (e.g. 100000 inf)
       extra:
         type: string
-        description: parameters that should be forwarded to tiddit
+        description: parameters that should be forwarded to cnvpytor_filter
       p_range:
         type: string
         description: parameters for p range (e.g. 0 0.01)
@@ -187,8 +191,8 @@ properties:
         type: string
         description: parameter for minimum variant size (e.g. 1000)
 
-  exomedepth:
-    description: parameters for exomedepth
+  exomedepth_call:
+    description: parameters for exomedepth_call
     type: object
     properties:
       benchmark_repeats:
@@ -200,24 +204,28 @@ properties:
       bedfile:
         type: string
         description: path to bedfile
-      male_reference:
+      extra:
         type: string
-        description: path to ref_count of male reference samples (normal pool)
-      female_reference:
+        description: parameters that should be forwarded
+      ref_count:
         type: string
-        description: path to ref_count of female reference samples (normal pool)
-      genome_version:
-        type: string
-        pattern: "hg38|hg19"
-        description: name of reference genome
-      genesfile:
-        type: string
-        description: path to genename file if not using hg19
-      exonsfile:
-        type: string
-        description: path to genename file if not using hg19
+        description: function that finds the path to ref_count for female or male reference samples (normal pool)
     required:
       - bedfile
+
+  exomedepth_sex:
+    description: parameters for exomedepth_sex
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   expansionhunter:
     description: parameters for expansionhunter
@@ -231,7 +239,7 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: extra parameters
+        description: parameters that should be forwarded
 
   gatk_denoisereadcounts:
     description: parameters for gatk_denoisereadcounts

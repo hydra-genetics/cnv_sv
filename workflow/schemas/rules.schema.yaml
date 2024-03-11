@@ -38,9 +38,6 @@ properties:
           bai:
             type: string
             description: input 'bam' index
-          normal_reference:
-            type: string
-            description: path to normal reference panel
       output:
         type: object
         description: list of outputs
@@ -77,8 +74,8 @@ properties:
             description: copy number segmentation file
           vcf:
             type: string
-            description: 'vcf' file with germline SNPs used for BAF information
-          tc:
+            description: a 'vcf' file with germline SNPs used for BAF information
+          tc_file:
             type: string
             description: tumor content in the sample, can be estimated by for example purecn
       output:
@@ -127,7 +124,7 @@ properties:
             description: tumor content in the sample, can be estimated by for example purecn
           vcf:
             type: string
-            description: 'vcf' file with germline SNPs used for BAF plotting
+            description: a 'vcf' file with germline SNPs used for BAF plotting
       output:
         type: object
         description: list of outputs
@@ -154,7 +151,7 @@ properties:
           vcf:
             type: string
             description: copy number segmentation file in 'vcf' format used downstream by for example SVDB
-
+            
   cnvkit_export_seg:
     type: object
     description: input and output parameters for cnvkit_export_seg
@@ -190,7 +187,7 @@ properties:
             description: input 'bam' index
           vcf:
             type: string
-            description: 'vcf' file with germline SNPs used for BAF information
+            description: a 'vcf' file with germline SNPs used for BAF information
       output:
         type: object
         description: list of outputs
@@ -231,18 +228,18 @@ properties:
         properties:
           peddy:
             type: string
-            description: 'peddy' file
+            description: a 'peddy' sex file
       output:
         type: object
         description: list of outputs
         properties:
           peddy:
             type: string
-            description: 'peddy' file used by exomedepth
+            description: a 'peddy' sex file used by exomedepth
     
   exomedepth_call:
     type: object
-    description: input and output parameters for exomedepth_sex
+    description: input and output parameters for exomedepth_call
     properties:
       input:
         type: object
@@ -250,13 +247,13 @@ properties:
         properties:
           bam:
             type: string
-            description: 'bam' file
+            description: a 'bam' file
           bedfile:
             type: string
-            description: 'bed' file with regions to be analyzed
+            description: a 'bed' file with regions to be analyzed
           sex:
             type: string
-            description: 'peddy' file
+            description: a 'peddy' sex file
           ref_count:
             type: string
             description: file with panel of normal reference panel, male or female
@@ -266,7 +263,44 @@ properties:
         properties:
           exon:
             type: string
-            description: 'RData' file with CNV calls
+            description: a 'RData' file with CNV calls
           txt:
             type: string
-            description: 'txt' file with CNV calls
+            description: a 'txt' file with CNV calls
+
+  expansionhunter:
+    type: object
+    description: input and output parameters for expansionhunter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          cat:
+            type: string
+            description: file with catalog of variants to analyze
+          ref:
+            type: string
+            description: fasta genome reference file
+          sex:
+            type: string
+            description: a 'peddy' sex file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: realigned 'bam' file
+          json:
+            type: string
+            description: statistics file in 'json' format 
+          vcf:
+            type: string
+            description: called expansions in 'vcf' file format
