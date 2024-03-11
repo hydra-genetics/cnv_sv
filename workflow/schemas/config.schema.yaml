@@ -485,20 +485,6 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  pindel_update_vcf:
-    description: parameters for pindel_update_vcf
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container including picard and bcftools
-      extra:
-        type: string
-        description: parameters that should be forwarded
-
   purecn:
     description: parameters for purecn
     type: object

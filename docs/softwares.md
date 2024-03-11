@@ -413,3 +413,142 @@ An in-house script that converts the GATK segmentation into a file compatible wi
 #RESOURCESSCHEMA__gatk_to_vcf#
 
 ---
+
+## [manta config tn](https://github.com/Illumina/manta)
+Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule configures a python script that runs Manta to call somatic variants in tumor normal mode. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__manta__manta_config_tn#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__manta__manta_config_tn#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__manta_config_tn#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__manta_config_tn#
+
+---
+
+## [manta run workflow tn](https://github.com/Illumina/manta)
+Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule runs Manta to call somatic variants in tumor normal mode. 
+
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__manta__manta_run_workflow_tn#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__manta__manta_run_workflow_tn#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__manta_run_workflow_tn#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__manta_run_workflow_tn#
+
+---
+
+## [manta config t](https://github.com/Illumina/manta)
+Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule configures a python script that runs Manta to call somatic variants in tumor only mode. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__manta__manta_config_t#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__manta__manta_config_t#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__manta_config_t#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__manta_config_t#
+
+---
+
+## [manta run workflow t](https://github.com/Illumina/manta)
+Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule runs Manta to call somatic variants in tumor only mode. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__manta__manta_run_workflow_t#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__manta__manta_run_workflow_t#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__manta_run_workflow_t#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__manta_run_workflow_t#
+
+---
+
+## [manta config n](https://github.com/Illumina/manta)
+Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule configures a python script that runs Manta to call germline variants in normal samples. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__manta__manta_config_n#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__manta__manta_config_n#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__manta_config_n#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__manta_config_n#
+
+---
+
+## [manta run workflow n](https://github.com/Illumina/manta)
+Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule runs Manta to call germline variants in normal samples. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__manta__manta_run_workflow_n#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__manta__manta_run_workflow_n#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__manta_run_workflow_n#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__manta_run_workflow_n#
+
+---
