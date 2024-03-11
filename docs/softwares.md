@@ -275,3 +275,141 @@ Expansion Hunter aims to estimate sizes of selected repeats by performing a targ
 #RESOURCESSCHEMA__expansionhunter#
 
 ---
+
+## [gatk_collect_read_counts](https://gatk.broadinstitute.org/hc/en-us/articles/360037592671-CollectReadCounts)
+A collection of rules for GATK CNV calling in somatic samples using a panel of normal following GATK [guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531092--How-to-part-I-Sensitively-detect-copy-ratio-alterations-and-allelic-segments). This rule goes through the `bam` file of the sample and collects coverage statistics.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__gatk__gatk_collect_read_counts#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__gatk__gatk_collect_read_counts#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__gatk_collect_read_counts#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__gatk_collect_read_counts#
+
+---
+
+## [gatk_collect_allelic_counts](https://gatk.broadinstitute.org/hc/en-us/articles/360037594071-CollectAllelicCounts)
+A collection of rules for GATK CNV calling in somatic samples using a panel of normal following GATK [guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531092--How-to-part-I-Sensitively-detect-copy-ratio-alterations-and-allelic-segments). This rule collects allele counts for germline SNPs specified in input.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__gatk__gatk_collect_allelic_counts#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__gatk__gatk_collect_allelic_counts#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__gatk_collect_allelic_counts#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__gatk_collect_allelic_counts#
+
+---
+
+## [gatk_denoise_read_counts](https://gatk.broadinstitute.org/hc/en-us/articles/360040508731-DenoiseReadCounts)
+A collection of rules for GATK CNV calling in somatic samples using a panel of normal following GATK [guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531092--How-to-part-I-Sensitively-detect-copy-ratio-alterations-and-allelic-segments). This rule uses a panel of normal to corrects the coverage data collected by the rule gatk_collect_read_counts.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__gatk__gatk_denoise_read_counts#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__gatk__gatk_denoise_read_counts#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__gatk_denoise_read_counts#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__gatk_denoise_read_counts#
+
+---
+
+## [gatk_model_segments](https://gatk.broadinstitute.org/hc/en-us/articles/360037225892-ModelSegments)
+A collection of rules for GATK CNV calling in somatic samples using a panel of normal following GATK [guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531092--How-to-part-I-Sensitively-detect-copy-ratio-alterations-and-allelic-segments). This rule makes the actual copy number segmentation.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__gatk__gatk_model_segments#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__gatk__gatk_model_segments#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__gatk_model_segments#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__gatk_model_segments#
+
+---
+
+## [gatk_call_copy_ratio_segments](https://gatk.broadinstitute.org/hc/en-us/articles/360037593771-CallCopyRatioSegments)
+A collection of rules for GATK CNV calling in somatic samples using a panel of normal following GATK [guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531092--How-to-part-I-Sensitively-detect-copy-ratio-alterations-and-allelic-segments). Calls amplifications and deletion based on a statistical test.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__gatk__gatk_call_copy_ratio_segments#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__gatk__gatk_call_copy_ratio_segments#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__gatk_call_copy_ratio_segments#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__gatk_call_copy_ratio_segments#
+
+---
+
+## [gatk_to_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py)
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__gatk__gatk_to_vcf#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__gatk__gatk_to_vcf#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__gatk_to_vcf#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__gatk_to_vcf#
+
+---

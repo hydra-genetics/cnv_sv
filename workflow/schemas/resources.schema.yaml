@@ -287,7 +287,7 @@ properties:
         type: string
         description: max execution time
 
-  gatk_collect_read_counts:
+  gatk_collect_allelic_counts:
     description: resource definitions for gatk_collect_read_counts
     type: object
     properties:
@@ -307,8 +307,8 @@ properties:
         type: string
         description: max execution time
 
-  gatk_denoise_read_counts:
-    description: resource definitions for gatk_denoise_read_counts
+  gatk_collect_read_counts:
+    description: resource definitions for gatk_collect_read_counts
     type: object
     properties:
       mem_mb:
@@ -367,8 +367,8 @@ properties:
         type: string
         description: max execution time
 
-  gatk_cnv_vcf:
-    description: resource definitions for gatk_cnv_vcf
+  gatk_to_vcf:
+    description: resource definitions for gatk_to_vcf
     type: object
     properties:
       mem_mb:
