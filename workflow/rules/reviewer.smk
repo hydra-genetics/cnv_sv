@@ -4,7 +4,7 @@ __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule reviewer_genrate_locus_list:
+rule reviewer_generate_locus_list:
     input:
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",

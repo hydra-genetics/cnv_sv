@@ -827,3 +827,56 @@ properties:
           purity:
             type: string
             description: a 'txt' file with only the purity value used in downstream cnv analysis
+
+  reviewer_generate_locus_list:
+    type: object
+    description: input and output parameters for reviewer_generate_locus_list
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file created by expansionhunter
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          txt:
+            type: string
+            description: locus list that should be reviewed
+  
+  reviewer:
+    type: object
+    description: input and output parameters for reviewer
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          loci:
+            type: string
+            description: locus list that should be reviewed
+          vcf:
+            type: string
+            description: a 'vcf' file created by expansionhunter
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: output directory
+          metrics:
+            type: string
+            description: file with metrics information
+          phasing:
+            type: string
+            description: file with phasing information
