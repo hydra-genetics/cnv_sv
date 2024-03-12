@@ -920,3 +920,49 @@ TIDDIT is a tool to used to identify chromosomal rearrangements using Mate Pair 
 #RESOURCESSCHEMA__tiddit#
 
 ---
+
+## [upd_regions](https://github.com/bjhall/upd)
+Call UPD regions from germline exome/wgs trios.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__upd__upd_regions#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__upd__upd_regions#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__upd_regions#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__upd_regions#
+
+---
+
+## [upd_sites](https://github.com/bjhall/upd)
+Call UPD informative sites from germline exome/wgs trios.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__upd__upd_sites#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__upd__upd_sites#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__upd_sites#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__upd_sites#
+
+---

@@ -735,8 +735,22 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  upd:
-    description: parameters for upd
+  upd_regions:
+    description: parameters for upd_regions
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
+
+  upd_sites:
+    description: parameters for upd_sites
     type: object
     properties:
       benchmark_repeats:

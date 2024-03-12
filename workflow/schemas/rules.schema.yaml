@@ -1006,3 +1006,41 @@ properties:
           vcf:
             type: string
             description: a 'vcf' file with SVs and other chromosomal rearrangements
+
+  upd_regions:
+    type: object
+    description: input and output parameters for upd_regions
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file with SNVs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          regions:
+            type: string
+            description: file with called upd regions
+
+  upd_sites:
+    type: object
+    description: input and output parameters for upd_regions
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file with SNVs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          sites:
+            type: string
+            description: file with upd informative sites
