@@ -897,3 +897,26 @@ SVDB is a toolkit for constructing and querying structural variant databases. Th
 #RESOURCESSCHEMA__svdb_query#
 
 ---
+
+## [tiddit](https://github.com/SciLifeLab/TIDDIT)
+TIDDIT is a tool to used to identify chromosomal rearrangements using Mate Pair or Paired End sequencing data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__tiddit__tiddit#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__tiddit__tiddit#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__tiddit#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__tiddit#
+
+---

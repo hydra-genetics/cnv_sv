@@ -981,3 +981,28 @@ properties:
           vcf:
             type: string
             description: a 'vcf' file annotated with frequency data from a SVDB database
+    
+  tiddit:
+    type: object
+    description: input and output parameters for tiddit
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          folder:
+            type: string
+            description: output folder for tiddit
+          ploidies:
+            type: string
+            description: ploidy file
+          vcf:
+            type: string
+            description: a 'vcf' file with SVs and other chromosomal rearrangements
