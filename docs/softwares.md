@@ -23,7 +23,7 @@ Tool to find regions of homozygosity (ROHs) from sequencing data of human sample
 
 ---
 
-## [CNVkit batch](https://github.com/etal/cnvkit)
+## [CNVkit_batch](https://github.com/etal/cnvkit)
 CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces copy number segments that are not adjusted for tumor content.
 
 ### :snake: Rule
@@ -46,7 +46,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-## [CNVkit call](https://github.com/etal/cnvkit)
+## [CNVkit_call](https://github.com/etal/cnvkit)
 CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces copy number segments that are adjusted for tumor content.
 
 ### :snake: Rule
@@ -69,7 +69,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-## [CNVkit diagram](https://github.com/etal/cnvkit)
+## [CNVkit_diagram](https://github.com/etal/cnvkit)
 CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces a overview plot of each chromosome with copy number aberrations color coded based on type of variation.
 
 ### :snake: Rule
@@ -92,7 +92,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-## [CNVkit scatter](https://github.com/etal/cnvkit)
+## [CNVkit_scatter](https://github.com/etal/cnvkit)
 CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces a copy number plot over the entire genome.
 
 ### :snake: Rule
@@ -115,7 +115,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-## [CNVkit vcf](https://github.com/etal/cnvkit)
+## [CNVkit_vcf](https://github.com/etal/cnvkit)
 CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule exports the called segments into a 'vcf' file used in downstream analysis.
 
 ### :snake: Rule
@@ -138,7 +138,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-## [CNVkit export seg](https://github.com/etal/cnvkit)
+## [CNVkit_export_seg](https://github.com/etal/cnvkit)
 CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule exports the called segments into a 'seg' file used in downstream analysis.
 
 ### :snake: Rule
@@ -161,7 +161,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-## [CNVpytor readdepth](https://github.com/abyzovlab/CNVpytor)
+## [CNVpytor_readdepth](https://github.com/abyzovlab/CNVpytor)
 CNVpytor calls copy number variation in WGS germline samples. This rule calculates read depths and creates a binary 'pytor' file containing copy number data.
 
 ### :snake: Rule
@@ -184,7 +184,7 @@ CNVpytor calls copy number variation in WGS germline samples. This rule calculat
 
 ---
 
-## [CNVpytor filter](https://github.com/abyzovlab/CNVpytor)
+## [CNVpytor_filter](https://github.com/abyzovlab/CNVpytor)
 CNVpytor calls copy number variation in WGS germline samples. This rule creates filtered and unfiltered 'vcf' files with called CNVs.
 
 ### :snake: Rule
@@ -207,7 +207,7 @@ CNVpytor calls copy number variation in WGS germline samples. This rule creates 
 
 ---
 
-## [ExomeDepth call](https://github.com/abyzovlab/CNVpytor)
+## [ExomeDepth_call](https://github.com/abyzovlab/CNVpytor)
 ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panles). This rule calls the CNVs.
 
 ### :snake: Rule
@@ -230,7 +230,7 @@ ExomeDepth is a R package designed to detect inherited copy number variants (CNV
 
 ---
 
-## [ExomeDepth sex](https://github.com/abyzovlab/CNVpytor)
+## [ExomeDepth_sex](https://github.com/abyzovlab/CNVpytor)
 ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panles). This rule only copies the peddy sex file to a copy used by ExomeDepth.
 
 ### :snake: Rule
@@ -414,7 +414,7 @@ An in-house script that converts the GATK segmentation into a file compatible wi
 
 ---
 
-## [manta config tn](https://github.com/Illumina/manta)
+## [manta_config_tn](https://github.com/Illumina/manta)
 Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule configures a python script that runs Manta to call somatic variants in tumor normal mode. 
 
 ### :snake: Rule
@@ -437,7 +437,7 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
-## [manta run workflow tn](https://github.com/Illumina/manta)
+## [manta_run_workflow_tn](https://github.com/Illumina/manta)
 Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule runs Manta to call somatic variants in tumor normal mode. 
 
 
@@ -461,7 +461,7 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
-## [manta config t](https://github.com/Illumina/manta)
+## [manta_config_t](https://github.com/Illumina/manta)
 Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule configures a python script that runs Manta to call somatic variants in tumor only mode. 
 
 ### :snake: Rule
@@ -484,7 +484,7 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
-## [manta run workflow t](https://github.com/Illumina/manta)
+## [manta_run_workflow_t](https://github.com/Illumina/manta)
 Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule runs Manta to call somatic variants in tumor only mode. 
 
 ### :snake: Rule
@@ -507,7 +507,7 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
-## [manta config n](https://github.com/Illumina/manta)
+## [manta_config_n](https://github.com/Illumina/manta)
 Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule configures a python script that runs Manta to call germline variants in normal samples. 
 
 ### :snake: Rule
@@ -530,7 +530,7 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
-## [manta run workflow n](https://github.com/Illumina/manta)
+## [manta_run_workflow_n](https://github.com/Illumina/manta)
 Manta calls structural variants (SVs) and indels from mapped paired-end sequencing reads. This rule runs Manta to call germline variants in normal samples. 
 
 ### :snake: Rule
@@ -550,5 +550,97 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__manta_run_workflow_n#
+
+---
+
+## [pindel_generate_config](https://github.com/genome/pindel)
+Pindel can detect breakpoints of large deletions, medium sized insertions, inversions, tandem duplications and other structural variants at single-based resolution from next-gen sequence data. This rule generates a config file that is used when running the actual pindel calling.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pindel__pindel_generate_config#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pindel__pindel_generate_config#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pindel_generate_config#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pindel_generate_config#
+
+---
+
+## [pindel_call](https://github.com/genome/pindel)
+Pindel can detect breakpoints of large deletions, medium sized insertions, inversions, tandem duplications and other structural variants at single-based resolution from next-gen sequence data. This rule call variants using pindel.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pindel__pindel_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pindel__pindel_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pindel_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pindel_call#
+
+---
+
+## [pindel2vcf](https://github.com/genome/pindel)
+Pindel can detect breakpoints of large deletions, medium sized insertions, inversions, tandem duplications and other structural variants at single-based resolution from next-gen sequence data. This rule collects all variants called by pindel into one `vcf` file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pindel__pindel2vcf#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pindel__pindel2vcf#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pindel2vcf#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pindel2vcf#
+
+---
+
+## [pindel_update_vcf](https://gatk.broadinstitute.org/hc/en-us/articles/360037425731-UpdateVCFSequenceDictionary)
+Pindel can detect breakpoints of large deletions, medium sized insertions, inversions, tandem duplications and other structural variants at single-based resolution from next-gen sequence data. This rule adds contigs to header of the `vcf` file to make it a valid `vcf` file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pindel__pindel2vcf#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pindel__pindel2vcf#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pindel2vcf#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pindel2vcf#
 
 ---

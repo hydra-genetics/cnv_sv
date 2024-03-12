@@ -345,17 +345,6 @@ properties:
         type: string
         description: copy number threshold for duplication
 
-  generate_pindel_config:
-    description: parameters for generate_pindel_config
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-
   manta_config_t:
     description: parameters for manta_config_t
     type: object
@@ -422,6 +411,17 @@ properties:
 
   manta_run_workflow_n:
     description: parameters for manta_run_workflow_n
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  pindel_generate_config:
+    description: parameters for pindel_generate_config
     type: object
     properties:
       benchmark_repeats:
