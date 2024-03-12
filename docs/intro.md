@@ -1,7 +1,9 @@
 # Hydra-genetics snv_sv module
 The cnv_sv module consists of a collection of tools calling larger structural genomic aberrations in DNA. Most tools use aligned `.bam` files as input, but many tools also make use of small variants calls in the form of a `.vcf` file.
 
-![DNA steps](images/alignment.dna.png)
+## CNV_SV
+
+![CNV_SV steps](images/cnv_sv_dag.svg)
 
 ## Module input files
 Aligned and merged `.bam` files as well as different `.vcf` files depending on application.
