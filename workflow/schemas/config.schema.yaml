@@ -716,7 +716,7 @@ properties:
         description: name or path to docker/singularity container
       db_string:
         type: string
-        description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq)
+        description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq) where --db is the path to the SVDB database
       extra:
         type: string
         description: parameters that should be forwarded

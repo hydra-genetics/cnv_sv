@@ -851,3 +851,49 @@ SMNCopyNumberCaller is a tool to call the copy number of full-length SMN1, full-
 #RESOURCESSCHEMA__smn_charts#
 
 ---
+
+## [svdb_merge](https://github.com/J35P312/SVDB)
+SVDB is a toolkit for constructing and querying structural variant databases. This rule merges `vcf` files from different structural variant callers into one file where similar calls are clumped together.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__svdb__svdb_merge#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__svdb__svdb_merge#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__svdb_merge#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__svdb_merge#
+
+---
+
+## [svdb_query](https://github.com/J35P312/SVDB)
+SVDB is a toolkit for constructing and querying structural variant databases. This rule queries and SVDB database file and report the frequencies of similar structural variants in the database.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__svdb__svdb_query#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__svdb__svdb_query#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__svdb_query#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__svdb_query#
+
+---

@@ -942,4 +942,42 @@ properties:
         properties:
           pdf:
             type: string
-            description: a 'pdf' file containing four plots showing coverage and copy number data 
+            description: a 'pdf' file containing four plots showing coverage and copy number data
+        
+  svdb_merge:
+    type: object
+    description: input and output parameters for svdb_merge
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcfs:
+            type: string
+            description: a function get_vcfs_for_svdb_merge (common.smk) is used to list all files (eg. from different callers) that should be merge into a SVDB 'vcf'
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file containing the merged SV calls
+        
+  svdb_query:
+    type: object
+    description: input and output parameters for svdb_query
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file containing the merged SV calls
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file annotated with frequency data from a SVDB database
