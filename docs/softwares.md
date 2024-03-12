@@ -644,3 +644,95 @@ Pindel can detect breakpoints of large deletions, medium sized insertions, inver
 #RESOURCESSCHEMA__pindel2vcf#
 
 ---
+
+## [purecn_coverage](https://github.com/lima1/PureCN)
+PureCN is a tool developed for tumor-only diagnostic sequencing using hybrid-capture protocols. It  purity and ploidy estimation. This rule calculates coverage estimates from a `bam` file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__purecn__purecn_coverage#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__purecn__purecn_coverage#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__purecn_coverage#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__purecn_coverage#
+
+---
+
+## [purecn](https://github.com/lima1/PureCN)
+PureCN is a tool developed for tumor-only diagnostic sequencing using hybrid-capture protocols. It  purity and ploidy estimation. This rule generates purecn output files depending on the configurations and put them in a temp directory which is then handled by purecn_copy_output.
+
+### :snake: Rule
+
+SNAKEMAKE_RULE_SOURCE__purecn__purecn#
+
+#### :left_right_arrow: input / output files
+
+SNAKEMAKE_RULE_TABLE__purecn__purecn#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+CONFIGSCHEMA__purecn#
+
+#### Resources settings (`resources.yaml`)
+
+RESOURCESSCHEMA__purecn#
+
+---
+
+## purecn_copy_output
+PureCN is a tool developed for tumor-only diagnostic sequencing using hybrid-capture protocols. It  purity and ploidy estimation. This rule copies files from a temporary directory to a results directory using bash.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__purecn__purecn_copy_output#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__purecn__purecn_copy_output#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__purecn_copy_output#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__purecn_copy_output#
+
+---
+
+## purecn_purity_file
+PureCN is a tool developed for tumor-only diagnostic sequencing using hybrid-capture protocols. It  purity and ploidy estimation. This rule extracts the purity information using awk.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__purecn__purecn_purity_file#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__purecn__purecn_purity_file#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__purecn_purity_file#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__purecn_purity_file#
+
+---
