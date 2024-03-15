@@ -896,7 +896,7 @@ SVDB is a toolkit for constructing and querying structural variant databases. Th
 ---
 
 ### [svdb_query](https://github.com/J35P312/SVDB)
-SVDB is a toolkit for constructing and querying structural variant databases. This rule queries and SVDB database file and report the frequencies of similar structural variants in the database.
+SVDB is a toolkit for constructing and querying structural variant databases. This rule queries an SVDB database file and report the frequencies of similar structural variants in the database.
 
 #### :snake: Rule
 
