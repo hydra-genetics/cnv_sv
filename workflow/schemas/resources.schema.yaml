@@ -188,7 +188,7 @@ properties:
         description: max execution time
 
   cnvpytor_filter:
-    description: resource definitions for cnvpytor_readdepth
+    description: resource definitions for cnvpytor_filter
     type: object
     properties:
       mem_mb:
