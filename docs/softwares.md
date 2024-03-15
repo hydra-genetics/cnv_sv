@@ -237,7 +237,7 @@ ExomeDepth is a R package designed to detect inherited copy number variants (CNV
 ---
 
 ### [ExomeDepth_sex](https://github.com/vplagnol/ExomeDepth)
-ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panles). This rule only copies the peddy sex file to a copy used by ExomeDepth.
+ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panels). This rule only copies the peddy sex file to a copy used by ExomeDepth.
 
 #### :snake: Rule
 
