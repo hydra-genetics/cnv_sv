@@ -72,7 +72,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 ---
 
 ### [CNVkit_diagram](https://github.com/etal/cnvkit)
-CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces a overview plot of each chromosome with copy number aberrations color coded based on type of variation.
+CNVkit calls copy number variation in cancer samples. The program uses a panel of normals to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces an overview plot of each chromosome with copy number aberrations color coded based on the variant type
 
 #### :snake: Rule
 
