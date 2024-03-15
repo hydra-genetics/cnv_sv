@@ -10,7 +10,7 @@ rule gatk_collect_read_counts:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
     output:
-        temp("cnv_sv/gatk_collect_read_counts/{sample}_{type}.counts.hdf5"),
+        hdf5=temp("cnv_sv/gatk_collect_read_counts/{sample}_{type}.counts.hdf5"),
     params:
         extra=config.get("gatk_collect_read_counts", {}).get("extra", ""),
         mergingRule="OVERLAPPING_ONLY",
@@ -31,14 +31,14 @@ rule gatk_collect_read_counts:
     container:
         config.get("gatk_collect_read_counts", {}).get("container", config["default_container"])
     message:
-        "{rule}: use gatk_cnv to obtain cnv_sv/gatk_collect_read_counts/{wildcards.sample}_{wildcards.type}.counts.hdf5"
+        "{rule}: use gatk_cnv to obtain {output.hdf5}"
     shell:
         "(gatk --java-options '-Xmx4g' CollectReadCounts "
         "-I {input.bam} "
         "-L {input.interval} "
         "--interval-merging-rule {params.mergingRule} "
         "{params.extra} "
-        "-O {output}) &> {log}"
+        "-O {output.hdf5}) &> {log}"
 
 
 rule gatk_collect_allelic_counts:
@@ -48,7 +48,7 @@ rule gatk_collect_allelic_counts:
         interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
         ref=config["reference"]["fasta"],
     output:
-        temp("cnv_sv/gatk_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv"),
+        tsv=temp("cnv_sv/gatk_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv"),
     params:
         extra=config.get("gatk_collect_allelic_counts", {}).get("extra", ""),
     log:
@@ -68,13 +68,13 @@ rule gatk_collect_allelic_counts:
     container:
         config.get("gatk_collect_allelic_counts", {}).get("container", config["default_container"])
     message:
-        "{rule}: use gatk_cnv to obtain cnv_sv/gatk_collect_allelic_counts/{wildcards.sample}_{wildcards.type}.clean.allelicCounts.tsv"
+        "{rule}: use gatk_cnv to obtain {output.tsv}"
     shell:
         "(gatk --java-options '-Xmx4g' CollectAllelicCounts "
         "-L {input.interval} "
         "-I {input.bam} "
         "-R {input.ref} "
-        "-O {output} "
+        "-O {output.tsv} "
         "{params.extra}) &> {log}"
 
 
@@ -104,7 +104,7 @@ rule gatk_denoise_read_counts:
     container:
         config.get("gatk_denoise_read_counts", {}).get("container", config["default_container"])
     message:
-        "{rule}: use gatk_cnv to obtain cnv_sv/gatk_denoise_read_counts/{wildcards.sample}_{wildcards.type}.clean.denoisedCR.tsv"
+        "{rule}: use gatk_cnv to obtain {output.denoisedCopyRatio}"
     shell:
         "(gatk --java-options '-Xmx4g' DenoiseReadCounts "
         "-I {input.hdf5Tumor} "
@@ -119,16 +119,16 @@ rule gatk_model_segments:
         allelicCounts="cnv_sv/gatk_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv",
         denoisedCopyRatio="cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv",
     output:
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.af.igv.seg"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.igv.seg"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.hets.tsv"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelBegin.cr.param"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelBegin.af.param"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelBegin.seg"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.af.param"),
-        temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.cr.param"),
+        begin_af_param=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelBegin.af.param"),
+        begin_cr_param=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelBegin.cr.param"),
+        begin_seg=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelBegin.seg"),
+        cr_seg=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg"),
+        final_af_param=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.af.param"),
+        final_cr_param=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.cr.param"),
+        final_seg=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.modelFinal.seg"),
+        hets_tsv=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.hets.tsv"),
+        igv_af_seg=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.af.igv.seg"),
+        igv_cr_seg=temp("cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.igv.seg"),
     params:
         extra=config.get("gatk_model_segments", {}).get("extra", ""),
         outdir=lambda wildcards, output: os.path.dirname(output[0]),
@@ -150,7 +150,7 @@ rule gatk_model_segments:
     container:
         config.get("gatk_model_segments", {}).get("container", config["default_container"])
     message:
-        "{rule}: use gatk to obtain cnv_sv/gatk_model_segments/{wildcards.sample}_{wildcards.type}.clean.modelFinal.seg"
+        "{rule}: use gatk to obtain {output.final_seg}"
     shell:
         "(gatk --java-options '-Xmx4g' ModelSegments "
         "--denoised-copy-ratios {input.denoisedCopyRatio} "
@@ -162,7 +162,7 @@ rule gatk_model_segments:
 
 rule gatk_call_copy_ratio_segments:
     input:
-        "cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg",
+        segments="cnv_sv/gatk_model_segments/{sample}_{type}.clean.cr.seg",
     output:
         igv_segments=temp("cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.igv.seg"),
         segments=temp("cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg"),
@@ -185,10 +185,10 @@ rule gatk_call_copy_ratio_segments:
     container:
         config.get("gatk_call_copy_ratio_segments", {}).get("container", config["default_container"])
     message:
-        "{rule}: use gatk_to obtain cnv_sv/gatk_call_copy_ratio_segments/{wildcards.sample}_{wildcards.type}.clean.calledCNVs.seg"
+        "{rule}: use gatk_to obtain {output.segments}"
     shell:
         "(gatk --java-options '-Xmx4g' CallCopyRatioSegments "
-        "--input {input} "
+        "--input {input.segments} "
         "--output {output.segments} "
         "{params.extra}) &> {log}"
 
@@ -204,7 +204,6 @@ rule gatk_to_vcf:
         het_del_limit=config.get("gatk_vcf", {}).get("het_del_limit", 1.5),
         hom_del_limit=config.get("gatk_vcf", {}).get("hom_del_limit", 0.5),
         sample_id="{sample}_{type}",
-        #tc=lambda wildcards: get_sample(samples, wildcards)["tumor_content"],
         tc=get_tc,
     log:
         "cnv_sv/gatk_vcf/{sample}_{type}.{tc_method}.vcf.log",
@@ -223,6 +222,6 @@ rule gatk_to_vcf:
     container:
         config.get("gatk_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: export gatk cnv segments into vcf in cnv_sv/gatk_vcf/{wildcards.sample}_{wildcards.type}.vcf"
+        "{rule}: export gatk cnv segments into vcf in {output.vcf}"
     script:
         "../scripts/gatk_to_vcf.py"

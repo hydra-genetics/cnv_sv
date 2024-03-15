@@ -6,9 +6,9 @@ __license__ = "GPL-3"
 
 checkpoint exomedepth_sex:
     input:
-        "qc/peddy/peddy.sex_check.csv",
+        peddy="qc/peddy/peddy.sex_check.csv",
     output:
-        "qc/peddy/peddy.sex_check-checkpoint.csv",
+        peddy="qc/peddy/peddy.sex_check-checkpoint.csv",
     params:
         extra=config.get("exomedepth_sex", {}).get("extra", ""),
     log:
@@ -28,9 +28,9 @@ checkpoint exomedepth_sex:
     container:
         config.get("exomedepth_sex", {}).get("container", config["default_container"])
     message:
-        "{rule}: checkpoint with {input}"
+        "{rule}: checkpoint with {input.peddy}"
     shell:
-        "cp {input} {output}"
+        "cp {input.peddy} {output.peddy}"
 
 
 rule exomedepth_call:
