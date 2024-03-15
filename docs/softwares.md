@@ -49,7 +49,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 ---
 
 ### [CNVkit_call](https://github.com/etal/cnvkit)
-CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces copy number segments that are adjusted for tumor content.
+CNVkit calls copy number variation in cancer samples. The program uses a panel of normals to correct for biases and adjust calls based on estimated tumor content (external data). This rule produces copy number segments that are adjusted for tumor content.
 
 #### :snake: Rule
 
