@@ -141,7 +141,7 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 ---
 
 ### [CNVkit_export_seg](https://github.com/etal/cnvkit)
-CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule exports the called segments into a 'seg' file used in downstream analysis.
+CNVkit calls copy number variation in cancer samples. The program uses a panel of normals to correct for biases and adjust calls based on estimated tumor content (external data). This rule exports the called segments into a 'seg' file used in downstream analysis.
 
 #### :snake: Rule
 
