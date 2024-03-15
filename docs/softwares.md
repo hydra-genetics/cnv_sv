@@ -873,7 +873,7 @@ SMNCopyNumberCaller is a tool to call the copy number of full-length SMN1, full-
 ## SVDB
 
 ### [svdb_merge](https://github.com/J35P312/SVDB)
-SVDB is a toolkit for constructing and querying structural variant databases. This rule merges `vcf` files from different structural variant callers into one file where similar calls are clumped together.
+SVDB is a toolkit for constructing and querying structural variant databases. This rule merges `vcf` files from different structural variant callers into one `vcf` file where overlapping calls are merged as a single record.
 
 #### :snake: Rule
 
