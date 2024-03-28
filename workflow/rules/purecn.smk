@@ -134,7 +134,7 @@ rule purecn_copy_output:
     message:
         "{rule}: Copy {input.files} to {output.files}"
     shell:
-        "ln {input.files} {output.files} || cp {input.files} {output.files}"
+        "cp {input.files} {output.files}"
 
 
 rule purecn_purity_file:
