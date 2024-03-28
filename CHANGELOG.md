@@ -1,5 +1,62 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.4.1...v0.5.0) (2024-03-28)
+
+
+### Features
+
+* add names for the vcfs using params and add bnd_distance param ([e32ca47](https://www.github.com/hydra-genetics/cnv_sv/commit/e32ca47bfbac69ef37bf670c9a014937c0cfd037))
+* add priority as a param ([db6e1ba](https://www.github.com/hydra-genetics/cnv_sv/commit/db6e1bac37321f23a7d2763b94493ebc0f4dd049))
+* make the tumor cell content optional ([#160](https://www.github.com/hydra-genetics/cnv_sv/issues/160)) ([1c960c6](https://www.github.com/hydra-genetics/cnv_sv/commit/1c960c638ffdefea8b23296f8a49fbe65b82b557))
+
+
+### Bug Fixes
+
+* add missing space in command ([21e2767](https://www.github.com/hydra-genetics/cnv_sv/commit/21e2767e8741a6d06cb2b4fedc5928d21025f49c))
+* add quite to picard for stdout ([8f09906](https://www.github.com/hydra-genetics/cnv_sv/commit/8f09906109194e6444e84c7b3fc6a41ecfebab73))
+* added RTD for all reviewer rules and fix rule name ([3a81357](https://www.github.com/hydra-genetics/cnv_sv/commit/3a81357f9ce3d063d9a77403e06d1ea6a557b26a))
+* allow missing TC when generating GATK VCF ([#162](https://www.github.com/hydra-genetics/cnv_sv/issues/162)) ([aa6fece](https://www.github.com/hydra-genetics/cnv_sv/commit/aa6fece935ea8587910b273da7cbf6b8674bfb68))
+* bump snakemake version to support apptainer ([#151](https://www.github.com/hydra-genetics/cnv_sv/issues/151)) ([eb4b05d](https://www.github.com/hydra-genetics/cnv_sv/commit/eb4b05df754c2b6be16d5feed3244d00d9f4b5f1))
+* **cnvpytor:** add bam index as input ([60c840a](https://www.github.com/hydra-genetics/cnv_sv/commit/60c840ad7c71dbfd66c0925becc210ae31dfa41a))
+* handle that cns files can have different number of columns ([57da77b](https://www.github.com/hydra-genetics/cnv_sv/commit/57da77b993ea25be88116e75712b09411e45677e))
+* incorrect type for copy number thresholds ([#164](https://www.github.com/hydra-genetics/cnv_sv/issues/164)) ([b549266](https://www.github.com/hydra-genetics/cnv_sv/commit/b549266994149bf7b4bdcc385456229b4f0eee77))
+* pin pulp version to <2.8.0 ([1c960c6](https://www.github.com/hydra-genetics/cnv_sv/commit/1c960c638ffdefea8b23296f8a49fbe65b82b557))
+* rm extra } in benchmark name ([e2f34ce](https://www.github.com/hydra-genetics/cnv_sv/commit/e2f34ce8d24515d7d1f980994f3d72e12878d4da))
+* specify model when calling and filtering in cnvpytor, and threads in readdpth rule ([4347806](https://www.github.com/hydra-genetics/cnv_sv/commit/434780660b693fc7b9dbdf709cc4700be33de63c))
+* **svdb:** use the overlap and extra params ([fe656a9](https://www.github.com/hydra-genetics/cnv_sv/commit/fe656a91dd0a74c566ef0b8bf3512609a071ab94))
+* update container for rule pindel_update_vcf ([#161](https://www.github.com/hydra-genetics/cnv_sv/issues/161)) ([512a924](https://www.github.com/hydra-genetics/cnv_sv/commit/512a924beba54282757745c8c66475e78f52cca3))
+
+
+### Performance Improvements
+
+* add bcftools reheader to pindel vcf for correct samplename ([fcadaba](https://www.github.com/hydra-genetics/cnv_sv/commit/fcadaba56976bad8a6f2975558c5368c25016fb8))
+
+
+### Documentation
+
+* added RTD files and the rules for automap and cnvkit ([ce2f2ca](https://www.github.com/hydra-genetics/cnv_sv/commit/ce2f2ca0b4cdd6876968f638d3d30226f62bfe19))
+* added RTD for all manta rules ([2571744](https://www.github.com/hydra-genetics/cnv_sv/commit/25717444f3a6a48825e95d2c4e756ec2af62c244))
+* added RTD for all pindel rules ([b0ca4da](https://www.github.com/hydra-genetics/cnv_sv/commit/b0ca4dadbbada7bbad66c1274c125f58ef69447d))
+* added RTD for all purecn rules ([7211b29](https://www.github.com/hydra-genetics/cnv_sv/commit/7211b298c138c8aaa693bca072b78885379d8532))
+* added RTD for all smncaller rules ([ed55b6b](https://www.github.com/hydra-genetics/cnv_sv/commit/ed55b6b121c08fb4b4935fe231f493e563f41104))
+* added RTD for all svdb rules ([1cdd6ba](https://www.github.com/hydra-genetics/cnv_sv/commit/1cdd6ba37ca9cfd3c21458188d3d04b706334112))
+* added RTD for cnvpytor and exomedepth ([8fd490a](https://www.github.com/hydra-genetics/cnv_sv/commit/8fd490a8b73efc412797859678569ecba07ac783))
+* added RTD for expansionhunter ([4f290ca](https://www.github.com/hydra-genetics/cnv_sv/commit/4f290ca1e0b69dc7540411d877d380644da69b7e))
+* added RTD for gatk cnv rules ([a0a575e](https://www.github.com/hydra-genetics/cnv_sv/commit/a0a575ef4a37ac0014b67da8690f8241eeef68f9))
+* added RTD for tiddit rules ([fea5964](https://www.github.com/hydra-genetics/cnv_sv/commit/fea5964ec64f5e184c3df75a43241485fbdfa8b0))
+* added RTD for upd rules ([2eccfe5](https://www.github.com/hydra-genetics/cnv_sv/commit/2eccfe5bc01c485afc3996cd85cf0c3700a06175))
+* dag graph ([7a654c2](https://www.github.com/hydra-genetics/cnv_sv/commit/7a654c2ddedecc9a47321f8120b955162fe66674))
+* organise rules based on software ([36568d9](https://www.github.com/hydra-genetics/cnv_sv/commit/36568d9cc61789b3ee5e07af1d695c01d783e496))
+* Update docs/softwares.md ([d3e3f67](https://www.github.com/hydra-genetics/cnv_sv/commit/d3e3f67f1e91e15223cc655133c944128c9e5a54))
+* Update docs/softwares.md ([188ef59](https://www.github.com/hydra-genetics/cnv_sv/commit/188ef594302900cc0b37580e616775412fe79764))
+* Update docs/softwares.md ([90ad983](https://www.github.com/hydra-genetics/cnv_sv/commit/90ad983f53a88117f0532bb8042c74c279d1d7d5))
+* Update docs/softwares.md ([dd02db5](https://www.github.com/hydra-genetics/cnv_sv/commit/dd02db57a7d41c253c1e1d5e79b521d43a6f003d))
+* Update docs/softwares.md ([6f16c13](https://www.github.com/hydra-genetics/cnv_sv/commit/6f16c13479c785cfa52f7c318a9c85aa6a2f5727))
+* Update docs/softwares.md ([25b3195](https://www.github.com/hydra-genetics/cnv_sv/commit/25b31959177b1cd798e4896e47c5bab36c94bad3))
+* Update docs/softwares.md ([c02990c](https://www.github.com/hydra-genetics/cnv_sv/commit/c02990c978a76a7d26ed8f1ce4f962e42bc566e3))
+* update to new rule plugin ([aedbdfd](https://www.github.com/hydra-genetics/cnv_sv/commit/aedbdfd8d9f3084b4e49a0d7e9bb709da707fb10))
+* Update workflow/schemas/resources.schema.yaml ([6136f71](https://www.github.com/hydra-genetics/cnv_sv/commit/6136f71519cb149297621d16cb16c31bf8017838))
+
 ### [0.4.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.4.0...v0.4.1) (2023-05-04)
 
 
