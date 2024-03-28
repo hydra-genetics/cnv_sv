@@ -30,20 +30,22 @@ cnvkit_scatter:
 
 cnvkit_vcf:
   container: "docker://hydragenetics/cnvkit:0.9.9"
+  hom_del_limit: 0.5
 
 cnvkit_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvpytor_readdepth:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
+  container: "docker://hydragenetics/cnvpytor:1.3.1"
   length_list: "10000"
 
 cnvpytor_filter:
-  container: "docker://hydragenetics/cnvpytor:1.2.1"
+  container: "docker://hydragenetics/cnvpytor:1.3.1"
+  calling_model: "rd_mean_shift"
   dG_range: "100000 inf"
   p_range: "0 0.01"
   pN_range: "0 0.5"
-  Q0_range: "0 0.05"
+  Q0_range: "0 0.5"
   view: "10000"
 
 exomedepth_call:
@@ -94,8 +96,8 @@ manta_run_workflow_tn:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
-pindel_update_vcf_sequence_dictionary:
-  container: "docker://hydragenetics/picard:2.25.0"
+pindel_update_vcf:
+  container: "docker://hydragenetics/picard:2.25.4"
 
 pindel_call:
   include_bed: "reference/twist_DNA_solid.chr1.annotated.bed"
@@ -131,13 +133,16 @@ svdb_merge:
       cnv_caller:
         - cnvkit
         - gatk
+      priority: "cnvkit,gatk"
     - name: pathology
       cnv_caller:
         - cnvkit
         - gatk
+      priority: "cnvkit,gatk"
     - name: no_tc
       cnv_caller:
         - pindel
+      priority: "pindel"
   container: "docker://hydragenetics/svdb:2.6.0"
 
 svdb_query:

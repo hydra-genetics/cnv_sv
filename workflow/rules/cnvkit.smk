@@ -8,7 +8,7 @@ rule cnvkit_batch:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        cnv_reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+        reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
     output:
         antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
         bins=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.bintest.cns"),
@@ -19,7 +19,6 @@ rule cnvkit_batch:
     params:
         extra=config.get("cnvkit_batch", {}).get("extra", ""),
         method=config.get("cnvkit_batch", {}).get("method", "hybrid"),
-        outdir=lambda wildcards, output: os.path.dirname(output[0]),
     log:
         "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns.log",
     benchmark:
@@ -38,12 +37,8 @@ rule cnvkit_batch:
         config.get("cnvkit_batch", {}).get("container", config["default_container"])
     message:
         "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
-    shell:
-        "(cnvkit.py batch {input.bam} "
-        "-r {input.cnv_reference} "
-        "-d {params.outdir} "
-        "-m {params.method} "
-        "{params.extra}) &> {log}"
+    wrapper:
+        "v3.3.6/bio/cnvkit/batch"
 
 
 rule cnvkit_call:
@@ -55,7 +50,7 @@ rule cnvkit_call:
         segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
     params:
         extra=config.get("cnvkit_call", {}).get("extra", ""),
-        tc=get_tc,
+        purity=get_tc,
     log:
         "cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.log",
     benchmark:
@@ -74,12 +69,8 @@ rule cnvkit_call:
         config.get("cnvkit_call", {}).get("container", config["default_container"])
     message:
         "{rule}: call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
-    shell:
-        "(cnvkit.py call {input.segment} "
-        "-v {input.vcf} "
-        "-o {output.segment} "
-        "--purity {params.tc} "
-        "{params.extra}) &> {log}"
+    wrapper:
+        "v3.3.6/bio/cnvkit/call"
 
 
 rule cnvkit_diagram:
@@ -108,11 +99,8 @@ rule cnvkit_diagram:
         config.get("cnvkit_diagram", {}).get("container", config["default_container"])
     message:
         "{rule}: chromosome plot cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.pdf"
-    shell:
-        "(cnvkit.py diagram {input.cnr} "
-        "-s {input.cns} "
-        "-o {output.pdf} "
-        "{params.extra}) &> {log}"
+    wrapper:
+        "v3.3.6/bio/cnvkit/diagram"
 
 
 rule cnvkit_scatter:
@@ -207,9 +195,5 @@ rule cnvkit_export_seg:
         config.get("cnvkit_export_seg", {}).get("container", config["default_container"])
     message:
         "{rule}: export cnvkit segments into seg in {output.seg}"
-    shell:
-        "(cnvkit.py export seg "
-        "{input.segments} "
-        "--enumerate-chroms "
-        "-o {output.seg} "
-        "{params.extra}) &> {log}"
+    wrapper:
+        "v3.3.6/bio/cnvkit/export"

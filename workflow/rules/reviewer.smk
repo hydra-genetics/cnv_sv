@@ -4,7 +4,7 @@ __email__ = "padraic.corcoran@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
-rule reviewer_genrate_locus_list:
+rule reviewer_generate_locus_list:
     input:
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
@@ -41,9 +41,9 @@ rule reviewer:
         ref=config.get("reference", {}).get("fasta", ""),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
-        temp(directory("cnv_sv/reviewer/{sample}_{type}/")),
-        temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv"),
-        temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv"),
+        dir=temp(directory("cnv_sv/reviewer/{sample}_{type}/")),
+        metrics=temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv"),
+        phasing=temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv"),
     params:
         extra=config.get("reviewer", {}).get("extra", ""),
         in_locus=lambda wildcards, input: get_locus_str(input.loci),

@@ -36,7 +36,7 @@ rule smn_manifest:
 
 rule smn_caller:
     input:
-        "cnv_sv/smn_caller/{sample}_{type}_manifest.txt",
+        manifest="cnv_sv/smn_caller/{sample}_{type}_manifest.txt",
     output:
         json=temp("cnv_sv/smn_caller/{sample}_{type}.json"),
         tsv=temp("cnv_sv/smn_caller/{sample}_{type}.tsv"),
@@ -64,7 +64,7 @@ rule smn_caller:
     message:
         "{rule}: call SMN1 and SMN2 copynumber on {input} using SMNCopyNumberCaller"
     shell:
-        "smn_caller.py --manifest {input} "
+        "smn_caller.py --manifest {input.manifest} "
         "--genome {params.genome} "
         "--prefix {params.prefix} "
         "--outDir {params.outdir} "

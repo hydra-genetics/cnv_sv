@@ -9,7 +9,7 @@ rule purecn_coverage:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
     output:
-        temp(
+        purecn=temp(
             expand(
                 "cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
                 ext=[
@@ -96,10 +96,10 @@ checkpoint purecn:
 
 rule purecn_copy_output:
     input:
-        lambda wildcards: checkpoints.purecn.get(**wildcards).output.outdir,
-        file=lambda wildcards: f"{checkpoints.purecn.get(**wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
+        file_dir=lambda wildcards: checkpoints.purecn.get(**wildcards).output.outdir,
+        files=lambda wildcards: f"{checkpoints.purecn.get(**wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
     output:
-        temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
+        files=temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
     wildcard_constraints:
         suffix="|".join(
             f"({s})"
@@ -119,7 +119,7 @@ rule purecn_copy_output:
         "cnv_sv/purecn/{sample}_{type}{suffix}.output.log",
     benchmark:
         repeat(
-            "cnv_sv/purecn/{sample}_{type}{suffix}}.purecn_copy_output.benchmark.tsv",
+            "cnv_sv/purecn/{sample}_{type}{suffix}.purecn_copy_output.benchmark.tsv",
             config.get("purecn_copy_output", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("purecn_copy_output", {}).get("threads", config["default_resources"]["threads"])
@@ -132,9 +132,9 @@ rule purecn_copy_output:
     container:
         config["default_container"]
     message:
-        "{rule}: Copy {input} to {output}"
+        "{rule}: Copy {input.files} to {output.files}"
     shell:
-        "ln {input.file} {output} || cp {input.file} {output}"
+        "ln {input.files} {output.files} || cp {input.files} {output.files}"
 
 
 rule purecn_purity_file:

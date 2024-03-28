@@ -14,7 +14,7 @@ from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 
-min_version("7.8.0")
+min_version("7.8.3")
 
 ### Set and validate config file
 
@@ -29,7 +29,7 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
+samples = pd.read_table(config["samples"]).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
@@ -50,13 +50,20 @@ wildcard_constraints:
 
 
 def get_tc(wildcards):
+    """
+    Get the tumor cell content of a sample. If the tumor content
+    cannot be identified, return an empty string.
+    """
     tc_method = wildcards.tc_method
     if tc_method == "pathology":
+        sample = get_sample(samples, wildcards)
+        if not "tumor_content" in sample:
+            return ""
         return get_sample(samples, wildcards)["tumor_content"]
     else:
         tc_file = f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
         if not os.path.exists(tc_file):
-            return -1
+            return ""
         else:
             with open(tc_file, "r") as f:
                 tc = f.read()
@@ -135,7 +142,6 @@ def get_peddy_sex(wildcards, peddy_sex_check):
 
 
 def get_exomedepth_ref(wildcards):
-
     sex = get_peddy_sex(wildcards, checkpoints.exomedepth_sex.get().output[0])
 
     if sex == "male":
@@ -152,21 +158,35 @@ def get_locus_str(loci):
     return loc_str
 
 
-def get_vcfs_for_svdb_merge(wildcards):
+def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
     vcf_dict = {}
     for v in config.get("svdb_merge", {}).get("tc_method"):
         tc_method = v["name"]
         callers = v["cnv_caller"]
         for caller in callers:
-            if tc_method in vcf_dict:
-                vcf_dict[tc_method].append(f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf")
+            if add_suffix:
+                caller_suffix = f":{caller}"
             else:
-                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf"]
+                caller_suffix = ""
+            if tc_method in vcf_dict:
+                vcf_dict[tc_method].append(
+                    f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"
+                )
+            else:
+                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"]
     return vcf_dict[wildcards.tc_method]
 
 
-def get_parent_samples(wildcards, trio_member):
+def get_priority(wildcards):
+    priority_dict = {}
+    for v in config.get("svdb_merge", {}).get("tc_method"):
+        tc_method = v["name"]
+        priority_dict[tc_method] = v["priority"]
 
+    return priority_dict[wildcards.tc_method]
+
+
+def get_parent_samples(wildcards, trio_member):
     proband_sample = samples[samples.index == wildcards.sample]
     trio_id = proband_sample.at[wildcards.sample, "trioid"]
 

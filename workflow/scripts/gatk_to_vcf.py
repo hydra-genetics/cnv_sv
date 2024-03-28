@@ -56,7 +56,7 @@ for line in seg_in:
         baf = columns[9]
         cn = 2*pow(2, float(log_odds_ratio))
         ccn = cn
-        if float(TC) > 0:
+        if TC and float(TC) > 0:
             ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
         cn = round(cn, 2)
         ref = "N"

@@ -42,7 +42,7 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to automap
+        description: parameters that should be forwarded
       build:
         type: string
         description: which genome build that should be used (hg19/hg38)
@@ -122,13 +122,13 @@ properties:
         type: string
         description: name or path to docker/singularity container
       hom_del_limit:
-        type: string
+        type: number
         description: copy number threshold for homozygous deletion
       het_del_limit:
-        type: string
+        type: number
         description: copy number threshold for heterozygous deletion
       dup_limit:
-        type: string
+        type: number
         description: copy number threshold for duplication
 
   cnvkit_export_seg:
@@ -143,9 +143,10 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
+        description: parameters that should be forwarded
 
   cnvpytor_readdepth:
-    description: parameters for tiddit
+    description: parameters for cnvpytor_readdepth
     type: object
     properties:
       benchmark_repeats:
@@ -156,13 +157,13 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to tiddit
+        description: parameters that should be forwarded
       lengthlist:
         type: string
         description: different variant length thresholds (e.g. 1000 10000 100000)
 
   cnvpytor_filter:
-    description: parameters for tiddit
+    description: parameters for cnvpytor_filter
     type: object
     properties:
       benchmark_repeats:
@@ -176,7 +177,7 @@ properties:
         description: parameters for dG range (e.g. 100000 inf)
       extra:
         type: string
-        description: parameters that should be forwarded to tiddit
+        description: parameters that should be forwarded
       p_range:
         type: string
         description: parameters for p range (e.g. 0 0.01)
@@ -190,8 +191,8 @@ properties:
         type: string
         description: parameter for minimum variant size (e.g. 1000)
 
-  exomedepth:
-    description: parameters for exomedepth
+  exomedepth_call:
+    description: parameters for exomedepth_call
     type: object
     properties:
       benchmark_repeats:
@@ -203,77 +204,31 @@ properties:
       bedfile:
         type: string
         description: path to bedfile
-      male_reference:
+      extra:
         type: string
-        description: path to ref_count of male reference samples (normal pool)
-      female_reference:
+        description: parameters that should be forwarded
+      ref_count:
         type: string
-        description: path to ref_count of female reference samples (normal pool)
-      genome_version:
-        type: string
-        pattern: "hg38|hg19"
-        description: name of reference genome
-      genesfile:
-        type: string
-        description: path to genename file if not using hg19
-      exonsfile:
-        type: string
-        description: path to genename file if not using hg19
+        description: function that finds the path to ref_count for female or male reference samples (normal pool)
     required:
       - bedfile
 
+  exomedepth_sex:
+    description: parameters for exomedepth_sex
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   expansionhunter:
     description: parameters for expansionhunter
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: extra parameters
-
-  gatk_denoisereadcounts:
-    description: parameters for gatk_denoisereadcounts
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      normal_reference:
-        type: string
-        description: path to normal reference panel for gatk DenoiseReadCounts
-      extra:
-        type: string
-        description: parameters that should be forwarded
-    required:
-      - normal_reference
-
-  gatk_collect_read_counts:
-    description: parameters for gatk_collect_read_counts
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      interval:
-        type: string
-        description: picard interval file for the target bed file
-      extra:
-        type: string
-        description: parameters that should be forwarded
-
-  gatk_model_segments:
-    description: parameters for gatk_model_segments
     type: object
     properties:
       benchmark_repeats:
@@ -300,6 +255,43 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  gatk_collect_read_counts:
+    description: parameters for gatk_collect_read_counts
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      interval:
+        type: string
+        description: picard interval file for the target bed file
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  gatk_collect_allelic_counts:
+    description: parameters for gatk_collect_allelic_counts
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      interval:
+        type: string
+        description: picard interval file for SNPs
+      ref:
+        type: string
+        description: reference genome 'fasta' file
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   gatk_denoise_read_counts:
     description: parameters for gatk_denoise_read_counts
     type: object
@@ -310,15 +302,31 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      SNP_interval:
+      hdf5PoN:
         type: string
-        description: picard interval file for the germline SNPs
+        description: path to normal reference panel for gatk_denoise_read_counts
+      extra:
+        type: string
+        description: parameters that should be forwarded
+    required:
+      - normal_reference
+
+  gatk_model_segments:
+    description: parameters for gatk_model_segments
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
       extra:
         type: string
         description: parameters that should be forwarded
 
-  gatk_vcf:
-    description: parameters for gatk_vcf
+  gatk_to_vcf:
+    description: parameters for gatk_to_vcf
     type: object
     properties:
       benchmark_repeats:
@@ -336,17 +344,6 @@ properties:
       dup_limit:
         type: string
         description: copy number threshold for duplication
-
-  generate_pindel_config:
-    description: parameters for generate_pindel_config
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
 
   manta_config_t:
     description: parameters for manta_config_t
@@ -423,8 +420,19 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  pindel_update_vcf_sequence_dictionary:
-    description: parameters for pindel_update_vcf_sequence_dictionary
+  pindel_generate_config:
+    description: parameters for pindel_generate_config
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  pindel_update_vcf:
+    description: parameters for pindel_update_vcf
     type: object
     properties:
       benchmark_repeats:
@@ -455,7 +463,7 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to pindel
+        description: parameters that should be forwarded
 
   pindel2vcf:
     description: parameters for pindel2vcf
@@ -501,7 +509,7 @@ properties:
         description: include variants in the interval flanking regions of the specified size in bp
       extra:
         type: string
-        description: parameters that should be forwarded to PureCN.R
+        description: parameters that should be forwarded
     oneOf:
       - properties:
           segmentation_method:
@@ -580,7 +588,7 @@ properties:
         description: interval file (_intervals.txt generated by IntervalFile.R)
       extra:
         type: string
-        description: parameters that should be forwarded to Coverage.R
+        description: parameters that should be forwarded
     required:
       - intervals
 
@@ -625,6 +633,19 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  smn_manifest:
+    description: parameter for smn_manifest
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   smn_caller:
     description: parameter for smn_caller
     properties:
@@ -636,7 +657,7 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to smn_caller
+        description: parameters that should be forwarded
       genome_version:
         type: string
         description: genome version to use with smn_caller
@@ -652,7 +673,7 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to smn_charts
+        description: parameters that should be forwarded
     
   svdb_merge:
     description: parameters for svdb_merge
@@ -695,7 +716,7 @@ properties:
         description: name or path to docker/singularity container
       db_string:
         type: string
-        description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq)
+        description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq) where --db is the path to the SVDB database
       extra:
         type: string
         description: parameters that should be forwarded
@@ -712,10 +733,10 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to tiddit
+        description: parameters that should be forwarded
 
-  upd:
-    description: parameters for upd
+  upd_regions:
+    description: parameters for upd_regions
     type: object
     properties:
       benchmark_repeats:
@@ -726,4 +747,18 @@ properties:
         description: name or path to docker/singularity container
       extra:
         type: string
-        description: parameters that should be forwarded to upd, e.g. "--vep" if population AF had been annotated with vep
+        description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
+
+  upd_sites:
+    description: parameters for upd_sites
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep

@@ -1,0 +1,1046 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+  automap:
+    type: object
+    description: input and output parameters for automap
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: input 'vcf' with SNVs and INDELs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pdf:
+            type: string
+            description: list of regions of homozygozity in 'pdf' file format
+          tsv:
+            type: string
+            description: list of regions of homozygozity in 'tsv' file format
+
+  cnvkit_batch:
+    type: object
+    description: input and output parameters for cnvkit_batch
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input 'bam' file
+          bai:
+            type: string
+            description: input 'bam' index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          antitarget_coverage:
+            type: string
+            description: sequencing coverage for each region outside of the target
+          bins:
+            type: string
+            description: bin size statistics used for target region splitting
+          regions:
+            type: string
+            description: copy number statistics for each region
+          segments:
+            type: string
+            description: copy number segmentation
+          segments_called:
+            type: string
+            description: copy number segmentation with integer copy numbers for each segment
+          target_coverage:
+            type: string
+            description: sequencing coverage for each region in the target regions
+
+  cnvkit_call:
+    type: object
+    description: input and output parameters for cnvkit_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+          vcf:
+            type: string
+            description: a 'vcf' file with germline SNPs used for BAF information
+          tc_file:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          segment:
+            type: string
+            description: called copy number segmentation rescaled based on tumor content
+
+  cnvkit_diagram:
+    type: object
+    description: input and output parameters for cnvkit_diagram
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          cns:
+            type: string
+            description: copy number segmentation file
+          cnr:
+            type: string
+            description: copy number statistics for each region
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pdf:
+            type: string
+            description: plot in 'pdf' format showing an overview of aberrations found in each chromosome
+
+  cnvkit_scatter:
+    type: object
+    description: input and output parameters for cnvkit_scatter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segments:
+            type: string
+            description: copy number segmentation file
+          segment_regions:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+          vcf:
+            type: string
+            description: a 'vcf' file with germline SNPs used for BAF plotting
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          plot:
+            type: string
+            description: plot in 'pdf' format of the segmentation over the genome
+
+  cnvkit_vcf:
+    type: object
+    description: input and output parameters for cnvkit_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: copy number segmentation file in 'vcf' format used downstream by for example SVDB
+
+  cnvkit_export_seg:
+    type: object
+    description: input and output parameters for cnvkit_export_seg
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segments:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          seg:
+            type: string
+            description: copy number segmentation file in 'vcf' format used in downstream analysis
+
+  cnvpytor_readdepth:
+    type: object
+    description: input and output parameters for cnvpytor_readdepth
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input 'bam' file
+          bai:
+            type: string
+            description: input 'bam' index
+          vcf:
+            type: string
+            description: a 'vcf' file with germline SNPs used for BAF information
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pytor:
+            type: string
+            description: candidate copy number calls
+
+  cnvpytor_filter:
+    type: object
+    description: input and output parameters for cnvpytor_filter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          pytor:
+            type: string
+            description: candidate copy number calls
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: candidate copy number calls in 'vcf' file format
+          filtvcf:
+            type: string
+            description: filtered candidate copy number calls in 'vcf' file format
+
+  exomedepth_sex:
+    type: object
+    description: input and output parameters for exomedepth_sex
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          peddy:
+            type: string
+            description: a 'peddy' sex file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          peddy:
+            type: string
+            description: a 'peddy' sex file used by exomedepth
+    
+  exomedepth_call:
+    type: object
+    description: input and output parameters for exomedepth_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bedfile:
+            type: string
+            description: a 'bed' file with regions to be analyzed
+          sex:
+            type: string
+            description: a 'peddy' sex file
+          ref_count:
+            type: string
+            description: file with panel of normal reference panel, male or female
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          exon:
+            type: string
+            description: a 'RData' file with CNV calls
+          txt:
+            type: string
+            description: a 'txt' file with CNV calls
+
+  expansionhunter:
+    type: object
+    description: input and output parameters for expansionhunter
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          cat:
+            type: string
+            description: file with catalog of variants to analyze
+          ref:
+            type: string
+            description: fasta genome reference file
+          sex:
+            type: string
+            description: a 'peddy' sex file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: realigned 'bam' file
+          json:
+            type: string
+            description: statistics file in 'json' format 
+          vcf:
+            type: string
+            description: called expansions in 'vcf' file format
+
+  gatk_collect_read_counts:
+    type: object
+    description: input and output parameters for gatk_collect_read_counts
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          hdf5:
+            type: string
+            description: gatks binary 'hdf5' used in downstream analysis
+
+  gatk_collect_allelic_counts:
+    type: object
+    description: input and output parameters for gatk_collect_allelic_counts
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          tsv:
+            type: string
+            description: a 'tsv' file with allelic counts for the input SNPs
+
+  gatk_denoise_read_counts:
+    type: object
+    description: input and output parameters for gatk_denoise_read_counts
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          hdf5Tumor:
+            type: string
+            description: a 'hdf5' file generated by gatk in upstream analysis
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          denoisedCopyRatio:
+            type: string
+            description: denoised copy ratios
+          stdCopyRatio:
+            type: string
+            description: standard deviation of denoised copy ratios
+
+  gatk_model_segments:
+    type: object
+    description: input and output parameters for gatk_model_segments
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          allelicCounts:
+            type: string
+            description: allelic counts for the SNPs
+          denoisedCopyRatio:
+            type: string
+            description: denoised copy ratios
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          begin_af_param:
+            type: string
+            description: start parameters used for SNPs
+          begin_cr_param:
+            type: string
+            description: start parameters used for copy ratios
+          begin_seg:
+            type: string
+            description: initial segmentation
+          cr_seg:
+            type: string
+            description: reformatted final_seg used by gatk_call_copy_ratio_segments
+          final_af_param:
+            type: string
+            description: final parameters used for SNPs
+          final_cr_param:
+            type: string
+            description: final parameters used for copy ratios
+          final_seg:
+            type: string
+            description: final segmentation
+          hets_tsv:
+            type: string
+            description: allelic counts for the SNPs
+          igv_af_seg:
+            type: string
+            description: final segmentation files adapted for IGV viewing
+          igv_cr_seg:
+            type: string
+            description: final segmentation files adapted for IGV viewing
+
+  gatk_call_copy_ratio_segments:
+    type: object
+    description: input and output parameters for gatk_call_copy_ratio_segments
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segments:
+            type: string
+            description: segmentation file generated by gatk_model_segments
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          igv_segments:
+            type: string
+            description: called copy number segment file adapted for IGV
+          segments:
+            type: string
+            description: called copy number segment file based on a statistical test
+
+  gatk_to_vcf:
+    type: object
+    description: input and output parameters for gatk_to_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: final segmentation file
+          tc_file:
+            type: string
+            description: Tumor content of sample. A function determines what file should be used based on the tc_method wildcard.
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: segmentation in 'vcf' file format
+
+  manta_config_tn:
+    type: object
+    description: input and output parameters for manta_config_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: a tumor 'bam' file
+          bai_t:
+            type: string
+            description: a tumor 'bam' file index
+          bam_n:
+            type: string
+            description: a normal 'bam' file from the same sample
+          bai_n:
+            type: string
+            description: a normal 'bam' file index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          scrpt:
+            type: string
+            description: a python script with configurations that is used in the manta analysis
+
+  manta_run_workflow_tn:
+    type: object
+    description: input and output parameters for manta_run_workflow_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: a tumor 'bam' file
+          bai_t:
+            type: string
+            description: a tumor 'bam' file index
+          bam_n:
+            type: string
+            description: a normal 'bam' file from the same sample
+          bai_n:
+            type: string
+            description: a normal 'bam' file index
+          scrpt:
+            type: string
+            description: a python script with configurations that is used in the manta analysis
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          cand_si_vcf:
+            type: string
+            description: candidate small INDELs 'vcf' file compress by bgzip
+          cand_si_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          cand_sv_vcf:
+            type: string
+            description: candidate structural variants 'vcf' file compress by bgzip
+          cand_sv_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          dipl_sv_vcf:
+            type: string
+            description: germline structural variants 'vcf' file compress by bgzip
+          dipl_sv_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          som_sv_vcf:
+            type: string
+            description: somatic structural variants 'vcf' file compress by bgzip
+          som_sv_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          wrk_dir:
+            type: string
+            description: working directory
+
+  manta_config_t:
+    type: object
+    description: input and output parameters for manta_config_t
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: a tumor 'bam' file
+          bai_t:
+            type: string
+            description: a tumor 'bam' file index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          scrpt:
+            type: string
+            description: a python script with configurations that is used in the manta analysis
+
+  manta_run_workflow_t:
+    type: object
+    description: input and output parameters for manta_run_workflow_t
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: a tumor 'bam' file
+          bai_t:
+            type: string
+            description: a tumor 'bam' file index
+          scrpt:
+            type: string
+            description: a python script with configurations that is used in the manta analysis
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          cand_si_vcf:
+            type: string
+            description: candidate small INDELs 'vcf' file compress by bgzip
+          cand_si_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          cand_sv_vcf:
+            type: string
+            description: candidate structural variants 'vcf' file compress by bgzip
+          cand_sv_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          tum_sv_vcf:
+            type: string
+            description: somatic / germline structural variants 'vcf' file compress by bgzip
+          tum_sv_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          wrk_dir:
+            type: string
+            description: working directory
+
+  manta_config_n:
+    type: object
+    description: input and output parameters for manta_config_n
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_n:
+            type: string
+            description: a normal 'bam' file
+          bai_n:
+            type: string
+            description: a normal 'bam' file index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          scrpt:
+            type: string
+            description: a python script with configurations that is used in the manta analysis
+
+  manta_run_workflow_n:
+    type: object
+    description: input and output parameters for manta_run_workflow_n
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_n:
+            type: string
+            description: a normal 'bam' file
+          bai_n:
+            type: string
+            description: a normal 'bam' file index
+          scrpt:
+            type: string
+            description: a python script with configurations that is used in the manta analysis
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          cand_si_vcf:
+            type: string
+            description: candidate small INDELs 'vcf' file compress by bgzip
+          cand_si_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          cand_sv_vcf:
+            type: string
+            description: candidate structural variants 'vcf' file compress by bgzip
+          cand_sv_tbi:
+            type: string
+            description: tabix 'tbi' index file
+          wrk_dir:
+            type: string
+            description: working directory
+
+  pindel_generate_config:
+    type: object
+    description: input and output parameters for pindel_generate_config
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          metrics:
+            type: string
+            description: a insert size metrics file generated by picard_collect_multiple_metrics
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          config:
+            type: string
+            description: config file used when running pindel
+
+  pindel_call:
+    type: object
+    description: input and output parameters for pindel_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index file
+          config:
+            type: string
+            description: the config file generated by pindel_generate_config
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pindel:
+            type: string
+            description: a collection of output files with different kinds of variants
+
+  pindel2vcf:
+    type: object
+    description: input and output parameters for pindel2vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          pindel:
+            type: string
+            description: a collection of output files with different kinds of variants generated by pindel_call
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file with all variants in one file
+
+  purecn_coverage:
+    type: object
+    description: input and output parameters for purecn_coverage
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          purecn:
+            type: string
+            description: a collection of output files with coverage information
+
+  purecn:
+    type: object
+    description: input and output parameters for purecn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          unpack:
+            type: string
+            description: list of input files determined by function get_purecn_inputs and the config for the rule
+          vcf:
+            type: string
+            description: an bgzipped unfiltered 'vcf' file from mutect2 annotated by bcftools with germline information (-m DB)
+          tbi:
+            type: string
+            description: a 'vcf' file index file created by tabix
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          csv:
+            type: string
+            description: purity and ploidy estimations which can be empty if purecn fails
+          outdir:
+            type: string
+            description: output directory containing files determined by input files and config
+
+  purecn_copy_output:
+    type: object
+    description: input and output parameters for purecn_copy_output
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          file_dir:
+            type: string
+            description: input temporary directory created by purecn
+          files:
+            type: string
+            description: result files generated by purecn that should be copied
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          files:
+            type: string
+            description: result files generated by purecn that should were copied
+
+  purecn_purity_file:
+    type: object
+    description: input and output parameters for purecn_purity_file
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          csv:
+            type: string
+            description: a 'csv' file from purecn with purity and ploidy information
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          purity:
+            type: string
+            description: a 'txt' file with only the purity value used in downstream cnv analysis
+
+  reviewer_generate_locus_list:
+    type: object
+    description: input and output parameters for reviewer_generate_locus_list
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file created by expansionhunter
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          txt:
+            type: string
+            description: locus list that should be reviewed
+  
+  reviewer:
+    type: object
+    description: input and output parameters for reviewer
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          loci:
+            type: string
+            description: locus list that should be reviewed
+          vcf:
+            type: string
+            description: a 'vcf' file created by expansionhunter
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: output directory with read pileup 'svg' files for each locus
+          metrics:
+            type: string
+            description: file with metrics information
+          phasing:
+            type: string
+            description: file with phasing information
+
+  smn_manifest:
+    type: object
+    description: input and output parameters for smn_manifest
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          manifest:
+            type: string
+            description: a manifest file which is used by smn_caller
+
+  smn_caller:
+    type: object
+    description: input and output parameters for smn_caller
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          manifest:
+            type: string
+            description: a manifest file generated by smn_manifest
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          json:
+            type: string
+            description: a 'json' file with SMN calling result and extra debugging info
+          tsv:
+            type: string
+            description: a 'tsv' file with SMN calling result
+
+  smn_charts:
+    type: object
+    description: input and output parameters for smn_charts
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          json:
+            type: string
+            description: a 'json' file with SMN calling result generated by smn_caller
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          pdf:
+            type: string
+            description: a 'pdf' file containing four plots showing coverage and copy number data
+        
+  svdb_merge:
+    type: object
+    description: input and output parameters for svdb_merge
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcfs:
+            type: string
+            description: a function get_vcfs_for_svdb_merge (common.smk) is used to list all files (eg. from different callers) that should be merge into a SVDB 'vcf'
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file containing the merged SV calls
+        
+  svdb_query:
+    type: object
+    description: input and output parameters for svdb_query
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file containing the merged SV calls
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file annotated with frequency data from a SVDB database
+    
+  tiddit:
+    type: object
+    description: input and output parameters for tiddit
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          folder:
+            type: string
+            description: output folder for tiddit
+          ploidies:
+            type: string
+            description: ploidy file
+          vcf:
+            type: string
+            description: a 'vcf' file with SVs and other chromosomal rearrangements
+
+  upd_regions:
+    type: object
+    description: input and output parameters for upd_regions
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file with SNVs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          regions:
+            type: string
+            description: file with called upd regions
+
+  upd_sites:
+    type: object
+    description: input and output parameters for upd_regions
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file with SNVs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          sites:
+            type: string
+            description: file with upd informative sites

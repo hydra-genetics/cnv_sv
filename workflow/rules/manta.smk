@@ -159,8 +159,8 @@ rule manta_run_workflow_t:
 
 rule manta_config_n:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_N.bam",
-        bai="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
+        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py"),
@@ -186,7 +186,7 @@ rule manta_config_n:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
         "configManta.py "
-        "--bam={input.bam} "
+        "--bam={input.bam_n} "
         "--referenceFasta={input.ref} "
         "{params.extra} "
         "--runDir=cnv_sv/manta_run_workflow_n/{wildcards.sample} &> {log}"

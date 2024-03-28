@@ -11,12 +11,16 @@ automap:
   build: "hg38"
   extra: "--DP 10 --minsize 3 --chrX"
 
+cnvkit_export_seg:
+  extra: "--enumerate-chroms"
+
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   length_list: ""
 
 cnvpytor_filter:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
+  calling_model: "rd_mean_shift"
   dG_range: ""
   p_range: ""
   pN_range: ""
@@ -41,8 +45,8 @@ manta_config_n:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
-pindel_update_vcf_sequence_dictionary:
-  container: "docker://hydragenetics/picard:2.25.0"
+pindel_update_vcf:
+  container: "docker://hydragenetics/picard:2.25.4"
 
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
