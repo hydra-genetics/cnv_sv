@@ -118,6 +118,5 @@ rule trgt_plot:
         "--plot-type {params.plot_type} "
         "--image {output.image} "
         "--show {params.show} "
-        "{params.extra} &> {log} || true "        
+        "{params.extra} &> {log} || true "
         "&& touch {output.image}"
-        
