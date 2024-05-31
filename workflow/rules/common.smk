@@ -219,7 +219,7 @@ def get_parent_samples(wildcards, trio_member):
     return parent_sample_id
 
 
-def get_trg_loci(wildcards):
+def get_trgt_loci(wildcards):
     trgt_bed = config.get("trgt_genotype", {}).get("bed", "")
     rep_ids = []
     with open(trgt_bed, "r") as infile:
@@ -250,7 +250,7 @@ def compile_output_list(wildcards):
             for prefix in files.keys()
             for sample in get_samples(samples)
             for unit_type in get_unit_types(units, sample)
-            for locus in get_trg_loci(wildcards)
+            for locus in get_trgt_loci(wildcards)
             for suffix in files[prefix]
         ]
     else:
