@@ -1056,7 +1056,7 @@ properties:
           bam:
             type: string
             description: a sorted 'bam' file
-          bai:
+          idx:
             type: string
             description: output 'bam' index
           
