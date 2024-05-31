@@ -67,7 +67,7 @@ def get_karyotype(wildcards):
         karyotype = "XY"
     else:
         karyotype = "XX"
-    
+
     return karyotype
 
 
@@ -224,7 +224,7 @@ def get_trgt_loci(wildcards):
     rep_ids = []
     with open(trgt_bed, "r") as infile:
         for line in infile:
-            cols = line.split('\t')
+            cols = line.split("\t")
             rep_id = cols[3].split(";")[0]
             rep_ids.append(rep_id.split("=")[1])
     return rep_ids
