@@ -7,7 +7,7 @@ __license__ = "GPL-3"
 rule trgt_genotype:
     input:
         bam="alignment/minimap2/{sample}_{type}.bam",
-        bam="alignment/minimap2/{sample}_{type}.bam.bai",
+        bai="alignment/minimap2/{sample}_{type}.bam.bai",
         bed=config.get("trgt_genotype", {}).get("bed", ""),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
