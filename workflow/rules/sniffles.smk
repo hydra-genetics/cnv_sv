@@ -1,7 +1,7 @@
-__author__ = "Nina Hollfelder"
 __copyright__ = "Copyright 2023, Nina Hollfelder"
 __email__ = "nina_hollfelder@scilifelab.uu.se"
 __license__ = "GPL-3"
+
 
 rule sniffles:
     input:
