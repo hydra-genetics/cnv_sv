@@ -578,11 +578,11 @@ pbsv is a suite of tools to call and analyze structural variants in diploid geno
 
 #### Software settings (`config.yaml`)
 
-#CONFIGSCHEMA__pbsv#
+#CONFIGSCHEMA__pbsv_call#
 
 #### Resources settings (`resources.yaml`)
 
-#RESOURCESSCHEMA__pbsv#
+#RESOURCESSCHEMA__pbsv_call#
 
 ---
 
