@@ -17,7 +17,10 @@ rule sniffles:
     log:
         "long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
     benchmark:
-        repeat("long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv", config.get("sniffles", {}).get("benchmark_repeats", 1))
+        repeat(
+            "long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv",
+            config.get("sniffles", {}).get("benchmark_repeats", 1),
+        )
     threads: config.get("sniffles", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("sniffles", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
