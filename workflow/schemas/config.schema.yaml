@@ -674,7 +674,24 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-    
+
+  sniffles:
+    type: object
+    description: parameters for sniffles
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      non_germline: 
+        type: string
+        description: set to  --non-germline if running somatic
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   svdb_merge:
     description: parameters for svdb_merge
     type: object
@@ -762,3 +779,4 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
+

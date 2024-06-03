@@ -127,6 +127,11 @@ smn_caller:
 smn_charts:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
 
+ sniffles:
+   container: "docker://hydragenetics/sniffles2:2.0.7"
+   extra: "" 
+   non_germline: "" #set to  --non-germline if running somatic
+   
 svdb_merge:
   tc_method:
     - name: purecn

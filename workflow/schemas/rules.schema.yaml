@@ -943,7 +943,35 @@ properties:
           pdf:
             type: string
             description: a 'pdf' file containing four plots showing coverage and copy number data
-        
+
+  sniffles:
+    type: object
+    description: input and output parameters for sniffles
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a bam file
+          bai:
+            type: string
+            description: a bai file
+          fasta:
+            type: string
+            description: a genome reference fasta file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a vcf file containing the resulting SV calls
+          snf:
+            type: string
+            description: a snf file containing the resulting SV calls
+
   svdb_merge:
     type: object
     description: input and output parameters for svdb_merge
