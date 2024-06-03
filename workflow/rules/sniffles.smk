@@ -38,3 +38,4 @@ rule sniffles:
         "{params.extra} "
         "--vcf {output.vcf} "
         "--snf {output.snf}  &> {log} "
+
