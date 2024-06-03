@@ -927,8 +927,6 @@ properties:
         type: string
         description: max execution time
 
-
-
   upd_regions:
     description: resource definitions for upd_regions
     type: object
@@ -971,6 +969,9 @@ properties:
 
   required:
     - default_resources
+
+
+
 
 
 

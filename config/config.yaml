@@ -45,6 +45,13 @@ manta_config_n:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
+pbsv_discover:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  ccs: "--ccs"
+  
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
 

@@ -563,6 +563,29 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
+## [pbsv](https://github.com/PacificBiosciences/pbsv)
+pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio single molecule real-time sequencing (SMRT) reads. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv#
+
+---
+
 ## Pindel
 
 ### [pindel_generate_config](https://github.com/genome/pindel)
@@ -1075,5 +1098,4 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
-
 

@@ -420,6 +420,31 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
+  pbsv_discover:
+    type: object
+    description: parameters for pbsv
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  pbsv_call:
+    type: object
+    description: parameters for pbsv
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      css:
+        type: string
+        description: ccs parameter "--ccs"
+
   pindel_generate_config:
     description: parameters for pindel_generate_config
     type: object
@@ -833,4 +858,3 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
-
