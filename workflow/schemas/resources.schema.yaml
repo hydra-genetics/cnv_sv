@@ -507,6 +507,26 @@ properties:
         type: string
         description: max execution time
 
+  pbsv_call:
+    description: resource definitions for pbsv_call
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   pindel_generate_config:
     description: resource definitions for pindel_generate_config
     type: object

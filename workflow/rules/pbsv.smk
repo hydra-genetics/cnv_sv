@@ -1,5 +1,6 @@
+__author__ = "Jonas Almlöf"
 __copyright__ = "Copyright 2023, Jonas Almlöf"
-__email__ = "jonas.almlof@scilife.uu.se"
+__email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 rule pbsv_discover:
@@ -33,7 +34,6 @@ rule pbsv_discover:
         "{output.svsig} "
         "{params.extra}) "
         "&> {log}"
-
 
 rule pbsv_call:
     input:
