@@ -5,7 +5,6 @@ __license__ = "GPL-3"
 rule pbsv_discover:
     input:
         bam="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
-        #bam="long_read/pbmm2_align/{sample}_{type}_{processing_unit}_{barcode}.pbmm2.sort.bam",
     output:
         svsig="long_read/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
     params:
