@@ -11,7 +11,7 @@ reference:
 
 trgt_genotype:
   bed: "reference/human_GRCh38_trgt.bed"
-  container: "hydragenetics/trgt:1.0.0"
+  container: "docker://hydragenetics/trgt:1.0.0"
 
 trgt_plot:
   image_type: "svg"
