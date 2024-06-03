@@ -734,6 +734,60 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+  
+  trgt_genotype:
+    description: parameters for trgt_genotype
+    type: object
+    properties:
+      bed:
+        type: string
+        description: path to bed file of repeats to be genotyped
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  trgt_bam_sort:
+    type: object
+    description: parameters for trgt_bam_sort
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  trgt_plot:
+    type: object
+    description: parameters for trgt_plot
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      image_type:
+        type: string
+        description: image type for the plot (png|svg|pdf)
+      plot_type:
+        type: string
+        description: Type of trgt plot (allele or waterfall) 
+      show:
+        type: string
+        description: either motifs (motifs) or methylation (meth) plots 
 
   upd_regions:
     description: parameters for upd_regions
