@@ -1,0 +1,2 @@
+sample	type	platform	machine	processing_unit	barcode	methylation	bam
+HG002	N	PACBIO	SEQUEL	m84011_220902_175841_s1	NNNN	Yes	alignment/minimap2/HG002_N.bam

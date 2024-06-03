@@ -33,12 +33,18 @@ samples = pd.read_table(config["samples"], dtype={"sample": str}).set_index("sam
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
-
-units = (
-    pandas.read_table(config["units"], dtype=str)
-    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
-    .sort_index()
-)
+if config["pacbio_alignment"] or config["ont_alignment"]:
+    units = (
+        pandas.read_table(config["units"], dtype=str)
+        .set_index(["sample", "type", "processing_unit", "barcode"], drop=False)
+        .sort_index()
+    )
+else:
+    units = (
+        pandas.read_table(config["units"], dtype=str)
+        .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
+        .sort_index()
+    )
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -47,6 +53,22 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
+
+
+def get_karyotype(wildcards):
+    """
+    Translate sex to karyotype for trgt. If sex is unknown
+    or sex is not in the samples.tsv file then 'XX' is returned
+    as default
+    """
+
+    sex = samples.loc[wildcards.sample].sex
+    if sex == "male":
+        karyotype = "XY"
+    else:
+        karyotype = "XX"
+
+    return karyotype
 
 
 def get_tc(wildcards):
@@ -197,88 +219,122 @@ def get_parent_samples(wildcards, trio_member):
     return parent_sample_id
 
 
-def compile_output_list(wildcards):
-    files = {
-        "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
-        "cnv_sv/cnvkit_diagram": ["pdf"],
-        "cnv_sv/cnvkit_scatter": ["png"],
-        "cnv_sv/cnvkit_vcf": ["pathology.vcf"],
-        "cnv_sv/cnvpytor": ["vcf"],
-        "cnv_sv/expansionhunter": ["vcf"],
-        "cnv_sv/gatk_vcf": ["pathology.vcf"],
-        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
-        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
-        "cnv_sv/exomedepth_call": ["txt", "RData"],
-        "cnv_sv/pindel_vcf": ["no_tc.vcf"],
-        "cnv_sv/tiddit": ["vcf"],
-    }
-    output_files = [
-        "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        for unit_type in get_unit_types(units, sample)
-        for suffix in files[prefix]
-    ]
-    output_files += [
-        "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        for unit_type in get_unit_types(units, sample)
-    ]
-    output_files += [
-        "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        for unit_type in get_unit_types(units, sample)
-    ]
-    output_files.append(
-        [
-            "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
-            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        ]
-    )
-    output_files.append(
-        [
-            "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
-            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        ]
-    )
-    output_files.append(
-        [
-            "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
-            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        ]
-    )
-    files = {
-        "upd": ["upd_regions.bed", "upd_sites.bed"],
-    }
-    output_files += [
-        "cnv_sv/%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in samples[samples.trio_member == "proband"].index
-        for unit_type in get_unit_types(units, sample)
-        for suffix in files[prefix]
-    ]
-    # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
-    # testing and we can not guarantee that it will work
-    # output_files.append(
-    #   [
-    #       "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
-    #       for sample in get_samples(samples)
-    #       for unit_type in get_unit_types(units, sample)
-    #   ]
-    # )
-    # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
+def get_trgt_loci(wildcards):
+    trgt_bed = config.get("trgt_genotype", {}).get("bed", "")
+    rep_ids = []
+    with open(trgt_bed, "r") as infile:
+        for line in infile:
+            cols = line.split("\t")
+            rep_id = cols[3].split(";")[0]
+            rep_ids.append(rep_id.split("=")[1])
+    return rep_ids
 
-    # Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
-    # testing and we can not guarantee that it will work
-    # output_files += [
-    #     ""cnv_sv/smn_caller"" % (sample, unit_type)
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    # ]
-    # output_files += [
-    #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
-    #     for sample in get_samples(samples)
-    #     for unit_type in get_unit_types(units, sample)
-    # ]
+
+def compile_output_list(wildcards):
+    if config["pacbio_alignment"]:
+        files = {
+            "cnv_sv/trgt_genotype": ["vcf.gz"],
+        }
+        output_files = [
+            f"{prefix}/{sample}_{unit_type}.{suffix}"
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
+            for suffix in files[prefix]
+        ]
+        files = {
+            "cnv_sv/trgt_plot": [config.get("trgt_plot", {}).get("image", "svg")],
+        }
+        output_files += [
+            f"{prefix}/{sample}_{unit_type}_{locus}.{suffix}"
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
+            for locus in get_trgt_loci(wildcards)
+            for suffix in files[prefix]
+        ]
+    else:
+        files = {
+            "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
+            "cnv_sv/cnvkit_diagram": ["pdf"],
+            "cnv_sv/cnvkit_scatter": ["png"],
+            "cnv_sv/cnvkit_vcf": ["pathology.vcf"],
+            "cnv_sv/cnvpytor": ["vcf"],
+            "cnv_sv/expansionhunter": ["vcf"],
+            "cnv_sv/gatk_vcf": ["pathology.vcf"],
+            "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
+            "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
+            "cnv_sv/exomedepth_call": ["txt", "RData"],
+            "cnv_sv/pindel_vcf": ["no_tc.vcf"],
+            "cnv_sv/tiddit": ["vcf"],
+        }
+        output_files = [
+            "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+            for prefix in files.keys()
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for unit_type in get_unit_types(units, sample)
+            for suffix in files[prefix]
+        ]
+        output_files += [
+            "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for unit_type in get_unit_types(units, sample)
+        ]
+        output_files += [
+            "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for unit_type in get_unit_types(units, sample)
+        ]
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        files = {
+            "upd": ["upd_regions.bed", "upd_sites.bed"],
+        }
+        output_files += [
+            "cnv_sv/%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+            for prefix in files.keys()
+            for sample in samples[samples.trio_member == "proband"].index
+            for unit_type in get_unit_types(units, sample)
+            for suffix in files[prefix]
+        ]
+        # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
+        # testing and we can not guarantee that it will work
+        # output_files.append(
+        #   [
+        #       "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
+        #       for sample in get_samples(samples)
+        #       for unit_type in get_unit_types(units, sample)
+        #   ]
+        # )
+        # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
+
+        # Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
+        # testing and we can not guarantee that it will work
+        # output_files += [
+        #     ""cnv_sv/smn_caller"" % (sample, unit_type)
+        #     for sample in get_samples(samples)
+        #     for unit_type in get_unit_types(units, sample)
+        # ]
+        # output_files += [
+        #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
+        #     for sample in get_samples(samples)
+        #     for unit_type in get_unit_types(units, sample)
+        # ]
 
     return output_files

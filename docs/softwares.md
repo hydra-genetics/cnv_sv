@@ -963,6 +963,72 @@ TIDDIT is a tool to used to identify chromosomal rearrangements using Mate Pair 
 #RESOURCESSCHEMA__tiddit#
 
 ---
+## [trgt_genotype](https://github.com/PacificBiosciences/trgt)
+TRGT is a tool for targeted genotyping of tandem repeats from PacBio HiFi data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__trgt__trgt_genotype#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__trgt__trgt_genotype#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__trgt_genotype#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__trgt_genotype#
+
+## [trgt_bam_sort](https://www.htslib.org/doc/samtools-sort.html)
+The trgt_bam_sort rule uses samtools sort to sort and index the spanning reads bam file produced by trgt genotype.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__trgt__trgt_bam_sort#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__trgt__trgt_bam_sort#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__trgt_bam_sort#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__trgt_bam_sort#
+
+
+## [trgt_plot](https://github.com/PacificBiosciences/trgt)
+The trgt plot command produces read pileup images of reads supporting the genotype
+call made by trgt genotype.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__trgt__trgt_plot#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__trgt__trgt_plot#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__trgt_plot#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__trgt_plot#
+
+---
 
 ## upd
 
@@ -1010,4 +1076,4 @@ Call UPD informative sites from germline exome/wgs trios.
 
 #RESOURCESSCHEMA__upd_sites#
 
----
+
