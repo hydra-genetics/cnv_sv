@@ -3,6 +3,7 @@ __copyright__ = "Copyright 2023, Jonas Almlöf"
 __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
+
 rule pbsv_discover:
     input:
         bam="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
@@ -34,6 +35,7 @@ rule pbsv_discover:
         "{output.svsig} "
         "{params.extra}) "
         "&> {log}"
+
 
 rule pbsv_call:
     input:
