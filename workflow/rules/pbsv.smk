@@ -8,14 +8,14 @@ rule pbsv_discover:
     input:
         bam="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
     output:
-        svsig="long_read/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
+        svsig="cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
     params:
         extra=config.get("pbsv_discover", {}).get("extra", ""),
     log:
-        "long_read/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.log",
+        "cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.log",
     benchmark:
         repeat(
-            "long_read/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.benchmark.tsv",
+            "cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.benchmark.tsv",
             config.get("pbsv_discover", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_discover", {}).get("threads", config["default_resources"]["threads"])
@@ -39,19 +39,19 @@ rule pbsv_discover:
 
 rule pbsv_call:
     input:
-        svsig="long_read/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
-        tabix="long_read/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.tbi",
+        svsig="cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
+        tabix="cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.tbi",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        vcf="long_read/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf",
+        vcf="cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf",
     params:
         ccs=config.get("pbsv_call", {}).get("ccs", ""),
         extra=config.get("pbsv_call", {}).get("extra", ""),
     log:
-        "long_read/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
+        "cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
     benchmark:
         repeat(
-            "long_read/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv",
+            "cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv",
             config.get("pbsv_call", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_call", {}).get("threads", config["default_resources"]["threads"])
@@ -72,3 +72,4 @@ rule pbsv_call:
         "{output.vcf} "
         "{params.extra} "
         "&> {log}"
+
