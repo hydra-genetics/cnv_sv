@@ -7,8 +7,6 @@ rule sniffles:
     input:
         bam="alignment/minimap2/{sample}_{type}.bam",
         bai="alignment/minimap2/{sample}_{type}.bam.bai",
-        #bam="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
-        #bai="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.bai",
         fasta=config.get("reference", {}).get("fasta", ""),
     output:
         vcf="cnv_sv/sniffles/{sample}_{type}.vcf.gz",
