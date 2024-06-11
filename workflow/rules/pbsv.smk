@@ -12,7 +12,7 @@ rule pbsv_discover:
     params:
         extra=config.get("pbsv_discover", {}).get("extra", ""),
     log:
-        "cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.log",
+        "cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.log",
     benchmark:
         repeat(
             "cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.benchmark.tsv",
@@ -48,7 +48,7 @@ rule pbsv_call:
         ccs=config.get("pbsv_call", {}).get("ccs", ""),
         extra=config.get("pbsv_call", {}).get("extra", ""),
     log:
-        "cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
+        "cnv_sv/pbsv_call/{sample}_{type}.vcf.log",
     benchmark:
         repeat(
             "cnv_sv/pbsv_call/{sample}_{type}.vcf.benchmark.tsv",
