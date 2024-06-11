@@ -1,21 +1,21 @@
 __author__ = "Jonas Almlöf"
-__copyright__ = "Copyright 2023, Jonas Almlöf"
+__copyright__ = "Copyright 2023, Uppsala Universitet"
 __email__ = "jonas.almlof@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 
 rule pbsv_discover:
     input:
-        bam="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam",
+        bam="alignment/minimap2/{sample}_{type}.bam",
     output:
-        svsig="cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
+        svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
     params:
         extra=config.get("pbsv_discover", {}).get("extra", ""),
     log:
         "cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.log",
     benchmark:
         repeat(
-            "cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.benchmark.tsv",
+            "cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.benchmark.tsv",
             config.get("pbsv_discover", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_discover", {}).get("threads", config["default_resources"]["threads"])
@@ -39,11 +39,11 @@ rule pbsv_discover:
 
 rule pbsv_call:
     input:
-        svsig="cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz",
-        tabix="cnv_sv/pbsv_discover/{sample}_{type}_{processing_unit}_{barcode}.svsig.gz.tbi",
+        svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
+        tabix="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.tbi",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        vcf="cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf",
+        vcf="cnv_sv/pbsv_call/{sample}_{type}.vcf",
     params:
         ccs=config.get("pbsv_call", {}).get("ccs", ""),
         extra=config.get("pbsv_call", {}).get("extra", ""),
@@ -51,7 +51,7 @@ rule pbsv_call:
         "cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/pbsv_call/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv",
+            "cnv_sv/pbsv_call/{sample}_{type}.vcf.benchmark.tsv",
             config.get("pbsv_call", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_call", {}).get("threads", config["default_resources"]["threads"])
