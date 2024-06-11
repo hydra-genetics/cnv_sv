@@ -11,15 +11,15 @@ rule sniffles:
         #bai="alignment/minimap2/{sample}_{type}_{processing_unit}_{barcode}.bam.bai",
         fasta=config.get("reference", {}).get("fasta", ""),
     output:
-        vcf="long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.gz",
-        snf="long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.snf",
+        vcf="cnv_sv/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.gz",
+        snf="cnv_sv/sniffles/{sample}_{type}_{processing_unit}_{barcode}.snf",
     params:
         extra=config.get("sniffles", {}).get("extra", ""),
     log:
-        "long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
+        "cnv_sv/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.log",
     benchmark:
         repeat(
-            "long_read/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv",
+            "cnv_sv/sniffles/{sample}_{type}_{processing_unit}_{barcode}.vcf.benchmark.tsv",
             config.get("sniffles", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("sniffles", {}).get("threads", config["default_resources"]["threads"])
