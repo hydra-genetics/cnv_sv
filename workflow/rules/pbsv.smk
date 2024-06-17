@@ -72,4 +72,3 @@ rule pbsv_call:
         "{output.vcf} "
         "{params.extra} "
         "&> {log}"
-
