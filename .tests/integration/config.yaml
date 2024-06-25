@@ -2,9 +2,6 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-pacbio_alignment: false
-ont_alignment: false
-
 default_container: "docker://hydragenetics/common:0.2.0"
 
 reference:
