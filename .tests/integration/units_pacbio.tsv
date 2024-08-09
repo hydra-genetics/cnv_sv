@@ -1,2 +1,4 @@
-sample	type	platform	machine	processing_unit	barcode	methylation	bam
-HG002	N	PACBIO	SEQUEL	m84011_220902_175841_s1	NNNN	Yes	alignment/minimap2/HG002_N.bam
+sample	type	platform	machine	processing_unit	barcode	methylation	bam	flowcell	fastq1	fastq2	adapter
+HG002-1	N	PACBIO	SEQUEL	m84011_220902_175841_s1	NNNN	Yes	alignment/minimap2/HG002-1_N.bam	NA	NA	NA	ATGC
+HG002-4	N	PACBIO	SEQUEL	m84011_220902_175841_s1	NNNN	Yes	alignment/minimap2/HG002-4_N.bam	NA	NA	NA	AGTCC
+HG002-5	N	PACBIO	SEQUEL	m84011_220902_175841_s1	NNNN	Yes	alignment/minimap2/HG002-5_N.bam	NA	NA	NA	GACT

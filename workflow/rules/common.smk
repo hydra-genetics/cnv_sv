@@ -232,6 +232,7 @@ def get_trgt_loci(wildcards):
 
 def compile_output_list(wildcards):
     if config["pacbio_alignment"]:
+        print ("THIS OUTPUT")
         files = {
             "cnv_sv/trgt_genotype": ["vcf.gz"],
         }
@@ -257,11 +258,20 @@ def compile_output_list(wildcards):
             "cnv_sv/pbsv_discover": ["svsig.gz"],
         }
         output_files += [
-            f"{prefix}/{sample}_{unit_type}_{locus}.{suffix}"
+            f"{prefix}/{sample}_{unit_type}.{suffix}"
             for prefix in files.keys()
             for sample in get_samples(samples)
             for unit_type in get_unit_types(units, sample)
-            for locus in get_trgt_loci(wildcards)
+            for suffix in files[prefix]
+        ]
+        files = {
+            "cnv_sv/upd": ["upd_sites.bed"],
+        }
+        output_files += [
+            f"{prefix}/{sample}_{unit_type}.{suffix}"
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
             for suffix in files[prefix]
         ]
     else:

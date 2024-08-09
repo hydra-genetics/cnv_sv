@@ -5,25 +5,49 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-include: "rules/trgt.smk"
-include: "rules/automap.smk"
+#include: "rules/trgt.smk"
+#include: "rules/automap.smk"
 include: "rules/cnvkit.smk"
 include: "rules/cnvpytor.smk"
-include: "rules/exomedepth.smk"
+#include: "rules/exomedepth.smk"
 include: "rules/expansionhunter.smk"
 include: "rules/gatk.smk"
 include: "rules/manta.smk"
-include: "rules/pbsv.smk"
+#include: "rules/pbsv.smk"
 include: "rules/pindel.smk"
 include: "rules/purecn.smk"
 include: "rules/reviewer.smk"
 include: "rules/smncopynumbercaller.smk"
 include: "rules/sniffles.smk"
-include: "rules/svdb.smk"
+#include: "rules/svdb.smk"
 include: "rules/tiddit.smk"
-include: "rules/upd.smk"
+#include: "rules/upd.smk"
 
 
 rule all:
     input:
         unpack(compile_output_list),
+
+
+##############################
+
+# Module cnv_sv
+module cnv_sv:
+    snakefile:
+        github(
+            "hydra-genetics/cnv_sv",
+            path="workflow/Snakefile",
+            tag="af46405",
+            #tag="add_sniffles",
+        )
+    config:
+        config
+
+
+use rule * from cnv_sv as cnv_sv_*
+
+'''
+use rule automap from cnv_sv as cnv_sv_automap with:
+    input:
+        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf"
+'''

@@ -1,2 +1,4 @@
-sample	sex
-HG002	male
+sample	sex	trioid	trio_member
+HG002-1	NA	Trio1	proband
+HG002-4	NA	Trio1	father
+HG002-5	NA	Trio1	mother
