@@ -6,7 +6,8 @@ __license__ = "GPL-3"
 
 rule automap:
     input:
-        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/HG002_N.ensembled.vcf",
+        #"snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
     output:
         pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf"),
         tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
@@ -14,6 +15,7 @@ rule automap:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
         dir=temp(directory(lambda w, output: os.path.dirname(os.path.dirname(output[0])))),
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
@@ -30,8 +32,11 @@ rule automap:
     message:
         "{rule}: finding ROH regions {output.tsv}"
     shell:
+        "echo  {params.vcf} "
+'''
         "automap "
         "--vcf {input.vcf} "
         "--out {params.dir} "
         "--genome {params.build} "
         "{params.extra} &> {log}"
+'''

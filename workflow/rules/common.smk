@@ -253,6 +253,17 @@ def compile_output_list(wildcards):
             for locus in get_trgt_loci(wildcards)
             for suffix in files[prefix]
         ]
+        files = {
+            "cnv_sv/pbsv_discover": ["svsig.gz"],
+        }
+        output_files += [
+            f"{prefix}/{sample}_{unit_type}_{locus}.{suffix}"
+            for prefix in files.keys()
+            for sample in get_samples(samples)
+            for unit_type in get_unit_types(units, sample)
+            for locus in get_trgt_loci(wildcards)
+            for suffix in files[prefix]
+        ]
     else:
         files = {
             "cnv_sv/cnvkit_call": ["pathology.loh.cns"],

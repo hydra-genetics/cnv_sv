@@ -6,7 +6,8 @@ __license__ = "GPL-3"
 
 rule pbsv_discover:
     input:
-        bam="alignment/minimap2/{sample}_{type}.bam",
+        bam="alignment/minimap2/HG002_N.bam",
+        # bam="alignment/minimap2/{sample}_{type}.bam",
     output:
         svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
     params:
