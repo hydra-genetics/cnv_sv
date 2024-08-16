@@ -50,6 +50,6 @@ rule automap:
 """
 
 
-'''
+"""
 #config.get("automap", {}).get("read_group", generate_automap_id(wildcards, bam)),
-'''
+"""
