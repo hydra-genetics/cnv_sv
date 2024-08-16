@@ -48,3 +48,8 @@ rule automap:
 """
         "echo  {params.vcf} "
 """
+
+
+'''
+#config.get("automap", {}).get("read_group", generate_automap_id(wildcards, bam)),
+'''
