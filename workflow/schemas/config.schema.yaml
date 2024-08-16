@@ -30,6 +30,16 @@ properties:
     - resources
     - default_container
 
+  pacbio_alignment:
+    type: boolean
+    description: if pacbio_alignment is used set to true
+    default: false
+
+  ont_alignment:
+    type: boolean
+    description: if ont_alignment should be used set to true
+    default: false
+
   automap:
     description: parameters for automap
     type: object
