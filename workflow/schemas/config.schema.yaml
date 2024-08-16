@@ -46,7 +46,16 @@ properties:
       build:
         type: string
         description: which genome build that should be used (hg19/hg38)
-
+      dir:
+        type: string
+        description: path to output folder - each sample results will be printed to a separate file
+      bam:
+        type: string
+        description: bam file from which the sample ID should be collected
+      id:
+        type: string
+        description: derived sample ID, which will also be the name of output folders and files
+  
   cnvkit_batch:
     description: parameters for cnvkit_batch
     type: object
@@ -444,6 +453,23 @@ properties:
       css:
         type: string
         description: ccs parameter "--ccs"
+      fasta:
+        type: string
+        description: path to fasta reference file
+
+  pbsv_index:
+    type: object
+    description: parameters for pbsv_index
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   pindel_generate_config:
     description: parameters for pindel_generate_config

@@ -586,6 +586,29 @@ pbsv is a suite of tools to call and analyze structural variants in diploid geno
 
 ---
 
+## [pbsv_index](http://www.htslib.org/doc/tabix.html)
+Creates an index file for faster processing of positions in a bgzipped vcf file. Special invokation of the command for a pbsv svsig file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_index#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_index#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv_index#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv_index#
+
+---
+
 ## Pindel
 
 ### [pindel_generate_config](https://github.com/genome/pindel)
@@ -1098,4 +1121,6 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
+
+
 

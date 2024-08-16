@@ -715,6 +715,25 @@ properties:
             type: string
             description: custom format output file
 
+  pbsv_index:
+    type: object
+    description: input and output parameters for pbsv_index
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          gz:
+            type: string
+            description: input file .svsig.gz from pbsv discover
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          tbi:
+            type: string
+            description: special tabix index of input file
+
   pindel_generate_config:
     type: object
     description: input and output parameters for pindel_generate_config
@@ -1198,4 +1217,3 @@ properties:
           sites:
             type: string
             description: file with upd informative sites
-

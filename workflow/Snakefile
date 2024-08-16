@@ -5,23 +5,26 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
-#include: "rules/trgt.smk"
-#include: "rules/automap.smk"
+include: "rules/trgt.smk"
+include: "rules/automap.smk"
 include: "rules/cnvkit.smk"
 include: "rules/cnvpytor.smk"
-#include: "rules/exomedepth.smk"
+include: "rules/exomedepth.smk"
 include: "rules/expansionhunter.smk"
 include: "rules/gatk.smk"
 include: "rules/manta.smk"
-#include: "rules/pbsv.smk"
+include: "rules/pbsv.smk"
 include: "rules/pindel.smk"
 include: "rules/purecn.smk"
 include: "rules/reviewer.smk"
 include: "rules/smncopynumbercaller.smk"
 include: "rules/sniffles.smk"
-#include: "rules/svdb.smk"
+include: "rules/svdb.smk"
 include: "rules/tiddit.smk"
-#include: "rules/upd.smk"
+include: "rules/upd.smk"
+
+
+ruleorder: pbsv_index > misc_tabix
 
 
 rule all:
@@ -31,6 +34,7 @@ rule all:
 
 ##############################
 
+'''
 # Module cnv_sv
 module cnv_sv:
     snakefile:
@@ -47,7 +51,29 @@ module cnv_sv:
 use rule * from cnv_sv as cnv_sv_*
 
 '''
+
+'''
 use rule automap from cnv_sv as cnv_sv_automap with:
     input:
         vcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf"
 '''
+
+
+# Module misc
+module misc:
+    snakefile:
+        github(
+            "hydra-genetics/misc",
+            path="workflow/Snakefile",
+            #tag="mk_fastq",
+            tag="9a0c9ec",
+        )
+    config:
+        config
+
+
+use rule * from misc exclude all as misc_*
+
+
+
+

@@ -5,9 +5,53 @@ units: "units_pacbio.tsv"
 default_container: "docker://hydragenetics/common:1.14.0"
 
 pacbio_alignment: true
+ont_alignment: true
 
 reference:
-  fasta: "reference/human_GRCh38.fasta"
+  fasta: "reference/human_GRCh38_no_alt_analysis_set.fasta"
+
+
+automap:
+  container: "docker://hydragenetics/automap:1.2"
+  build: "hg38"
+  extra: "--DP 10 --minsize 3 --chrX"
+
+expansionhunter:
+  container: "docker://hydragenetics/expansionhunter:5.0.0"
+  variant_catalog: "reference/variant_catalog.json"
+
+pbsv_discover:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  ccs: "--ccs"
+  fasta: "reference/human_GRCh38_no_alt_analysis_set.fasta"
+
+pbsv_index:
+  extra: "-c '#' -s 3 -b 4 -e 4 "
+
+svdb_merge:
+  tc_method:
+    - name: purecn
+      cnv_caller:
+        - cnvkit
+        - gatk
+      priority: "cnvkit,gatk"
+    - name: pathology
+      cnv_caller:
+        - cnvkit
+        - gatk
+      priority: "cnvkit,gatk"
+    - name: no_tc
+      cnv_caller:
+        - pindel
+      priority: "pindel"
+  container: "docker://hydragenetics/svdb:2.6.0"
+
+svdb_query:
+  container: "docker://hydragenetics/svdb:2.6.0"
+  db_string: "--db reference/normal_26_svdb_0.8.vcf"
 
 trgt_genotype:
   bed: "reference/human_GRCh38_trgt.bed"
@@ -18,4 +62,9 @@ trgt_plot:
   plot_type: "allele"
   show: "motifs"
   container: "docker://hydragenetics/trgt:1.0.0"
+
+upd:
+  container: "docker://hydragenetics/upd:0.1.1"
+  extra: "--vep "
+
 

@@ -51,7 +51,10 @@ pbsv_discover:
 pbsv_call:
   container: "docker://hydragenetics/pbsv:2.9.0"
   ccs: "--ccs"
-  
+
+pbsv_index:
+  extra: "-c '#' -s 3 -b 4 -e 4 "
+
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
 
