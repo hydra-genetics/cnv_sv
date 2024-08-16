@@ -43,7 +43,7 @@ rule pbsv_call:
         svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
         tabix="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.tbi",
         #ref=config.get("reference", {}).get("fasta", ""),
-        ref=config["reference"]["fasta"], # this genome has to be exactly the same as the pbsv_discover .bam file was aligned to
+        ref=config["reference"]["fasta"],  # this genome has to be exactly the same as the pbsv_discover .bam file was aligned to
     output:
         vcf="cnv_sv/pbsv_call/{sample}_{type}.vcf",
     params:

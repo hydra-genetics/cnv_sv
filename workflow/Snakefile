@@ -34,30 +34,6 @@ rule all:
 
 ##############################
 
-'''
-# Module cnv_sv
-module cnv_sv:
-    snakefile:
-        github(
-            "hydra-genetics/cnv_sv",
-            path="workflow/Snakefile",
-            tag="af46405",
-            #tag="add_sniffles",
-        )
-    config:
-        config
-
-
-use rule * from cnv_sv as cnv_sv_*
-
-'''
-
-'''
-use rule automap from cnv_sv as cnv_sv_automap with:
-    input:
-        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf"
-'''
-
 
 # Module misc
 module misc:
@@ -65,15 +41,11 @@ module misc:
         github(
             "hydra-genetics/misc",
             path="workflow/Snakefile",
-            #tag="mk_fastq",
-            tag="9a0c9ec",
+            tag="mk_fastq",
+            # tag="9a0c9ec",
         )
     config:
         config
 
 
-use rule * from misc exclude all as misc_*
-
-
-
-
+use rule * from misc as misc_*

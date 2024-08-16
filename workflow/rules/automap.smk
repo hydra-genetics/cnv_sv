@@ -45,6 +45,6 @@ rule automap:
         "{params.extra} &> {log}"
 
 
-'''
+"""
         "echo  {params.vcf} "
-'''
+"""

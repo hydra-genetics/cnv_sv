@@ -120,4 +120,3 @@ rule trgt_plot:
         "--show {params.show} "
         "{params.extra} &> {log} || true "
         "&& touch {output.image}"
-
