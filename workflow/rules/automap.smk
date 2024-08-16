@@ -4,6 +4,9 @@ __email__ = "jessika.nordin@scilifelab.uu."
 __license__ = "GPL-3"
 
 
+bam="alignment/minimap2/{sample}_{type}.bam"
+print("BAM", bam) 
+
 rule automap:
     input:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
@@ -18,7 +21,8 @@ rule automap:
         id=lambda wildcards, input: "%s %s -x %s"
         % (
             config.get("automap", {}).get("extra", ""),
-            config.get("automap", {}).get("read_group", generate_automap_id(wildcards, bam)),
+            #config.get("automap", {}).get("read_group", generate_automap_id(wildcards, bam)),
+            config.get("automap", {}).get("read_group", "HG002_N-1"),
             config.get("automap", {}).get("preset", "map-ont"),
         ),
     log:
