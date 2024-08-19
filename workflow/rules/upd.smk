@@ -8,7 +8,7 @@ rule upd_regions:
     input:
         vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
-        regions=temp("cnv_sv/upd/{sample}_{type}.upd_regions.bed"),
+        regions="cnv_sv/upd/{sample}_{type}.upd_regions.bed",
     params:
         father=lambda wildcards: get_parent_samples(wildcards, "father"),
         mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
@@ -48,7 +48,7 @@ rule upd_sites:
     input:
         vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
-        sites=temp("cnv_sv/upd/{sample}_{type}.upd_sites.bed"),
+        sites="cnv_sv/upd/{sample}_{type}.upd_sites.bed",
     params:
         father=lambda wildcards: get_parent_samples(wildcards, "father"),
         mother=lambda wildcards: get_parent_samples(wildcards, "mother"),

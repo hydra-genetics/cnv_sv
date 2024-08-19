@@ -242,7 +242,7 @@ def generate_automap_id(wildcards, input):
         str: The read group line (e.g. @RG\\tID:group1\\tLB:library1\\tPU:unit1).
             If no read group is found, an empty string is returned.
     """
-
+    
     with pysam.AlignmentFile(input.query, "rb", check_sq=False) as bam:
         # Get the header dictionary
         header = bam.header
