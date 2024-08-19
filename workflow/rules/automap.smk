@@ -17,7 +17,7 @@ rule automap:
         bam="alignment/minimap2/{sample}_{type}.bam",
         id=lambda wildcards, input: "--id %s "
         % (
-            config.get("automap", {}).get("read_group", "HG002_N-1"),
+            config.get("automap", {}).get("read_group", "HG002-1_N"),
         ),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
@@ -35,7 +35,7 @@ rule automap:
     message:
         "{rule}: finding ROH regions {output.tsv}"
     shell:
-        "automap "
+        "/automap/automap "
         "--vcf {input.vcf} "
         "--out {params.dir} "
         "--genome {params.build} "
