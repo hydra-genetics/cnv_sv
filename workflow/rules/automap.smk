@@ -15,11 +15,9 @@ rule automap:
         build=config.get("automap", {}).get("build", ""),
         dir=temp(directory(lambda w, output: os.path.dirname(os.path.dirname(output[0])))),
         bam="alignment/minimap2/{sample}_{type}.bam",
-        id=lambda wildcards, input: "%s %s -x %s"
+        id=lambda wildcards, input: "--id %s "
         % (
-            config.get("automap", {}).get("extra", ""),
             config.get("automap", {}).get("read_group", "HG002_N-1"),
-            config.get("automap", {}).get("preset", "map-ont"),
         ),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
@@ -41,15 +39,11 @@ rule automap:
         "--vcf {input.vcf} "
         "--out {params.dir} "
         "--genome {params.build} "
-        "--id {params.id} "
+        "{params.id} "
         "{params.extra} &> {log}"
 
 
 """
         "echo  {params.vcf} "
-"""
-
-
-"""
 #config.get("automap", {}).get("read_group", generate_automap_id(wildcards, bam)),
 """
