@@ -6,7 +6,6 @@ __license__ = "GPL-3"
 
 rule pbsv_discover:
     input:
-        #bam="alignment/minimap2/HG002_N.bam",
         bam="alignment/minimap2/{sample}_{type}.bam",
     output:
         svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
@@ -42,7 +41,6 @@ rule pbsv_call:
     input:
         svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
         tabix="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.tbi",
-        #ref=config.get("reference", {}).get("fasta", ""),
         ref=config["reference"]["fasta"],  # this genome has to be exactly the same as the pbsv_discover .bam file was aligned to
     output:
         vcf="cnv_sv/pbsv_call/{sample}_{type}.vcf",

@@ -8,8 +8,10 @@ pacbio_alignment: true
 ont_alignment: true
 
 reference:
-  fasta: "reference/human_GRCh38_no_alt_analysis_set.fasta"
-
+  fasta: "reference/HES45.fa"
+  #fasta: "reference/human_GRCh38.chr1.fa"
+  #fasta: "reference/human_GRCh38.fasta"
+  #fasta: "reference/human_GRCh38_no_alt_analysis_set.fasta"
 
 automap:
   container: "docker://hydragenetics/automap:1.2"
