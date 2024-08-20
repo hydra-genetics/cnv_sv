@@ -15,7 +15,10 @@ rule automap:
         build=config.get("automap", {}).get("build", ""),
         dir=temp(directory(lambda w, output: os.path.dirname(os.path.dirname(output[0])))),
         bam="alignment/minimap2/{sample}_{type}.bam",
-        id=lambda wildcards, input: "--id %s " % (config.get("automap", {}).get("read_group", "HG002-1_N"),),
+        id=lambda wildcards, input: "--id %s "
+        % (
+            config.get("automap", {}).get("read_group", "HG002-1_N"),
+        ),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
