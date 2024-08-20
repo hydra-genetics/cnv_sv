@@ -8,17 +8,12 @@ rule automap:
     input:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
     output:
-        pdf=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf"),
-        tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
+        pdf="cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf",
+        tsv="cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv",
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
         dir=temp(directory(lambda w, output: os.path.dirname(os.path.dirname(output[0])))),
-        bam="alignment/minimap2/{sample}_{type}.bam",
-        id=lambda wildcards, input: "--id %s "
-        % (
-            config.get("automap", {}).get("read_group", "HG002-1_N"),
-        ),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",
     benchmark:
@@ -35,15 +30,8 @@ rule automap:
     message:
         "{rule}: finding ROH regions {output.tsv}"
     shell:
-        "/automap/automap "
+        "automap "
         "--vcf {input.vcf} "
         "--out {params.dir} "
         "--genome {params.build} "
-        "{params.id} "
         "{params.extra} &> {log}"
-
-
-"""
-        "echo  {params.vcf} "
-#config.get("automap", {}).get("read_group", generate_automap_id(wildcards, bam)),
-"""

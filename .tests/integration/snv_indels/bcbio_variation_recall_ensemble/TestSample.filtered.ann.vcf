@@ -111,7 +111,7 @@
 ##bcftools_viewCommand=view -i QUAL>=150 -r chr1,chr2,chr3,chr4 -o TestSample.filtered.vcf TestSample.sort.vcf.gz; Date=Mon Aug 19 10:15:10 2024
 ##bcftools_annotateVersion=1.9+htslib-1.9
 ##bcftools_annotateCommand=annotate -x INFO/ExcessHet,INFO/FS,INFO/ClippingRankSum,INFO/MLEAF,INFO/SOR,INFO/MLEAC,INFO/DP,INFO/MQRankSum,INFO/ReadPosRankSum,INFO/DB,INFO/BaseQRankSum,INFO/MQ,INFO/QD -o TestSample.filtered.ann.vcf TestSample.filtered.vcf; Date=Mon Aug 19 10:35:46 2024
-#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TestSample
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	HG002-1_N
 chr1	13300	.	A	T	410.77	.	AC=1;AF=0.5;AN=2	GT:AD:DP:GQ:PL	0/1:125,25:150:99:439,0,4602
 chr1	13484	.	A	T	167.77	.	AC=1;AF=0.5;AN=2	GT:AD:DP:GQ:PL	0/1:44,12:56:99:196,0,2654
 chr1	13568	.	A	T	1329.77	.	AC=1;AF=0.5;AN=2	GT:AD:DP:GQ:PL	0/1:21,34:55:99:1358,0,1272
