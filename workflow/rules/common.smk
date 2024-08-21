@@ -298,6 +298,24 @@ def compile_output_list(wildcards):
             for type in units.loc[sample, "type"]
             for suffix in files[prefix]
         ]
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
     # print("Outflies5", output_files)
     else:
         files = {
