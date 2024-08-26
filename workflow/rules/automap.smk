@@ -31,7 +31,7 @@ rule automap:
     message:
         "{rule}: finding ROH regions {output.tsv}"
     shell:
-        "automap "
+        "echo automap "
         "--vcf {input.vcf} "
         "--out {params.dir} "
         "--genome {params.build} "
