@@ -290,6 +290,8 @@ def compile_output_list(wildcards):
             # "expansionhunter": ["vcf"],
             "pbsv_discover": ["svsig.gz"],
             "pbsv_call": ["vcf"],
+            "sniffles": ["vcf.gz"],
+            "sniffles": ["snf"],
         }
         output_files += [
             "cnv_sv/%s/%s_%s.%s" % (prefix, sample, type, suffix)
