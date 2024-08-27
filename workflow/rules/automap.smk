@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule automap:
     input:
-        vvcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf",
+        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf",
         #vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.ensembled.vcf",
     output:
         pdf="cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.pdf",
