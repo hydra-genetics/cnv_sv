@@ -7,6 +7,7 @@ __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
 import pandas as pd
+import pysam
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -230,29 +231,94 @@ def get_trgt_loci(wildcards):
     return rep_ids
 
 
+def generate_automap_id(wildcards, input):
+    """
+    Extracts the read group line from a bam file using pysam.
+
+    Args:
+        input: Path to the bam file.
+
+    Returns:
+        str: The read group line (e.g. @RG\\tID:group1\\tLB:library1\\tPU:unit1).
+            If no read group is found, an empty string is returned.
+    """
+
+    with pysam.AlignmentFile(input.query, "rb", check_sq=False) as bam:
+        # Get the header dictionary
+        header = bam.header
+        # Check if Read Groups are present
+        if "RG" in header:
+            # Access the first read group (assuming single RG in the bam)
+            read_group = header["RG"][0]
+            rg_line = "-R '@RG\\t" + "\\t".join(f"{key}:{val}" for key, val in read_group.items()) + "'"
+            return rg_line
+        else:
+            return ""
+
+
 def compile_output_list(wildcards):
+    output_files = []
+    # print("Check 1", config["pacbio_alignment"])
     if config["pacbio_alignment"]:
+        # print ("Check 2")
+
+        # Outputfiles which only needs proband
         files = {
-            "cnv_sv/trgt_genotype": ["vcf.gz"],
-        }
-        output_files = [
-            f"{prefix}/{sample}_{unit_type}.{suffix}"
-            for prefix in files.keys()
-            for sample in get_samples(samples)
-            for unit_type in get_unit_types(units, sample)
-            for suffix in files[prefix]
-        ]
-        files = {
-            "cnv_sv/trgt_plot": [config.get("trgt_plot", {}).get("image", "svg")],
+            "upd": ["upd_regions.bed", "upd_sites.bed"],
         }
         output_files += [
-            f"{prefix}/{sample}_{unit_type}_{locus}.{suffix}"
+            "cnv_sv/%s/%s_%s.%s" % (prefix, sample, type, suffix)
             for prefix in files.keys()
-            for sample in get_samples(samples)
-            for unit_type in get_unit_types(units, sample)
-            for locus in get_trgt_loci(wildcards)
+            for sample in samples[samples.trio_member == "proband"].index
+            for type in units.loc[sample, "type"]
             for suffix in files[prefix]
         ]
+        files = {
+            "automap": ["HomRegions.tsv", "HomRegions.pdf"],
+        }
+        output_files += [
+            "cnv_sv/%s/%s_%s/%s_%s.%s" % (prefix, sample, type, sample2, type2, suffix)
+            for prefix in files.keys()
+            for sample in samples[samples.trio_member == "proband"].index
+            for type in units.loc[sample, "type"]
+            for sample2 in samples[samples.trio_member == "proband"].index
+            for type2 in units.loc[sample, "type"]
+            for suffix in files[prefix]
+        ]
+        # All output files
+        files = {
+            # "expansionhunter": ["vcf"],
+            "pbsv_discover": ["svsig.gz"],
+            "pbsv_call": ["vcf"],
+            "sniffles": ["vcf.gz"],
+            "sniffles": ["snf"],
+        }
+        output_files += [
+            "cnv_sv/%s/%s_%s.%s" % (prefix, sample, type, suffix)
+            for prefix in files.keys()
+            for sample in samples.index  # Include all trio members
+            for type in units.loc[sample, "type"]
+            for suffix in files[prefix]
+        ]
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+        output_files.append(
+            [
+                "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
+                for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            ]
+        )
+    # print("Outflies5", output_files)
     else:
         files = {
             "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
@@ -313,28 +379,29 @@ def compile_output_list(wildcards):
             for unit_type in get_unit_types(units, sample)
             for suffix in files[prefix]
         ]
-        # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
-        # testing and we can not guarantee that it will work
-        # output_files.append(
-        #   [
-        #       "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
-        #       for sample in get_samples(samples)
-        #       for unit_type in get_unit_types(units, sample)
-        #   ]
-        # )
-        # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
 
-        # Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
-        # testing and we can not guarantee that it will work
-        # output_files += [
-        #     ""cnv_sv/smn_caller"" % (sample, unit_type)
-        #     for sample in get_samples(samples)
-        #     for unit_type in get_unit_types(units, sample)
-        # ]
-        # output_files += [
-        #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
-        #     for sample in get_samples(samples)
-        #     for unit_type in get_unit_types(units, sample)
-        # ]
+    # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files.append(
+    #   [
+    #       "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
+    #       for sample in get_samples(samples)
+    #       for unit_type in get_unit_types(units, sample)
+    #   ]
+    # )
+    # output_files.append(["cnv_sv/purecn/%s_T.csv" % (sample) for sample in get_samples(samples)])
 
+    # Since it is not possible to create integration test without a large dataset SMNCopyNumberCaller will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files += [
+    #     ""cnv_sv/smn_caller"" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+    # output_files += [
+    #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+    print("Check4", output_files)
     return output_files

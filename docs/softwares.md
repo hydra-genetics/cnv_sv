@@ -563,6 +563,52 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
+## [pbsv call](https://github.com/PacificBiosciences/pbsv)
+pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio single molecule real-time sequencing (SMRT) reads. 
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv_call#
+
+---
+
+## [pbsv_index](http://www.htslib.org/doc/tabix.html)
+Creates an index file for faster processing of positions in a bgzipped vcf file. Special invokation of the command for a pbsv svsig file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_index#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_index#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv_index#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv_index#
+
+---
+
 ## Pindel
 
 ### [pindel_generate_config](https://github.com/genome/pindel)
@@ -870,6 +916,29 @@ SMNCopyNumberCaller is a tool to call the copy number of full-length SMN1, full-
 
 ---
 
+## [sniffles](https://github.com/fritzsedlazeck/Sniffles)
+A fast structural variant caller for long-read sequencing, Sniffles2 accurately detect SVs on germline, somatic and population-level for PacBio and Oxford Nanopore read data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sniffles__sniffles#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sniffles__sniffles#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sniffles#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sniffles#
+
+---
+
 ## SVDB
 
 ### [svdb_merge](https://github.com/J35P312/SVDB)
@@ -1052,4 +1121,6 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
+
+
 

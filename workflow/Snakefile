@@ -13,15 +13,39 @@ include: "rules/exomedepth.smk"
 include: "rules/expansionhunter.smk"
 include: "rules/gatk.smk"
 include: "rules/manta.smk"
+include: "rules/pbsv.smk"
 include: "rules/pindel.smk"
 include: "rules/purecn.smk"
 include: "rules/reviewer.smk"
 include: "rules/smncopynumbercaller.smk"
+include: "rules/sniffles.smk"
 include: "rules/svdb.smk"
 include: "rules/tiddit.smk"
 include: "rules/upd.smk"
 
 
+ruleorder: pbsv_index > misc_tabix
+
+
 rule all:
     input:
         unpack(compile_output_list),
+
+
+##############################
+
+
+# Module misc
+module misc:
+    snakefile:
+        github(
+            "hydra-genetics/misc",
+            path="workflow/Snakefile",
+            tag="mk_fastq",
+            # tag="9a0c9ec",
+        )
+    config:
+        config
+
+
+use rule * from misc as misc_*

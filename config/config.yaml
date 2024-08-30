@@ -45,6 +45,16 @@ manta_config_n:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
+pbsv_discover:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  ccs: "--ccs"
+
+pbsv_index:
+  extra: "-c '#' -s 3 -b 4 -e 4 "
+
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
 
@@ -55,6 +65,11 @@ smn_caller:
 smn_charts:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
 
+ sniffles:
+   container: "docker://hydragenetics/sniffles2:2.0.7"
+   extra: "" 
+   non_germline: "" #set to  --non-germline if running somatic
+   
 tiddit:
   container: "docker://hydragenetics/tiddit:3.3.2"
 

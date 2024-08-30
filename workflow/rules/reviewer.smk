@@ -34,8 +34,8 @@ rule reviewer_generate_locus_list:
 
 rule reviewer:
     input:
-        bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam",
-        bai="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.bai",
+        bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.bam",
+        bai="cnv_sv/expansionhunter/{sample}_{type}_realigned.bam.bai",
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
         loci="cnv_sv/reviewer/{sample}_{type}_locus_list.txt",
         ref=config.get("reference", {}).get("fasta", ""),
