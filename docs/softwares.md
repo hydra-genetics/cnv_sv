@@ -241,21 +241,21 @@ ExomeDepth is a R package designed to detect inherited copy number variants (CNV
 
 #### :snake: Rule
 
-SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
+#SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
 
 ##### :left_right_arrow: input / output files
 
-SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
+#SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
 
 #### :wrench: Configuration
 
 ##### Software settings (`config.yaml`)
 
-CONFIGSCHEMA__exomedepth_sex#
+#CONFIGSCHEMA__exomedepth_sex#
 
 ##### Resources settings (`resources.yaml`)
 
-RESOURCESSCHEMA__exomedepth_sex#
+#RESOURCESSCHEMA__exomedepth_sex#
 
 ---
 
@@ -687,21 +687,21 @@ PureCN is a tool developed for tumor-only diagnostic sequencing using hybrid-cap
 
 #### :snake: Rule
 
-SNAKEMAKE_RULE_SOURCE__purecn__purecn#
+#SNAKEMAKE_RULE_SOURCE__purecn__purecn#
 
 ##### :left_right_arrow: input / output files
 
-SNAKEMAKE_RULE_TABLE__purecn__purecn#
+#SNAKEMAKE_RULE_TABLE__purecn__purecn#
 
 #### :wrench: Configuration
 
 ##### Software settings (`config.yaml`)
 
-CONFIGSCHEMA__purecn#
+#CONFIGSCHEMA__purecn#
 
 ##### Resources settings (`resources.yaml`)
 
-RESOURCESSCHEMA__purecn#
+#RESOURCESSCHEMA__purecn#
 
 ---
 
