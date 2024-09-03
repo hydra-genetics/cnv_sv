@@ -38,6 +38,10 @@ exomedepth:
   reference_count: ""
   WW25: ""
 
+jumble_run:
+  container: "docker://hydragenetics/jumble:240530"
+  normal_reference: ""
+
 manta_config_n:
   container: "docker://hydragenetics/manta:1.6.0"
   extra: ""

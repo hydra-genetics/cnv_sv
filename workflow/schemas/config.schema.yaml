@@ -355,6 +355,20 @@ properties:
         type: string
         description: copy number threshold for duplication
 
+  jumble_run:
+    type: object
+    description: parameters for jumble_run
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      normal_reference:
+        type: string
+        description: path to the jumble normal reference pool 
+
   manta_config_t:
     description: parameters for manta_config_t
     type: object
@@ -843,3 +857,4 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
+

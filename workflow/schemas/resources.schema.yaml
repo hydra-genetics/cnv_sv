@@ -19,7 +19,7 @@ properties:
         description: default memory used per cpu for a rule
       partition:
         type: string
-        description: default partition to use on the cluser for a rule
+        description: default partition to use on the cluster for a rule
     required:
       - threads
       - time
@@ -387,8 +387,28 @@ properties:
         type: string
         description: max execution time
 
+  jumble_run:
+    type: object
+    description: resource definitions for jumble_run
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   manta_config_t:
-    description: resource definitions for config_manta_t
+    description: resource definitions for manta_config_t
     type: object
     properties:
       mem_mb:
@@ -408,7 +428,7 @@ properties:
         description: max execution time
 
   manta_config_tn:
-    description: resource definitions for config_manta_tn
+    description: resource definitions for manta_config_tn
     type: object
     properties:
       mem_mb:
@@ -428,7 +448,7 @@ properties:
         description: max execution time
 
   manta_config_n:
-    description: resource definitions for config_manta_n
+    description: resource definitions for manta_config_n
     type: object
     properties:
       mem_mb:
@@ -509,26 +529,6 @@ properties:
 
   pindel_generate_config:
     description: resource definitions for pindel_generate_config
-    type: object
-    properties:
-      mem_mb:
-        type: integer
-        description: max memory in MB to be available
-      mem_per_cpu:
-        type: integer
-        description: memory in MB used per cpu
-      partition:
-        type: string
-        description: partition to use on cluster
-      threads:
-        type: integer
-        description: number of threads to be available
-      time:
-        type: string
-        description: max execution time
-
-  pindel_update_vcf:
-    description: resource definitions for pindel_update_vcf
     type: object
     properties:
       mem_mb:
@@ -971,3 +971,4 @@ properties:
 
   required:
     - default_resources
+

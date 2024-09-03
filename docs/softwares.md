@@ -1074,3 +1074,24 @@ Call UPD informative sites from germline exome/wgs trios.
 
 #RESOURCESSCHEMA__upd_sites#
 
+
+## [jumble_run](url_to_tool)
+Introduction to jumble_run
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_run#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_run#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_run#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_run#
