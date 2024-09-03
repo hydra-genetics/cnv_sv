@@ -1095,3 +1095,24 @@ Introduction to jumble_run
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__jumble_run#
+
+## [jumble_vcf](url_to_tool)
+Introduction to jumble_vcf
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_vcf#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_vcf#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_vcf#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_vcf#

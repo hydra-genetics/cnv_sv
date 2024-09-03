@@ -4,12 +4,13 @@ from datetime import date
 seg_in = open(snakemake.input.segment)
 vcf_out = open(snakemake.output.vcf, "w")
 sample_name = snakemake.params.sample_name
+TC = snakemake.params.tc
 hom_del_limit = snakemake.params.hom_del_limit
 het_del_limit = snakemake.params.het_del_limit
 dup_limit = snakemake.params.dup_limit
 
 
-def write_vcf_header(gatk_version, sample_name):
+def write_vcf_header(sample_name):
     vcf_out.write("##fileformat=VCFv4.2\n")
     vcf_out.write("##fileDate=%s\n" % str(date.today()))
     vcf_out.write("##INFO=<ID=END,Number=1,Type=Integer,Description=\"End position of the variant described in this record\">\n")
@@ -21,6 +22,7 @@ def write_vcf_header(gatk_version, sample_name):
     vcf_out.write("##INFO=<ID=LOG_ODDS_RATIO,Number=1,Type=Float,Description=\"Log odds ratio\">\n")
     vcf_out.write("##INFO=<ID=PROBES,Number=1,Type=Integer,Description=\"Number of probes in CNV\">\n")
     vcf_out.write("##INFO=<ID=BAF,Number=1,Type=Float,Description=\"SNP minor allele frequency\">\n")
+    vcf_out.write("##INFO=<ID=BAF_PROBES,Number=1,Type=Integer,Description=\"Number of SNPs for BAF\">\n")
     vcf_out.write("##ALT=<ID=DEL,Description=\"Deletion\">\n")
     vcf_out.write("##ALT=<ID=DUP,Description=\"Duplication\">\n")
     vcf_out.write("##ALT=<ID=COPY_NORMAL,Description=\"Normal copy number\">\n")
@@ -33,29 +35,35 @@ def write_vcf_header(gatk_version, sample_name):
 
 
 header = 0
-gatk_version = ""
 sample_name = ""
 header_map = {}
 for line in seg_in:
     columns = line.strip().split("\t")
     if columns[0] == "chromosome":
         header_map = {column_name: index for index, column_name in enumerate(columns)}
-        write_vcf_header(gatk_version, sample_name)
+        write_vcf_header(sample_name)
     else:
         chrom = columns[header_map['chromosome']]
+        if chrom.find("chr") == -1:
+            chrom = f"chr{chrom}"
         start_pos = columns[header_map['start']]
         end_pos = columns[header_map['end']]
         svlen = int(end_pos) - int(start_pos) + 1
         nr_probes = columns[header_map['probes']]
         log_odds_ratio = columns[header_map['log2']]
         baf = columns[header_map['baf']]
+        nr_baf_probes = columns[header_map['baf_probes']]
         dp = columns[header_map['depth']]
         cn = round(2*pow(2, float(log_odds_ratio)), 2)
+        ccn = cn
+        if TC and float(TC) > 0:
+            ccn = round(2 + (cn - 2) * (1/float(TC)), 2)
+        cn = round(cn, 2)
         ref = "N"
         alt = ""
-        if cn < het_del_limit:
+        if ccn < het_del_limit:
             alt = "<DEL>"
-        elif cn > dup_limit:
+        elif ccn > dup_limit:
             alt = "<DUP>"
         else:
             alt = "<COPY_NORMAL>"
@@ -63,21 +71,23 @@ for line in seg_in:
         qual = "."
         filter = "."
         gt = ""
-        if cn < hom_del_limit:
+        if ccn < hom_del_limit:
             gt = "1/1"
-        elif (cn >= hom_del_limit and cn < het_del_limit) or cn > dup_limit:
+        elif (ccn >= hom_del_limit and ccn < het_del_limit) or ccn > dup_limit:
             gt = "0/1"
         else:
             gt = "0/0"
-        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=cnvkit;CN=NA;CORR_CN=%s" % (
-            alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn)
+        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=gatk;CN=%s;CORR_CN=%s" % (
+            alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn), str(ccn)
         )
         info = "%s;PROBES=%s;BAF=%s" % (info, nr_probes, baf)
-        format = "GT:CN:CNQ:DP"
-        data = "%s:%s:%s:%s" % (gt, cn, nr_probes, dp)
-        if baf != "":
-            format += ":BAF"
-            data += ":%s" % (baf)
-        out_line = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (chrom, start_pos, id, ref, alt, qual, filter, info, format, data)
+        format = "GT:CN:CCN:CNQ"
+        data = "%s:%s:%s:%s" % (gt, cn, ccn, nr_probes)
+        if int(nr_baf_probes) > 0:
+            format += ":BAF:BAFQ"
+            data += ":%s:%s" % (baf, nr_baf_probes)
+        out_line = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (
+            chrom, start_pos, id, ref, alt, qual, filter, info, format, data
+        )
         vcf_out.write(out_line)
 vcf_out.close()

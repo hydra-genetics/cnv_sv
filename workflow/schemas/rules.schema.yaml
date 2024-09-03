@@ -464,6 +464,25 @@ properties:
             type: string
             description: segmentation in 'vcf' file format
 
+  jumble_vcf:
+    type: object
+    description: input and output parameters for jumble_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: copy number segmentation file in 'vcf' format used downstream by for example SVDB
+
   jumble_run:
     type: object
     description: input and output parameters for jumble_run
@@ -494,6 +513,9 @@ properties:
           counts:
             type: string
             description: read counts
+          dna_copy_segments:
+            type: string
+            description: called CNV segments in DNAcopy format
           jumble_segments:
             type: string
             description: called CNV segments in jumble format
