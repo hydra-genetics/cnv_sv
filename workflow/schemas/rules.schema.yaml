@@ -464,6 +464,31 @@ properties:
             type: string
             description: segmentation in 'vcf' file format
 
+  jumble_cnvkit_call:
+    type: object
+    description: input and output parameters for jumble_cnvkit_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+          vcf:
+            type: string
+            description: a 'vcf' file with germline SNPs used for BAF information
+          tc_file:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          segment:
+            type: string
+            description: called copy number segmentation rescaled based on tumor content
+
   jumble_vcf:
     type: object
     description: input and output parameters for jumble_vcf

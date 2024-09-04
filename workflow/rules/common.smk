@@ -361,4 +361,12 @@ def compile_output_list(wildcards):
     #     for unit_type in get_unit_types(units, sample)
     # ]
 
+        # Since it is not possible to create integration test without a large dataset jumble will not be subjected to integration
+        # testing and we can not guarantee that it will work
+        # output_files += [
+        #     "cnv_sv/jumble_vcf/%s_%s.pathology.vcf" % (sample, unit_type)
+        #     for sample in get_samples(samples)
+        #     for unit_type in get_unit_types(units, sample)
+        # ]
+
     return output_files

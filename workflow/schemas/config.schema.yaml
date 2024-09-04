@@ -346,14 +346,28 @@ properties:
         type: string
         description: name or path to docker/singularity container
       hom_del_limit:
-        type: string
+        type: number
         description: copy number threshold for homozygous deletion
       het_del_limit:
-        type: string
+        type: number
         description: copy number threshold for heterozygous deletion
       dup_limit:
-        type: string
+        type: number
         description: copy number threshold for duplication
+
+  jumble_cnvkit_call:
+    type: object
+    description: parameters for jumble_cnvkit_call
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   jumble_vcf:
     type: object
@@ -366,13 +380,13 @@ properties:
         type: string
         description: name or path to docker/singularity container
       hom_del_limit:
-        type: string
+        type: number
         description: copy number threshold for homozygous deletion
       het_del_limit:
-        type: string
+        type: number
         description: copy number threshold for heterozygous deletion
       dup_limit:
-        type: string
+        type: number
         description: copy number threshold for duplication
 
   jumble_run:

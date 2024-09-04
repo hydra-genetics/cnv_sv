@@ -26,7 +26,7 @@ rule jumble_run:
     benchmark:
         repeat(
             "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
-            config.get("jumble_run", {}).get("benchmark_repeats", 1)
+            config.get("jumble_run", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("jumble_run", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -47,12 +47,44 @@ rule jumble_run:
         "-o {output.output_dir} &> {log}"
 
 
-rule jumble_vcf:
+rule jumble_cnvkit_call:
     input:
-        jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.cns"),
+        segments="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
+        vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
         tc_file=get_tc_file,
     output:
-        jumble_segments=temp("cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf"),
+        segment=temp("cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
+    params:
+        extra=config.get("jumble_cnvkit_call", {}).get("extra", ""),
+        purity=get_tc,
+    log:
+        "cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.log",
+    benchmark:
+        repeat(
+            "cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.benchmark.tsv",
+            config.get("jumble_cnvkit_call", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("jumble_cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("jumble_cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("jumble_cnvkit_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("jumble_cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("jumble_cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("jumble_cnvkit_call", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("jumble_cnvkit_call", {}).get("container", config["default_container"])
+    message:
+        "{rule}: call cnvs with loh info into {output.segment}"
+    wrapper:
+        "v3.3.6/bio/cnvkit/call"
+
+
+rule jumble_vcf:
+    input:
+        segment="cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns",
+        tc_file=get_tc_file,
+    output:
+        vcf=temp("cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
         dup_limit=config.get("jumble_vcf", {}).get("dup_limit", 2.5),
         het_del_limit=config.get("jumble_vcf", {}).get("het_del_limit", 1.5),
@@ -60,11 +92,11 @@ rule jumble_vcf:
         sample_id="{sample}_{type}",
         tc=get_tc,
     log:
-        "cnv_sv/jumble_vcf/{sample}_{type}.output.log",
+        "cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/jumble_vcf/{sample}_{type}.output.benchmark.tsv",
-            config.get("jumble_vcf", {}).get("benchmark_repeats", 1)
+            "cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf.output.benchmark.tsv",
+            config.get("jumble_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("jumble_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -79,4 +111,3 @@ rule jumble_vcf:
         "{rule}: export cnvkit segments into vcf in {output.vcf}"
     script:
         "../scripts/cnvkit_vcf.py"
-
