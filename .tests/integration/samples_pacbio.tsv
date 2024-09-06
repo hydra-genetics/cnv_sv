@@ -1,2 +1,2 @@
-sample	sex
-HG002	male
+sample	sex	trioid	trio_member
+HG002	male	NA	NA
