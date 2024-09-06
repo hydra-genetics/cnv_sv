@@ -38,6 +38,9 @@ exomedepth:
   reference_count: ""
   WW25: ""
 
+jumble_cnvkit_call:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
 jumble_run:
   container: "docker://hydragenetics/jumble:240530"
   normal_reference: ""

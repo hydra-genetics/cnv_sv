@@ -87,9 +87,12 @@ jumble_vcf:
   het_del_limit: 1.5
   hom_del_limit: 0.5
 
+jumble_cnvkit_call:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
 jumble_run:
   container: "docker://hydragenetics/jumble:240530"
-  normal_reference: "twist_DNA_solid.chr1.annotated.bed.reference.RDS"
+  normal_reference: "/projects/wp1/nobackup/ngs/utveckling/analys/2024/jumble/jumble_PoN/pool1_pool2.sort.merged.padded20.cnv200.hg19.split_fusion_genes.reannotated.230222.bed.reference.RDS"
 
 manta_config_t:
   container: "docker://hydragenetics/manta:1.6.0"
