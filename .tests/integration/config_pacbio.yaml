@@ -16,3 +16,7 @@ trgt_plot:
   plot_type: "allele"
   show: "motifs"
   container: "docker://hydragenetics/trgt:1.0.0"
+
+sniffles2_call:
+  tandem_repeats: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
+  container: "docker://hydragenetics/sniffles2:2.4"

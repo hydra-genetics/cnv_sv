@@ -684,7 +684,24 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-    
+  
+  sniffles2_call:
+    type: object
+    description: parameters for sniffles2_call
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      tandem_repeats:
+        type: string
+        description: Tandem repeats bed file for improved calling in repetitive regions
+
   svdb_merge:
     description: parameters for svdb_merge
     type: object

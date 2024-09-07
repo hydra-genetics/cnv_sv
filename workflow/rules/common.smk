@@ -224,10 +224,20 @@ def get_trgt_loci(wildcards):
     return rep_ids
 
 
+def get_tr_bed(wildcards):
+    tr_bed = config.get("sniffles2_call", {}).get("tandem_repeats", "")
+
+    if tr_bed != "":
+        tr_bed = f"--tandem-repeats {tr_bed}"
+
+    return tr_bed
+
 def compile_output_list(wildcards):
     platform = units.platform.iloc[0]
     files = {
         "cnv_sv/trgt_genotype": ["vcf.gz"],
+        "cnv_sv/sniffles2_call": ["vcf"],
+        "cnv_sv/sniffles2_call": ["snf"],
     }
     output_files = [
         f"{prefix}/{sample}_{unit_type}.{suffix}"
