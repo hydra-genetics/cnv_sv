@@ -232,6 +232,7 @@ def get_tr_bed(wildcards):
 
     return tr_bed
 
+
 def compile_output_list(wildcards):
     platform = units.platform.iloc[0]
     files = {
