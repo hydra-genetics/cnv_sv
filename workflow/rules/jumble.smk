@@ -44,7 +44,7 @@ rule jumble_run:
         "-r {params.reference} "
         "-b {input.bam} "
         "-v {input.vcf} "
-        "-o {output.output_dir} &> {log}"
+        "-o {output.output_dir}) &> {log}"
 
 
 rule jumble_cnvkit_call:
