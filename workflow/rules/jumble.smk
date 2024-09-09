@@ -20,7 +20,7 @@ rule jumble_run:
         png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.png"),
         snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble.snps.RDS"),
     params:
-        reference=config.get("jumble", {}).get("normal_reference", ""),
+        reference=config.get("jumble_run", {}).get("normal_reference", ""),
     log:
         "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
