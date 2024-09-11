@@ -23,6 +23,29 @@ Tool to find regions of homozygosity (ROHs) from sequencing data of human sample
 
 ---
 
+## [bgzip](http://www.htslib.org/doc/bgzip.html)
+Compress a `.vcf` file using bgzip.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__bgzip__bgzip#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__bgzip__bgzip#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__bgzip#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__bgzip#
+
+---
+
 ## CNVkit
 
 ### [CNVkit_batch](https://github.com/etal/cnvkit)
@@ -936,6 +959,29 @@ SVDB is a toolkit for constructing and querying structural variant databases. Th
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__svdb_query#
+
+---
+
+## [tabix](http://www.htslib.org/doc/tabix.html)
+Creates an index file for faster processing of positions in a bgzipped vcf file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__tabix__tabix#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__tabix__tabix#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__tabix#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__tabix#
 
 ---
 

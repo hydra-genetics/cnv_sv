@@ -47,6 +47,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
+    file="^cnv_sv/.+",
 
 
 def get_karyotype(wildcards):
@@ -237,8 +238,7 @@ def compile_output_list(wildcards):
     platform = units.platform.iloc[0]
     files = {
         "cnv_sv/trgt_genotype": ["vcf.gz"],
-        "cnv_sv/sniffles2_call": ["vcf"],
-        "cnv_sv/sniffles2_call": ["snf"],
+        "cnv_sv/sniffles2_call": ["vcf.gz", "vcf.gz.tbi", "snf"],
     }
     output_files = [
         f"{prefix}/{sample}_{unit_type}.{suffix}"
@@ -268,15 +268,15 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
-        "cnv_sv/cnvkit_vcf": ["pathology.vcf"],
-        "cnv_sv/cnvpytor": ["vcf"],
-        "cnv_sv/expansionhunter": ["vcf"],
-        "cnv_sv/gatk_vcf": ["pathology.vcf"],
-        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
-        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
+        "cnv_sv/cnvkit_vcf": ["pathology.vcf.gz"],
+        "cnv_sv/cnvpytor": ["vcf.gz"],
+        "cnv_sv/expansionhunter": ["vcf.gz"],
+        "cnv_sv/gatk_vcf": ["pathology.vcf.gz"],
+        "cnv_sv/svdb_merge": ["no_tc.merged.vcf.gz", "pathology.merged.vcf.gz"],
+        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf.gz", "pathology.svdb_query.vcf.gz"],
         "cnv_sv/exomedepth_call": ["txt", "RData"],
-        "cnv_sv/pindel_vcf": ["no_tc.vcf"],
-        "cnv_sv/tiddit": ["vcf"],
+        "cnv_sv/pindel_vcf": ["no_tc.vcf.gz"],
+        "cnv_sv/tiddit": ["vcf.gz"],
     }
     output_files += [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
