@@ -43,10 +43,10 @@ jobs:
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
-          mamba install -c conda-forge -c bioconda singularity=3.8.6
+          mamba install -c conda-forge -c bioconda apptainer=1.3.2
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
       - name: Integration test - small dataset PACBIO
         working-directory: .tests/integration
         run: |
-          mamba install -c conda-forge -c bioconda singularity=3.8.6
+          mamba install -c conda-forge -c bioconda apptainer=1.3.2
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config_pacbio.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
