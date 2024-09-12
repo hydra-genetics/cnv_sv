@@ -47,6 +47,26 @@ properties:
         type: string
         description: max execution time
 
+  bgzip:
+    type: object
+    description: resource definitions for bgzip
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   cnvkit_batch:
     description: resource definitions for cnvkit_batch
     type: object
@@ -886,6 +906,26 @@ properties:
       time:
         type: string
         description: max execution time
+  
+  tabix:
+    type: object
+    description: resource definitions for tabix
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
 
   tiddit:
     description: resource definitions for tiddit
@@ -966,8 +1006,6 @@ properties:
       time:
         type: string
         description: max execution time
-
-
 
   upd_regions:
     description: resource definitions for upd_regions

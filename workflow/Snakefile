@@ -5,6 +5,8 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/tabix.smk"
+include: "rules/bgzip.smk"
 include: "rules/sniffles2.smk"
 include: "rules/trgt.smk"
 include: "rules/automap.smk"

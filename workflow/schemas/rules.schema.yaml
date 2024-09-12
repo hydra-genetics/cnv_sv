@@ -24,6 +24,25 @@ properties:
             type: string
             description: list of regions of homozygozity in 'tsv' file format
 
+  bgzip:
+    type: object
+    description: input and output parameters for bgzip
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: the `.vcf` file that should be compressed
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          gz:
+            type: string
+            description: the compressed `.vcf.gz` file
+
   cnvkit_batch:
     type: object
     description: input and output parameters for cnvkit_batch
@@ -1100,7 +1119,26 @@ properties:
           vcf:
             type: string
             description: a 'vcf' file annotated with frequency data from a SVDB database
-    
+
+  tabix:
+    type: object
+    description: input and output parameters for tabix
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          gz:
+            type: string
+            description: bgzipped vcf file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          tbi:
+            type: string
+            description: tabix index file
+  
   tiddit:
     type: object
     description: input and output parameters for tiddit

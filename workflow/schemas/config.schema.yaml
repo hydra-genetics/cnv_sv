@@ -30,16 +30,6 @@ properties:
     - resources
     - default_container
 
-  pacbio_alignment:
-    type: boolean
-    description: if pacbio_alignment is used set to true
-    default: false
-
-  ont_alignment:
-    type: boolean
-    description: if ont_alignment should be used set to true
-    default: false
-
   automap:
     description: parameters for automap
     type: object
@@ -56,6 +46,20 @@ properties:
       build:
         type: string
         description: which genome build that should be used (hg19/hg38)
+  
+  bgzip:
+    type: object
+    description: parameters for bgzip
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   cnvkit_batch:
     description: parameters for cnvkit_batch
@@ -792,6 +796,20 @@ properties:
       db_string:
         type: string
         description: string with database parameters (--db, --in_occ, --in_freq, --out_occ, --out_freq) where --db is the path to the SVDB database
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  tabix:
+    type: object
+    description: parameters for tabix
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
       extra:
         type: string
         description: parameters that should be forwarded
