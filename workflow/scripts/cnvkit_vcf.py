@@ -43,7 +43,7 @@ for line in seg_in:
         write_vcf_header(gatk_version, sample_name)
     else:
         chrom = columns[header_map['chromosome']]
-        if chrom.find("chr") == -1:
+        if not chrom.startswith("chr"):
             chrom = f"chr{chrom}"
         start_pos = columns[header_map['start']]
         end_pos = columns[header_map['end']]
