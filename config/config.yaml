@@ -4,7 +4,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:0.1.8"
+default_container: "docker://hydragenetics/common:3.0.0"
 
 automap:
   container: "docker://hydragenetics/automap:1.2"
