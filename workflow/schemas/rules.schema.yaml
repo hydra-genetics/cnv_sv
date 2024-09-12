@@ -24,6 +24,25 @@ properties:
             type: string
             description: list of regions of homozygozity in 'tsv' file format
 
+  bgzip:
+    type: object
+    description: input and output parameters for bgzip
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: the `.vcf` file that should be compressed
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          gz:
+            type: string
+            description: the compressed `.vcf.gz` file
+
   cnvkit_batch:
     type: object
     description: input and output parameters for cnvkit_batch
@@ -463,6 +482,96 @@ properties:
           vcf:
             type: string
             description: segmentation in 'vcf' file format
+
+  jumble_cnvkit_call:
+    type: object
+    description: input and output parameters for jumble_cnvkit_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+          vcf:
+            type: string
+            description: a 'vcf' file with germline SNPs used for BAF information
+          tc_file:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          segment:
+            type: string
+            description: called copy number segmentation rescaled based on tumor content
+
+  jumble_vcf:
+    type: object
+    description: input and output parameters for jumble_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: copy number segmentation file in 'vcf' format used downstream by for example SVDB
+
+  jumble_run:
+    type: object
+    description: input and output parameters for jumble_run
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+          vcf:
+            type: string
+            description: vcf file with called germline SNPs used for improved visualization
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          cnvkit_segments:
+            type: string
+            description: called CNV segments in CNVkit format
+          cnvkit_bins:
+            type: string
+            description: values for CNV bins in CNVkit format
+          counts:
+            type: string
+            description: read counts
+          dna_copy_segments:
+            type: string
+            description: called CNV segments in DNAcopy format
+          jumble_segments:
+            type: string
+            description: called CNV segments in jumble format
+          output_dir:
+            type: string
+            description: output directory
+          png:
+            type: string
+            description: visualization of the results
+          snps:
+            type: string
+            description: read counts for the SNPs
 
   manta_config_tn:
     type: object
@@ -943,7 +1052,36 @@ properties:
           pdf:
             type: string
             description: a 'pdf' file containing four plots showing coverage and copy number data
-        
+
+  sniffles2_call:
+    type: object
+    description: input and output parameters for sniffles2_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: input 'bam' index
+          ref:
+            type: string
+            description: fasta genome reference file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: VCF file with sv calls
+          vcf:
+            type: string
+            description: A 'snf' file that can be used as input to multisample/trio calling with Sniffles2
+
   svdb_merge:
     type: object
     description: input and output parameters for svdb_merge
@@ -981,7 +1119,26 @@ properties:
           vcf:
             type: string
             description: a 'vcf' file annotated with frequency data from a SVDB database
-    
+
+  tabix:
+    type: object
+    description: input and output parameters for tabix
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          gz:
+            type: string
+            description: bgzipped vcf file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          tbi:
+            type: string
+            description: tabix index file
+  
   tiddit:
     type: object
     description: input and output parameters for tiddit
@@ -1006,6 +1163,88 @@ properties:
           vcf:
             type: string
             description: a 'vcf' file with SVs and other chromosomal rearrangements
+
+  trgt_genotype:
+    type: object
+    description: input and output parameters for trgt_genotype
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: input 'bam' index
+          bed:
+            type: string
+            description: a 'bed' file specify STRs in the reference genome to genotype
+          ref:
+            type: string
+            description: fasta genome reference file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: Compressed vcf '.vcf.gz' of genotyped STRs
+          bam:
+            type: string
+            description: A 'bam' file containing reads spanning the str regions in the trgt vcf
+
+  trgt_bam_sort:
+    type: object
+    description: input and output parameters for trgt_bam_sort
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: A 'bam' file containing spanning reads generated by trgt genotype
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: a sorted 'bam' file
+          idx:
+            type: string
+            description: output 'bam' index
+          
+  
+  trgt_plot:
+    type: object
+    description: input and output parameters for trgt_plot
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a sorted 'bam' file containing spanning reads generated by trgt genotype
+          bai:
+            type: string
+            description: intput 'bam' index
+          bed:
+            type: string
+            description: a 'bed' file specify STRs in the reference genome to genotype
+          ref:
+            type: string
+            description: fasta genome reference file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          image:
+            type: string
+            description: trgt plot pileup images file (format=svg|png|pdf)
 
   upd_regions:
     type: object

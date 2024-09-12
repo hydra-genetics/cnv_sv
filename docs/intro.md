@@ -28,8 +28,11 @@ The output consists of results files that describe different kinds of larger gen
 * `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf`
 * `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv`
+* `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.{locus}.svg`
 * `cnv_sv/smn_caller/{sample}_{type}.tsv`
 * `cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf`
 * `cnv_sv/tiddit/{sample}_{type}.vcf`
+* `cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz`
+* `cnv_sv/trgt_plot/{sample}_{type}_{locus}.svg`
 * `cnv_sv/upd/{sample}_{type}.upd_regions.bed`
 * `cnv_sv/upd/{sample}_{type}.upd_sites.bed`

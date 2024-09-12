@@ -154,7 +154,7 @@ rule pindel_update_vcf:
     message:
         "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs and correct samplename"
     shell:
-        "(echo -e '{wildcards.sample}\n' > {output.samplename} && "
+        "(echo -e '{wildcards.sample}_{wildcards.type}\n' > {output.samplename} && "
         "picard UpdateVcfSequenceDictionary "
         "-INPUT {input.vcf} -QUIET true "
         "-SD {input.fasta} "

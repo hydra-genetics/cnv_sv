@@ -1,0 +1,22 @@
+resources: "resources.yaml"
+samples: "samples_pacbio.tsv"
+units: "units_pacbio.tsv"
+
+default_container: "docker://hydragenetics/common:3.0.0"
+
+reference:
+  fasta: "reference/human_GRCh38.fasta"
+
+trgt_genotype:
+  bed: "reference/human_GRCh38_trgt.bed"
+  container: "docker://hydragenetics/trgt:1.0.0"
+
+trgt_plot:
+  image_type: "svg"
+  plot_type: "allele"
+  show: "motifs"
+  container: "docker://hydragenetics/trgt:1.0.0"
+
+sniffles2_call:
+  tandem_repeats: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
+  container: "docker://hydragenetics/sniffles2:2.4"

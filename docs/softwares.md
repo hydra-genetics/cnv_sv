@@ -23,6 +23,29 @@ Tool to find regions of homozygosity (ROHs) from sequencing data of human sample
 
 ---
 
+## [bgzip](http://www.htslib.org/doc/bgzip.html)
+Compress a `.vcf` file using bgzip.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__bgzip__bgzip#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__bgzip__bgzip#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__bgzip#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__bgzip#
+
+---
+
 ## CNVkit
 
 ### [CNVkit_batch](https://github.com/etal/cnvkit)
@@ -117,8 +140,8 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-### [CNVkit_vcf](https://github.com/etal/cnvkit)
-CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule exports the called segments into a 'vcf' file used in downstream analysis.
+### [CNVkit_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py)
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format used for downstream analysis.
 
 #### :snake: Rule
 
@@ -241,21 +264,21 @@ ExomeDepth is a R package designed to detect inherited copy number variants (CNV
 
 #### :snake: Rule
 
-SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
+#SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
 
 ##### :left_right_arrow: input / output files
 
-SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
+#SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
 
 #### :wrench: Configuration
 
 ##### Software settings (`config.yaml`)
 
-CONFIGSCHEMA__exomedepth_sex#
+#CONFIGSCHEMA__exomedepth_sex#
 
 ##### Resources settings (`resources.yaml`)
 
-RESOURCESSCHEMA__exomedepth_sex#
+#RESOURCESSCHEMA__exomedepth_sex#
 
 ---
 
@@ -400,7 +423,7 @@ A collection of rules for GATK CNV calling in somatic samples using a panel of n
 ---
 
 ### [gatk_to_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py)
-An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format.
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format used for downstream analysis.
 
 #### :snake: Rule
 
@@ -419,6 +442,77 @@ An in-house script that converts the GATK segmentation into a file compatible wi
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__gatk_to_vcf#
+
+---
+
+## Jumble
+
+### [jumble_run](https://github.com/ClinSeq/jumble)
+The somatic CNV caller Jumble calls is an improved CNVkit caller using a PoN for references
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_run#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_run#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_run#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_run#
+
+---
+
+### [jumble_cnvkit_call](https://github.com/etal/cnvkit))
+Uses CNVkit call function to incorporate purity estimates and baf-signals.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_cnvkit_call#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_cnvkit_call#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_cnvkit_call#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_cnvkit_call#
+
+---
+
+### [jumble_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py)
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format used for downstream analysis.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_vcf#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_vcf#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_vcf#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_vcf#
 
 ---
 
@@ -687,21 +781,21 @@ PureCN is a tool developed for tumor-only diagnostic sequencing using hybrid-cap
 
 #### :snake: Rule
 
-SNAKEMAKE_RULE_SOURCE__purecn__purecn#
+#SNAKEMAKE_RULE_SOURCE__purecn__purecn#
 
 ##### :left_right_arrow: input / output files
 
-SNAKEMAKE_RULE_TABLE__purecn__purecn#
+#SNAKEMAKE_RULE_TABLE__purecn__purecn#
 
 #### :wrench: Configuration
 
 ##### Software settings (`config.yaml`)
 
-CONFIGSCHEMA__purecn#
+#CONFIGSCHEMA__purecn#
 
 ##### Resources settings (`resources.yaml`)
 
-RESOURCESSCHEMA__purecn#
+#RESOURCESSCHEMA__purecn#
 
 ---
 
@@ -870,6 +964,27 @@ SMNCopyNumberCaller is a tool to call the copy number of full-length SMN1, full-
 
 ---
 
+## [sniffles2_call](url_to_tool)
+Sniffles2 calls germline or somatic structural variants on PacBio and Oxford Nanopore read data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sniffles2__sniffles2_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sniffles2__sniffles2_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sniffles2_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sniffles2_call#
+
 ## SVDB
 
 ### [svdb_merge](https://github.com/J35P312/SVDB)
@@ -918,6 +1033,29 @@ SVDB is a toolkit for constructing and querying structural variant databases. Th
 
 ---
 
+## [tabix](http://www.htslib.org/doc/tabix.html)
+Creates an index file for faster processing of positions in a bgzipped vcf file.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__tabix__tabix#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__tabix__tabix#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__tabix#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__tabix#
+
+---
+
 ## [tiddit](https://github.com/SciLifeLab/TIDDIT)
 TIDDIT is a tool to used to identify chromosomal rearrangements using Mate Pair or Paired End sequencing data.
 
@@ -938,6 +1076,76 @@ TIDDIT is a tool to used to identify chromosomal rearrangements using Mate Pair 
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__tiddit#
+
+---
+
+## [trgt_genotype](https://github.com/PacificBiosciences/trgt)
+TRGT is a tool for targeted genotyping of tandem repeats from PacBio HiFi data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__trgt__trgt_genotype#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__trgt__trgt_genotype#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__trgt_genotype#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__trgt_genotype#
+
+---
+
+## [trgt_bam_sort](https://www.htslib.org/doc/samtools-sort.html)
+The trgt_bam_sort rule uses samtools sort to sort and index the spanning reads bam file produced by trgt genotype.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__trgt__trgt_bam_sort#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__trgt__trgt_bam_sort#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__trgt_bam_sort#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__trgt_bam_sort#
+
+---
+
+## [trgt_plot](https://github.com/PacificBiosciences/trgt)
+The trgt plot command produces read pileup images of reads supporting the genotype
+call made by trgt genotype.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__trgt__trgt_plot#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__trgt__trgt_plot#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__trgt_plot#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__trgt_plot#
 
 ---
 
@@ -987,4 +1195,3 @@ Call UPD informative sites from germline exome/wgs trios.
 
 #RESOURCESSCHEMA__upd_sites#
 
----

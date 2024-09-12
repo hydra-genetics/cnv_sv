@@ -29,16 +29,16 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"]).set_index("sample", drop=False)
+samples = pd.read_table(config["samples"], dtype={"sample": str}).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
+units = pandas.read_table(config["units"], dtype=str)
 
-units = (
-    pandas.read_table(config["units"], dtype=str)
-    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
-    .sort_index()
-)
+if units.platform.iloc[0] in ["PACBIO", "ONT"]:
+    units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
+else:  # assume that the platform Illumina data with a lane and flowcell columns
+    units = units.set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -47,6 +47,23 @@ validate(units, schema="../schemas/units.schema.yaml")
 wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
+    file="^cnv_sv/.+",
+
+
+def get_karyotype(wildcards):
+    """
+    Translate sex to karyotype for trgt. If sex is unknown
+    or sex is not in the samples.tsv file then 'XX' is returned
+    as default
+    """
+
+    sex = samples.loc[wildcards.sample].sex
+    if sex == "male":
+        karyotype = "XY"
+    else:
+        karyotype = "XX"
+
+    return karyotype
 
 
 def get_tc(wildcards):
@@ -197,54 +214,115 @@ def get_parent_samples(wildcards, trio_member):
     return parent_sample_id
 
 
+def get_trgt_loci(wildcards):
+    trgt_bed = config.get("trgt_genotype", {}).get("bed", "")
+    rep_ids = []
+    with open(trgt_bed, "r") as infile:
+        for line in infile:
+            cols = line.split("\t")
+            rep_id = cols[3].split(";")[0]
+            rep_ids.append(rep_id.split("=")[1])
+    return rep_ids
+
+
+def get_tr_bed(wildcards):
+    tr_bed = config.get("sniffles2_call", {}).get("tandem_repeats", "")
+
+    if tr_bed != "":
+        tr_bed = f"--tandem-repeats {tr_bed}"
+
+    return tr_bed
+
+
 def compile_output_list(wildcards):
+    platform = units.platform.iloc[0]
+    files = {
+        "cnv_sv/trgt_genotype": ["vcf.gz"],
+        "cnv_sv/sniffles2_call": ["vcf.gz", "vcf.gz.tbi", "snf"],
+    }
+    output_files = [
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
+    files = {
+        "cnv_sv/trgt_plot": [config.get("trgt_plot", {}).get("image", "svg")],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}_{locus}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for locus in get_trgt_loci(wildcards)
+        for suffix in files[prefix]
+    ]
+
     files = {
         "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
-        "cnv_sv/cnvkit_vcf": ["pathology.vcf"],
-        "cnv_sv/cnvpytor": ["vcf"],
-        "cnv_sv/expansionhunter": ["vcf"],
-        "cnv_sv/gatk_vcf": ["pathology.vcf"],
-        "cnv_sv/svdb_merge": ["no_tc.merged.vcf", "pathology.merged.vcf"],
-        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf", "pathology.svdb_query.vcf"],
+        "cnv_sv/cnvkit_vcf": ["pathology.vcf.gz"],
+        "cnv_sv/cnvpytor": ["vcf.gz"],
+        "cnv_sv/expansionhunter": ["vcf.gz"],
+        "cnv_sv/gatk_vcf": ["pathology.vcf.gz"],
+        "cnv_sv/svdb_merge": ["no_tc.merged.vcf.gz", "pathology.merged.vcf.gz"],
+        "cnv_sv/svdb_query": ["no_tc.svdb_query.vcf.gz", "pathology.svdb_query.vcf.gz"],
         "cnv_sv/exomedepth_call": ["txt", "RData"],
-        "cnv_sv/pindel_vcf": ["no_tc.vcf"],
-        "cnv_sv/tiddit": ["vcf"],
+        "cnv_sv/pindel_vcf": ["no_tc.vcf.gz"],
+        "cnv_sv/tiddit": ["vcf.gz"],
     }
-    output_files = [
+    output_files += [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
     ]
     output_files += [
         "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
     ]
     output_files.append(
         [
             "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
             for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for platform in units.loc[(sample,)].platform
+            if platform not in ["ONT", "PACBIO"]
         ]
     )
     output_files.append(
         [
             "cnv_sv/manta_run_workflow_t/%s/results/variants/tumorSV.vcf.gz" % (sample)
             for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for platform in units.loc[(sample,)].platform
+            if platform not in ["ONT", "PACBIO"]
         ]
     )
     output_files.append(
         [
             "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
             for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for platform in units.loc[(sample,)].platform
+            if platform not in ["ONT", "PACBIO"]
         ]
     )
     files = {
@@ -255,6 +333,8 @@ def compile_output_list(wildcards):
         for prefix in files.keys()
         for sample in samples[samples.trio_member == "proband"].index
         for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
     # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
@@ -277,6 +357,14 @@ def compile_output_list(wildcards):
     # ]
     # output_files += [
     #     "cnv_sv/smn_charts/smn_%s_%s.pdf" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
+
+    # Since it is not possible to create integration test without a large dataset jumble will not be subjected to integration
+    # testing and we can not guarantee that it will work
+    # output_files += [
+    #     "cnv_sv/jumble_vcf/%s_%s.pathology.vcf" % (sample, unit_type)
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     # ]

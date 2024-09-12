@@ -46,6 +46,20 @@ properties:
       build:
         type: string
         description: which genome build that should be used (hg19/hg38)
+  
+  bgzip:
+    type: object
+    description: parameters for bgzip
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   cnvkit_batch:
     description: parameters for cnvkit_batch
@@ -336,14 +350,62 @@ properties:
         type: string
         description: name or path to docker/singularity container
       hom_del_limit:
-        type: string
+        type: number
         description: copy number threshold for homozygous deletion
       het_del_limit:
-        type: string
+        type: number
         description: copy number threshold for heterozygous deletion
       dup_limit:
-        type: string
+        type: number
         description: copy number threshold for duplication
+
+  jumble_cnvkit_call:
+    type: object
+    description: parameters for jumble_cnvkit_call
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  jumble_vcf:
+    type: object
+    description: parameters for jumble_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      hom_del_limit:
+        type: number
+        description: copy number threshold for homozygous deletion
+      het_del_limit:
+        type: number
+        description: copy number threshold for heterozygous deletion
+      dup_limit:
+        type: number
+        description: copy number threshold for duplication
+
+  jumble_run:
+    type: object
+    description: parameters for jumble_run
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      normal_reference:
+        type: string
+        description: path to the jumble normal reference pool 
 
   manta_config_t:
     description: parameters for manta_config_t
@@ -674,7 +736,24 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-    
+  
+  sniffles2_call:
+    type: object
+    description: parameters for sniffles2_call
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      tandem_repeats:
+        type: string
+        description: Tandem repeats bed file for improved calling in repetitive regions
+
   svdb_merge:
     description: parameters for svdb_merge
     type: object
@@ -721,6 +800,20 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  tabix:
+    type: object
+    description: parameters for tabix
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   tiddit:
     description: parameters for tiddit
     type: object
@@ -734,6 +827,60 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+  
+  trgt_genotype:
+    description: parameters for trgt_genotype
+    type: object
+    properties:
+      bed:
+        type: string
+        description: path to bed file of repeats to be genotyped
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  trgt_bam_sort:
+    type: object
+    description: parameters for trgt_bam_sort
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  trgt_plot:
+    type: object
+    description: parameters for trgt_plot
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      image_type:
+        type: string
+        description: image type for the plot (png|svg|pdf)
+      plot_type:
+        type: string
+        description: Type of trgt plot (allele or waterfall) 
+      show:
+        type: string
+        description: either motifs (motifs) or methylation (meth) plots 
 
   upd_regions:
     description: parameters for upd_regions
@@ -762,3 +909,4 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
+
