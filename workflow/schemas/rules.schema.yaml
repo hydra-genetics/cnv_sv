@@ -472,7 +472,7 @@ properties:
         type: object
         description: list of inputs
         properties:
-          segments:
+          segment:
             type: string
             description: copy number segmentation file
           vcf:

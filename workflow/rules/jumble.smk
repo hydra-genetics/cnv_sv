@@ -48,7 +48,7 @@ rule jumble_run:
 
 rule jumble_cnvkit_call:
     input:
-        segments="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
+        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
         tc_file=get_tc_file,
     output:
