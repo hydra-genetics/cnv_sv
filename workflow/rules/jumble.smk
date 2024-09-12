@@ -81,15 +81,13 @@ rule jumble_cnvkit_call:
 rule jumble_vcf:
     input:
         segment="cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns",
-        tc_file=get_tc_file,
     output:
         vcf=temp("cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
         dup_limit=config.get("jumble_vcf", {}).get("dup_limit", 2.5),
         het_del_limit=config.get("jumble_vcf", {}).get("het_del_limit", 1.5),
         hom_del_limit=config.get("jumble_vcf", {}).get("hom_del_limit", 0.5),
-        sample_id="{sample}_{type}",
-        tc=get_tc,
+        sample_name="{sample}_{type}",
     log:
         "cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
