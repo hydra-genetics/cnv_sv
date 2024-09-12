@@ -29,8 +29,10 @@ cnvkit_scatter:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 cnvkit_vcf:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  dup_limit: 2.5
+  het_del_limit: 1.5
   hom_del_limit: 0.5
+  
 
 cnvkit_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -75,8 +77,22 @@ gatk_model_segments:
 gatk_call_copy_ratio_segments:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
-gatk_seq_to_vcf:
-  container: "docker://hydragenetics/gatk4:4.2.2.0"
+gatk_to_vcf:
+  dup_limit: 2.5
+  het_del_limit: 1.5
+  hom_del_limit: 0.5
+
+jumble_vcf:
+  dup_limit: 2.5
+  het_del_limit: 1.5
+  hom_del_limit: 0.5
+
+jumble_cnvkit_call:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+jumble_run:
+  container: "docker://hydragenetics/jumble:240530"
+  normal_reference: ""
 
 manta_config_t:
   container: "docker://hydragenetics/manta:1.6.0"

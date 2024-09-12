@@ -464,6 +464,96 @@ properties:
             type: string
             description: segmentation in 'vcf' file format
 
+  jumble_cnvkit_call:
+    type: object
+    description: input and output parameters for jumble_cnvkit_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+          vcf:
+            type: string
+            description: a 'vcf' file with germline SNPs used for BAF information
+          tc_file:
+            type: string
+            description: tumor content in the sample, can be estimated by for example purecn
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          segment:
+            type: string
+            description: called copy number segmentation rescaled based on tumor content
+
+  jumble_vcf:
+    type: object
+    description: input and output parameters for jumble_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          segment:
+            type: string
+            description: copy number segmentation file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: copy number segmentation file in 'vcf' format used downstream by for example SVDB
+
+  jumble_run:
+    type: object
+    description: input and output parameters for jumble_run
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+          vcf:
+            type: string
+            description: vcf file with called germline SNPs used for improved visualization
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          cnvkit_segments:
+            type: string
+            description: called CNV segments in CNVkit format
+          cnvkit_bins:
+            type: string
+            description: values for CNV bins in CNVkit format
+          counts:
+            type: string
+            description: read counts
+          dna_copy_segments:
+            type: string
+            description: called CNV segments in DNAcopy format
+          jumble_segments:
+            type: string
+            description: called CNV segments in jumble format
+          output_dir:
+            type: string
+            description: output directory
+          png:
+            type: string
+            description: visualization of the results
+          snps:
+            type: string
+            description: read counts for the SNPs
+
   manta_config_tn:
     type: object
     description: input and output parameters for manta_config_tn

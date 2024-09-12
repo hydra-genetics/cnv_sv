@@ -117,8 +117,8 @@ CNVkit calls copy number variation in cancer samples. The program uses a panel o
 
 ---
 
-### [CNVkit_vcf](https://github.com/etal/cnvkit)
-CNVkit calls copy number variation in cancer samples. The program uses a panel of normal to correct for biases and adjust calls based on estimated tumor content (external data). This rule exports the called segments into a 'vcf' file used in downstream analysis.
+### [CNVkit_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py)
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format used for downstream analysis.
 
 #### :snake: Rule
 
@@ -400,7 +400,7 @@ A collection of rules for GATK CNV calling in somatic samples using a panel of n
 ---
 
 ### [gatk_to_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/gatk_to_vcf.py)
-An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format.
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format used for downstream analysis.
 
 #### :snake: Rule
 
@@ -419,6 +419,77 @@ An in-house script that converts the GATK segmentation into a file compatible wi
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__gatk_to_vcf#
+
+---
+
+## Jumble
+
+### [jumble_run](https://github.com/ClinSeq/jumble)
+The somatic CNV caller Jumble calls is an improved CNVkit caller using a PoN for references
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_run#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_run#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_run#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_run#
+
+---
+
+### [jumble_cnvkit_call](https://github.com/etal/cnvkit))
+Uses CNVkit call function to incorporate purity estimates and baf-signals.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_cnvkit_call#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_cnvkit_call#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_cnvkit_call#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_cnvkit_call#
+
+---
+
+### [jumble_vcf](https://github.com/hydra-genetics/cnv_sv/blob/develop/workflow/scripts/cnvkit_vcf.py)
+An in-house script that converts the GATK segmentation into a file compatible with the `vcf` file format used for downstream analysis.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__jumble__jumble_vcf#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__jumble__jumble_vcf#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__jumble_vcf#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__jumble_vcf#
 
 ---
 
@@ -961,6 +1032,7 @@ TIDDIT is a tool to used to identify chromosomal rearrangements using Mate Pair 
 #RESOURCESSCHEMA__tiddit#
 
 ---
+
 ## [trgt_genotype](https://github.com/PacificBiosciences/trgt)
 TRGT is a tool for targeted genotyping of tandem repeats from PacBio HiFi data.
 
@@ -981,6 +1053,8 @@ TRGT is a tool for targeted genotyping of tandem repeats from PacBio HiFi data.
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__trgt_genotype#
+
+---
 
 ## [trgt_bam_sort](https://www.htslib.org/doc/samtools-sort.html)
 The trgt_bam_sort rule uses samtools sort to sort and index the spanning reads bam file produced by trgt genotype.
@@ -1003,6 +1077,7 @@ The trgt_bam_sort rule uses samtools sort to sort and index the spanning reads b
 
 #RESOURCESSCHEMA__trgt_bam_sort#
 
+---
 
 ## [trgt_plot](https://github.com/PacificBiosciences/trgt)
 The trgt plot command produces read pileup images of reads supporting the genotype

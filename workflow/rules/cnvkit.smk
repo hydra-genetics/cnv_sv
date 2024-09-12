@@ -165,7 +165,7 @@ rule cnvkit_vcf:
     container:
         config.get("cnvkit_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: export cnvkit segments into vcf in cnv_sv/cnvkit_vcf/{wildcards.sample}_{wildcards.type}.vcf"
+        "{rule}: export cnvkit segments into vcf in {output.vcf}"
     script:
         "../scripts/cnvkit_vcf.py"
 
