@@ -544,9 +544,6 @@ properties:
           jumble_segments:
             type: string
             description: called CNV segments in jumble format
-          jumble_bins:
-            type: string
-            description: values for CNV bins in jumble format
           output_dir:
             type: string
             description: output directory

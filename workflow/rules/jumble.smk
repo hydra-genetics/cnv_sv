@@ -14,11 +14,10 @@ rule jumble_run:
         cnvkit_bins=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cnr"),
         counts=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.counts.RDS"),
         dna_copy_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam_dnacopy.seg"),
-        jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.segments.csv"),
-        jumble_bins=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble.RDS"),
+        jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble.RDS"),
         output_dir=temp(directory("cnv_sv/jumble_run/{sample}_{type}/")),
         png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.png"),
-        snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble.snps.RDS"),
+        snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble_snps.RDS"),
     params:
         reference=config.get("jumble_run", {}).get("normal_reference", ""),
     log:
