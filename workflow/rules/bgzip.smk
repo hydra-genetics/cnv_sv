@@ -25,4 +25,4 @@ rule bgzip:
     message:
         "{rule}: bgzip {input.vcf}"
     wrapper:
-        "v4.3.0/bio/bgzip"
+        "v1.3.1/bio/bgzip"
