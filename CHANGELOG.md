@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.5.0...v0.6.0) (2024-09-12)
+
+
+### Features
+
+* add chr to chromosome if missing ([0197bb2](https://www.github.com/hydra-genetics/cnv_sv/commit/0197bb2c48b9d45d72c9d562a18ac02169511508))
+* add sniffles2 single sample calling ([0ce9b8a](https://www.github.com/hydra-genetics/cnv_sv/commit/0ce9b8aa3821e4c98d78d8f89ca8d423164e1765))
+* add tabix and bgzip for vcf output ([f29e4a2](https://www.github.com/hydra-genetics/cnv_sv/commit/f29e4a29c469b931137f64a9698ccdb3c786c744))
+* add trgt ([145641d](https://www.github.com/hydra-genetics/cnv_sv/commit/145641daefdd6e47d9dc07b229c964582f8874d6))
+* added cnvkit call of jumble output ([605ce90](https://www.github.com/hydra-genetics/cnv_sv/commit/605ce9040f4137aead0a1f392d34cc0d931ee5fe))
+* added jumble_vcf rule for segment exports ([0aa2632](https://www.github.com/hydra-genetics/cnv_sv/commit/0aa263211e11c6f16c56b1adb47da832cb87b905))
+* added the CNV caller Jumble ([4d24aa8](https://www.github.com/hydra-genetics/cnv_sv/commit/4d24aa883305ac8783af0df91f9b9e02e2071545))
+
+
+### Bug Fixes
+
+* add default values for pacbio_alignment and ont_alignment in config.schema.yaml ([ddedade](https://www.github.com/hydra-genetics/cnv_sv/commit/ddedade1728750d9cdd64f18a4d53532a05457ac))
+* change to compatible wrapper ([4759cff](https://www.github.com/hydra-genetics/cnv_sv/commit/4759cffbb9cbd2ac24efb85296cb9a854fcc19ef))
+* code improvement ([911422a](https://www.github.com/hydra-genetics/cnv_sv/commit/911422a2cd2428c574b7f398c8129f0a340577a6))
+* **common:** set type to str for pandas dataframe ([4c0e0f2](https://www.github.com/hydra-genetics/cnv_sv/commit/4c0e0f2252da1ab187ff94c132523fe1958c959c))
+* correct input parameter name ([1722db4](https://www.github.com/hydra-genetics/cnv_sv/commit/1722db4fea07392d23eb31c13bf6bd4586fb5ae6))
+* corrected output file names ([238fb36](https://www.github.com/hydra-genetics/cnv_sv/commit/238fb36ac6e9ffe4bb6318ef244e564e5f7719ce))
+* jumble_vcf should have same parameters as cnvkit_vcf ([1748415](https://www.github.com/hydra-genetics/cnv_sv/commit/1748415286965c99ea7864c5fc11694f3f8f6568))
+* make sure sample column is a string ([2d3aa6b](https://www.github.com/hydra-genetics/cnv_sv/commit/2d3aa6bae5addca7219e9aa833778110efd1173f))
+* missing parenthesis ([be912f8](https://www.github.com/hydra-genetics/cnv_sv/commit/be912f822c7f7284676c7b083dc51214da5bb9d8))
+* update common container ([409dbda](https://www.github.com/hydra-genetics/cnv_sv/commit/409dbda6607a2d6cbba60ea63632bebb9893e333))
+* Update config_pacbio.yaml ([e7f6117](https://www.github.com/hydra-genetics/cnv_sv/commit/e7f6117eac6d519f1238395b0bb79864b6d9daa9))
+* Update config.yaml ([c2a82f8](https://www.github.com/hydra-genetics/cnv_sv/commit/c2a82f81e283dabec54a7e8494ba1adf41a2b574))
+* Update config.yaml ([ea9a0f7](https://www.github.com/hydra-genetics/cnv_sv/commit/ea9a0f7d916952197381fcb61c98063a2f71835b))
+* Update config.yaml ([794e3d6](https://www.github.com/hydra-genetics/cnv_sv/commit/794e3d6fedc8d26674128bb7f06db814e7900d44))
+* wrong config parameter name ([3ad5336](https://www.github.com/hydra-genetics/cnv_sv/commit/3ad533667c4ea0577793c7e55cdb3cf3474cb23e))
+
+
+### Documentation
+
+* documentation fix ([958550b](https://www.github.com/hydra-genetics/cnv_sv/commit/958550be4c0b91ac499f73310ce4f4078e76b6b0))
+* update rules ([e1166af](https://www.github.com/hydra-genetics/cnv_sv/commit/e1166aff1bee8ace4b6f4a8583cfd9d7a4cd7218))
+
 ## [0.5.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.4.1...v0.5.0) (2024-03-28)
 
 
