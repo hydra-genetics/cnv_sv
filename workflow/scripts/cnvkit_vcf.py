@@ -34,7 +34,6 @@ def write_vcf_header(gatk_version, sample_name):
 
 header = 0
 gatk_version = ""
-sample_name = ""
 header_map = {}
 for line in seg_in:
     columns = line.strip().split("\t")
