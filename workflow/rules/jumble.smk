@@ -20,6 +20,7 @@ rule jumble_run:
         snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble_snps.RDS"),
     params:
         reference=config.get("jumble_run", {}).get("normal_reference", ""),
+        caller="jumble",
     log:
         "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
