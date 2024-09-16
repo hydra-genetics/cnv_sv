@@ -7,6 +7,7 @@ sample_name = snakemake.params.sample_name
 hom_del_limit = snakemake.params.hom_del_limit
 het_del_limit = snakemake.params.het_del_limit
 dup_limit = snakemake.params.dup_limit
+caller = snakemake.params.caller
 
 
 def write_vcf_header(gatk_version, sample_name):
@@ -70,8 +71,10 @@ for line in seg_in:
             gt = "0/1"
         else:
             gt = "0/0"
-        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=cnvkit;CN=NA;CORR_CN=%s" % (
-            alt[1:-1], end_pos, svlen, log_odds_ratio, str(cn)
+        if caller == "":
+            caller="cnvkit"
+        info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=%s;CN=NA;CORR_CN=%s" % (
+            alt[1:-1], end_pos, svlen, log_odds_ratio, caller, str(cn)
         )
         info = "%s;PROBES=%s;BAF=%s" % (info, nr_probes, baf)
         format = "GT:CN:CNQ:DP"
