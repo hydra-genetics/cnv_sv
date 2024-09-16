@@ -71,8 +71,6 @@ for line in seg_in:
             gt = "0/1"
         else:
             gt = "0/0"
-        if caller == "":
-            caller="cnvkit"
         info = "SVTYPE=%s;END=%s;SVLEN=%s;LOG_ODDS_RATIO=%s;CALLER=%s;CN=NA;CORR_CN=%s" % (
             alt[1:-1], end_pos, svlen, log_odds_ratio, caller, str(cn)
         )
