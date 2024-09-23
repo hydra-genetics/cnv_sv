@@ -17,7 +17,7 @@ rule svdb_merge:
         overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
         bnd_distance=config.get("svdb_merge", {}).get("bnd_distance", 10000),
         priority=get_priority,
-        vcfs=lambda wildards: get_vcfs_for_svdb_merge(wildards, add_suffix=True),
+        vcfs=lambda wildcards: get_vcfs_for_svdb_merge(wildcards, add_suffix=True),
     log:
         "cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf.log",
     benchmark:
