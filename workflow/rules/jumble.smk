@@ -84,6 +84,7 @@ rule jumble_vcf:
     output:
         vcf=temp("cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf"),
     params:
+        caller=config.get("jumble_run", {}).get("caller_name", "jumble"),
         dup_limit=config.get("jumble_vcf", {}).get("dup_limit", 2.5),
         het_del_limit=config.get("jumble_vcf", {}).get("het_del_limit", 1.5),
         hom_del_limit=config.get("jumble_vcf", {}).get("hom_del_limit", 0.5),
