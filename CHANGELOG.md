@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.6.0...v0.7.0) (2024-10-02)
+
+
+### Features
+
+* add possibility to change caller annotation ([267285f](https://www.github.com/hydra-genetics/cnv_sv/commit/267285f782855a7903c4165ef829c515d2082aa2))
+* add possibility to change caller name ([0b5f000](https://www.github.com/hydra-genetics/cnv_sv/commit/0b5f000f761b934d4ffc747b432f00efdffdebec))
+* make caller name configurable ([461aee1](https://www.github.com/hydra-genetics/cnv_sv/commit/461aee1d4d14bc2cf337c8c634eebe2148827325))
+
+
+### Bug Fixes
+
+* make name configurable ([69ea10a](https://www.github.com/hydra-genetics/cnv_sv/commit/69ea10ac806fd0fec770a72e3974d7e1b6a18a14))
+* put param in correct rule ([b99712e](https://www.github.com/hydra-genetics/cnv_sv/commit/b99712e44513dc7840a1da9fac5b0244ecb60b15))
+* set sample_name correctly in header ([ef428c6](https://www.github.com/hydra-genetics/cnv_sv/commit/ef428c6d69394fd8495eaf8ebfe5db730932f475))
+
 ## [0.6.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.5.0...v0.6.0) (2024-09-12)
 
 
