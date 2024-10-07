@@ -7,6 +7,7 @@ __license__ = "GPL-3"
 rule tiddit:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         ref=config["reference"]["fasta"],
     output:
         folder=temp(directory("cnv_sv/tiddit/{sample}_{type}_tiddit")),
