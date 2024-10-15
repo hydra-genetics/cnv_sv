@@ -1,5 +1,5 @@
-# [CNV_SV module](https://github.com/hydra-genetics/cnv_sv)
-The cnv_sv module consists of a collection of tools calling larger structural genomic aberrations in DNA. Most tools use aligned `.bam` files as input, but many tools also make use of small variants calls in the form of a `.vcf` file.
+# CNV_SV module
+The [cnv_sv module](https://github.com/hydra-genetics/cnv_sv) consists of a collection of tools calling larger structural genomic aberrations in DNA. Most tools use aligned `.bam` files as input, but many tools also make use of small variants calls in the form of a `.vcf` file.
 
 # [Hydra-genetics](https://hydra-genetics.readthedocs.io/en/latest/)
 

@@ -22,6 +22,7 @@ The output consists of results files that describe different kinds of larger gen
 * `cnv_sv/exomedepth_call/{sample}_{type}.txt`
 * `cnv_sv/expansionhunter/{sample}_{type}.vcf`
 * `cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg`
+* `cnv_sv/jumble_vcf/{sample}_{type}.pathology.vcf`
 * `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz`
