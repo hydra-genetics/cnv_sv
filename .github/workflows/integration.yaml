@@ -24,7 +24,7 @@ jobs:
       - name: Setup Miniforge
         uses: conda-incubator/setup-miniconda@v2
         with:
-            miniforge-variant: Miniforge
+            miniforge-variant: Miniforge3
             miniforge-version: latest
             activate-environment: my-env
             use-mamba: true
