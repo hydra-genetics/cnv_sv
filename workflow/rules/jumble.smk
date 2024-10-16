@@ -15,7 +15,6 @@ rule jumble_run:
         counts=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.counts.RDS"),
         dna_copy_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam_dnacopy.seg"),
         jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble.RDS"),
-        output_dir=temp(directory("cnv_sv/jumble_run/{sample}_{type}/")),
         png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.png"),
         snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble_snps.RDS"),
     params:
@@ -43,7 +42,7 @@ rule jumble_run:
         "-r {params.reference} "
         "-b {input.bam} "
         "-v {input.vcf} "
-        "-o {output.output_dir}) &> {log}"
+        "-o $(dirname {output.jumble_segments})) &> {log}"
 
 
 rule jumble_cnvkit_call:
