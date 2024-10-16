@@ -42,7 +42,7 @@ rule jumble_run:
         "-r {params.reference} "
         "-b {input.bam} "
         "-v {input.vcf} "
-        "-o $(dirname {output.jumble_segments}) &> {log}"
+        "-o $(dirname {output.jumble_segments})) &> {log}"
 
 
 rule jumble_cnvkit_call:
