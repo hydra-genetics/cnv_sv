@@ -563,9 +563,6 @@ properties:
           jumble_segments:
             type: string
             description: called CNV segments in jumble format
-          output_dir:
-            type: string
-            description: output directory
           png:
             type: string
             description: visualization of the results
