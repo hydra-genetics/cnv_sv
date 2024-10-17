@@ -1,5 +1,20 @@
 # Changelog
 
+### [0.7.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.7.0...v0.7.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* add missing parenthesis ([9328c59](https://www.github.com/hydra-genetics/cnv_sv/commit/9328c593d2bc0b3b525ef1fd8214b90e9ed2ee4a))
+* jumble results removed prematurely ([5ae3b74](https://www.github.com/hydra-genetics/cnv_sv/commit/5ae3b74b4da103c03332c77f2caa19aed5e2bee1))
+* **tiddit:** add bai file as an input ([ace4bcd](https://www.github.com/hydra-genetics/cnv_sv/commit/ace4bcd17b2f7c16f58b9eac6b223308067a9d45))
+
+
+### Documentation
+
+* update documentation ([087f67e](https://www.github.com/hydra-genetics/cnv_sv/commit/087f67e52ce4cda10861f58f4c42609b354dad95))
+* update mkdocs ([e28d589](https://www.github.com/hydra-genetics/cnv_sv/commit/e28d5896c9dbd3727bcff704bf6e7967b2b43bf0))
+
 ## [0.7.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.6.0...v0.7.0) (2024-10-02)
 
 
