@@ -1195,3 +1195,45 @@ Call UPD informative sites from germline exome/wgs trios.
 
 #RESOURCESSCHEMA__upd_sites#
 
+
+## [sawfish_discover](url_to_tool)
+Introduction to sawfish_discover
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_discover#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_discover#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sawfish_discover#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sawfish_discover#
+
+## [sawfish_joint_call](url_to_tool)
+Introduction to sawfish_joint_call
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_joint_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_joint_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sawfish_joint_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sawfish_joint_call#

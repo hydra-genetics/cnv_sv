@@ -1280,3 +1280,50 @@ properties:
           sites:
             type: string
             description: file with upd informative sites
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  sawfish_discover:
+    type: object
+    description: input and output parameters for sawfish_discover
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  sawfish_joint_call:
+    type: object
+    description: input and output parameters for sawfish_joint_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          input1:
+            type: string
+            description: description input1
+            #value: set to override value in table, else remove
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          output1:
+            type: string
+            description: description output1
+            #value: set to override value in table, else remove
