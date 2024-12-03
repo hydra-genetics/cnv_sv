@@ -657,8 +657,8 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
-## [paraphase](url_to_tool)
-Introduction to paraphase
+## [paraphase](https://github.com/PacificBiosciences/paraphase)
+Paraphase is a Python tool that takes HiFi aligned BAMs as input (whole-genome or enrichment), phases haplotypes for genes of the same family, determines copy numbers and makes phased variant calls.
 
 ### :snake: Rule
 
