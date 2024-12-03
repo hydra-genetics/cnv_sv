@@ -481,6 +481,20 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+  
+  paraphase:
+    type: object
+    description: parameters for paraphase
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   pindel_generate_config:
     description: parameters for pindel_generate_config

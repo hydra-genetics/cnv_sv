@@ -657,6 +657,29 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
+## [paraphase](url_to_tool)
+Introduction to paraphase
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__paraphase__paraphase#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__paraphase__paraphase#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__paraphase#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__paraphase#
+
+---
+
 ## Pindel
 
 ### [pindel_generate_config](https://github.com/genome/pindel)

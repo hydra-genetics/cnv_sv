@@ -97,7 +97,7 @@ checkpoint purecn:
 rule purecn_copy_output:
     input:
         file_dir=lambda wildcards: checkpoints.purecn.get(**wildcards).output.outdir,
-        files=lambda wildcards: f"{checkpoints.purecn.get(**wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
+        files=lambda wildcards: f"{checkpoints.purecn.get(** wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
     output:
         files=temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
     wildcard_constraints:
