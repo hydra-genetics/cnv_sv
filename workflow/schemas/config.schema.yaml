@@ -694,6 +694,34 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+  
+  sawfish_discover:
+    type: object
+    description: parameters for sawfish_discover
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  sawfish_joint_call:
+    type: object
+    description: parameters for sawfish_joint_call
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   smn_manifest:
     description: parameter for smn_manifest
@@ -909,38 +937,3 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
-
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  sawfish_discover:
-    type: object
-    description: parameters for sawfish_discover
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded
-
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  sawfish_joint_call:
-    type: object
-    description: parameters for sawfish_joint_call
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded
-

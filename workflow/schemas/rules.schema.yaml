@@ -986,6 +986,163 @@ properties:
           phasing:
             type: string
             description: file with phasing information
+  
+  sawfish_discover:
+    type: object
+    description: input and output parameters for sawfish_discover
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          ref:
+            type: string
+            description: fasta genome reference file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          asm_bed:
+            type: string
+            description: assemby regions bed file
+          bcf:
+            type: string
+            description: candidate SVs in bcf 
+          csi:
+            type: string
+            description: candidate SVs in bcf index
+          contig_bam:
+            type: string
+            description: SV locus contigs 'bam' file
+          contig_csi:
+            type: string
+            description: SV locus contigs 'bam' file index
+          cluster_bed:
+            type: string
+            description: breakpoint clusters 'bed' file
+          refine_txt:
+            type: string
+            description: cluster refinement debug 'text' file
+          dp_bw:
+            type: string
+            description: depth Bins 'BIGWIG' file
+          dp_mpack:
+            type: string
+            description: depth Bins 'MesagePack' file
+          settings_json:
+            type: string
+            description: sawfish discover settings 'json' file
+          cn_bed:
+            type: string
+            description: expected coopy number 'bed' file
+          gc_mpack:
+            type: string
+            description: genome gc levels 'MessagePack' file
+          max_dp:
+            type: string
+            description: max SV depth 'bed' file
+          stats_json:
+            type: string
+            description: sawfish discover run stats 'json' file
+          gcbias_mpack:
+            type: string
+            description: sample gcbias 'MessagePack' file
+
+  sawfish_joint_call:
+    type: object
+    description: input and output parameters for sawfish_joint_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          ref:
+            type: string
+            description: fasta genome reference file
+          asm_bed:
+            type: string
+            description: assemby regions bed file
+          bcf:
+            type: string
+            description: candidate SVs in bcf 
+          csi:
+            type: string
+            description: candidate SVs in bcf index
+          contig_bam:
+            type: string
+            description: SV locus contigs 'bam' file
+          contig_csi:
+            type: string
+            description: SV locus contigs 'bam' file index
+          cluster_bed:
+            type: string
+            description: breakpoint clusters 'bed' file
+          refine_txt:
+            type: string
+            description: cluster refinement debug 'text' file
+          dp_bw:
+            type: string
+            description: depth Bins 'BIGWIG' file
+          dp_mpack:
+            type: string
+            description: depth Bins 'MesagePack' file
+          settings_json:
+            type: string
+            description: sawfish discover settings 'json' file
+          cn_bed:
+            type: string
+            description: expected coopy number 'bed' file
+          gc_mpack:
+            type: string
+            description: genome gc levels 'MessagePack' file
+          max_dp:
+            type: string
+            description: max SV depth 'bed' file
+          stats_json:
+            type: string
+            description: sawfish discover run stats 'json' file
+          gcbias_mpack:
+            type: string
+            description: sample gcbias 'MessagePack' file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          log:
+            type: string
+            description: sawfish joint-call log file
+          stats_json:
+            type: string
+            description: sawfish joint-call run stats 'json' file
+          genotype_vcf:
+            type: string
+            description: sawfish joint-call genotypes gzipped 'vcf' file
+          genotype_tbi:
+            type: string
+            description: sawfish joint-call genotypes vcf tabix file
+          sample_vcf:
+            type: string
+            description: sample named sawfish joint-call genotypes gzipped 'vcf' file
+          sample_tbi:
+            type: string
+            description: sample named sawfish joint-call genotypes vcf tabix file
+          sr_json:
+            type: string
+            description: supporting reads 'json' file
 
   smn_manifest:
     type: object
@@ -1075,7 +1232,7 @@ properties:
           vcf:
             type: string
             description: VCF file with sv calls
-          vcf:
+          snf:
             type: string
             description: A 'snf' file that can be used as input to multisample/trio calling with Sniffles2
 
@@ -1280,50 +1437,3 @@ properties:
           sites:
             type: string
             description: file with upd informative sites
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  sawfish_discover:
-    type: object
-    description: input and output parameters for sawfish_discover
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          input1:
-            type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output1:
-            type: string
-            description: description output1
-            #value: set to override value in table, else remove
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  sawfish_joint_call:
-    type: object
-    description: input and output parameters for sawfish_joint_call
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          input1:
-            type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          output1:
-            type: string
-            description: description output1
-            #value: set to override value in table, else remove
