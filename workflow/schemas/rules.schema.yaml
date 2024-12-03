@@ -1128,10 +1128,10 @@ properties:
           stats_json:
             type: string
             description: sawfish joint-call run stats 'json' file
-          genotype_vcf:
+          gt_vcf:
             type: string
             description: sawfish joint-call genotypes gzipped 'vcf' file
-          genotype_tbi:
+          gt_tbi:
             type: string
             description: sawfish joint-call genotypes vcf tabix file
           sample_vcf:
