@@ -893,6 +893,53 @@ REViewer is a tool for visualizing alignments of reads in regions containing tan
 
 ---
 
+## [sawfish_discover](https://github.com/PacificBiosciences/sawfish)
+Sawfish calls structural variants from mapped HiFi sequencing reads. It discovers germline variants from local sequence assembly and jointly genotypes variants across multiple samples.
+The discover step identifies candidate structural variant (SV) regions and assembles each local SV haplotype.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_discover#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_discover#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sawfish_discover#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sawfish_discover#
+
+---
+
+## [sawfish_joint_call](https://github.com/PacificBiosciences/sawfish)
+Sawfish calls structural variants from mapped HiFi sequencing reads. It discovers germline variants from local sequence assembly and jointly genotypes variants across multiple samples.
+The joint call step takes the output of the sawfish 'discover' step for one to many samples and provides jointly genotyped SV calls over the sample set.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_joint_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_joint_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sawfish_joint_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sawfish_joint_call#
+
+
 ## SMNCopyNumberCaller
 
 ### [smn_manifest](https://github.com/Illumina/SMNCopyNumberCaller)

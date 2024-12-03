@@ -50,6 +50,13 @@ wildcard_constraints:
     file="^cnv_sv/.+",
 
 
+def get_longread_bam(wildcards):
+    aligner = config.get("aligner", "minimap2")
+    alignment_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
+    index_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam.bai"
+    return (alignment_path, index_path)
+
+
 def get_karyotype(wildcards):
     """
     Translate sex to karyotype for trgt. If sex is unknown
@@ -64,6 +71,25 @@ def get_karyotype(wildcards):
         karyotype = "XX"
 
     return karyotype
+
+
+def get_expected_cn(wildcards):
+    """
+    Find the expected copy number BED file path for sawfish discover.
+    These bed are typically used to specify ploidy in the non-PAR regions of the sex chromosomes.
+    """
+
+    sex = samples.loc[wildcards.sample].sex
+    if sex == "male":
+        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
+        sawfish_param = f"--expected-cn {expected_cn}"
+    elif sex == "female":
+        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
+        sawfish_param = f"--expected-cn {expected_cn}"
+    else:  # when no sex in samples.tsv treat all regions as diploid
+        sawfish_param = ""
+
+    return sawfish_param
 
 
 def get_tc(wildcards):
@@ -239,6 +265,7 @@ def compile_output_list(wildcards):
     files = {
         "cnv_sv/trgt_genotype": ["vcf.gz"],
         "cnv_sv/sniffles2_call": ["vcf.gz", "vcf.gz.tbi", "snf"],
+        "cnv_sv/sawfish_joint_call": ["vcf.gz"],
     }
     output_files = [
         f"{prefix}/{sample}_{unit_type}.{suffix}"
