@@ -97,8 +97,8 @@ rule sawfish_joint_call:
         ),
     params:
         extra=config.get("sawfish_joint_call", {}).get("extra", ""),
-        in_dir="cnv_sv/sawfish_discover/{sample}_{type}/",
-        out_dir="cnv_sv/sawfish_joint_call/{sample}_{type}",
+        in_dir=lambda w, input: os.path.dirname(input.settings_json),
+        out_dir=lambda w, output: os.path.dirname(output[0]),
         suporting_reads=(
             f"--report-supporting-reads" if config.get("sawfish_joint_call", {}).get("supporting_reads", False) else ""
         ),
