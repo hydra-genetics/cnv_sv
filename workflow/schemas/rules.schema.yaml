@@ -776,6 +776,42 @@ properties:
           wrk_dir:
             type: string
             description: working directory
+  
+  paraphase:
+    type: object
+    description: input and output parameters for paraphase
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index file
+          ref:
+            type: string
+            description: fasta genome reference file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: a haplotagged paraphase 'bam' file
+          bai:
+            type: string
+            description: a haplotagged paraphase 'bam' file index file
+          json:
+            type: string
+            description: a paraphase 'json' file 
+          vcf:
+            type: string
+            description: a paraphase 'vcf' file with variant and haplotype information for a single gene
+
 
   pindel_generate_config:
     type: object

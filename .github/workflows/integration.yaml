@@ -12,41 +12,40 @@ on:
   workflow_dispatch:
 
 jobs:
-  integration-small-singularity:
-    name: integration small data set singularity
-    runs-on: ubuntu-latest
-    steps:
+  isteps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.8
         uses: actions/setup-python@v3
         with:
           python-version: 3.8
-      - name: Setup Miniforge
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-            miniforge-variant: Miniforge3
-            miniforge-version: latest
-            activate-environment: my-env
-            use-mamba: true
-      - name: Set strict channel
+      - name: Build
         run: |
-          conda config --set channel_priority strict
+          echo "Free space:"
+          df -h
+      - name: Remove stuff
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
+      - name: Install apptainer/singularity
+        run: |
+          sudo add-apt-repository -y ppa:apptainer/ppa && sudo apt install -y software-properties-common && sudo apt install -y apptainer
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
       - name: Install requirements.test.txt
         run: |
           pip install -r requirements.test.txt
-      - name: Add conda to system path
-        run: |
-          echo $CONDA/bin >> $GITHUB_PATH
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
-          mamba install -c conda-forge -c bioconda apptainer=1.3.2
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
       - name: Integration test - small dataset PACBIO
         working-directory: .tests/integration
         run: |
-          mamba install -c conda-forge -c bioconda apptainer=1.3.2
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config_pacbio.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "

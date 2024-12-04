@@ -9,6 +9,13 @@ aligner: "pbmm2"
 reference:
   fasta: "reference/human_GRCh38.fasta"
 
+paraphase:
+  container: "docker://quay.io/pacbio/paraphase:3.1.1_build1"
+  genome: "38"
+  genes:
+    - pms2
+
+
 trgt_genotype:
   container: "docker://hydragenetics/trgt:1.0.0"
   bed: "reference/human_GRCh38_trgt.bed"

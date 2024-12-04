@@ -292,6 +292,35 @@ def compile_output_list(wildcards):
     ]
 
     files = {
+        "cnv_sv/paraphase": ["bam"],
+        "cnv_sv/paraphase": [".bam.bai"],
+        "cnv_sv/paraphase": ["json"],
+    }
+    output_files += [
+        f"{prefix}/paraphase_{sample}_{unit_type}/{sample}_{unit_type}.paraphase.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
+    files = {
+        "cnv_sv/paraphase": ["vcf.gz"],
+    }
+    output_files += [
+        f"{prefix}/paraphase_{sample}_{unit_type}/{sample}_{unit_type}_paraphase_vcfs/{sample}_{unit_type}_{gene}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for gene in config.get("paraphase", {}).get("genes", "")
+        for suffix in files[prefix]
+    ]
+
+    files = {
         "cnv_sv/cnvkit_call": ["pathology.loh.cns"],
         "cnv_sv/cnvkit_diagram": ["pdf"],
         "cnv_sv/cnvkit_scatter": ["png"],
