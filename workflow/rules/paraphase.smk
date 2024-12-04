@@ -45,5 +45,6 @@ rule paraphase:
         "--prefix {params.prefix} "
         "--out {params.out} "
         "{params.gene} "
+        "{params.extra} "
         "--threads {threads} "
         "--genome {params.genome} &> {log}"
