@@ -12,7 +12,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  isteps:
+   integration-small-singularity:
+    name: integration small data set singularity
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.8
         uses: actions/setup-python@v3
@@ -49,3 +52,5 @@ jobs:
         working-directory: .tests/integration
         run: |
           snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config_pacbio.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
+
+    
