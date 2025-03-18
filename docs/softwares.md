@@ -1265,3 +1265,66 @@ Call UPD informative sites from germline exome/wgs trios.
 
 #RESOURCESSCHEMA__upd_sites#
 
+
+## [melt_melt](url_to_tool)
+Introduction to melt_melt
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__melt__melt_melt#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__melt__melt_melt#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__melt_melt#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__melt_melt#
+
+## [scramble_scramble](url_to_tool)
+Introduction to scramble_scramble
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__scramble__scramble_scramble#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__scramble__scramble_scramble#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__scramble_scramble#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__scramble_scramble#
+
+## [xtea_xtea](url_to_tool)
+Introduction to xtea_xtea
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__xtea__xtea_xtea#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__xtea__xtea_xtea#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__xtea_xtea#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__xtea_xtea#

@@ -951,3 +951,54 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  melt_melt:
+    type: object
+    description: parameters for melt_melt
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  scramble_scramble:
+    type: object
+    description: parameters for scramble_scramble
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  xtea_xtea:
+    type: object
+    description: parameters for xtea_xtea
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+

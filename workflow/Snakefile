@@ -5,6 +5,9 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/xtea.smk"
+include: "rules/scramble.smk"
+include: "rules/melt.smk"
 include: "rules/sawfish.smk"
 include: "rules/tabix.smk"
 include: "rules/bgzip.smk"
