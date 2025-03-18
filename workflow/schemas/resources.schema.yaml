@@ -586,7 +586,27 @@ properties:
       time:
         type: string
         description: max execution time
-  
+
+  melt:
+    type: object
+    description: resource definitions for melt_melt
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   paraphase:
     type: object
     description: resource definitions for paraphase
@@ -1109,29 +1129,6 @@ properties:
 
   required:
     - default_resources
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  melt_melt:
-    type: object
-    description: resource definitions for melt_melt
-    properties:
-      mem_mb:
-        type: integer
-        description: max memory in MB to be available
-      mem_per_cpu:
-        type: integer
-        description: memory in MB used per cpu
-      partition:
-        type: string
-        description: partition to use on cluster
-      threads:
-        type: integer
-        description: number of threads to be available
-      time:
-        type: string
-        description: max execution time
-
 
 
 # Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order

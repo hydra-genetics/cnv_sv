@@ -481,7 +481,24 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-  
+
+  melt:
+    type: object
+    description: parameters for melt
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      bed:
+        type: string
+        description: gene annotation for the FASTA reference ("MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed")
+      mei:
+        type: string
+        description: list of MEI.zip files with one file per line (MELTv2.2.2/me_refs/*zip)
+
   paraphase:
     type: object
     description: parameters for paraphase
@@ -951,24 +968,6 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
-
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
-  melt_melt:
-    type: object
-    description: parameters for melt_melt
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded
-
-
 
 # Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   scramble_scramble:

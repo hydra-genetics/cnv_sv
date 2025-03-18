@@ -52,6 +52,12 @@ manta_config_n:
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
 
+melt:
+  container: "docker://vanallenlab/melt:3159ce1"
+  bed: ""
+  extra: ""
+  mei: ""
+
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
 
