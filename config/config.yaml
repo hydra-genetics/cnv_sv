@@ -71,7 +71,7 @@ upd:
 
 hificnv:
   container: "docker://hydragenetics/hificnv:1.0.1"
-  exclude: "cnv.excluded_regions.common_50.hg38.bed.gz"
+  exclude: ""
 
 pbsv_discover:
   container: "docker://hydragenetics/pbsv:2.9.0"
