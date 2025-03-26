@@ -68,3 +68,7 @@ tiddit:
 upd:
   container: "docker://hydragenetics/upd:0.1.1"
   extra: "--vep "
+
+hificnv:
+  container: "docker://hydragenetics/hificnv:1.0.1"
+  exclude: "cnv.excluded_regions.common_50.hg38.bed.gz"
