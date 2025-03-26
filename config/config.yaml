@@ -77,4 +77,8 @@ pbsv_discover:
   container: "docker://hydragenetics/pbsv:2.9.0"
   extra: ""
   trf: ""
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  extra: ""
   reference: ""
