@@ -3,6 +3,7 @@ __copyright__ = "Copyright 2025, Andrei Guliaev"
 __email__ = "andrei.guliae@scilifelab.uu.se"
 __license__ = "GPL-3"
 
+
 rule pbsv_discover:
     input:
         tumor="alignment/samtools_merge_bam/{sample}_T.bam",
@@ -17,15 +18,25 @@ rule pbsv_discover:
     benchmark:
         repeat(
             "cnv_sv/pbsv_discover/{sample}.output.benchmark.tsv",
-            config.get("pbsv_discover", {}).get("benchmark_repeats", 1)
+            config.get("pbsv_discover", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_discover", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("pbsv_discover", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("pbsv_discover", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("pbsv_discover", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("pbsv_discover", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("pbsv_discover", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("pbsv_discover", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("pbsv_discover", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("pbsv_discover", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("pbsv_discover", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("pbsv_discover", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     container:
         config.get("pbsv_discover", {}).get("container", config["default_container"])
     message:
@@ -36,28 +47,39 @@ rule pbsv_discover:
         "--log-file {log.discover} "
         "{input.tumor} {output.svsig}"
 
+
 rule pbsv_call:
     input:
         svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
     output:
-        vcf="cnv_sv/pbsv_call/{sample}.vcf"
+        vcf="cnv_sv/pbsv_call/{sample}.vcf",
     params:
         reference=config.get("pbsv_call", {}).get("reference", ""),
         extra=config.get("pbsv_call", {}).get("extra", ""),
     log:
-        call="cnv_sv/pbsv_call/{sample}.call.log"
+        call="cnv_sv/pbsv_call/{sample}.call.log",
     benchmark:
         repeat(
             "cnv_sv/pbsv_call/{sample}.output.benchmark.tsv",
-            config.get("pbsv_call", {}).get("benchmark_repeats", 1)
+            config.get("pbsv_call", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("pbsv_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("pbsv_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("pbsv_call", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("pbsv_call", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("pbsv_call", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("pbsv_call", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("pbsv_call", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("pbsv_call", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("pbsv_call", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("pbsv_call", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     container:
         config.get("pbsv_call", {}).get("container", config["default_container"])
     message:
