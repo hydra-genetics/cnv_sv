@@ -3,13 +3,10 @@ __copyright__ = "Copyright 2025, Andrei Guliaev"
 __email__ = "andrei.guliae@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-# split the pbsv rule into two rules
 rule pbsv_discover:
     input:
         tumor="alignment/samtools_merge_bam/{sample}_T.bam",
-        # tumor=lambda wildcards: get_longread_bam(wildcards)[0],
         bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
-        # bai_t=lambda wildcards: get_longread_bam(wildcards)[1],
     output:
         svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
     params:
