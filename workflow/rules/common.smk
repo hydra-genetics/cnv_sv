@@ -49,6 +49,24 @@ wildcard_constraints:
     type="N|T|R",
     file="^cnv_sv/.+",
 
+def get_starting_bam(wildcards, tissue="T"):
+    """
+    Get path to input bam for deepsomatic_tn depending on the value in your config file.
+    If you start your analysyis with fully processed bam files, set 'type', in config
+    to 'haplotagged', otherwise set it to empty strin ("").
+    Set 'path' to the location of unmapped or haplotagged bam files, depending on your needs.
+    Default 'path' is 'alignemnt/samtools_merge_bam'  
+    """
+    # 1st: config entry, 2nd: default value
+    bam_path = config.get("starting_bam", {}).get("path", "alignment/samtools_merge_bam")
+    bam_type = config.get("starting_bam", {}).get("type", "")
+    if bam_type == "haplotagged":
+        alignment_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam"
+        index_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam.bai"
+    else:
+        alignment_path = f"{bam_path}/{wildcards.sample}_{tissue}.bam"
+        index_path = f"{bam_path}/{wildcards.sample}_{tissue}.bam.bai"
+    return alignment_path, index_path
 
 def get_longread_bam(wildcards):
     aligner = config.get("aligner", "minimap2")
