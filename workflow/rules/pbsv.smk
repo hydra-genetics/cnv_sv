@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule pbsv_discover:
     input:
-        tumor="alignment/samtools_merge_bam/{sample}_T.bam",
-        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        tumor=lambda wildcards: get_starting_bam(wildcards, "T")[0],
+        bai_t=lambda wildcards: get_starting_bam(wildcards, "T")[1],
     output:
         svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
     params:
