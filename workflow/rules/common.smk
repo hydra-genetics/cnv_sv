@@ -80,6 +80,7 @@ def get_starting_bam(wildcards, tissue="T"):
         index_path = f"{bam_path}/{wildcards.sample}_{tissue}.bam.bai"
     return alignment_path, index_path
 
+
 def get_longread_bam(wildcards):
     aligner = config.get("aligner", "minimap2")
     alignment_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
