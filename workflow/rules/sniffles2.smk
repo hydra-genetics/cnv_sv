@@ -13,6 +13,7 @@ rule sniffles2_call:
         vcf="cnv_sv/sniffles2_call/{sample}_{type}.vcf",
         snf="cnv_sv/sniffles2_call/{sample}_{type}.snf",
     params:
+        sample_id=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
         tandem_repeats=get_tr_bed,
         extra=config.get("sniffles2_call", {}).get("extra", ""),
     log:
@@ -37,6 +38,7 @@ rule sniffles2_call:
         "sniffles -i {input.bam} "
         "--reference {input.ref} "
         "-t {threads} "
+        "--sample-id {params.sample_id} "
         "{params.tandem_repeats} "
         "{params.extra} "
         "--vcf {output.vcf} "
