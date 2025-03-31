@@ -8,7 +8,9 @@ rule hificnv:
     input:
         bam=lambda wildcards: get_starting_bam(wildcards, "T")[0],
     output:
-        "cnv_sv/hificnv/{sample}.vcf",
+        vcf="cnv_sv/hificnv/{sample}.vcf",
+        bw="cnv_sv/hificnv/{sample}.depth.bw",
+        bedgraph="cnv_sv/hificnv/{sample}.copynum.bedgraph",
     params:
         ref=config.get("reference", {}).get("fasta", ""),
         exclude=config.get("hificnv", {}).get("exclude", ""),
@@ -39,9 +41,10 @@ rule hificnv:
     message:
         "{rule}: Calculating copy number variants on {input.bam} with HiFiCNV"
     shell:
+        "OUTNAME={output.vcf} && "
         "hificnv --bam {input.bam} "
-        "--reference {params.ref} "
+        "--ref {params.ref} "
         "--threads {threads} "
         "--exclude {params.exclude} "
-        "--output_prefix {output} "
+        "--output-prefix ${{OUTNAME%.vcf.gz}} "
         "&> {log}"
