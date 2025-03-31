@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule hificnv:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_T.bam",
+        bam=lambda wildcards: get_starting_bam(wildcards, "T")[0],
     output:
         "cnv_sv/hificnv/{sample}.vcf",
     params:
