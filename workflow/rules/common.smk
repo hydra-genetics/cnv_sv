@@ -51,11 +51,23 @@ wildcard_constraints:
 
 def get_starting_bam(wildcards, tissue="T"):
     """
-    Get path to input bam for deepsomatic_tn depending on the value in your config file.
-    If you start your analysyis with fully processed bam files, set 'type', in config
-    to 'haplotagged', otherwise set it to empty strin ("").
-    Set 'path' to the location of unmapped or haplotagged bam files, depending on your needs.
-    Default 'path' is 'alignemnt/samtools_merge_bam'  
+    Get path to input bam files.
+
+    This function retrieves the 'starting_bam' entry from the config file.
+    The 'starting_bam' entry should contain the path to the input bam files
+    and the type of bam files (e.g. 'haplotagged' or empty string).
+    The function returns the path to the input bam file and its index file.
+    If 'starting_bam' is not specified in the config file, it defaults to
+    'alignment/samtools_merge_bam'.
+    
+    Arguments:
+    wildcards: snakemake.io.Wildcards
+        The wildcards object containing the sample name and type.
+    tissue: str
+        The type of tissue ('T' or 'N'; default is 'T' for tumor).
+    Returns:
+    tuple: (alignment_path, index_path)
+        The path to the input bam file and its index file.
     """
     # 1st: config entry, 2nd: default value
     bam_path = config.get("starting_bam", {}).get("path", "alignment/samtools_merge_bam")
