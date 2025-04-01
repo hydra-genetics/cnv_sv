@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule pbsv_discover:
     input:
-        tumor=lambda wildcards: get_starting_bam(wildcards, "T")[0],
-        bai_t=lambda wildcards: get_starting_bam(wildcards, "T")[1],
+        tumor=lambda wildcards: get_input_bam(wildcards, "T")[0],
+        bai_t=lambda wildcards: get_input_bam(wildcards, "T")[1],
     output:
         svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
     params:
