@@ -57,6 +57,6 @@ rule hificnv:
         "grep '@RG' | "
         "awk -F'\t' '{{for(i=1;i<=NF;i++) if($i ~ /^SM:/) "
         "print substr($i,4)}}') &> {log.pull} && "
-        "mv $PREFIX.$SAMPLE_NAME'.vcf.gz' $PREFIX'.vcf.gz &> {log.mv_vcf} && '
-        "mv $PREFIX.$SAMPLE_NAME'.depth.bw' $PREFIX'.depth.bw &> {log.mv_bw} && "
+        "mv $PREFIX.$SAMPLE_NAME'.vcf.gz' $PREFIX'.vcf.gz' &> {log.mv_vcf} && "
+        "mv $PREFIX.$SAMPLE_NAME'.depth.bw' $PREFIX'.depth.bw' &> {log.mv_bw} && "
         "mv $PREFIX.$SAMPLE_NAME'.copynum.bedgraph' $PREFIX'.copynum.bedgraph' &> {log.mv_bedgraph}"
