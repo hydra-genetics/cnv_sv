@@ -49,43 +49,63 @@ wildcard_constraints:
     type="N|T|R",
     file="^cnv_sv/.+",
 
-def get_starting_bam(wildcards, tissue="T"):
-    """
-    Get path to input bam files.
-
-    This function retrieves the 'starting_bam' entry from the config file.
-    The 'starting_bam' entry should contain the path to the input bam files
-    and the type of bam files (e.g. 'haplotagged' or empty string).
-    The function returns the path to the input bam file and its index file.
-    If 'starting_bam' is not specified in the config file, it defaults to
-    'alignment/samtools_merge_bam'.
-    
-    Arguments:
-    wildcards: snakemake.io.Wildcards
-        The wildcards object containing the sample name and type.
-    tissue: str
-        The type of tissue ('T' or 'N'; default is 'T' for tumor).
-    Returns:
-    tuple: (alignment_path, index_path)
-        The path to the input bam file and its index file.
-    """
-    # 1st: config entry, 2nd: default value
-    bam_path = config.get("starting_bam", {}).get("path", "alignment/samtools_merge_bam")
-    bam_type = config.get("starting_bam", {}).get("type", "")
-    if bam_type == "haplotagged":
-        alignment_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam"
-        index_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam.bai"
-    else:
-        alignment_path = f"{bam_path}/{wildcards.sample}_{tissue}.bam"
-        index_path = f"{bam_path}/{wildcards.sample}_{tissue}.bam.bai"
-    return alignment_path, index_path
-
 
 def get_longread_bam(wildcards):
     aligner = config.get("aligner", "minimap2")
     alignment_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
     index_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam.bai"
     return (alignment_path, index_path)
+
+
+def get_input_bam(wildcards, tissue="T", default_path="alignment/samtools_merge_bam"):
+    """
+    Get path to input bam files.
+
+    This function checks if 'input_bam' or 'aligner' is in the config 
+    and uses whichever is found in bam files path.
+    The situation when both input_bam and aligner entries are in the config
+    must not happen, and we do not check for it here.
+    The 'input_bam' entry should contain the path to the input bam files
+    and the type of bam files (e.g. 'haplotagged').
+    The 'aligner' entry should contain name of the aligner used.
+    If neither 'input_bam' nor 'aligner' are in the config, it defaults to
+    'alignment/samtools_merge_bam'
+    The function returns path to the input bam file and its index file.
+    
+    Arguments:
+    wildcards: snakemake.io.Wildcards
+        The wildcards object containing the sample name and type.
+    tissue: str
+        The type of tissue ('T' or 'N'; default is 'T' for tumor).
+    default_path: str
+        The default path to the input bam files if 'input_bam' is not specified in the config.
+        Ensures compatibility with the other workflows using deepsomatic_* rules.
+    Returns:
+    tuple: (alignment_path, index_path)
+        The path to the input bam file and its index file.
+    """
+    # situation when both input_bam and aligner entries are in the config
+    # is not allowed, so we do not check for that here.
+    if config.get("input_bam", {}).get("type") is not None:
+        # if input_bam entry is in the config
+        # use it to compile output
+        bam_path = config.get("input_bam", {}).get("path", "")
+        bam_type = config.get("input_bam", {}).get("type", "")
+        alignment_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam"
+        index_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam.bai"
+
+    elif config.get("input_bam") is None and config.get("aligner") is not None:
+        # if input_bam entry is not in the config & aligner is in the config
+        # use the other function to get bam paths
+        path_index = get_longread_bam(wildcards)
+        alignment_path = path_index[0]
+        index_path = path_index[1]
+    else:
+        # if neither input_bam nor aligner entries are in the config
+        # use default bam path to compile output
+        alignment_path = f"{default_path}/{wildcards.sample}_{tissue}.bam"
+        index_path = f"{default_path}/{wildcards.sample}_{tissue}.bam.bai"
+    return alignment_path, index_path
 
 
 def get_karyotype(wildcards):
