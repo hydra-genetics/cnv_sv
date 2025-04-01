@@ -8,14 +8,14 @@ rule hificnv:
     input:
         bam=lambda wildcards: get_starting_bam(wildcards, "T")[0],
     output:
-        vcf="cnv_sv/hificnv/{sample}.vcf",
+        vcf="cnv_sv/hificnv/{sample}.vcf.gz",
         bw="cnv_sv/hificnv/{sample}.depth.bw",
         bedgraph="cnv_sv/hificnv/{sample}.copynum.bedgraph",
     params:
         ref=config.get("reference", {}).get("fasta", ""),
         exclude=config.get("hificnv", {}).get("exclude", ""),
     log:
-        "cnv_sv/hificnv/{sample}.vcf.log",
+        "cnv_sv/hificnv/{sample}.vcf.gz.log",
     benchmark:
         repeat(
             "cnv_sv/hificnv/{sample}.output.benchmark.tsv",
