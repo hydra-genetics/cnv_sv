@@ -15,7 +15,11 @@ rule hificnv:
         ref=config.get("reference", {}).get("fasta", ""),
         exclude=config.get("hificnv", {}).get("exclude", ""),
     log:
-        "cnv_sv/hificnv/{sample}.vcf.gz.log",
+        call="cnv_sv/hificnv/{sample}.vcf.gz.log",
+        pull="cnv_sv/hificnv/{sample}.pull.log",
+        mv_vcf="cnv_sv/hificnv/{sample}.vcf.gz.mv.log",
+        mv_bw="cnv_sv/hificnv/{sample}.depth.bw.mv.log",
+        mv_bedgraph="cnv_sv/hificnv/{sample}.copynum.bedgraph.mv.log",
     benchmark:
         repeat(
             "cnv_sv/hificnv/{sample}.output.benchmark.tsv",
@@ -41,10 +45,18 @@ rule hificnv:
     message:
         "{rule}: Calculating copy number variants on {input.bam} with HiFiCNV"
     shell:
-        "OUTNAME={output.vcf} && "
+        "OUTPUT={output.vcf} && "
+        "PREFIX=${{OUTPUT%.vcf.gz}} && "
         "hificnv --bam {input.bam} "
         "--ref {params.ref} "
         "--threads {threads} "
         "--exclude {params.exclude} "
-        "--output-prefix ${{OUTNAME%.vcf.gz}} "
-        "&> {log}"
+        "--output-prefix $PREFIX "
+        "&> {log.call} && "
+        "SAMPLE_NAME=$(samtools view -H {input.bam} | "
+        "grep '@RG' | "
+        "awk -F'\t' '{{for(i=1;i<=NF;i++) if($i ~ /^SM:/) "
+        "print substr($i,4)}}') &> {log.pull} && "
+        "mv $PREFIX.$SAMPLE_NAME'.vcf.gz' $PREFIX'.vcf.gz &> {log.mv_vcf} && '
+        "mv $PREFIX.$SAMPLE_NAME'.depth.bw' $PREFIX'.depth.bw &> {log.mv_bw} && "
+        "mv $PREFIX.$SAMPLE_NAME'.copynum.bedgraph' $PREFIX'.copynum.bedgraph' &> {log.mv_bedgraph}"
