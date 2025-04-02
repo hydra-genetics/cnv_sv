@@ -24,11 +24,21 @@ rule sniffles2_call:
         )
     threads: config.get("sniffles2_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("sniffles2_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("sniffles2_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("sniffles2_call", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("sniffles2_call", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("sniffles2_call", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("sniffles2_call", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("sniffles2_call", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("sniffles2_call", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("sniffles2_call", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("sniffles2_call", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     container:
         config.get("sniffles2_call", {}).get("container", config["default_container"])
     message:
