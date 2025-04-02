@@ -16,7 +16,6 @@ rule hificnv:
         exclude=config.get("hificnv", {}).get("exclude", ""),
     log:
         call="cnv_sv/hificnv/{sample}.vcf.gz.log",
-        pull="cnv_sv/hificnv/{sample}.pull.log",
         mv_vcf="cnv_sv/hificnv/{sample}.vcf.gz.mv.log",
         mv_bw="cnv_sv/hificnv/{sample}.depth.bw.mv.log",
         mv_bedgraph="cnv_sv/hificnv/{sample}.copynum.bedgraph.mv.log",
@@ -53,10 +52,6 @@ rule hificnv:
         "--exclude {params.exclude} "
         "--output-prefix $PREFIX "
         "&> {log.call} && "
-        "SAMPLE_NAME=$(samtools view -H {input.bam} | "
-        "grep '@RG' | "
-        "awk -F'\t' '{{for(i=1;i<=NF;i++) if($i ~ /^SM:/) "
-        "print substr($i,4)}}') &> {log.pull} && "
-        "mv $PREFIX.$SAMPLE_NAME'.vcf.gz' $PREFIX'.vcf.gz' &> {log.mv_vcf} && "
-        "mv $PREFIX.$SAMPLE_NAME'.depth.bw' $PREFIX'.depth.bw' &> {log.mv_bw} && "
-        "mv $PREFIX.$SAMPLE_NAME'.copynum.bedgraph' $PREFIX'.copynum.bedgraph' &> {log.mv_bedgraph}"
+        "mv $PREFIX.{wildcards.sample}'.vcf.gz' $PREFIX'.vcf.gz' &> {log.mv_vcf} && "
+        "mv $PREFIX.{wildcards.sample}'.depth.bw' $PREFIX'.depth.bw' &> {log.mv_bw} && "
+        "mv $PREFIX.{wildcards.sample}'.copynum.bedgraph' $PREFIX'.copynum.bedgraph' &> {log.mv_bedgraph}"
