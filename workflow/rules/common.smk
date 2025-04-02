@@ -19,9 +19,7 @@ min_version("7.8.3")
 ### Set and validate config file
 
 if not workflow.overwrite_configfiles:
-    sys.exit(
-        "At least one config file must be passed using --configfile/--configfiles, by command line or a profile!"
-    )
+    sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 
 validate(config, schema="../schemas/config.schema.yaml")
@@ -31,22 +29,16 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"], dtype={"sample": str}).set_index(
-    "sample", drop=False
-)
+samples = pd.read_table(config["samples"], dtype={"sample": str}).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 units = pandas.read_table(config["units"], dtype=str)
 
 if units.platform.iloc[0] in ["PACBIO", "ONT"]:
-    units = units.set_index(
-        ["sample", "type", "processing_unit", "barcode"], drop=False
-    ).sort_index()
+    units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
 else:  # assume that the platform Illumina data with a lane and flowcell columns
-    units = units.set_index(
-        ["sample", "type", "flowcell", "lane", "barcode"], drop=False
-    ).sort_index()
+    units = units.set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
@@ -60,12 +52,8 @@ wildcard_constraints:
 
 def get_longread_bam(wildcards):
     aligner = config.get("aligner", "minimap2")
-    alignment_path = (
-        f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
-    )
-    index_path = (
-        f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam.bai"
-    )
+    alignment_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
+    index_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam.bai"
     return alignment_path, index_path
 
 
@@ -144,14 +132,10 @@ def get_expected_cn(wildcards):
 
     sex = samples.loc[wildcards.sample].sex
     if sex == "male":
-        expected_cn = (
-            config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
-        )
+        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
         sawfish_param = f"--expected-cn {expected_cn}"
     elif sex == "female":
-        expected_cn = (
-            config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
-        )
+        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
         sawfish_param = f"--expected-cn {expected_cn}"
     else:  # when no sex in samples.tsv treat all regions as diploid
         sawfish_param = ""
@@ -189,11 +173,7 @@ def get_tc_file(wildcards):
 
 
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
-    inputs = {
-        k: v
-        for k, v in config.get("purecn", {}).items()
-        if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]
-    }
+    inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":
         inputs.update(
@@ -222,9 +202,7 @@ def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     return inputs
 
 
-def get_purecn_extra(
-    wildcards: snakemake.io.Wildcards, input: snakemake.io.InputFiles, threads: int
-):
+def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.InputFiles, threads: int):
     log_ratio_file = input.get("log_ratio_file")
     seg_file = input.get("seg_file")
     intervals = input.get("intervals")
@@ -238,11 +216,7 @@ def get_purecn_extra(
             f" --log-ratio-file={log_ratio_file}" if log_ratio_file is not None else "",
             f" --seg-file={seg_file}" if seg_file is not None else "",
             f" --intervals={intervals}" if intervals is not None else "",
-            (
-                f" --mapping-bias-file={mapping_bias_file}"
-                if mapping_bias_file is not None
-                else ""
-            ),
+            (f" --mapping-bias-file={mapping_bias_file}" if mapping_bias_file is not None else ""),
             f" --normaldb={normaldb}" if normaldb is not None else "",
             f" --snp-blacklist={snp_blacklist}" if snp_blacklist is not None else "",
             f" --parallel --cores={threads}" if threads > 1 else "",
@@ -293,9 +267,7 @@ def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
                     f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"
                 )
             else:
-                vcf_dict[tc_method] = [
-                    f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"
-                ]
+                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"]
     return vcf_dict[wildcards.tc_method]
 
 
@@ -312,9 +284,7 @@ def get_parent_samples(wildcards, trio_member):
     proband_sample = samples[samples.index == wildcards.sample]
     trio_id = proband_sample.at[wildcards.sample, "trioid"]
 
-    parent_sample = samples[
-        (samples.trio_member == trio_member) & (samples.trioid == trio_id)
-    ].index[0]
+    parent_sample = samples[(samples.trio_member == trio_member) & (samples.trioid == trio_id)].index[0]
 
     parent_sample_id = f"{parent_sample}_{wildcards.type}"
 
@@ -432,8 +402,7 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
     ]
     output_files += [
-        "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv"
-        % (sample, unit_type, sample, unit_type)
+        "cnv_sv/automap/%s_%s/%s_%s.HomRegions.tsv" % (sample, unit_type, sample, unit_type)
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
@@ -441,8 +410,7 @@ def compile_output_list(wildcards):
     ]
     output_files.append(
         [
-            "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz"
-            % (sample)
+            "cnv_sv/manta_run_workflow_tn/%s/results/variants/somaticSV.vcf.gz" % (sample)
             for sample in get_samples(samples[pd.isnull(samples["trioid"])])
             for platform in units.loc[(sample,)].platform
             if platform not in ["ONT", "PACBIO"]
@@ -458,8 +426,7 @@ def compile_output_list(wildcards):
     )
     output_files.append(
         [
-            "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz"
-            % (sample)
+            "cnv_sv/manta_run_workflow_n/%s/results/variants/candidateSV.vcf.gz" % (sample)
             for sample in get_samples(samples[pd.isnull(samples["trioid"])])
             for platform in units.loc[(sample,)].platform
             if platform not in ["ONT", "PACBIO"]

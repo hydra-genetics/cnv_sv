@@ -26,18 +26,10 @@ rule hificnv:
         )
     threads: config.get("hificnv", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("hificnv", {}).get(
-            "mem_mb", config["default_resources"]["mem_mb"]
-        ),
-        mem_per_cpu=config.get("hificnv", {}).get(
-            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
-        ),
-        partition=config.get("hificnv", {}).get(
-            "partition", config["default_resources"]["partition"]
-        ),
-        threads=config.get("hificnv", {}).get(
-            "threads", config["default_resources"]["threads"]
-        ),
+        mem_mb=config.get("hificnv", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("hificnv", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("hificnv", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("hificnv", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("hificnv", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("hificnv", {}).get("container", config["default_container"])
