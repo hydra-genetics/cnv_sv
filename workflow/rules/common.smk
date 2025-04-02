@@ -54,7 +54,7 @@ def get_longread_bam(wildcards):
     aligner = config.get("aligner", "minimap2")
     alignment_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
     index_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam.bai"
-    return (alignment_path, index_path)
+    return alignment_path, index_path
 
 
 def get_input_bam(wildcards, tissue="T", default_path="alignment/samtools_merge_bam"):
