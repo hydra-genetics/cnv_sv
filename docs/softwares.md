@@ -705,27 +705,51 @@ Paraphase is a Python tool that takes HiFi aligned BAMs as input (whole-genome o
 
 ---
 
-## [pbsv](https://github.com/PacificBiosciences/pbsv)
+## PBSV
+
+### [pbsv_call](https://github.com/PacificBiosciences/pbsv)
 pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio HiFi reads.
 
-### :snake: Rule
+#### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv#
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_call#
 
-#### :left_right_arrow: input / output files
+##### :left_right_arrow: input / output files
 
-#SNAKEMAKE_RULE_TABLE__pbsv__pbsv#
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_call#
 
-### :wrench: Configuration
+#### :wrench: Configuration
 
-#### Software settings (`config.yaml`)
+##### Software settings (`config.yaml`)
 
-#CONFIGSCHEMA__pbsv#
+#CONFIGSCHEMA__pbsv_call#
 
-#### Resources settings (`resources.yaml`)
+##### Resources settings (`resources.yaml`)
 
-#RESOURCESSCHEMA__pbsv#
+#RESOURCESSCHEMA__pbsv_call#
 
+---
+
+### [pbsv_discover](https://github.com/PacificBiosciences/pbsv)
+pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio HiFi reads.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_discover#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_discover#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv_discover#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv_discover#
 ---
 
 ## Pindel
