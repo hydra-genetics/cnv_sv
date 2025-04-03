@@ -445,6 +445,31 @@ An in-house script that converts the GATK segmentation into a file compatible wi
 
 ---
 
+## HiFiCNV
+
+### [hificnv](https://github.com/PacificBiosciences/HiFiCNV)
+HiFiCNV is a tool for calling copy number variants (CNVs) from HiFi sequencing data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hificnv__hificnv#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hificnv__hificnv#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hificnv#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hificnv#
+
+---
+
 ## Jumble
 
 ### [jumble_run](https://github.com/ClinSeq/jumble)
@@ -677,6 +702,29 @@ Paraphase is a Python tool that takes HiFi aligned BAMs as input (whole-genome o
 #### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__paraphase#
+
+---
+
+## [pbsv](https://github.com/PacificBiosciences/pbsv)
+pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio HiFi reads.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv#
 
 ---
 
