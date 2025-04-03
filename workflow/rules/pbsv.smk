@@ -6,15 +6,15 @@ __license__ = "GPL-3"
 
 rule pbsv_discover:
     input:
-        tumor=lambda wildcards: get_input_bam(wildcards, "T")[0],
-        bai_t=lambda wildcards: get_input_bam(wildcards, "T")[1],
+        bam=lambda wildcards: get_input_bam(wildcards, "T")[0],
+        bai=lambda wildcards: get_input_bam(wildcards, "T")[1],
     output:
         svsig=temp("cnv_sv/pbsv_discover/{sample}.svsig.gz"),
     params:
         trf=config.get("pbsv_discover", {}).get("trf", ""),
         extra=config.get("pbsv_discover", {}).get("extra", ""),
     log:
-        discover="cnv_sv/pbsv_discover/{sample}.discover.log",
+        discover="cnv_sv/pbsv_discover/{sample}.svsig.gz.log",
     benchmark:
         repeat(
             "cnv_sv/pbsv_discover/{sample}.output.benchmark.tsv",
@@ -30,24 +30,24 @@ rule pbsv_discover:
     container:
         config.get("pbsv_discover", {}).get("container", config["default_container"])
     message:
-        "{rule}: discover SV signatures with pbsv on {input.tumor}"
+        "{rule}: discover SV signatures with pbsv on {input.bam}"
     shell:
         "pbsv discover "
         "--tandem-repeats {params.trf} "
         "--log-file {log.discover} "
-        "{input.tumor} {output.svsig}"
+        "{input.bam} {output.svsig}"
 
 
 rule pbsv_call:
     input:
         svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         vcf=temp("cnv_sv/pbsv_call/{sample}.vcf"),
     params:
-        reference=config.get("pbsv_call", {}).get("reference", ""),
         extra=config.get("pbsv_call", {}).get("extra", ""),
     log:
-        call="cnv_sv/pbsv_call/{sample}.call.log",
+        call="cnv_sv/pbsv_call/{sample}.vcf.log",
     benchmark:
         repeat(
             "cnv_sv/pbsv_call/{sample}.output.benchmark.tsv",
@@ -67,6 +67,6 @@ rule pbsv_call:
     shell:
         "pbsv call -j {threads} "
         "--log-file {log.call} "
-        "--hifi {params.reference} "
+        "--hifi {input.ref} "
         "{input.svsig} "
         "{output.vcf}"
