@@ -9,7 +9,7 @@ rule pbsv_discover:
         tumor=lambda wildcards: get_input_bam(wildcards, "T")[0],
         bai_t=lambda wildcards: get_input_bam(wildcards, "T")[1],
     output:
-        svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
+        svsig=temp("cnv_sv/pbsv_discover/{sample}.svsig.gz"),
     params:
         trf=config.get("pbsv_discover", {}).get("trf", ""),
         extra=config.get("pbsv_discover", {}).get("extra", ""),
@@ -42,7 +42,7 @@ rule pbsv_call:
     input:
         svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
     output:
-        vcf="cnv_sv/pbsv_call/{sample}.vcf",
+        vcf=temp("cnv_sv/pbsv_call/{sample}.vcf"),
     params:
         reference=config.get("pbsv_call", {}).get("reference", ""),
         extra=config.get("pbsv_call", {}).get("extra", ""),

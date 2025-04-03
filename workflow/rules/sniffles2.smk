@@ -10,8 +10,8 @@ rule sniffles2_call:
         bai=lambda wildcards: get_input_bam(wildcards)[1],
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        vcf="cnv_sv/sniffles2_call/{sample}_{type}.vcf",
-        snf="cnv_sv/sniffles2_call/{sample}_{type}.snf",
+        vcf=temp("cnv_sv/sniffles2_call/{sample}_{type}.vcf"),
+        snf=temp("cnv_sv/sniffles2_call/{sample}_{type}.snf"),
     params:
         tandem_repeats=get_tr_bed,
         extra=config.get("sniffles2_call", {}).get("extra", ""),

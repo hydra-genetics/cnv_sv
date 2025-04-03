@@ -8,9 +8,9 @@ rule hificnv:
     input:
         bam=lambda wildcards: get_input_bam(wildcards, "T")[0],
     output:
-        vcf="cnv_sv/hificnv/{sample}.vcf.gz",
-        bw="cnv_sv/hificnv/{sample}.depth.bw",
-        bedgraph="cnv_sv/hificnv/{sample}.copynum.bedgraph",
+        vcf=temp("cnv_sv/hificnv/{sample}.vcf.gz"),
+        bw=temp("cnv_sv/hificnv/{sample}.depth.bw"),
+        bedgraph=temp("cnv_sv/hificnv/{sample}.copynum.bedgraph"),
     params:
         ref=config.get("reference", {}).get("fasta", ""),
         exclude=config.get("hificnv", {}).get("exclude", ""),
