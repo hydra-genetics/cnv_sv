@@ -444,6 +444,32 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    files = {
+        "cnv_sv/pbsv_discover": ["svsig.gz"],
+        "cnv_sv/pbsv_call": ["vcf"],
+    }
+    output_files += [
+        f"{prefix}/{sample}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+    files = {
+        "cnv_sv/hificnv": ["vcf.gz"],
+        "cnv_sv/hificnv": ["depth.bw"],
+        "cnv_sv/hificnv": ["copynum.bedgraph"],
+    }
+    output_files += [
+        f"{prefix}/{sample}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
     # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
     # testing and we can not guarantee that it will work
     # output_files.append(
