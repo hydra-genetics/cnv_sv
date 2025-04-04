@@ -449,9 +449,10 @@ def compile_output_list(wildcards):
         "cnv_sv/pbsv_call": ["vcf"],
     }
     output_files += [
-        f"{prefix}/{sample}.{suffix}"
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
         for prefix in files.keys()
         for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
         if platform in ["ONT", "PACBIO"]
         for suffix in files[prefix]
@@ -462,9 +463,10 @@ def compile_output_list(wildcards):
         "cnv_sv/hificnv": ["copynum.bedgraph"],
     }
     output_files += [
-        f"{prefix}/{sample}.{suffix}"
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
         for prefix in files.keys()
         for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
         if platform in ["ONT", "PACBIO"]
         for suffix in files[prefix]
