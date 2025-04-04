@@ -9,15 +9,15 @@ rule pbsv_discover:
         bam=lambda wildcards: get_input_bam(wildcards, "T")[0],
         bai=lambda wildcards: get_input_bam(wildcards, "T")[1],
     output:
-        svsig=temp("cnv_sv/pbsv_discover/{sample}.svsig.gz"),
+        svsig=temp("cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz"),
     params:
         trf=config.get("pbsv_discover", {}).get("trf", ""),
         extra=config.get("pbsv_discover", {}).get("extra", ""),
     log:
-        discover="cnv_sv/pbsv_discover/{sample}.svsig.gz.log",
+        discover="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.log",
     benchmark:
         repeat(
-            "cnv_sv/pbsv_discover/{sample}.output.benchmark.tsv",
+            "cnv_sv/pbsv_discover/{sample}_{type}.output.benchmark.tsv",
             config.get("pbsv_discover", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_discover", {}).get("threads", config["default_resources"]["threads"])
