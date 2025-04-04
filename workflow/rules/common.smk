@@ -57,54 +57,61 @@ def get_longread_bam(wildcards):
     return alignment_path, index_path
 
 
-def get_input_bam(wildcards, tissue="T", default_path="alignment/samtools_merge_bam"):
+def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     """
     Get path to input bam files.
 
-    This function checks if 'input_bam' or 'aligner' is in the config
+    This function checks if 'unit_bam' or 'aligner' is in the config
     and uses whichever is found in bam files path.
-    The situation when both input_bam and aligner entries are in the config
+    The situation when both unit_bam and aligner entries are in the config
     must not happen, and we do not check for it here.
-    The 'input_bam' entry should contain the path to the input bam files
-    and the type of bam files (e.g. 'haplotagged').
-    The 'aligner' entry should contain name of the aligner used.
-    If neither 'input_bam' nor 'aligner' are in the config, it defaults to
+
+    The 'aligner' entry should contain name of the aligner used. For
+    example, if the aligner used is minimap2, the entry should be
+
+        "aligner": "minimap2",
+
+
+    The unit_bam entry should be set to true in the config if the bam input sho
+    be taken from the units file. The entry should look like this:
+
+        "unit_bam": true,
+
+    If neither 'unit_bam' nor 'aligner' are in the config, it defaults to
     'alignment/samtools_merge_bam'
+
+
     The function returns path to the input bam file and its index file.
 
     Arguments:
     wildcards: snakemake.io.Wildcards
         The wildcards object containing the sample name and type.
-    tissue: str
-        The type of tissue ('T' or 'N'; default is 'T' for tumor).
-    default_path: str
-        The default path to the input bam files if 'input_bam' is not specified in the config.
-        Ensures compatibility with the other workflows using deepsomatic_* rules.
+
     Returns:
     tuple: (alignment_path, index_path)
         The path to the input bam file and its index file.
     """
     # situation when both input_bam and aligner entries are in the config
     # is not allowed, so we do not check for that here.
-    if config.get("input_bam", {}).get("type") is not None:
+    if config.get("unit_bam") is True and config.get("aligner") is None:
         # if input_bam entry is in the config
         # use it to compile output
-        bam_path = config.get("input_bam", {}).get("path", "")
-        bam_type = config.get("input_bam", {}).get("type", "")
-        alignment_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam"
-        index_path = f"{bam_path}/{wildcards.sample}_{tissue}.{bam_type}.bam.bai"
+        unit = units[(units["sample"] == wildcards.sample) & (units["type"] == wildcards.type)]
+        alignment_path = unit["bam"].iloc[0]
+        index_path = f"{alignment_path}.bai"
 
     elif config.get("input_bam") is None and config.get("aligner") is not None:
         # if input_bam entry is not in the config & aligner is in the config
-        # use the other function to get bam paths
+        # use get_longread_bam to get bam paths
         path_index = get_longread_bam(wildcards)
         alignment_path = path_index[0]
         index_path = path_index[1]
     else:
         # if neither input_bam nor aligner entries are in the config
         # use default bam path to compile output
-        alignment_path = f"{default_path}/{wildcards.sample}_{tissue}.bam"
-        index_path = f"{default_path}/{wildcards.sample}_{tissue}.bam.bai"
+        alignment_path = f"{default_path}/{wildcards.sample}_{wildcards.sample}.bam"
+        index_path = f"{default_path}/{wildcards.sample}_{wildcards.sample}.bam.bai"
+    print(f"Using bam file: {alignment_path}")
     return alignment_path, index_path
 
 

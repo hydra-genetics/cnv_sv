@@ -4,8 +4,7 @@ units: "units_pacbio.tsv"
 
 default_container: "docker://hydragenetics/common:3.0.0"
 
-aligner: "pbmm2"
-
+unit_bam: true
 
 reference:
   fasta: "reference/human_GRCh38.fasta"

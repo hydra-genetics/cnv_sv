@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule paraphase:
     input:
-        bam=lambda wildcards: get_longread_bam(wildcards)[0],
-        bai=lambda wildcards: get_longread_bam(wildcards)[1],
+        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bai=lambda wildcards: get_input_bam(wildcards)[1],
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         bam="cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam",
