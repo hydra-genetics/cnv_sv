@@ -8,20 +8,20 @@ rule hificnv:
     input:
         bam=lambda wildcards: get_input_bam(wildcards, "T")[0],
     output:
-        vcf=temp("cnv_sv/hificnv/{sample}.vcf.gz"),
-        bw=temp("cnv_sv/hificnv/{sample}.depth.bw"),
-        bedgraph=temp("cnv_sv/hificnv/{sample}.copynum.bedgraph"),
+        vcf=temp("cnv_sv/hificnv/{sample}_{type}.vcf.gz"),
+        bw=temp("cnv_sv/hificnv/{sample}_{type}.depth.bw"),
+        bedgraph=temp("cnv_sv/hificnv/{sample}_{type}.copynum.bedgraph"),
     params:
         ref=config.get("reference", {}).get("fasta", ""),
         exclude=config.get("hificnv", {}).get("exclude", ""),
     log:
-        call="cnv_sv/hificnv/{sample}.vcf.gz.log",
-        mv_vcf="cnv_sv/hificnv/{sample}.vcf.gz.mv.log",
-        mv_bw="cnv_sv/hificnv/{sample}.depth.bw.mv.log",
-        mv_bedgraph="cnv_sv/hificnv/{sample}.copynum.bedgraph.mv.log",
+        call="cnv_sv/hificnv/{sample}_{type}.vcf.gz.log",
+        mv_vcf="cnv_sv/hificnv/{sample}_{type}.vcf.gz.mv.log",
+        mv_bw="cnv_sv/hificnv/{sample}_{type}.depth.bw.mv.log",
+        mv_bedgraph="cnv_sv/hificnv/{sample}_{type}.copynum.bedgraph.mv.log",
     benchmark:
         repeat(
-            "cnv_sv/hificnv/{sample}.output.benchmark.tsv",
+            "cnv_sv/hificnv/{sample}_{type}.output.benchmark.tsv",
             config.get("hificnv", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("hificnv", {}).get("threads", config["default_resources"]["threads"])
