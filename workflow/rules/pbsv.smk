@@ -40,17 +40,17 @@ rule pbsv_discover:
 
 rule pbsv_call:
     input:
-        svsig="cnv_sv/pbsv_discover/{sample}.svsig.gz",
+        svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        vcf=temp("cnv_sv/pbsv_call/{sample}.vcf"),
+        vcf=temp("cnv_sv/pbsv_call/{sample}_{type}.vcf"),
     params:
         extra=config.get("pbsv_call", {}).get("extra", ""),
     log:
-        call="cnv_sv/pbsv_call/{sample}.vcf.log",
+        call="cnv_sv/pbsv_call/{sample}_{type}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/pbsv_call/{sample}.output.benchmark.tsv",
+            "cnv_sv/pbsv_call/{sample}_{type}.output.benchmark.tsv",
             config.get("pbsv_call", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("pbsv_call", {}).get("threads", config["default_resources"]["threads"])
