@@ -109,8 +109,8 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     else:
         # if neither input_bam nor aligner entries are in the config
         # use default bam path to compile output
-        alignment_path = f"{default_path}/{wildcards.sample}_{wildcards.sample}.bam"
-        index_path = f"{default_path}/{wildcards.sample}_{wildcards.sample}.bam.bai"
+        alignment_path = f"{default_path}/{wildcards.sample}_{wildcards.type}.bam"
+        index_path = f"{default_path}/{wildcards.sample}_{wildcards.type}.bam.bai"
     return alignment_path, index_path
 
 
