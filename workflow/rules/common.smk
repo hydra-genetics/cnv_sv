@@ -111,7 +111,6 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
         # use default bam path to compile output
         alignment_path = f"{default_path}/{wildcards.sample}_{wildcards.sample}.bam"
         index_path = f"{default_path}/{wildcards.sample}_{wildcards.sample}.bam.bai"
-    print(f"Using bam file: {alignment_path}")
     return alignment_path, index_path
 
 
