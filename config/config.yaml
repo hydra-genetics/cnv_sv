@@ -68,3 +68,17 @@ tiddit:
 upd:
   container: "docker://hydragenetics/upd:0.1.1"
   extra: "--vep "
+
+hificnv:
+  container: "docker://hydragenetics/hificnv:1.0.1"
+  exclude: ""
+
+pbsv_discover:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  extra: ""
+  trf: ""
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  extra: ""
+  reference: ""
