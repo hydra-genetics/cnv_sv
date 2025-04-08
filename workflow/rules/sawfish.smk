@@ -63,8 +63,8 @@ rule sawfish_discover:
 
 rule sawfish_joint_call:
     input:
-        bam="alignment/pbmm2_align/{sample}_{type}.bam",
-        bai="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bai=lambda wildcards: get_input_bam(wildcards)[1],
         ref=config.get("reference", {}).get("fasta", ""),
         asm_bed="cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed",
         bcf="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf",
