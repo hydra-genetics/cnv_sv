@@ -19,6 +19,14 @@ paraphase:
 hificnv:
   container: "docker://hydragenetics/hificnv:1.0.1"
 
+pbsv_discover:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  trf: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  reference: "reference/human_GRCh38.fasta"
+
 trgt_genotype:
   container: "docker://hydragenetics/trgt:1.0.0"
   bed: "reference/human_GRCh38_trgt.bed"
