@@ -1248,6 +1248,53 @@ properties:
             type: string
             description: supporting reads 'json' file
 
+  severus_t_only:
+    type: object
+    description: input and output parameters for severus_t_only
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: mapped and phased reads in BAM format
+          vntr:
+            type: string
+            description: path to bed file for tandem repeat regions (must be ordered)
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory with severus output files
+
+  severus_tn:
+    type: object
+    description: input and output parameters for severus_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: mapped and phased tumor reads in BAM format
+          bam_n:
+            type: string
+            description: mapped and phased normal reads in BAM format
+          vntr:
+            type: string
+            description: path to bed file for tandem repeat regions (must be ordered)
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory with severus output files
+
   smn_manifest:
     type: object
     description: input and output parameters for smn_manifest
