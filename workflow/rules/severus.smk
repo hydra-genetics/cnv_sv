@@ -8,7 +8,7 @@ rule severus_t_only:
     input:
         bam=lambda wildcards: get_input_bam(wildcards)[0],
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
-        pon=config.get("severus", {}).get("pon", ""),
+        pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
         dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}")),
     params:
