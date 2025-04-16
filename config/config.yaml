@@ -57,10 +57,13 @@ pindel_update_vcf:
 
 severus_t_only:
   container: "docker://hydragenetics/severus:1.3"
+  vntr: ""
+  pon: ""
   extra: ""
 
 severus_tn:
     container: "docker://hydragenetics/severus:1.3"
+    vntr: ""
     extra: " --vaf-thr 0.05 --TIN-ratio 0.0 --max-genomic-len 100000"
 
 smn_caller:
