@@ -62,9 +62,9 @@ severus_t_only:
   extra: ""
 
 severus_tn:
-    container: "docker://hydragenetics/severus:1.5"
-    vntr: ""
-    extra: " --vaf-thr 0.05 --TIN-ratio 0.0 --max-genomic-len 100000"
+  container: "docker://hydragenetics/severus:1.5"
+  vntr: ""
+  extra: " --vaf-thr 0.05 --TIN-ratio 0.0 --max-genomic-len 100000"
 
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
