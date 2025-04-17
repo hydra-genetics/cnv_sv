@@ -10,7 +10,15 @@ rule severus_t_only:
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
         pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
-        dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}")),
+        dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}_out_dir")),
+        b_double=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_breakpoint_double.csv"),
+        qual=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_read_qual.txt"),
+        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
+        all_b_clusters=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
+        all_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
+        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
+        somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
+        somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
     params:
         extra=config.get("severus_t_only", {}).get("extra", ""),
     log:
@@ -37,7 +45,16 @@ rule severus_t_only:
         "-t {threads} "
         "--vntr-bed {input.vntr} "
         "--PON {input.pon} "
-        "{params.extra} &> {log} "
+        "{params.extra} && "
+        "cp {output.dir}/breakpoints_double.csv {output.b_double} && "
+        "cp {output.dir}/read_qual.txt {output.qual} && "
+        "cp {output.dir}/all_SVs/severus_all.vcf {output.all_sv_vcf} && "
+        "cp {output.dir}/all_SVs/breakpoint_clusters.tsv {output.all_b_clusters} && "
+        "cp {output.dir}/all_SVs/breakpoint_clusters_list.tsv {output.all_b_clusters_list} && "
+        "cp {output.dir}/somatic_SVs/severus_somatic.vcf {output.somatic_sv_vcf} && "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters.tsv {output.somatic_b_clusters} && "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} "
+        "&> {log} "
 
 
 rule severus_tn:
@@ -47,6 +64,14 @@ rule severus_tn:
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}")),
+        b_double=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_breakpoint_double.csv"),
+        qual=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_read_qual.txt"),
+        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
+        all_b_clusters=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
+        all_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
+        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
+        somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
+        somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
     params:
         extra=config.get("severus_tn", {}).get("extra", ""),
     log:
@@ -73,4 +98,13 @@ rule severus_tn:
         "--out-dir {output.dir} "
         "-t {threads} "
         "--vntr-bed {input.vntr} "
-        "{params.extra} &> {log} "
+        "{params.extra} && "
+        "cp {output.dir}/breakpoints_double.csv {output.b_double} && "
+        "cp {output.dir}/read_qual.txt {output.qual} && "
+        "cp {output.dir}/all_SVs/severus_all.vcf {output.all_sv_vcf} && "
+        "cp {output.dir}/all_SVs/breakpoint_clusters.tsv {output.all_b_clusters} && "
+        "cp {output.dir}/all_SVs/breakpoint_clusters_list.tsv {output.all_b_clusters_list} && "
+        "cp {output.dir}/somatic_SVs/severus_somatic.vcf {output.somatic_sv_vcf} && "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters.tsv {output.somatic_b_clusters} && "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} "
+        "&> {log} "
