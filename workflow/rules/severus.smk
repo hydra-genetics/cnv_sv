@@ -39,6 +39,7 @@ rule severus_t_only:
         "--PON {input.pon} "
         "{params.extra} &> {log} "
 
+
 rule severus_tn:
     input:
         bam_t=lambda wildcards: get_input_bam(wildcards)[0],
