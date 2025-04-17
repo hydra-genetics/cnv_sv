@@ -64,14 +64,14 @@ rule severus_tn:
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}")),
-        b_double=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_breakpoint_double.csv"),
-        qual=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_read_qual.txt"),
-        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
-        all_b_clusters=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
-        all_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
-        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
-        somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
-        somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
+        b_double=temp("cnv_sv/severus_tn/{sample}/{sample}_{type}_breakpoint_double.csv"),
+        qual=temp("cnv_sv/severus_tn/{sample}/{sample}_{type}_read_qual.txt"),
+        all_sv_vcf=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
+        all_b_clusters=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
+        all_b_clusters_list=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
+        somatic_sv_vcf=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
+        somatic_b_clusters=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
+        somatic_b_clusters_list=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
     params:
         extra=config.get("severus_tn", {}).get("extra", ""),
     log:
