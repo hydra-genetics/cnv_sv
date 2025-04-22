@@ -785,6 +785,43 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  severus_t_only:
+    description: parameters for severus_t_only
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      vntr:
+        type: string
+        description: path to the bed file with the VNTR regions
+      pon:
+        type: string
+        description: path to the normal reference panel
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  severus_tn:
+    description: parameters for severus_tn
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      vntr:
+        type: string
+        description: path to the bed file with the VNTR regions
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   smn_manifest:
     description: parameter for smn_manifest
     properties:

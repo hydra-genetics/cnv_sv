@@ -1034,6 +1034,59 @@ The joint call step takes the output of the sawfish 'discover' step for one to m
 
 #RESOURCESSCHEMA__sawfish_joint_call#
 
+---
+
+## Severus
+
+### [severus_t_only](https://github.com/KolmogorovLab/Severus)
+Severus is a somatic structural variation (SV) caller for long reads (both PacBio and ONT).
+It is designed for matching tumor/normal analysis, supports multiple tumor samples, and produces accurate and complete somatic and germline calls.
+Severus takes advantage of long-read phasing and uses the breakpoint graph framework to model complex chromosomal rearrangements.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__severus__severus_t_only#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__severus__severus_t_only#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__severus_t_only#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__severus_t_only#
+
+---
+
+### [severus_tn](https://github.com/KolmogorovLab/Severus)
+Severus is a somatic structural variation (SV) caller for long reads (both PacBio and ONT).
+It is designed for matching tumor/normal analysis, supports multiple tumor samples, and produces accurate and complete somatic and germline calls.
+Severus takes advantage of long-read phasing and uses the breakpoint graph framework to model complex chromosomal rearrangements.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__severus__severus_tn#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__severus__severus_tn#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__severus_tn#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__severus_tn#
+
+---
 
 ## SMNCopyNumberCaller
 
