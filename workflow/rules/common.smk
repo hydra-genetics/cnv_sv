@@ -100,12 +100,20 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
         alignment_path = unit["bam"].iloc[0]
         index_path = f"{alignment_path}.bai"
 
-    elif config.get("input_bam") is None and config.get("aligner") is not None:
+    elif config.get("input_bam") is None and config.get("aligner") is not None and config.get("unit_bam") is None:
         # if input_bam entry is not in the config & aligner is in the config
         # use get_longread_bam to get bam paths
         path_index = get_longread_bam(wildcards)
         alignment_path = path_index[0]
         index_path = path_index[1]
+
+    elif config.get("unit_bam") is False and config.get("haplotag") is not None:
+        # if config contains haplotag: "tool_name" and unit_bam: false
+        # use this tool to compile bam file path
+        tool = config.get("haplotag")
+        alignment_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam"
+        index_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam.bai"
+
     else:
         # if neither input_bam nor aligner entries are in the config
         # use default bam path to compile output
