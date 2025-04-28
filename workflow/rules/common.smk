@@ -99,7 +99,9 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     if config.get("haplotagged_bam") is True and config.get("aligner") is None:
         # filter lines with status 'haplotagged' from units.tsv
         # use the string from column 'bam' as input path
-        unit = units[(units["sample"] == wildcards.sample) & (units["type"] == wildcards.type) & (units["status"] == "haplotagged")]
+        unit = units[
+            (units["sample"] == wildcards.sample) & (units["type"] == wildcards.type) & (units["status"] == "haplotagged")
+        ]
         alignment_path = unit["bam"].iloc[0]
         index_path = f"{alignment_path}.bai"
 
