@@ -61,7 +61,7 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     """
     Get path to input bam files.
 
-    This function checks if 'haplotagged_bam', 'aligner' and 'haplotagging_tool' are in the config,
+    This function checks if 'haplotagged_bam', 'aligner' and 'haplotagging' are in the config,
     interprets their combination to compile paths to input bam files.
 
     The 'aligner' entry should contain name of the aligner used. For
@@ -79,7 +79,7 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
 
     The 'haplotagging_tool' entry should contain name of the haplotagging tool used.
     For example, if the tool used is whatshap, the entry should be
-        "haplotagging_tool": "whatshap",
+        "haplotagging": "whatshap",
 
     If neither 'haplotagged_bam' nor 'aligner' are in the config, it defaults to
     'alignment/samtools_merge_bam'
@@ -110,10 +110,10 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
         alignment_path = path_index[0]
         index_path = path_index[1]
 
-    elif config.get("haplotagged_bam") is False and config.get("haplotag") is not None:
-        # if config contains haplotagging and haplotagged_bam: false
+    elif config.get("haplotagged_bam") is False and config.get("haplotagging") is not None:
+        # if config contains haplotagging_tool and haplotagged_bam: false
         # use this tool to compile input bam path
-        tool = config.get("haplotag")
+        tool = config.get("haplotagging")
         alignment_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam"
         index_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam.bai"
 
