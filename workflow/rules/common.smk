@@ -61,23 +61,27 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     """
     Get path to input bam files.
 
-    This function checks if 'unit_bam' or 'aligner' is in the config
-    and uses whichever is found in bam files path.
-    The situation when both unit_bam and aligner entries are in the config
-    must not happen, and we do not check for it here.
+    This function checks if 'haplotagged_bam', 'aligner' and 'haplotagging_tool' are in the config,
+    interprets their combination to compile paths to input bam files.
 
     The 'aligner' entry should contain name of the aligner used. For
     example, if the aligner used is minimap2, the entry should be
 
         "aligner": "minimap2",
 
+    The 'haplotagged_bam' entry should be set to true in the config if the bam input is already haplotagged.
+    The entry should look like this:
 
-    The unit_bam entry should be set to true in the config if the bam input sho
-    be taken from the units file. The entry should look like this:
+        "haplotagged_bam": true,
 
-        "unit_bam": true,
+    If the input bam files are not haplotagged, the entry should be set to false:
+        "haplotagged_bam": false,
 
-    If neither 'unit_bam' nor 'aligner' are in the config, it defaults to
+    The 'haplotagging_tool' entry should contain name of the haplotagging tool used.
+    For example, if the tool used is whatshap, the entry should be
+        "haplotagging_tool": "whatshap",
+
+    If neither 'haplotagged_bam' nor 'aligner' are in the config, it defaults to
     'alignment/samtools_merge_bam'
 
 
@@ -91,25 +95,24 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     tuple: (alignment_path, index_path)
         The path to the input bam file and its index file.
     """
-    # situation when both input_bam and aligner entries are in the config
-    # is not allowed, so we do not check for that here.
-    if config.get("unit_bam") is True and config.get("aligner") is None:
-        # if input_bam entry is in the config
-        # use it to compile output
-        unit = units[(units["sample"] == wildcards.sample) & (units["type"] == wildcards.type)]
+
+    if config.get("haplotagged_bam") is True and config.get("aligner") is None:
+        # filter lines with status 'haplotagged' from units.tsv
+        # use the string from column 'bam' as input path
+        unit = units[(units["sample"] == wildcards.sample) & (units["type"] == wildcards.type) & (units["status"] == "haplotagged")]
         alignment_path = unit["bam"].iloc[0]
         index_path = f"{alignment_path}.bai"
 
-    elif config.get("input_bam") is None and config.get("aligner") is not None and config.get("unit_bam") is None:
-        # if input_bam entry is not in the config & aligner is in the config
+    elif config.get("haplotagged_bam") is None and config.get("aligner") is not None:
+        # if haplotagged_bam entry is not in the config & aligner is in the config
         # use get_longread_bam to get bam paths
         path_index = get_longread_bam(wildcards)
         alignment_path = path_index[0]
         index_path = path_index[1]
 
-    elif config.get("unit_bam") is False and config.get("haplotag") is not None:
-        # if config contains haplotag: "tool_name" and unit_bam: false
-        # use this tool to compile bam file path
+    elif config.get("haplotagged_bam") is False and config.get("haplotag") is not None:
+        # if config contains haplotagging and haplotagged_bam: false
+        # use this tool to compile input bam path
         tool = config.get("haplotag")
         alignment_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam"
         index_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam.bai"
