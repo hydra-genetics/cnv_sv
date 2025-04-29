@@ -1,2 +1,2 @@
-sample	type	platform	machine	processing_unit	barcode	methylation	bam
-NA12878	N	PACBIO	REVIO	m84045_240413_222650_s4	ACGCTCATGCGAGTAT	Yes	alignment/pbmm2_align/NA12878_N.bam
+sample	type	platform	machine	processing_unit	barcode	methylation	bam	status
+NA12878	N	PACBIO	REVIO	m84045_240413_222650_s4	ACGCTCATGCGAGTAT	Yes	alignment/pbmm2_align/NA12878_N.bam	haplotagged
