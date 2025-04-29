@@ -97,6 +97,7 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
     """
 
     if config.get("haplotagged_bam") is True and config.get("aligner") is None:
+        # bam file is already haplotagged
         # filter lines with status 'haplotagged' from units.tsv
         # use the string from column 'bam' as input path
         unit = units[
@@ -113,14 +114,14 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
         index_path = path_index[1]
 
     elif config.get("haplotagged_bam") is False and config.get("haplotagging") is not None:
-        # if config contains haplotagging_tool and haplotagged_bam: false
-        # use this tool to compile input bam path
+        # if config contains haplotagging: tool and haplotagged_bam: false
+        # use 'tool' to compile input bam path
         tool = config.get("haplotagging")
         alignment_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam"
         index_path = f"annotation/{tool}_haplotag/{wildcards.sample}_{wildcards.type}.haplotagged.bam.bai"
 
     else:
-        # if neither input_bam nor aligner entries are in the config
+        # if none of the above entries are in the config
         # use default bam path to compile output
         alignment_path = f"{default_path}/{wildcards.sample}_{wildcards.type}.bam"
         index_path = f"{default_path}/{wildcards.sample}_{wildcards.type}.bam.bai"
