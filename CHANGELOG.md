@@ -1,5 +1,67 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.7.1...v0.8.0) (2025-05-05)
+
+
+### Features
+
+* add entries for severus_t_only and severus_tn ([89ec119](https://www.github.com/hydra-genetics/cnv_sv/commit/89ec119182c830a3280a5db585abd80468ebc883))
+* add function to compile input BAM paths ([49c2f1c](https://www.github.com/hydra-genetics/cnv_sv/commit/49c2f1c15452863db3fa9990a1cff8f7d98491ca))
+* add paraphase ([2d533ab](https://www.github.com/hydra-genetics/cnv_sv/commit/2d533ab7eda83cc077803e9751f33ccae60ac05c))
+* add pbsv.smk ([3854216](https://www.github.com/hydra-genetics/cnv_sv/commit/385421622d3a7a7590b9b33fbc80515a55f3e322))
+* add rule for HiFiCNV ([930b800](https://www.github.com/hydra-genetics/cnv_sv/commit/930b8008ea60cc36a3d9fe45d34018909aa08442))
+* add sawfish ([e7408b8](https://www.github.com/hydra-genetics/cnv_sv/commit/e7408b8d30c29613e389123c5fe4c87dbfa9637a))
+* add severus related entries to config.yaml ([cd64c98](https://www.github.com/hydra-genetics/cnv_sv/commit/cd64c9802e938117f41e2233a31a363164611f31))
+* add severus.smk ([53c64dc](https://www.github.com/hydra-genetics/cnv_sv/commit/53c64dc0924901482bd85cb1f6f3b39dbc6b9137))
+* add severus.smk to the list of included rules ([39a0dd0](https://www.github.com/hydra-genetics/cnv_sv/commit/39a0dd0208f1f9bf33b3b99a899880e9a091e869))
+* include hificnv.smk and pbsv.smk ([76ed3fc](https://www.github.com/hydra-genetics/cnv_sv/commit/76ed3fc59f46b5cc661b97c06f1e67300bcd2203))
+* new name and functionality of the functon for creating input bam files ([2b21dec](https://www.github.com/hydra-genetics/cnv_sv/commit/2b21dece2f6c8c38d3d336258c4a70793327e243))
+* update severus version to 1.5 ([e227d4f](https://www.github.com/hydra-genetics/cnv_sv/commit/e227d4f37155ecf6f7e3fb09da472b3b92f16659))
+* use get_input_bam() in rule cnvkit_batch ([db571ba](https://www.github.com/hydra-genetics/cnv_sv/commit/db571ba3ed66f13b057e0abf575dd2afd89e8101))
+
+
+### Bug Fixes
+
+* add 'exclude' entry and 'exclude' file for hificnv ([f9c9bf5](https://www.github.com/hydra-genetics/cnv_sv/commit/f9c9bf50cba19fc70a08bf4ae5c39e4a7d452a45))
+* add {type} to input, output, log and benchmark files in pbsv_call ([6c5c78c](https://www.github.com/hydra-genetics/cnv_sv/commit/6c5c78cf1b7417988114d65e8b24db7e9dad6944))
+* add {type} to ouput, log and benchmark files in pbsv_discover ([f4ca49c](https://www.github.com/hydra-genetics/cnv_sv/commit/f4ca49c69802b0eb7656e1ffa90eab66eba417de))
+* add {type} to output, log and benchmark files in rule hificnv ([26b5c38](https://www.github.com/hydra-genetics/cnv_sv/commit/26b5c38a4aac977af85a3b335389fabb95d75abf))
+* add {unit_type} to output files of pbsv_call, pbsv_discover and hificnv in compile_output_list() ([71b2572](https://www.github.com/hydra-genetics/cnv_sv/commit/71b2572f902ae8db0a54cb87b5eb1b606dcb825d))
+* add all output files description to severus_* ([8705dce](https://www.github.com/hydra-genetics/cnv_sv/commit/8705dce34522631f47433085744f25be922e8428))
+* add all required sub-entries to severus entries ([ee36340](https://www.github.com/hydra-genetics/cnv_sv/commit/ee36340ef96d5fcce60590c001824e86b17d82d8))
+* add container for hificnv to .tests/config_pacbio.yaml ([c1fa21a](https://www.github.com/hydra-genetics/cnv_sv/commit/c1fa21a1b4633dc4970921fb474954a649d7ec47))
+* add docker image path, reference and trf files to pbsv rules ([4842a93](https://www.github.com/hydra-genetics/cnv_sv/commit/4842a93e128db7f723ebea5a0138eceea81a198f))
+* add entries for hificnv and pbsv ([624d28b](https://www.github.com/hydra-genetics/cnv_sv/commit/624d28b16292af848c290d85364c8d4b54e649d2))
+* add output files from hificnv and pbsv to compile_output_list() ([d7241dd](https://www.github.com/hydra-genetics/cnv_sv/commit/d7241dd6c3a2199b07d561504e97d4f2f89bba87))
+* add renaming of the output files after HiFiCNV run ([762fbd7](https://www.github.com/hydra-genetics/cnv_sv/commit/762fbd79d0f9ecc74377c585cac505e657d97d62))
+* add required quotation marks in awk command ([ccdc1fd](https://www.github.com/hydra-genetics/cnv_sv/commit/ccdc1fd373c3bb5ac3b709b0e73582d61f3f366d))
+* add temp() directive to output ([0c4add0](https://www.github.com/hydra-genetics/cnv_sv/commit/0c4add03f30a1322a1efdc41a29e3dc585aa9774))
+* change input BAM files in pbsv_discover from hard-coded to function ([cab49eb](https://www.github.com/hydra-genetics/cnv_sv/commit/cab49ebb15aecac2e6b53d62b4af7b333b54f00c))
+* change input bam path; mv ref to params ([6075a12](https://www.github.com/hydra-genetics/cnv_sv/commit/6075a12fdfd8d355c1ee391b8168616ec9d9fe7f))
+* change input from  path to function ([8b7c139](https://www.github.com/hydra-genetics/cnv_sv/commit/8b7c139bff70774c2953654ba559c72d7a16bb6f))
+* change output/log to vcf.gz ([7d409db](https://www.github.com/hydra-genetics/cnv_sv/commit/7d409dbf66e7e74cf6204e8e3a14afa9623dd47a))
+* correct alignment_path and index_path in get_input_bam() ([d232314](https://www.github.com/hydra-genetics/cnv_sv/commit/d2323143815b5bc19854817f8bbd4fdb4a539b38))
+* correct config entry name for pon ([c867311](https://www.github.com/hydra-genetics/cnv_sv/commit/c867311cd4e644b78ea21c10386bb5010ea3f25b))
+* correct output subdir name for severus_tn ([74c0648](https://www.github.com/hydra-genetics/cnv_sv/commit/74c064801b0ab0efcb7c1a7b10e476852a36aeb0))
+* Delete workflow/rules/juli.smk ([d72fc1e](https://www.github.com/hydra-genetics/cnv_sv/commit/d72fc1e5dd68333144439d86cb24fe8c4abc1abe))
+* limit number of threads used by Jumble to that specified in config ([b27fb17](https://www.github.com/hydra-genetics/cnv_sv/commit/b27fb174baa146d5492e787232f6cb4a3805477f))
+* make two entries for pbsv (call & discover) ([c8a9272](https://www.github.com/hydra-genetics/cnv_sv/commit/c8a9272e129f1bd49c9b355ada28353dc075995f))
+* make two entries for pbsv (call & discover) ([55b8793](https://www.github.com/hydra-genetics/cnv_sv/commit/55b8793b11a3b0688a42beea99474c458251bdfa))
+* **paraphase:** add missing extra to shell command ([1250f24](https://www.github.com/hydra-genetics/cnv_sv/commit/1250f243de2623e1c235a26258ac32febceafa45))
+* remove print() from get_input_bam() ([80800a4](https://www.github.com/hydra-genetics/cnv_sv/commit/80800a4e1724d0920f6a6ea7a1487f2ec3fa57f7))
+* **sawfish:** update inputs to function ([671b316](https://www.github.com/hydra-genetics/cnv_sv/commit/671b316e8f2c7410c08447f0ae959e3862bbd9c0))
+* separate output files not only dir ([f977330](https://www.github.com/hydra-genetics/cnv_sv/commit/f97733055ef615689608e95680864fa528b69058))
+* **sniffles2:** add sample-id param to add sample name in VCF ([7f236b9](https://www.github.com/hydra-genetics/cnv_sv/commit/7f236b990664d66de412663bc4cf4913836187bf))
+* specify all output files and fix the 'ouput file name as prefix' problem ([8d9490e](https://www.github.com/hydra-genetics/cnv_sv/commit/8d9490ef4c232a1c0dcf8124b22f0af79a612ae0))
+* **tiddit:** add threads and access extras ([330c506](https://www.github.com/hydra-genetics/cnv_sv/commit/330c5064b76edbb8205b6d630f311a3dae3ff4ca))
+* use correct name of the input bam function ([0ff7ccd](https://www.github.com/hydra-genetics/cnv_sv/commit/0ff7ccdf1c4eb70f3990fb25bf960c848e2c7de6))
+* use get_input_bam() ([5aeb9af](https://www.github.com/hydra-genetics/cnv_sv/commit/5aeb9af6deb282743a7191430f78bd8b63ccf85a))
+
+
+### Documentation
+
+* update schemas with sawfish info ([e8f0163](https://www.github.com/hydra-genetics/cnv_sv/commit/e8f0163b632499f4f81908dc5d76d7d24c48e763))
+
 ### [0.7.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.7.0...v0.7.1) (2024-10-16)
 
 
