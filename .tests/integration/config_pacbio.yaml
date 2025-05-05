@@ -4,19 +4,53 @@ units: "units_pacbio.tsv"
 
 default_container: "docker://hydragenetics/common:3.0.0"
 
+aligner: "pbmm2"
+
+
 reference:
   fasta: "reference/human_GRCh38.fasta"
 
-trgt_genotype:
-  bed: "reference/human_GRCh38_trgt.bed"
-  container: "docker://hydragenetics/trgt:1.0.0"
+paraphase:
+  container: "docker://quay.io/pacbio/paraphase:3.1.1_build1"
+  genome: "38"
+  genes:
+    - pms2
 
+hificnv:
+  container: "docker://hydragenetics/hificnv:1.0.1"
+  exclude: "reference/cnv.excluded_regions.common_50.hg38.bed.gz"
+
+pbsv_discover:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  trf: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
+
+pbsv_call:
+  container: "docker://hydragenetics/pbsv:2.9.0"
+  reference: "reference/human_GRCh38.fasta"
+
+trgt_genotype:
+  container: "docker://hydragenetics/trgt:1.0.0"
+  bed: "reference/human_GRCh38_trgt.bed"
+  
 trgt_plot:
+  container: "docker://hydragenetics/trgt:1.0.0"
   image_type: "svg"
   plot_type: "allele"
   show: "motifs"
-  container: "docker://hydragenetics/trgt:1.0.0"
+  
+sawfish_discover:
+  extra: "--clobber "
+  container: "docker://hydragenetics/sawfish:0.12.7"
+  # expected_cn: ## not specified due to lack of chrXor chrY in the integration test data
+  #     male: "reference/expected_cn.hg38.XY.bed" 
+  #     female: "reference/expected_cn.hg38.XX.bed"
 
+sawfish_joint_call:
+  extra: "--clobber "
+  container: "docker://hydragenetics/sawfish:0.12.7"
+  supporting_reads: true
+  
 sniffles2_call:
-  tandem_repeats: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
   container: "docker://hydragenetics/sniffles2:2.4"
+  tandem_repeats: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
+  

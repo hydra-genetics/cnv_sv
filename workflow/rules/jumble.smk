@@ -38,7 +38,9 @@ rule jumble_run:
     message:
         "{rule}: Call CNVs with jumble on {input.bam}"
     shell:
-        "(Rscript /Jumble/jumble-run.R "
+        "(OMP_NUM_THREADS={threads} "
+        "MKL_NUM_THREADS={threads} "
+        "Rscript /Jumble/jumble-run.R "
         "-r {params.reference} "
         "-b {input.bam} "
         "-v {input.vcf} "

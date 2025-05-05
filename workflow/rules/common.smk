@@ -50,6 +50,70 @@ wildcard_constraints:
     file="^cnv_sv/.+",
 
 
+def get_longread_bam(wildcards):
+    aligner = config.get("aligner", "minimap2")
+    alignment_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam"
+    index_path = f"alignment/{aligner}_align/{wildcards.sample}_{wildcards.type}.bam.bai"
+    return alignment_path, index_path
+
+
+def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
+    """
+    Get path to input bam files.
+
+    This function checks if 'unit_bam' or 'aligner' is in the config
+    and uses whichever is found in bam files path.
+    The situation when both unit_bam and aligner entries are in the config
+    must not happen, and we do not check for it here.
+
+    The 'aligner' entry should contain name of the aligner used. For
+    example, if the aligner used is minimap2, the entry should be
+
+        "aligner": "minimap2",
+
+
+    The unit_bam entry should be set to true in the config if the bam input sho
+    be taken from the units file. The entry should look like this:
+
+        "unit_bam": true,
+
+    If neither 'unit_bam' nor 'aligner' are in the config, it defaults to
+    'alignment/samtools_merge_bam'
+
+
+    The function returns path to the input bam file and its index file.
+
+    Arguments:
+    wildcards: snakemake.io.Wildcards
+        The wildcards object containing the sample name and type.
+
+    Returns:
+    tuple: (alignment_path, index_path)
+        The path to the input bam file and its index file.
+    """
+    # situation when both input_bam and aligner entries are in the config
+    # is not allowed, so we do not check for that here.
+    if config.get("unit_bam") is True and config.get("aligner") is None:
+        # if input_bam entry is in the config
+        # use it to compile output
+        unit = units[(units["sample"] == wildcards.sample) & (units["type"] == wildcards.type)]
+        alignment_path = unit["bam"].iloc[0]
+        index_path = f"{alignment_path}.bai"
+
+    elif config.get("input_bam") is None and config.get("aligner") is not None:
+        # if input_bam entry is not in the config & aligner is in the config
+        # use get_longread_bam to get bam paths
+        path_index = get_longread_bam(wildcards)
+        alignment_path = path_index[0]
+        index_path = path_index[1]
+    else:
+        # if neither input_bam nor aligner entries are in the config
+        # use default bam path to compile output
+        alignment_path = f"{default_path}/{wildcards.sample}_{wildcards.type}.bam"
+        index_path = f"{default_path}/{wildcards.sample}_{wildcards.type}.bam.bai"
+    return alignment_path, index_path
+
+
 def get_karyotype(wildcards):
     """
     Translate sex to karyotype for trgt. If sex is unknown
@@ -64,6 +128,25 @@ def get_karyotype(wildcards):
         karyotype = "XX"
 
     return karyotype
+
+
+def get_expected_cn(wildcards):
+    """
+    Find the expected copy number BED file path for sawfish discover.
+    These bed are typically used to specify ploidy in the non-PAR regions of the sex chromosomes.
+    """
+
+    sex = samples.loc[wildcards.sample].sex
+    if sex == "male":
+        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
+        sawfish_param = f"--expected-cn {expected_cn}"
+    elif sex == "female":
+        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
+        sawfish_param = f"--expected-cn {expected_cn}"
+    else:  # when no sex in samples.tsv treat all regions as diploid
+        sawfish_param = ""
+
+    return sawfish_param
 
 
 def get_tc(wildcards):
@@ -139,7 +222,7 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
             f" --log-ratio-file={log_ratio_file}" if log_ratio_file is not None else "",
             f" --seg-file={seg_file}" if seg_file is not None else "",
             f" --intervals={intervals}" if intervals is not None else "",
-            f" --mapping-bias-file={mapping_bias_file}" if mapping_bias_file is not None else "",
+            (f" --mapping-bias-file={mapping_bias_file}" if mapping_bias_file is not None else ""),
             f" --normaldb={normaldb}" if normaldb is not None else "",
             f" --snp-blacklist={snp_blacklist}" if snp_blacklist is not None else "",
             f" --parallel --cores={threads}" if threads > 1 else "",
@@ -239,6 +322,7 @@ def compile_output_list(wildcards):
     files = {
         "cnv_sv/trgt_genotype": ["vcf.gz"],
         "cnv_sv/sniffles2_call": ["vcf.gz", "vcf.gz.tbi", "snf"],
+        "cnv_sv/sawfish_joint_call": ["vcf.gz"],
     }
     output_files = [
         f"{prefix}/{sample}_{unit_type}.{suffix}"
@@ -261,6 +345,35 @@ def compile_output_list(wildcards):
         for platform in units.loc[(sample,)].platform
         if platform in ["ONT", "PACBIO"]
         for locus in get_trgt_loci(wildcards)
+        for suffix in files[prefix]
+    ]
+
+    files = {
+        "cnv_sv/paraphase": ["bam"],
+        "cnv_sv/paraphase": [".bam.bai"],
+        "cnv_sv/paraphase": ["json"],
+    }
+    output_files += [
+        f"{prefix}/paraphase_{sample}_{unit_type}/{sample}_{unit_type}.paraphase.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
+    files = {
+        "cnv_sv/paraphase": ["vcf.gz"],
+    }
+    output_files += [
+        f"{prefix}/paraphase_{sample}_{unit_type}/{sample}_{unit_type}_paraphase_vcfs/{sample}_{unit_type}_{gene}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for gene in config.get("paraphase", {}).get("genes", "")
         for suffix in files[prefix]
     ]
 
@@ -337,6 +450,34 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    files = {
+        "cnv_sv/pbsv_discover": ["svsig.gz"],
+        "cnv_sv/pbsv_call": ["vcf"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+    files = {
+        "cnv_sv/hificnv": ["vcf.gz"],
+        "cnv_sv/hificnv": ["depth.bw"],
+        "cnv_sv/hificnv": ["copynum.bedgraph"],
+    }
+    output_files += [
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
+        for prefix in files.keys()
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
     # Since it is not possible to create integration test without a full dataset purecn will not be subjected to integration
     # testing and we can not guarantee that it will work
     # output_files.append(

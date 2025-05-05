@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule cnvkit_batch:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bai=lambda wildcards: get_input_bam(wildcards)[1],
         reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
     output:
         antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),

@@ -1,0 +1,44 @@
+resources: "resources.yaml"
+samples: "samples_pacbio.tsv"
+units: "units_pacbio.tsv"
+
+default_container: "docker://hydragenetics/common:3.0.0"
+
+unit_bam: true
+
+reference:
+  fasta: "reference/human_GRCh38.fasta"
+
+paraphase:
+  container: "docker://quay.io/pacbio/paraphase:3.1.1_build1"
+  genome: "38"
+  genes:
+    - pms2
+
+
+trgt_genotype:
+  container: "docker://hydragenetics/trgt:1.0.0"
+  bed: "reference/human_GRCh38_trgt.bed"
+  
+trgt_plot:
+  container: "docker://hydragenetics/trgt:1.0.0"
+  image_type: "svg"
+  plot_type: "allele"
+  show: "motifs"
+  
+sawfish_discover:
+  extra: "--clobber "
+  container: "docker://hydragenetics/sawfish:0.12.7"
+  # expected_cn: ## not specified due to lack of chrXor chrY in the integration test data
+  #     male: "reference/expected_cn.hg38.XY.bed" 
+  #     female: "reference/expected_cn.hg38.XX.bed"
+
+sawfish_joint_call:
+  extra: "--clobber "
+  container: "docker://hydragenetics/sawfish:0.12.7"
+  supporting_reads: true
+  
+sniffles2_call:
+  container: "docker://hydragenetics/sniffles2:2.4"
+  tandem_repeats: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
+  

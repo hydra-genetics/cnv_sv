@@ -483,6 +483,31 @@ properties:
             type: string
             description: segmentation in 'vcf' file format
 
+  hificnv:
+    type: object
+    description: input and output parameters for hificnv
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: called copy number segments in 'vcf' format
+          bw:
+            type: string
+            description: coverage file in 'BigWig' format
+          bedgraph:
+            type: string
+            description: copy number file in 'bedgraph' format
+
   jumble_cnvkit_call:
     type: object
     description: input and output parameters for jumble_cnvkit_call
@@ -776,6 +801,85 @@ properties:
           wrk_dir:
             type: string
             description: working directory
+  
+  paraphase:
+    type: object
+    description: input and output parameters for paraphase
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index file
+          ref:
+            type: string
+            description: fasta genome reference file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: a haplotagged paraphase 'bam' file
+          bai:
+            type: string
+            description: a haplotagged paraphase 'bam' file index file
+          json:
+            type: string
+            description: a paraphase 'json' file 
+          vcf:
+            type: string
+            description: a paraphase 'vcf' file with variant and haplotype information for a single gene
+
+  pbsv_discover:
+    type: object
+    description: input and output parameters for pbsv_discover
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bai' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          svsig:
+            type: string
+            description: structural variant signatures in 'svsig' format
+
+  pbsv_call:
+    type: object
+    description: input and output parameters for pbsv_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          svsig:
+            type: string
+            description: structural variant signatures in 'svsig' format
+          ref:
+            type: string
+            description: reference genome file in 'fasta' format
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: structural variants in 'vcf' format
 
   pindel_generate_config:
     type: object
@@ -986,6 +1090,258 @@ properties:
           phasing:
             type: string
             description: file with phasing information
+  
+  sawfish_discover:
+    type: object
+    description: input and output parameters for sawfish_discover
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          ref:
+            type: string
+            description: fasta genome reference file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          asm_bed:
+            type: string
+            description: assemby regions bed file
+          bcf:
+            type: string
+            description: candidate SVs in bcf 
+          csi:
+            type: string
+            description: candidate SVs in bcf index
+          contig_bam:
+            type: string
+            description: SV locus contigs 'bam' file
+          contig_csi:
+            type: string
+            description: SV locus contigs 'bam' file index
+          cluster_bed:
+            type: string
+            description: breakpoint clusters 'bed' file
+          refine_txt:
+            type: string
+            description: cluster refinement debug 'text' file
+          dp_bw:
+            type: string
+            description: depth Bins 'BIGWIG' file
+          dp_mpack:
+            type: string
+            description: depth Bins 'MesagePack' file
+          settings_json:
+            type: string
+            description: sawfish discover settings 'json' file
+          cn_bed:
+            type: string
+            description: expected coopy number 'bed' file
+          gc_mpack:
+            type: string
+            description: genome gc levels 'MessagePack' file
+          max_dp:
+            type: string
+            description: max SV depth 'bed' file
+          stats_json:
+            type: string
+            description: sawfish discover run stats 'json' file
+          gcbias_mpack:
+            type: string
+            description: sample gcbias 'MessagePack' file
+
+  sawfish_joint_call:
+    type: object
+    description: input and output parameters for sawfish_joint_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bam' file index
+          ref:
+            type: string
+            description: fasta genome reference file
+          asm_bed:
+            type: string
+            description: assemby regions bed file
+          bcf:
+            type: string
+            description: candidate SVs in bcf 
+          csi:
+            type: string
+            description: candidate SVs in bcf index
+          contig_bam:
+            type: string
+            description: SV locus contigs 'bam' file
+          contig_csi:
+            type: string
+            description: SV locus contigs 'bam' file index
+          cluster_bed:
+            type: string
+            description: breakpoint clusters 'bed' file
+          refine_txt:
+            type: string
+            description: cluster refinement debug 'text' file
+          dp_bw:
+            type: string
+            description: depth Bins 'BIGWIG' file
+          dp_mpack:
+            type: string
+            description: depth Bins 'MesagePack' file
+          settings_json:
+            type: string
+            description: sawfish discover settings 'json' file
+          cn_bed:
+            type: string
+            description: expected coopy number 'bed' file
+          gc_mpack:
+            type: string
+            description: genome gc levels 'MessagePack' file
+          max_dp:
+            type: string
+            description: max SV depth 'bed' file
+          stats_json:
+            type: string
+            description: sawfish discover run stats 'json' file
+          gcbias_mpack:
+            type: string
+            description: sample gcbias 'MessagePack' file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          log:
+            type: string
+            description: sawfish joint-call log file
+          stats_json:
+            type: string
+            description: sawfish joint-call run stats 'json' file
+          gt_vcf:
+            type: string
+            description: sawfish joint-call genotypes gzipped 'vcf' file
+          gt_tbi:
+            type: string
+            description: sawfish joint-call genotypes vcf tabix file
+          sample_vcf:
+            type: string
+            description: sample named sawfish joint-call genotypes gzipped 'vcf' file
+          sample_tbi:
+            type: string
+            description: sample named sawfish joint-call genotypes vcf tabix file
+          sr_json:
+            type: string
+            description: supporting reads 'json' file
+
+  severus_t_only:
+    type: object
+    description: input and output parameters for severus_t_only
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: mapped and phased reads in BAM format
+          vntr:
+            type: string
+            description: path to bed file for tandem repeat regions (must be ordered)
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: default severus output
+          b_double:
+            type: string
+            description: info about the detected breakpoints for all samples in text format
+          qual:
+            type: string
+            description: reads quality information in text format
+          all_sv_vcf:
+            type: string
+            description: somatic plus germline SVs in VCF format
+          all_b_clusters:
+            type: string
+            description: detailed information of the junctions involved in complex SVs
+          all_b_clusters_list:
+            type: string
+            description: a summary file for the complex SVs clusters
+          somatic_sv_vcf:
+            type: string
+            description: somatic only SVs in VCF format
+          somatic_b_clusters:
+            type: string
+            description: detailed information of the junctions involved in complex somatic SVs
+          somatic_b_clusters_list:
+            type: string
+            description: a summary file for the complex somatic SVs clusters
+
+  severus_tn:
+    type: object
+    description: input and output parameters for severus_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: mapped and phased tumor reads in BAM format
+          bam_n:
+            type: string
+            description: mapped and phased normal reads in BAM format
+          vntr:
+            type: string
+            description: path to bed file for tandem repeat regions (must be ordered)
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory with severus output files
+            b_double:
+              type: string
+              description: info about the detected breakpoints for all samples in text format
+            qual:
+              type: string
+              description: reads quality information in text format
+            all_sv_vcf:
+              type: string
+              description: somatic plus germline SVs in VCF format
+            all_b_clusters:
+              type: string
+              description: detailed information of the junctions involved in complex SVs
+            all_b_clusters_list:
+              type: string
+              description: a summary file for the complex SVs clusters
+            somatic_sv_vcf:
+              type: string
+              description: somatic only SVs in VCF format
+            somatic_b_clusters:
+              type: string
+              description: detailed information of the junctions involved in complex somatic SVs
+            somatic_b_clusters_list:
+              type: string
+              description: a summary file for the complex somatic SVs clusters
 
   smn_manifest:
     type: object
@@ -1075,7 +1431,7 @@ properties:
           vcf:
             type: string
             description: VCF file with sv calls
-          vcf:
+          snf:
             type: string
             description: A 'snf' file that can be used as input to multisample/trio calling with Sniffles2
 

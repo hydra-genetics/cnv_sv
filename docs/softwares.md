@@ -445,6 +445,31 @@ An in-house script that converts the GATK segmentation into a file compatible wi
 
 ---
 
+## HiFiCNV
+
+### [hificnv](https://github.com/PacificBiosciences/HiFiCNV)
+HiFiCNV is a tool for calling copy number variants (CNVs) from HiFi sequencing data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__hificnv__hificnv#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__hificnv__hificnv#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__hificnv#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__hificnv#
+
+---
+
 ## Jumble
 
 ### [jumble_run](https://github.com/ClinSeq/jumble)
@@ -655,6 +680,76 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 #RESOURCESSCHEMA__manta_run_workflow_n#
 
+---
+
+## [paraphase](https://github.com/PacificBiosciences/paraphase)
+Paraphase is a Python tool that takes HiFi aligned BAMs as input (whole-genome or enrichment), phases haplotypes for genes of the same family, determines copy numbers and makes phased variant calls.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__paraphase__paraphase#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__paraphase__paraphase#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__paraphase#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__paraphase#
+
+---
+
+## PBSV
+
+### [pbsv_call](https://github.com/PacificBiosciences/pbsv)
+pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio HiFi reads.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_call#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_call#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv_call#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv_call#
+
+---
+
+### [pbsv_discover](https://github.com/PacificBiosciences/pbsv)
+pbsv is a suite of tools to call and analyze structural variants in diploid genomes from PacBio HiFi reads.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__pbsv__pbsv_discover#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__pbsv__pbsv_discover#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__pbsv_discover#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__pbsv_discover#
 ---
 
 ## Pindel
@@ -890,6 +985,106 @@ REViewer is a tool for visualizing alignments of reads in regions containing tan
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__reviewer#
+
+---
+
+## [sawfish_discover](https://github.com/PacificBiosciences/sawfish)
+Sawfish calls structural variants from mapped HiFi sequencing reads. It discovers germline variants from local sequence assembly and jointly genotypes variants across multiple samples.
+The discover step identifies candidate structural variant (SV) regions and assembles each local SV haplotype.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_discover#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_discover#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sawfish_discover#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sawfish_discover#
+
+---
+
+## [sawfish_joint_call](https://github.com/PacificBiosciences/sawfish)
+Sawfish calls structural variants from mapped HiFi sequencing reads. It discovers germline variants from local sequence assembly and jointly genotypes variants across multiple samples.
+The joint call step takes the output of the sawfish 'discover' step for one to many samples and provides jointly genotyped SV calls over the sample set.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_joint_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_joint_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sawfish_joint_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sawfish_joint_call#
+
+---
+
+## Severus
+
+### [severus_t_only](https://github.com/KolmogorovLab/Severus)
+Severus is a somatic structural variation (SV) caller for long reads (both PacBio and ONT).
+It is designed for matching tumor/normal analysis, supports multiple tumor samples, and produces accurate and complete somatic and germline calls.
+Severus takes advantage of long-read phasing and uses the breakpoint graph framework to model complex chromosomal rearrangements.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__severus__severus_t_only#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__severus__severus_t_only#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__severus_t_only#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__severus_t_only#
+
+---
+
+### [severus_tn](https://github.com/KolmogorovLab/Severus)
+Severus is a somatic structural variation (SV) caller for long reads (both PacBio and ONT).
+It is designed for matching tumor/normal analysis, supports multiple tumor samples, and produces accurate and complete somatic and germline calls.
+Severus takes advantage of long-read phasing and uses the breakpoint graph framework to model complex chromosomal rearrangements.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__severus__severus_tn#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__severus__severus_tn#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__severus_tn#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__severus_tn#
 
 ---
 

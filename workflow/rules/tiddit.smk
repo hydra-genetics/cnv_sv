@@ -34,6 +34,8 @@ rule tiddit:
     shell:
         "tiddit "
         "--sv "
+        "--threads {threads} "
+        "{params.extra} "
         "--bam {input.bam} "
         "--ref {input.ref} "
         "-o {params.outprefix} &> {log}"

@@ -359,6 +359,23 @@ properties:
         type: number
         description: copy number threshold for duplication
 
+  hificnv:
+    description: parameters for hificnv
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      exclude:
+        type: string
+        description: path to bed file with excluded regions
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   jumble_cnvkit_call:
     type: object
     description: parameters for jumble_cnvkit_call
@@ -481,6 +498,51 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+  
+  paraphase:
+    type: object
+    description: parameters for paraphase
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  pbsv_call:
+    description: parameters for pbsv_call
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  pbsv_discover:
+    description: parameters for pbsv_discover
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      trf:
+        type: string
+        description: path to trf bed file
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   pindel_generate_config:
     description: parameters for pindel_generate_config
@@ -694,6 +756,71 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+  
+  sawfish_discover:
+    type: object
+    description: parameters for sawfish_discover
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  sawfish_joint_call:
+    type: object
+    description: parameters for sawfish_joint_call
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  severus_t_only:
+    description: parameters for severus_t_only
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      vntr:
+        type: string
+        description: path to the bed file with the VNTR regions
+      pon:
+        type: string
+        description: path to the normal reference panel
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  severus_tn:
+    description: parameters for severus_tn
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      vntr:
+        type: string
+        description: path to the bed file with the VNTR regions
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   smn_manifest:
     description: parameter for smn_manifest
@@ -909,4 +1036,3 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
-
