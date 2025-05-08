@@ -39,7 +39,7 @@ rule melt:
     shell:
         """
         java -Xmx{resources.mem_mb}m -jar \
-        /projects/wp3/nobackup/Workspace/mobile_elements/MELT/MELTv2.2.2/MELT.jar \
+        /projects/wp3/Software/MELTv2.2.2/MELT.jar \
         Single \
         -bamfile {input.bam} \
         -h {input.ref} \
