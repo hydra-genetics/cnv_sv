@@ -38,7 +38,7 @@ rule melt:
         "{rule}: Calling mobile elements in {input.bam} with MELT"
     shell:
         """
-        java -Xmx{resources.mem_mb}m -jar \
+        (java -Xmx{resources.mem_mb}m -jar \
         /projects/wp3/Software/MELTv2.2.2/MELT.jar \
         Single \
         -bamfile {input.bam} \
@@ -46,6 +46,6 @@ rule melt:
         -t {input.mei} \
         -n {input.bed} \
         -w {output.tmpdir} \
-        {params.extra} \
+        {params.extra}) \
         &> {log}
         """
