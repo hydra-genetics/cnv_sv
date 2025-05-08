@@ -509,15 +509,17 @@ def compile_output_list(wildcards):
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     # ]
-    files = {
-        "melt": ["ALU.final_comp.vcf.gz", "LINE1.final_comp.vcf.gz", "SVA.final_comp.vcf.gz"],
-    }
-    output_files += [
-        "cnv_sv/%s/%s_%s/%s" % (prefix, sample, unit_type, suffix)
-        for prefix in files.keys()
-        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
-        for unit_type in get_unit_types(units, sample)
-        for suffix in files[prefix]
-    ]
+    
+    # Can't access the newest version of MELT for integration-test right now. Add later.
+    #files = {
+    #    "melt": ["ALU.final_comp.vcf.gz", "LINE1.final_comp.vcf.gz", "SVA.final_comp.vcf.gz"],
+    #}
+    #output_files += [
+    #    "cnv_sv/%s/%s_%s/%s" % (prefix, sample, unit_type, suffix)
+    #    for prefix in files.keys()
+    #    for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+    #    for unit_type in get_unit_types(units, sample)
+    #    for suffix in files[prefix]
+    #]
 
     return output_files
