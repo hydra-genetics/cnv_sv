@@ -6,13 +6,14 @@ __license__ = "GPL-3"
 
 rule sniffles2_call:
     input:
-        bam=lambda wildcards: get_longread_bam(wildcards)[0],
-        bai=lambda wildcards: get_longread_bam(wildcards)[1],
+        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bai=lambda wildcards: get_input_bam(wildcards)[1],
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        vcf="cnv_sv/sniffles2_call/{sample}_{type}.vcf",
-        snf="cnv_sv/sniffles2_call/{sample}_{type}.snf",
+        vcf=temp("cnv_sv/sniffles2_call/{sample}_{type}.vcf"),
+        snf=temp("cnv_sv/sniffles2_call/{sample}_{type}.snf"),
     params:
+        sample_id=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
         tandem_repeats=get_tr_bed,
         extra=config.get("sniffles2_call", {}).get("extra", ""),
     log:
@@ -37,6 +38,7 @@ rule sniffles2_call:
         "sniffles -i {input.bam} "
         "--reference {input.ref} "
         "-t {threads} "
+        "--sample-id {params.sample_id} "
         "{params.tandem_repeats} "
         "{params.extra} "
         "--vcf {output.vcf} "

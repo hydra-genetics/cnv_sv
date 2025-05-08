@@ -483,6 +483,31 @@ properties:
             type: string
             description: segmentation in 'vcf' file format
 
+  hificnv:
+    type: object
+    description: input and output parameters for hificnv
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: called copy number segments in 'vcf' format
+          bw:
+            type: string
+            description: coverage file in 'BigWig' format
+          bedgraph:
+            type: string
+            description: copy number file in 'bedgraph' format
+
   jumble_cnvkit_call:
     type: object
     description: input and output parameters for jumble_cnvkit_call
@@ -849,6 +874,49 @@ properties:
             type: string
             description: a paraphase 'vcf' file with variant and haplotype information for a single gene
 
+  pbsv_discover:
+    type: object
+    description: input and output parameters for pbsv_discover
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: a 'bam' file
+          bai:
+            type: string
+            description: a 'bai' file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          svsig:
+            type: string
+            description: structural variant signatures in 'svsig' format
+
+  pbsv_call:
+    type: object
+    description: input and output parameters for pbsv_call
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          svsig:
+            type: string
+            description: structural variant signatures in 'svsig' format
+          ref:
+            type: string
+            description: reference genome file in 'fasta' format
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: structural variants in 'vcf' format
 
   pindel_generate_config:
     type: object
@@ -1216,6 +1284,101 @@ properties:
           sr_json:
             type: string
             description: supporting reads 'json' file
+
+  severus_t_only:
+    type: object
+    description: input and output parameters for severus_t_only
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: mapped and phased reads in BAM format
+          vntr:
+            type: string
+            description: path to bed file for tandem repeat regions (must be ordered)
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: default severus output
+          b_double:
+            type: string
+            description: info about the detected breakpoints for all samples in text format
+          qual:
+            type: string
+            description: reads quality information in text format
+          all_sv_vcf:
+            type: string
+            description: somatic plus germline SVs in VCF format
+          all_b_clusters:
+            type: string
+            description: detailed information of the junctions involved in complex SVs
+          all_b_clusters_list:
+            type: string
+            description: a summary file for the complex SVs clusters
+          somatic_sv_vcf:
+            type: string
+            description: somatic only SVs in VCF format
+          somatic_b_clusters:
+            type: string
+            description: detailed information of the junctions involved in complex somatic SVs
+          somatic_b_clusters_list:
+            type: string
+            description: a summary file for the complex somatic SVs clusters
+
+  severus_tn:
+    type: object
+    description: input and output parameters for severus_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_t:
+            type: string
+            description: mapped and phased tumor reads in BAM format
+          bam_n:
+            type: string
+            description: mapped and phased normal reads in BAM format
+          vntr:
+            type: string
+            description: path to bed file for tandem repeat regions (must be ordered)
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory with severus output files
+            b_double:
+              type: string
+              description: info about the detected breakpoints for all samples in text format
+            qual:
+              type: string
+              description: reads quality information in text format
+            all_sv_vcf:
+              type: string
+              description: somatic plus germline SVs in VCF format
+            all_b_clusters:
+              type: string
+              description: detailed information of the junctions involved in complex SVs
+            all_b_clusters_list:
+              type: string
+              description: a summary file for the complex SVs clusters
+            somatic_sv_vcf:
+              type: string
+              description: somatic only SVs in VCF format
+            somatic_b_clusters:
+              type: string
+              description: detailed information of the junctions involved in complex somatic SVs
+            somatic_b_clusters_list:
+              type: string
+              description: a summary file for the complex somatic SVs clusters
 
   smn_manifest:
     type: object

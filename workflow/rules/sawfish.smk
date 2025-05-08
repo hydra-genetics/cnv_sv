@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule sawfish_discover:
     input:
-        bam=lambda wildcards: get_longread_bam(wildcards)[0],
-        bai=lambda wildcards: get_longread_bam(wildcards)[1],
+        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bai=lambda wildcards: get_input_bam(wildcards)[1],
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         asm_bed=temp("cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed"),
@@ -24,9 +24,11 @@ rule sawfish_discover:
         max_dp=temp("cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed"),
         stats_json=temp("cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json"),
         gcbias_mpack=temp("cnv_sv/sawfish_discover/{sample}_{type}/sample.gcbias.mpack"),
-        cn_bed=temp("cnv_sv/sawfish_discover/{sample}_{type}/expected.copy.number.bed")
-        if config.get("sawfish_discover", {}).get("expected_cn", False)
-        else [],
+        cn_bed=(
+            temp("cnv_sv/sawfish_discover/{sample}_{type}/expected.copy.number.bed")
+            if config.get("sawfish_discover", {}).get("expected_cn", False)
+            else []
+        ),
     params:
         extra=config.get("sawfish_discover", {}).get("extra", ""),
         expected_cn=get_expected_cn,
@@ -61,8 +63,8 @@ rule sawfish_discover:
 
 rule sawfish_joint_call:
     input:
-        bam="alignment/pbmm2_align/{sample}_{type}.bam",
-        bai="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bai=lambda wildcards: get_input_bam(wildcards)[1],
         ref=config.get("reference", {}).get("fasta", ""),
         asm_bed="cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed",
         bcf="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf",
