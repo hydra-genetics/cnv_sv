@@ -425,10 +425,10 @@ def compile_output_list(wildcards):
     #     for unit_type in get_unit_types(units, sample)
     # ]
     files = {
-        "cnv_sv/melt/": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf"],
+        "melt": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf"],
     }
     output_files += [
-        "%s/%s_%s/%s" % (prefix, sample, unit_type, suffix)
+        "cnv_sv/%s/%s_%s/%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)

@@ -54,9 +54,9 @@ manta_run_workflow_n:
 
 melt:
   container: "docker://vanallenlab/melt:3159ce1"
-  bed: ""
+  bed: "" # In singularity /MELT/MELTv2.0.5_patch/add_bed_files/Hg38/Hg38.genes.bed
   extra: ""
-  mei: ""
+  mei: "" # Make txt-file with list to /MELT/MELTv2.0.5_patch/me_refs/Hg38/*zip
 
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
