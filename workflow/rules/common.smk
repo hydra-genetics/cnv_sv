@@ -425,7 +425,7 @@ def compile_output_list(wildcards):
     #     for unit_type in get_unit_types(units, sample)
     # ]
     files = {
-        "melt": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf"],
+        "melt": ["ALU.final_comp.vcf.gz", "LINE1.final_comp.vcf.gz", "SVA.final_comp.vcf.gz"],
     }
     output_files += [
         "cnv_sv/%s/%s_%s/%s" % (prefix, sample, unit_type, suffix)
