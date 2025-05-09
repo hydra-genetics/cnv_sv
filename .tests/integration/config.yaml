@@ -136,6 +136,10 @@ purecn_coverage:
 reviewer:
   container: "docker://hydragenetics/reviewer:0.2.7"
 
+scanitd:
+  container: "docker://hydragenetics/scanitd:0.9.1"
+  region_bed: "reference/scanITD_regions.bed"
+
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
   genome_version: '38'

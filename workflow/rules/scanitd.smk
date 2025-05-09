@@ -17,10 +17,7 @@ rule scanitd:
     log:
         "cnv_sv/scanitd/{sample}_{type}.vcf.log",
     benchmark:
-        repeat(
-            "cnv_sv/scanitd/{sample}_{type}.vcf.benchmark.tsv",
-            config.get("scanitd", {}).get("benchmark_repeats", 1)
-        )
+        repeat("cnv_sv/scanitd/{sample}_{type}.vcf.benchmark.tsv", config.get("scanitd", {}).get("benchmark_repeats", 1))
     threads: config.get("scanitd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("scanitd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -37,5 +34,5 @@ rule scanitd:
         "-i {input.bam} "
         "-r {input.ref} "
         "-o {output.vcf} "
-        "-t {params.region_bed}) "
-        "&> {log}"
+        "-t {params.region_bed} "
+        "{params.extra}) &> {log}"
