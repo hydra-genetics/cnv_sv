@@ -785,6 +785,23 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  scanitd:
+    type: object
+    description: parameters for scanitd
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      region_bed:
+        type: string
+        description: Optional bed file with genome regions where ITD should be called. If used the file should be preceded by the -t option (-t region_bed file). 
+
   severus_t_only:
     description: parameters for severus_t_only
     type: object

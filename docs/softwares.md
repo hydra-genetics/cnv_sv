@@ -1036,6 +1036,29 @@ The joint call step takes the output of the sawfish 'discover' step for one to m
 
 ---
 
+## [scanitd](https://github.com/ylab-hi/ScanITD)
+Scanitd calls internal tandem duplications in selected regions. Use filtering module to postfilter vcf-files.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__scanitd__scanitd#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__scanitd__scanitd#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__scanitd#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__scanitd#
+
+---
+
 ## Severus
 
 ### [severus_t_only](https://github.com/KolmogorovLab/Severus)
@@ -1389,4 +1412,3 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
-
