@@ -800,7 +800,7 @@ properties:
         description: parameters that should be forwarded
       region_bed:
         type: string
-        description: bed file with genome regions where ITD should be called
+        description: Optional bed file with genome regions where ITD should be called. If used the file should be preceded by the -t option (-t region_bed file). 
 
   severus_t_only:
     description: parameters for severus_t_only

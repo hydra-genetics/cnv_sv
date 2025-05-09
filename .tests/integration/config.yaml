@@ -138,7 +138,7 @@ reviewer:
 
 scanitd:
   container: "docker://hydragenetics/scanitd:0.9.1"
-  region_bed: "reference/scanITD_regions.bed"
+  region_bed: "-t reference/scanITD_regions.bed"
 
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
