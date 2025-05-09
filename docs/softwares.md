@@ -1036,8 +1036,8 @@ The joint call step takes the output of the sawfish 'discover' step for one to m
 
 ---
 
-## [scanitd](url_to_tool)
-Introduction to scanitd
+## [scanitd](https://github.com/ylab-hi/ScanITD)
+Scanitd calls internal tandem duplications in selected regions. Use filtering module to postfilter vcf-files.
 
 ### :snake: Rule
 
