@@ -34,7 +34,7 @@ rule scanitd:
         "{rule}: call ITD in supplied regions into {output.vcf}"
     shell:
         "(scanitd "
-        "-i {intput.bam} "
+        "-i {input.bam} "
         "-r {input.ref} "
         "-o {output.vcf} "
         "-t {params.region_bed}) "
