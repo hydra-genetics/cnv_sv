@@ -37,5 +37,5 @@ rule scanitd:
         "-i {intput.bam} "
         "-r {input.ref} "
         "-o {output.vcf} "
-        "-t {region_bed}) "
+        "-t {params.region_bed}) "
         "&> {log}"
