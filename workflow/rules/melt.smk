@@ -12,9 +12,9 @@ rule melt:
         mei=config.get("melt", {}).get("mei", ""),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        alu=temp("cnv_sv/melt/{sample}_{type}/ALU.final_comp.vcf.gz"),
-        line1=temp("cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf.gz"),
-        sva=temp("cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf.gz"),
+        alu=temp("cnv_sv/melt/{sample}_{type}/ALU.final_comp.vcf"),
+        line1=temp("cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf"),
+        sva=temp("cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf"),
         tmpdir=temp(directory("cnv_sv/melt/{sample}_{type}")),
     params:
         extra=config.get("melt", {}).get("extra", ""),

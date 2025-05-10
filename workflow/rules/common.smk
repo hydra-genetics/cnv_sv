@@ -512,7 +512,7 @@ def compile_output_list(wildcards):
     
     # Can't access the newest version of MELT for integration-test right now. Add later.
     #files = {
-    #    "melt": ["ALU.final_comp.vcf.gz", "LINE1.final_comp.vcf.gz", "SVA.final_comp.vcf.gz"],
+    #    "melt": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf", HERVK.final_comp.vcf],
     #}
     #output_files += [
     #    "cnv_sv/%s/%s_%s/%s" % (prefix, sample, unit_type, suffix)
