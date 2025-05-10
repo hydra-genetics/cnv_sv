@@ -39,7 +39,6 @@ cnvkit_scatter:
 cnvkit_vcf:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-
 cnvkit_seg:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
@@ -101,6 +100,12 @@ manta_run_workflow_tn:
 
 manta_run_workflow_n:
   container: "docker://hydragenetics/manta:1.6.0"
+
+melt:
+  container: "docker://vanallenlab/melt:3159ce1"
+  bed: "reference/Hg38.genes.bed"
+  extra: ""
+  mei: "reference/mei_list.txt"
 
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
