@@ -390,6 +390,7 @@ def compile_output_list(wildcards):
         "cnv_sv/exomedepth_call": ["txt", "RData"],
         "cnv_sv/pindel_vcf": ["no_tc.vcf.gz"],
         "cnv_sv/tiddit": ["vcf.gz"],
+        "cnv_sv/scanitd": ["vcf"],
     }
     output_files += [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
