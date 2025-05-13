@@ -105,9 +105,7 @@ def get_input_bam(wildcards, default_path="alignment/samtools_merge_bam"):
         except AttributeError:
             # TODO: come up with a better solution than print() because it breaks rule graph building process
             # print("'Wildcards' object has no attribute 'type'. Default to 'T'")
-            unit = units[
-                (units["sample"] == wildcards.sample) & (units["type"] == "T")
-            ]
+            unit = units[(units["sample"] == wildcards.sample) & (units["type"] == "T")]
         alignment_path = unit["bam"].iloc[0]
         index_path = f"{alignment_path}.bai"
 
