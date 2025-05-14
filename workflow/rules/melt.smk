@@ -22,8 +22,7 @@ rule melt:
     log:
         "cnv_sv/melt/{sample}_{type}/melt.output.log",
     benchmark:
-        repeat(
-            "cnv_sv/melt/{sample}_{type}/melt.benchmark.tsv", config.get("melt", {}).get("benchmark_repeats", 1))
+        repeat("cnv_sv/melt/{sample}_{type}/melt.benchmark.tsv", config.get("melt", {}).get("benchmark_repeats", 1))
     threads: config.get("melt", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("melt", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
