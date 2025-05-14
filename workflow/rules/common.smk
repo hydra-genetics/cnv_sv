@@ -509,7 +509,6 @@ def compile_output_list(wildcards):
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     # ]
-    
 
     # Can't access the newest version of MELT for integration-test right now. Add later when we have docker with newest version of MELT.
     # files = {
