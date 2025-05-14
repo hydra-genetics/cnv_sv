@@ -510,7 +510,7 @@ def compile_output_list(wildcards):
     #     for unit_type in get_unit_types(units, sample)
     # ]
     
-    # Can't access the newest version of MELT for integration-test right now. Add later.
+    # Can't access the newest version of MELT for integration-test right now. Add later when we have docker with newest version of MELT.
     #files = {
     #    "melt": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf", HERVK.final_comp.vcf],
     #}
