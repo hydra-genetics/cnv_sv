@@ -682,6 +682,29 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
+## [melt](https://melt.igs.umaryland.edu/index.php)
+The Mobile Element Locator Tool (MELT) is a software package, written in Java, that discovers, annotates, and genotypes non-reference Mobile Element Insertions (MEIs) in Illumina DNA paired-end whole genome sequencing (WGS) and whole exome (WES) data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__melt__melt#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__melt__melt#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__melt#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__melt#
+
+---
+
 ## [paraphase](https://github.com/PacificBiosciences/paraphase)
 Paraphase is a Python tool that takes HiFi aligned BAMs as input (whole-genome or enrichment), phases haplotypes for genes of the same family, determines copy numbers and makes phased variant calls.
 
@@ -1389,67 +1412,3 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
-
-
-## [melt_melt](url_to_tool)
-Introduction to melt_melt
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__melt__melt_melt#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__melt__melt_melt#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__melt_melt#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__melt_melt#
-
-## [scramble_scramble](url_to_tool)
-Introduction to scramble_scramble
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__scramble__scramble_scramble#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__scramble__scramble_scramble#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__scramble_scramble#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__scramble_scramble#
-
-## [xtea_xtea](url_to_tool)
-Introduction to xtea_xtea
-
-### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__xtea__xtea_xtea#
-
-#### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__xtea__xtea_xtea#
-
-### :wrench: Configuration
-
-#### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__xtea_xtea#
-
-#### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__xtea_xtea#
