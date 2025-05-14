@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.9.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.8.0...v0.9.0) (2025-05-14)
+
+
+### Features
+
+* added scanITD ([6b7e9bf](https://www.github.com/hydra-genetics/cnv_sv/commit/6b7e9bf5a6ecf48c518f4542f9a6bfb2db383661))
+
+
+### Bug Fixes
+
+* optional bed file ([7e2d882](https://www.github.com/hydra-genetics/cnv_sv/commit/7e2d8821e7206859d58532f0889455f2abf01ef3))
+* **scanITD:** correct rule params ([01cb157](https://www.github.com/hydra-genetics/cnv_sv/commit/01cb157b762dd03023eea58aefcadd74a2fde9a6))
+* **scanITD:** correct shell command ([3da1a76](https://www.github.com/hydra-genetics/cnv_sv/commit/3da1a76bf95766149f9d750f9472d8ec3ed1b185))
+* update to bugfixed docker ([20477be](https://www.github.com/hydra-genetics/cnv_sv/commit/20477be5d70c92803b258398089e478015289f6b))
+
+
+### Documentation
+
+* added docs and tests ([0fc6464](https://www.github.com/hydra-genetics/cnv_sv/commit/0fc64646e1049d93a85021ce1a890220d37582f9))
+
 ## [0.8.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.7.1...v0.8.0) (2025-05-05)
 
 
