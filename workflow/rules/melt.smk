@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule melt:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam", 
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai", 
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bed=config.get("melt", {}).get("bed", ""),
         mei=config.get("melt", {}).get("mei", ""),
         ref=config.get("reference", {}).get("fasta", ""),
