@@ -26,6 +26,10 @@ The output consists of results files that describe different kinds of larger gen
 * `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz`
+* `cnv_sv/melt/{sample}_{type}/ALU.final_comp.vcf`
+* `cnv_sv/melt/{sample}_{type}/HERVK.final_comp.vcf`
+* `cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf`
+* `cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf`
 * `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf`
 * `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv`

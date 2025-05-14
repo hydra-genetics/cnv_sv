@@ -801,6 +801,46 @@ properties:
           wrk_dir:
             type: string
             description: working directory
+
+  melt:
+    type: object
+    description: input and output parameters for melt
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: Input de-duplicated bam file
+          ref:
+            type: string
+            description: Reference genome
+          bed:
+            type: string
+            description: Name of input file for gene positions on the reference genome
+          mei:
+            type: string
+            description: Name of input file listing mei reference paths      
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          alu:
+            type: string
+            description: Output resulting VCF file ALU
+          hervk:
+            type: string
+            description: Output resulting VCF file HERVK
+          line1:
+            type: string
+            description: Output resulting VCF file LINE1
+          sva:
+            type: string
+            description: Output resulting VCF file SVA
+          tmpdir:
+            type: string
+            description: Working directory with all the outputs
   
   paraphase:
     type: object
