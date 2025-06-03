@@ -15,7 +15,7 @@ rule hificnv:
     params:
         ref=config.get("reference", {}).get("fasta", ""),
         exclude=config.get("hificnv", {}).get("exclude", ""),
-        output_prefix= lambda wildcards,output: str(output.vcf).replace(".vcf.gz",""),
+        output_prefix=lambda wildcards, output: str(output.vcf).replace(".vcf.gz", ""),
     log:
         call="cnv_sv/hificnv/{sample}_{type}.vcf.gz.log",
         mv_vcf="cnv_sv/hificnv/{sample}_{type}.vcf.gz.mv.log",
