@@ -5,6 +5,7 @@ __license__ = "GPL-3"
 
 
 include: "rules/common.smk"
+include: "rules/savana.smk"
 include: "rules/bgzip.smk"
 include: "rules/automap.smk"
 include: "rules/cnvkit.smk"
