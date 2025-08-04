@@ -13,7 +13,7 @@ rule savana_pb_to:
     output:
         dir=temp(directory("cnv_sv/savana_pb_to/{sample}_{type}")),
     params:
-        # --min_support=10
+        min_support=config.get("savana_pb_to", {}).get("min_support", 10),
         extra=config.get("savana_pb_to", {}).get("extra", ""),
     log:
         "cnv_sv/savana_pb_to/{sample}_{type}.output.log",
@@ -38,6 +38,7 @@ rule savana_pb_to:
         "--ref {input.ref} "
         "--ref_index {input.fai} "
         "--pb --threads {threads} "
+        "--min_support {params.min_support} "
         "{params.extra} &> {log}"
 
 
@@ -52,7 +53,7 @@ rule savana_pb_tn:
     output:
         dir=temp(directory("cnv_sv/savana_pb_tn/{sample}")),
     params:
-        # --min_support=10
+        min_support = config.get("savana_pb_tn",{}).get("min_support",10),
         extra=config.get("savana_pb_tn", {}).get("extra", ""),
     log:
         "cnv_sv/savana_pb_tn/{sample}.output.log",
@@ -78,6 +79,7 @@ rule savana_pb_tn:
         "--ref {input.ref} "
         "--ref_index {input.fai} "
         "--pb --threads {threads} "
+        "--min_support {params.min_support} "
         "{params.extra} &> {log}"
 
 
