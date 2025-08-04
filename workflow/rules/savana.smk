@@ -53,14 +53,12 @@ rule savana_pb_tn:
     output:
         dir=temp(directory("cnv_sv/savana_pb_tn/{sample}")),
     params:
-        min_support = config.get("savana_pb_tn",{}).get("min_support",10),
+        min_support=config.get("savana_pb_tn", {}).get("min_support", 10),
         extra=config.get("savana_pb_tn", {}).get("extra", ""),
     log:
         "cnv_sv/savana_pb_tn/{sample}.output.log",
     benchmark:
-        repeat(
-            "cnv_sv/savana_pb_tn/{sample}.output.benchmark.tsv", config.get("savana_pb_tn", {}).get("benchmark_repeats", 1)
-        )
+        repeat("cnv_sv/savana_pb_tn/{sample}.output.benchmark.tsv", config.get("savana_pb_tn", {}).get("benchmark_repeats", 1))
     threads: config.get("savana_pb_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("savana_pb_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -97,7 +95,8 @@ rule savana_ont_to:
         "cnv_sv/savana_ont_to/{sample}_{type}.output.log",
     benchmark:
         repeat(
-            "cnv_sv/savana_ont_to/{sample}_{type}.output.benchmark.tsv", config.get("savana_ont_to", {}).get("benchmark_repeats", 1)
+            "cnv_sv/savana_ont_to/{sample}_{type}.output.benchmark.tsv",
+            config.get("savana_ont_to", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("savana_ont_to", {}).get("threads", config["default_resources"]["threads"])
     resources:
@@ -134,9 +133,7 @@ rule savana_ont_tn:
     log:
         "cnv_sv/savana_ont_tn/{sample}.output.log",
     benchmark:
-        repeat(
-            "cnv_sv/savana_ont_tn/{sample}.output.benchmark.tsv", config.get("savana_ont_tn", {}).get("benchmark_repeats", 1)
-        )
+        repeat("cnv_sv/savana_ont_tn/{sample}.output.benchmark.tsv", config.get("savana_ont_tn", {}).get("benchmark_repeats", 1))
     threads: config.get("savana_ont_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("savana_ont_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
