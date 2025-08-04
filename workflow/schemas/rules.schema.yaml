@@ -1701,3 +1701,133 @@ properties:
           sites:
             type: string
             description: file with upd informative sites
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  savana_pb_to:
+    type: object
+    description: input and output parameters for savana_pb_to
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: mapped and haplotagged BAM file
+          bai:
+            type: string
+            description: BAM index file
+          ref:
+            type: string
+            description: reference genome file in FASTA format
+          fai:
+            type: string
+            description: reference genome index file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory for the output files
+
+  savana_pb_tn:
+    type: object
+    description: input and output parameters for savana_pb_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_n:
+            type: string
+            description: mapped and haplotagged BAM file (normal)
+          bai_n:
+            type: string
+            description: normal BAM index file
+          bam_t:
+            type: string
+            description: mapped and haplotagged BAM file (tumor)
+          bai_t:
+            type: string
+            description: tumor BAM index file
+          ref:
+            type: string
+            description: reference genome file in FASTA format
+          fai:
+            type: string
+            description: reference genome index file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory for the output files
+
+  savana_ont_to:
+    type: object
+    description: input and output parameters for savana_ont_to
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: mapped and haplotagged BAM file
+          bai:
+            type: string
+            description: BAM index file
+          ref:
+            type: string
+            description: reference genome file in FASTA format
+          fai:
+            type: string
+            description: reference genome index file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory for the output files
+
+  savana_ont_tn:
+    type: object
+    description: input and output parameters for savana_ont_tn
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam_n:
+            type: string
+            description: mapped and haplotagged BAM file (normal)
+          bai_n:
+            type: string
+            description: normal BAM index file
+          bam_t:
+            type: string
+            description: mapped and haplotagged BAM file (tumor)
+          bai_t:
+            type: string
+            description: tumor BAM index file
+          ref:
+            type: string
+            description: reference genome file in FASTA format
+          fai:
+            type: string
+            description: reference genome index file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          dir:
+            type: string
+            description: directory for the output files
