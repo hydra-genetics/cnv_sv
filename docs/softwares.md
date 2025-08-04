@@ -1435,3 +1435,97 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
+
+---
+
+## SAVANA
+
+### [savana_pb_to](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (SCNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_pb_to#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_pb_to#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_pb_to#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_pb_to#
+
+---
+
+### [savana_pb_tn](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (SCNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_pb_tn#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_pb_tn#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_pb_tn#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_pb_tn#
+
+---
+
+### [savana_ont_to](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (SCNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_ont_to#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_ont_to#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_ont_to#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_ont_to#
+
+---
+
+### [savana_ont_tn](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (SCNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_ont_tn#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_ont_tn#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_ont_tn#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_ont_tn#
