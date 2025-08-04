@@ -773,7 +773,71 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-  
+
+
+  savana_pb_to:
+    type: object
+    description: parameters for savana_pb_to
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      min_support:
+        type: integer
+        description: minimum supporting reads for a variant, for PacBio recommended value is 10
+
+  savana_pb_tn:
+    type: object
+    description: parameters for savana_pb_tn
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      min_support:
+        type: integer
+        description: minimum supporting reads for a variant, for PacBio recommended value is 10
+
+  savana_ont_to:
+    type: object
+    description: parameters for savana_ont_to
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  savana_ont_tn:
+    type: object
+    description: parameters for savana_ont_tn
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+
   sawfish_discover:
     type: object
     description: parameters for sawfish_discover
