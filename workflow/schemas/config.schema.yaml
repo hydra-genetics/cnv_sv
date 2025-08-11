@@ -791,6 +791,9 @@ properties:
       min_support:
         type: integer
         description: minimum supporting reads for a variant, for PacBio recommended value is 10
+      dir:
+        type: string
+        description: directory with the output files
 
   savana_pb_tn:
     type: object
@@ -808,6 +811,9 @@ properties:
       min_support:
         type: integer
         description: minimum supporting reads for a variant, for PacBio recommended value is 10
+      dir:
+        type: string
+        description: directory with the output files
 
   savana_ont_to:
     type: object
@@ -822,6 +828,9 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+      dir:
+        type: string
+        description: directory with the output files
 
   savana_ont_tn:
     type: object
@@ -836,6 +845,9 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+      dir:
+        type: string
+        description: directory with the output files
 
 
   sawfish_discover:
