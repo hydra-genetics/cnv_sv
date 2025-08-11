@@ -11,9 +11,15 @@ rule savana_pb_to:
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
-        dir=temp(directory("cnv_sv/savana_pb_to/{sample}_{type}")),
+        vcf_somatic=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.classified.somatic.vcf"),
+        vcf_classified=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.classified.vcf"),
+        vcf_breakpoints=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.sv_breakpoints.vcf"),
+        fa=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.inserted_sequences.fa"),
+        bedpe=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.sv_breakpoints.bedpe"),
+        tsv=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.sv_breakpoints_read_support.tsv"),
     params:
         min_support=config.get("savana_pb_to", {}).get("min_support", 10),
+        dir="cnv_sv/savana_pb_to/{sample}_{type}",
         extra=config.get("savana_pb_to", {}).get("extra", ""),
     log:
         "cnv_sv/savana_pb_to/{sample}_{type}.output.log",
@@ -34,7 +40,7 @@ rule savana_pb_to:
         "{rule}: run savana on {input.bam}"
     shell:
         "savana to --tumour {input.bam} "
-        "--outdir {output.dir} "
+        "--outdir {params.dir} "
         "--ref {input.ref} "
         "--ref_index {input.fai} "
         "--pb --threads {threads} "
@@ -51,8 +57,14 @@ rule savana_pb_tn:
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
-        dir=temp(directory("cnv_sv/savana_pb_tn/{sample}")),
+        vcf_somatic=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.classified.somatic.vcf"),
+        vcf_classified=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.classified.vcf"),
+        vcf_breakpoints=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.sv_breakpoints.vcf"),
+        fa=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.inserted_sequences.fa"),
+        bedpe=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.sv_breakpoints.bedpe"),
+        tsv=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.sv_breakpoints_read_support.tsv"),
     params:
+        dir="cnv_sv/savana_pb_tn/{sample}",
         min_support=config.get("savana_pb_tn", {}).get("min_support", 10),
         extra=config.get("savana_pb_tn", {}).get("extra", ""),
     log:
@@ -73,7 +85,7 @@ rule savana_pb_tn:
     shell:
         "savana --tumour {input.bam_t} "
         "--normal {input.bam_n} "
-        "--outdir {output.dir} "
+        "--outdir {params.dir} "
         "--ref {input.ref} "
         "--ref_index {input.fai} "
         "--pb --threads {threads} "
@@ -88,8 +100,14 @@ rule savana_ont_to:
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
-        dir=temp(directory("cnv_sv/savana_ont_to/{sample}_{type}")),
+        vcf_somatic=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.classified.somatic.vcf"),
+        vcf_classified=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.classified.vcf"),
+        vcf_breakpoints=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.sv_breakpoints.vcf"),
+        fa=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.inserted_sequences.fa"),
+        bedpe=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.sv_breakpoints.bedpe"),
+        tsv=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.sv_breakpoints_read_support.tsv"),
     params:
+        dir="cnv_sv/savana_ont_to/{sample}_{type}",
         extra=config.get("savana_ont_to", {}).get("extra", ""),
     log:
         "cnv_sv/savana_ont_to/{sample}_{type}.output.log",
@@ -111,7 +129,7 @@ rule savana_ont_to:
         "{rule}: run savana on {input.bam}"
     shell:
         "savana to --tumour {input.bam} "
-        "--outdir {output.dir} "
+        "--outdir {params.dir} "
         "--ref {input.ref} "
         "--ref_index {input.fai} "
         "--ont --threads {threads} "
@@ -127,8 +145,14 @@ rule savana_ont_tn:
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
-        dir=temp(directory("cnv_sv/savana_ont_tn/{sample}")),
+        vcf_somatic=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.classified.somatic.vcf"),
+        vcf_classified=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.classified.vcf"),
+        vcf_breakpoints=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.sv_breakpoints.vcf"),
+        fa=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.inserted_sequences.fa"),
+        bedpe=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.sv_breakpoints.bedpe"),
+        tsv=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.sv_breakpoints_read_support.tsv"),
     params:
+        dir="cnv_sv/savana_ont_tn/{sample}",
         extra=config.get("savana_ont_tn", {}).get("extra", ""),
     log:
         "cnv_sv/savana_ont_tn/{sample}.output.log",
@@ -148,7 +172,7 @@ rule savana_ont_tn:
     shell:
         "savana --tumour {input.bam_t} "
         "--normal {input.bam_n} "
-        "--outdir {output.dir} "
+        "--outdir {params.dir} "
         "--ref {input.ref} "
         "--ref_index {input.fai} "
         "--ont --threads {threads} "
