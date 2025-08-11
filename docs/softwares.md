@@ -1441,7 +1441,7 @@ Call UPD informative sites from germline exome/wgs trios.
 ## SAVANA
 
 ### [savana_pb_to](https://github.com/cortes-ciriano-lab/savana)
-SAVANA is a somatic structural variant (SV) and copy number aberrations (SCNA) caller for long-read data.
+SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) caller for long-read data.
 
 #### :snake: Rule
 
