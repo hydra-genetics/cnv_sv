@@ -1152,14 +1152,28 @@ properties:
           fai:
             type: string
             description: reference genome index file
-
       output:
         type: object
         description: list of outputs
         properties:
-          dir:
+          vcf_somatic:
             type: string
-            description: directory for the output files
+            description: a vcf file with variants classified as somatic
+          vcf_classified:
+            type: string
+            description: a vcf file with germline or somatic variants
+          vcf_breakpoints:
+            type: string
+            description: a vcf file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          fa:
+            type: string
+            description: a fasta file with sequences supporting insertion variants
+          bedpe:
+            type: string
+            description: a bedpe file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          tsv:
+            type: string
+            description: a tsv file containing one line per structural variant with the variant ID in the first column, the comma-separated ids of the tumour-supporting reads in the second, and normal-supporting reads in the third
 
   savana_pb_tn:
     type: object
@@ -1187,14 +1201,28 @@ properties:
           fai:
             type: string
             description: reference genome index file
-
       output:
         type: object
         description: list of outputs
         properties:
-          dir:
+          vcf_somatic:
             type: string
-            description: directory for the output files
+            description: a vcf file with variants classified as somatic
+          vcf_classified:
+            type: string
+            description: a vcf file with germline or somatic variants
+          vcf_breakpoints:
+            type: string
+            description: a vcf file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          fa:
+            type: string
+            description: a fasta file with sequences supporting insertion variants
+          bedpe:
+            type: string
+            description: a bedpe file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          tsv:
+            type: string
+            description: a tsv file containing one line per structural variant with the variant ID in the first column, the comma-separated ids of the tumour-supporting reads in the second, and normal-supporting reads in the third
 
   savana_ont_to:
     type: object
@@ -1216,14 +1244,28 @@ properties:
           fai:
             type: string
             description: reference genome index file
-
       output:
         type: object
         description: list of outputs
         properties:
-          dir:
+          vcf_somatic:
             type: string
-            description: directory for the output files
+            description: a vcf file with variants classified as somatic
+          vcf_classified:
+            type: string
+            description: a vcf file with germline or somatic variants
+          vcf_breakpoints:
+            type: string
+            description: a vcf file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          fa:
+            type: string
+            description: a fasta file with sequences supporting insertion variants
+          bedpe:
+            type: string
+            description: a bedpe file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          tsv:
+            type: string
+            description: a tsv file containing one line per structural variant with the variant ID in the first column, the comma-separated ids of the tumour-supporting reads in the second, and normal-supporting reads in the third
 
   savana_ont_tn:
     type: object
@@ -1251,14 +1293,28 @@ properties:
           fai:
             type: string
             description: reference genome index file
-
       output:
         type: object
         description: list of outputs
         properties:
-          dir:
+          vcf_somatic:
             type: string
-            description: directory for the output files
+            description: a vcf file with variants classified as somatic
+          vcf_classified:
+            type: string
+            description: a vcf file with germline or somatic variants
+          vcf_breakpoints:
+            type: string
+            description: a vcf file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          fa:
+            type: string
+            description: a fasta file with sequences supporting insertion variants
+          bedpe:
+            type: string
+            description: a bedpe file with all SV breakpoints, including those with normal support or predicted as noise by the model
+          tsv:
+            type: string
+            description: a tsv file containing one line per structural variant with the variant ID in the first column, the comma-separated ids of the tumour-supporting reads in the second, and normal-supporting reads in the third
 
 
   sawfish_discover:
