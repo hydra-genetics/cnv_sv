@@ -1487,7 +1487,7 @@ SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) ca
 ---
 
 ### [savana_ont_to](https://github.com/cortes-ciriano-lab/savana)
-SAVANA is a somatic structural variant (SV) and copy number aberrations (SCNA) caller for long-read data.
+SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) caller for long-read data.
 
 #### :snake: Rule
 
