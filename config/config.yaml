@@ -70,6 +70,7 @@ savana_ont_tn:
 
 savana_ont_to:
     container: "docker://hydragenetics/savana:1.3.5"
+    genome_version: "1000g_hg38"
     extra: ""
 
 savana_pb_tn:
@@ -80,6 +81,7 @@ savana_pb_tn:
 savana_pb_to:
     container: "docker://hydragenetics/savana:1.3.5"
     min_support: 10
+    genome_version: "1000g_hg38"
     extra: ""
 
 severus_t_only:
