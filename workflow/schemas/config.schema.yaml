@@ -791,6 +791,9 @@ properties:
       min_support:
         type: integer
         description: minimum supporting reads for a variant, for PacBio recommended value is 10
+      genome_version:
+        type: string
+        description: genome version to use instead of a matched normal; choices are "1000g_hg38", "1000g_hg19", "1000g_t2t"
       dir:
         type: string
         description: directory with the output files
@@ -828,6 +831,9 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
+      genome_version:
+        type: string
+        description: genome version to use instead of a matched normal; choices are "1000g_hg38", "1000g_hg19", "1000g_t2t"
       dir:
         type: string
         description: directory with the output files
