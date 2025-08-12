@@ -111,7 +111,7 @@ rule savana_ont_to:
     params:
         dir="cnv_sv/savana_ont_to/{sample}_{type}",
         extra=config.get("savana_ont_to", {}).get("extra", ""),
-        genome_version=config.get("savana_ont_to",{}).get("genome_version",""),
+        genome_version=config.get("savana_ont_to", {}).get("genome_version", ""),
     log:
         "cnv_sv/savana_ont_to/{sample}_{type}.output.log",
     benchmark:
