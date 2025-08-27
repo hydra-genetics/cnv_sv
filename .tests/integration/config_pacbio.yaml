@@ -46,7 +46,7 @@ sawfish_discover:
   #     male: "reference/expected_cn.hg38.XY.bed" 
   #     female: "reference/expected_cn.hg38.XX.bed"
 
-sawfish_joint_call:
+sawfish_joint_call_single:
   extra: "--clobber "
   container: "docker://hydragenetics/sawfish:2.0.4"
   supporting_reads: true

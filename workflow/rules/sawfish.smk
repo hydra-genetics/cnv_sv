@@ -92,7 +92,7 @@ rule sawfish_discover:
         "{params.expected_cn} &> {log}"
 
 
-rule sawfish_joint_call_single:
+rule sawfish_joint_call_single_single:
     input:
         bam=lambda wildcards: get_input_bam(wildcards)[0],
         bai=lambda wildcards: get_input_bam(wildcards)[1],
@@ -131,59 +131,64 @@ rule sawfish_joint_call_single:
             if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
+        maf_mpack=(
+            "cnv_sv/sawfish_discover/{sample}_{type}/maf.mpack"
+            if config.get("sawfish_discover", {}).get("maf", False)
+            else []
+        ),
         max_dp="cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed",
         stats_json="cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json",
     output:
         cn_bdg=(
-            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/copynum.bedgraph")
-            if not  config.get("sawfish_discover", {}).get("disable_cnv", False)
+            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/copynum.bedgraph")
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
-        dp_bw=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/depth.bw"),
+        dp_bw=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/depth.bw"),
         gcbias_bw=(
-            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw")
+            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw")
             if not config.get("sawfish_dicover", {}).get("disable_cnv", False)
             else []
         ),
-        gt_vcf=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/genotyped.sv.vcf.gz"),
-        gt_tbi=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/genotyped.sv.vcf.gz.tbi"),
-        log=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/sawfish.log"),
+        gt_vcf=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/genotyped.sv.vcf.gz"),
+        gt_tbi=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/genotyped.sv.vcf.gz.tbi"),
+        log=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/sawfish.log"),
         maf=(
-            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample_0001_{sample}_{type}/maf.bw")
+            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample_0001_{sample}_{type}/maf.bw")
             if config.get("sawfish_discover", {}).get("maf", False)
             else []
         ),
-        stats_json=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/run.stats.json"),
-        sample_vcf=temp("cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz"),
-        sample_tbi=temp("cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz.tbi"),
+        stats_json=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/run.stats.json"),
+        sample_vcf=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}.vcf.gz"),
+        sample_tbi=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}.vcf.gz.tbi"),
         sr_json=(
-            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/supporting_reads.json.gz")
-            if config.get("sawfish_joint_call", {}).get("supporting_reads", False)
+            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/supporting_reads.json.gz")
+            if config.get("sawfish_joint_call_single", {}).get("supporting_reads", False)
             else []
         ),
     params:
-        extra=config.get("sawfish_joint_call", {}).get("extra", ""),
+        extra=config.get("sawfish_joint_call_single", {}).get("extra", ""),
         in_dir=lambda w, input: os.path.dirname(input.settings_json),
         out_dir=lambda w, output: output[0].rsplit("/", 3)[0],
         supporting_reads=(
-            f"--report-supporting-reads" if config.get("sawfish_joint_call", {}).get("supporting_reads", False) else ""
+            f"--report-supporting-reads" if config.get("sawfish_joint_call_single", {}).get("supporting_reads", False) else ""
         ),
     log:
-        "cnv_sv/sawfish_joint_call/{sample}_{type}.joint_call.log",
+        "cnv_sv/sawfish_joint_call_single/{sample}_{type}.joint_call.log",
     benchmark:
         repeat(
-            "cnv_sv/sawfish_joint_call/{sample}_{type}.joint_call.benchmark.tsv",
-            config.get("sawfish_joint_call", {}).get("benchmark_repeats", 1),
+            "cnv_sv/sawfish_joint_call_single/{sample}_{type}.joint_call.benchmark.tsv",
+            config.get("sawfish_joint_call_single", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("sawfish_joint_call", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("sawfish_joint_call_single", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("sawfish_joint_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("sawfish_joint_call", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("sawfish_joint_call", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("sawfish_joint_call", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("sawfish_joint_call", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("sawfish_joint_call_single", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("sawfish_joint_call_single", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("sawfish_joint_call_single", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("sawfish_joint_call_single", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("sawfish_joint_call_single", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("sawfish_joint_call", {}).get("container", config["default_container"])
+        config.get("sawfish_joint_call_single", {}).get("container", config["default_container"])
     message:
         "{rule}: Run sawfish joint call on the single sample ouput of sawfish discover"
     shell:
