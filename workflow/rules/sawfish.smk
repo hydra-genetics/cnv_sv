@@ -144,7 +144,7 @@ rule sawfish_joint_call_single:
             if config.get("sawfish_joint_call", {}).get("maf", False)
             else []
         ),
-        stats_json=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/run_stats.json"),
+        stats_json=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/run.stats.json"),
         sample_vcf=temp("cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz"),
         sample_tbi=temp("cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz.tbi"),
         sr_json=(
