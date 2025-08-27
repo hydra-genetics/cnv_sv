@@ -144,8 +144,7 @@ rule sawfish_joint_call_single:
         ),
         dp_bw=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/depth.bw"),
         gcbias_bw=(
-            temp(
-                "cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw"
+            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw"
             )
             if not config.get("sawfish_dicover", {}).get("disable_cnv", False)
             else []
@@ -154,7 +153,7 @@ rule sawfish_joint_call_single:
         gt_tbi=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/genotyped.sv.vcf.gz.tbi"),
         log=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/sawfish.log"),
         maf=(
-            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample_0001_{sample}_{type}/maf.bw")
+            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/maf.bw")
             if config.get("sawfish_discover", {}).get("maf", False)
             else []
         ),
