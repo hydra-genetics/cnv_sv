@@ -43,7 +43,7 @@ rule sawfish_discover:
                 else []
             ),
         gcbias_mpack=(
-            "cnv_sv/sawfish_discover/{sample}_{type}/sample.gcbias.mpack",
+            "cnv_sv/sawfish_discover/{sample}_{type}/sample.gcbias.mpack"
             if config.get("sawfish_discover", {}).get("disable_cnv", False)
                 else []
             ),
