@@ -8,7 +8,7 @@ rule sawfish_discover:
     input:
         bam=lambda wildcards: get_input_bam(wildcards)[0],
         bai=lambda wildcards: get_input_bam(wildcards)[1],
-        maf=("snv_indels/deepvariant/{sample}_{type}.vcf.gz" if config.get("sawfish_discover", {}).get("maf", False) else []),
+        maf=("snv_indels/deepvariant_pacbio/{sample}_{type}.merged.vcf.gz" if config.get("sawfish_discover", {}).get("maf", False) else []),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         asm_bed=temp("cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed"),
