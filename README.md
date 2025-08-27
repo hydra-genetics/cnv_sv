@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://hydra-genetics-cnv-sv.readthedocs.io">https://hydra-genetics-cnv-sv.readthedocs.io</a>
+<h1><a href="https://hydra-genetics-cnv-sv.readthedocs.io">https://hydra-genetics-cnv-sv.readthedocs.io</a><h1>
 </p>
 
 # <img src="images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
@@ -30,7 +30,7 @@ In order to use this module, the following dependencies are required:
 
 ## :school_satchel: Preparations
 
-### Sample and unit data
+### Sample and unit data short read
 
 Input data should be added to [`samples.tsv`](https://github.com/hydra-genetics/prealignment/blob/develop/config/samples.tsv)
 and [`units.tsv`](https://github.com/hydra-genetics/prealignment/blob/develop/config/units.tsv).
@@ -51,6 +51,29 @@ The following information need to be added to these files:
 | barcode | sequence library barcode/index, connect forward and reverse indices by `+`, e.g. `ATGC+ATGC` |
 | fastq1/2 | absolute path to forward and reverse reads |
 | adapter | adapter sequences to be trimmed, separated by comma |
+
+
+### Sample and unit data long read
+
+Input data should be added to [`samples.tsv`](https://github.com/hydra-genetics/cnv_sv/blob/develop/.tests/integration/samples_pacbio.tsv)
+and [`units.tsv`](https://github.com/hydra-genetics/cnv_sv/blob/develop/.tests/integration/units_pacbio.tsv).
+The following information need to be added to these files:
+
+| Column Id | Description |
+| --- | --- |
+| **`samples.tsv`** |
+| sample | unique sample/patient id, one per row |
+| tumor_content | ratio of tumor cells to total cells |
+| **`units.tsv`** |
+| sample | same sample/patient id as in `samples.tsv` |
+| type | data type identifier (one letter), can be one of **T**umor, **N**ormal, **R**NA |
+| platform | type of sequencing platform, e.g. `Pacbio` |
+| machine | specific machine id, e.g. Pacbio instrument e.g. `REVIO` |
+| processing_unit | contains the PacBio movie name or flowcell id for ONT |
+| barcode | sequence library barcode/index, connect forward and reverse indices by `-`, e.g. `ATGC-ATGC` |
+| methylation | Methylation read tags are found in the bam file (Yes or No) |
+| bam | absolute path to the unmapped BAM file |
+
 
 ### Reference data
 
@@ -110,32 +133,6 @@ Latest:
 
  See [COMPATIBLITY.md](../master/COMPATIBLITY.md) file for a complete list of module compatibility.
 
-### Output files
-
-The following output files should be targeted via another rule:
-
-| File | Description |
-|---|---|
-| `cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf` | vcf with merged CNV and SV |
-| `cnv_sv/{caller}_vcf/{sample}_{type}.{tc_method}.vcf` | vcf file for each caller |
-| `cnv_sv/exomedepth_call/{sample}_{type}.txt` | CNV calls from exomedepth |
-| `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf` | SV calls from pindel |
-| `cnv_sv/tiddit/{sample}_{type}.vcf` | SV calls from tiddit |
-| `cnv_sv/cnvpytor/{sample}_{type}.vcf` | SV calls from cnvpyter |
-| `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
-| `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
-| `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz` | vcf file with CNV and SV calls from Manta |
-| `cnv_sv/smn_caller/{sample}_{type}.tsv` | cnv calling in the SMN gene with smncopynumbercaller | 
-| `cnv_sv/expansionhunter/{sample}_{type}.vcf` | vcf file with repeat expansions from expansionhunter | 
-| `cnv_sv/reviewer/{sample}_{type}/*.svg` |direcotory of svg files of read pileups from reviewer | 
-| `cnv_sv/automap/{sample}_{type}/{sample}_{type}.vcf` | vcf file with regions of homozygosity (ROHs) from automap | 
-| `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt` | text file with estimated purity from purecn |
-| `cnv_sv/upd/{sample}_{type}.upd_regions.bed` | bed file of upd regions |
-| `cnv_sv/upd/{sample}_{type}.upd_sites.bed` | bed file of upd informative sites |
-
-## :judge: Rule Graph
-
-![rule_graph](images/cnv_sv.svg)
 
 ### Disclaimer
 

@@ -1,9 +1,14 @@
 # Hydra-genetics snv_sv module
 The cnv_sv module consists of a collection of tools calling larger structural genomic aberrations in DNA. Most tools use aligned `.bam` files as input, but many tools also make use of small variants calls in the form of a `.vcf` file.
 
-## CNV_SV
+## CNV_SV short read steps
 
-![CNV_SV steps](images/cnv_sv_dag.svg)
+![CNV_SV steps](images/cnv_sv_short_read_dag.svg)
+
+## DNA Pacbio steps
+
+![CNV_SV steps](images/cnv_sv_pacbio_dag.svg)
+
 
 ## Module input files
 Aligned and merged `.bam` files as well as different `.vcf` files depending on application.
@@ -22,15 +27,31 @@ The output consists of results files that describe different kinds of larger gen
 * `cnv_sv/exomedepth_call/{sample}_{type}.txt`
 * `cnv_sv/expansionhunter/{sample}_{type}.vcf`
 * `cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg`
+* `cnv_sv/hificnv/{sample}_{type}-depth.bw`
+* `cnv_sv/hificnv/{sample}_{type}-copynum.bedgraph`
+* `cnv_sv/hificnv/{sample}_{type}-vcf.gz`
 * `cnv_sv/jumble_vcf/{sample}_{type}.pathology.vcf`
 * `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSV.vcf.gz`
+* `cnv_sv/melt/{sample}_{type}/ALU.final_comp.vcf`
+* `cnv_sv/melt/{sample}_{type}/HERVK.final_comp.vcf`
+* `cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf`
+* `cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam.bai`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.json`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase_{gene}.vcf.gz`
 * `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf`
 * `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.{locus}.svg`
+* `cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz`
+* `cnv_sv/scanitd/{sample}_{type}.vcf`
 * `cnv_sv/smn_caller/{sample}_{type}.tsv`
+* `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz`
+* `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz.tbi`
+* `cnv_sv/sniffles2_call/{sample}_{type}.snf`
 * `cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf`
 * `cnv_sv/tiddit/{sample}_{type}.vcf`
 * `cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz`

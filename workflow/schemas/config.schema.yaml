@@ -498,7 +498,24 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-  
+
+  melt:
+    type: object
+    description: parameters for melt
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      bed:
+        type: string
+        description: gene annotation for the FASTA reference ("MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed")
+      mei:
+        type: string
+        description: list of MEI.zip files with one file per line (MELTv2.2.2/me_refs/*zip)
+
   paraphase:
     type: object
     description: parameters for paraphase
@@ -756,7 +773,89 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-  
+
+
+  savana_pb_to:
+    type: object
+    description: parameters for savana_pb_to
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      min_support:
+        type: integer
+        description: minimum supporting reads for a variant, for PacBio recommended value is 10
+      genome_version:
+        type: string
+        description: genome version to use instead of a matched normal; choices are "1000g_hg38", "1000g_hg19", "1000g_t2t"
+      dir:
+        type: string
+        description: directory with the output files
+
+  savana_pb_tn:
+    type: object
+    description: parameters for savana_pb_tn
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      min_support:
+        type: integer
+        description: minimum supporting reads for a variant, for PacBio recommended value is 10
+      dir:
+        type: string
+        description: directory with the output files
+
+  savana_ont_to:
+    type: object
+    description: parameters for savana_ont_to
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      genome_version:
+        type: string
+        description: genome version to use instead of a matched normal; choices are "1000g_hg38", "1000g_hg19", "1000g_t2t"
+      dir:
+        type: string
+        description: directory with the output files
+
+  savana_ont_tn:
+    type: object
+    description: parameters for savana_ont_tn
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      dir:
+        type: string
+        description: directory with the output files
+
+
   sawfish_discover:
     type: object
     description: parameters for sawfish_discover

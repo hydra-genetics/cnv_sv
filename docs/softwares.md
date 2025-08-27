@@ -682,6 +682,29 @@ Manta calls structural variants (SVs) and indels from mapped paired-end sequenci
 
 ---
 
+## [melt](https://melt.igs.umaryland.edu/index.php)
+The Mobile Element Locator Tool (MELT) is a software package, written in Java, that discovers, annotates, and genotypes non-reference Mobile Element Insertions (MEIs) in Illumina DNA paired-end whole genome sequencing (WGS) and whole exome (WES) data.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__melt__melt#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__melt__melt#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__melt#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__melt#
+
+---
+
 ## [paraphase](https://github.com/PacificBiosciences/paraphase)
 Paraphase is a Python tool that takes HiFi aligned BAMs as input (whole-genome or enrichment), phases haplotypes for genes of the same family, determines copy numbers and makes phased variant calls.
 
@@ -1412,3 +1435,97 @@ Call UPD informative sites from germline exome/wgs trios.
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__upd_sites#
+
+---
+
+## SAVANA
+
+### [savana_pb_to](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_pb_to#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_pb_to#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_pb_to#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_pb_to#
+
+---
+
+### [savana_pb_tn](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_pb_tn#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_pb_tn#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_pb_tn#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_pb_tn#
+
+---
+
+### [savana_ont_to](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_ont_to#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_ont_to#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_ont_to#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_ont_to#
+
+---
+
+### [savana_ont_tn](https://github.com/cortes-ciriano-lab/savana)
+SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) caller for long-read data.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__savana__savana_ont_tn#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__savana__savana_ont_tn#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__savana_ont_tn#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__savana_ont_tn#
