@@ -136,13 +136,13 @@ rule sawfish_joint_call_single:
     output:
         cn_bdg=(
             temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/copynum.bedgraph")
-            if config.get("sawfish_joint_call", {}).get("disable_cnv", False)
+            if not  config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         dp_bw=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/depth.bw"),
         gcbias_bw=(
             temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw")
-            if config.get("sawfish_joint_call", {}).get("disable_cnv", False)
+            if not config.get("sawfish_dicover", {}).get("disable_cnv", False)
             else []
         ),
         gt_vcf=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/genotyped.sv.vcf.gz"),
@@ -150,7 +150,7 @@ rule sawfish_joint_call_single:
         log=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/sawfish.log"),
         maf=(
             temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample_0001_{sample}_{type}/maf.bw")
-            if config.get("sawfish_joint_call", {}).get("maf", False)
+            if config.get("sawfish_discover", {}).get("maf", False)
             else []
         ),
         stats_json=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/run.stats.json"),
