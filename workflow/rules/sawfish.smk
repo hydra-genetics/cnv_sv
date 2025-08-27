@@ -53,6 +53,9 @@ rule sawfish_discover:
             else []
         ),
         max_dp=temp("cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed"),
+        maf_mpack=(
+            "cnv_sv/sawfish_discover/{sample}_{type}/maf.mpack" if config.get("sawfish_discover", {}).get("maf", False) else []
+        ),
         refine_txt=temp("cnv_sv/sawfish_discover/{sample}_{type}/debug.cluster.refinement.txt"),
         settings_json=temp("cnv_sv/sawfish_discover/{sample}_{type}/discover.settings.json"),
         stats_json=temp("cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json"),
