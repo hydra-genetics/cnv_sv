@@ -132,9 +132,7 @@ rule sawfish_joint_call_single_single:
             else []
         ),
         maf_mpack=(
-            "cnv_sv/sawfish_discover/{sample}_{type}/maf.mpack"
-            if config.get("sawfish_discover", {}).get("maf", False)
-            else []
+            "cnv_sv/sawfish_discover/{sample}_{type}/maf.mpack" if config.get("sawfish_discover", {}).get("maf", False) else []
         ),
         max_dp="cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed",
         stats_json="cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json",
@@ -146,7 +144,9 @@ rule sawfish_joint_call_single_single:
         ),
         dp_bw=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/depth.bw"),
         gcbias_bw=(
-            temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw")
+            temp(
+                "cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw"
+            )
             if not config.get("sawfish_dicover", {}).get("disable_cnv", False)
             else []
         ),
