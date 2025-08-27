@@ -126,13 +126,13 @@ rule sawfish_joint_call_single:
         stats_json="cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json",
     output:
         cn_bdg=(
-            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample_0001_{sample}_{type}/copynum.bedgraph")
+            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/copynum.bedgraph")
             if config.get("sawfish_joint_call", {}).get("disable_cnv", False)
             else []
         ),
-        dp_bw=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample_0001_{sample}_{type}/depth.bw"),
+        dp_bw=temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/depth.bw"),
         gcbias_bw=(
-            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample_0001_{sample}_{type}/gc_bias_corrected_depth.bw")
+            temp("cnv_sv/sawfish_joint_call/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw")
             if config.get("sawfish_joint_call", {}).get("disable_cnv", False)
             else []
         ),
@@ -155,7 +155,7 @@ rule sawfish_joint_call_single:
     params:
         extra=config.get("sawfish_joint_call", {}).get("extra", ""),
         in_dir=lambda w, input: os.path.dirname(input.settings_json),
-        out_dir=lambda w, output: os.path.dirname(output[0]),
+        out_dir=lambda w, output: output[0].rsplit('/', 3)[0],
         supporting_reads=(
             f"--report-supporting-reads" if config.get("sawfish_joint_call", {}).get("supporting_reads", False) else ""
         ),
