@@ -36,7 +36,6 @@ rule sawfish_discover:
             if config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
-        dp_bw=temp("cnv_sv/sawfish_discover/{sample}_{type}/depth.bw"),
         dp_mpack=temp("cnv_sv/sawfish_discover/{sample}_{type}/depth.mpack"),
         gc_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/genome.gclevels.mpack"
