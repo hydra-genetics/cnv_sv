@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.10.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.9.0...v0.10.0) (2025-08-27)
+
+
+### Features
+
+* add savana ([1805178](https://www.github.com/hydra-genetics/cnv_sv/commit/1805178628156c3cd137c4df14d8396e2e355191))
+
+
+### Bug Fixes
+
+* add dir entry to savana_* rules ([6ff1ec0](https://www.github.com/hydra-genetics/cnv_sv/commit/6ff1ec03dc7a9c8e93e9bcf9cadc54b8ad0fa102))
+* add genome version to params in the TO rules ([6c6ef84](https://www.github.com/hydra-genetics/cnv_sv/commit/6c6ef847a0291e5a5dbaec5e7957938ca404af0b))
+* add genome version to the TO rules ([cf5da60](https://www.github.com/hydra-genetics/cnv_sv/commit/cf5da608e233ff744c1402e6a0a8685a18cd96ec))
+* add genome_version to the TO rules ([ce3c5b6](https://www.github.com/hydra-genetics/cnv_sv/commit/ce3c5b6545ed2929568dc6626011a018aa672aa8))
+* add min_support to parameters ([c4f4af6](https://www.github.com/hydra-genetics/cnv_sv/commit/c4f4af62c77e9b343959af5eed9dc166cdd60a80))
+* add output description to savana_* rules ([9dcf3d0](https://www.github.com/hydra-genetics/cnv_sv/commit/9dcf3d0a9225c59bb731ad0e59de36644fba9ac2))
+* add savana_* entries to config.yaml ([98f75e0](https://www.github.com/hydra-genetics/cnv_sv/commit/98f75e09332a07d83749e7d12ae98339fc0e2374))
+* alphabetical order of the savana_* rules in rules.schema.yaml ([238f9ce](https://www.github.com/hydra-genetics/cnv_sv/commit/238f9ce6fcb564aeb533e75fd3892488a4f38b25))
+* full output filenames & outdir to params ([5d23ac2](https://www.github.com/hydra-genetics/cnv_sv/commit/5d23ac28507a1d1a7f7a8e1dba1eeb2518ec397c))
+
+
+### Documentation
+
+* add description of savana_* rules to softwares.md ([a2d88c7](https://www.github.com/hydra-genetics/cnv_sv/commit/a2d88c790e59be2773ad173b0bf32ea0af7a28c5))
+* add entries for savana_* rules to config.schema.yaml ([8a14af8](https://www.github.com/hydra-genetics/cnv_sv/commit/8a14af8fcc9b80837b12131e735ce89127c003de))
+* add schemas for rules savana_* ([c9b1a43](https://www.github.com/hydra-genetics/cnv_sv/commit/c9b1a43b9df5ca13a3b542f08d4980605424039e))
+* update DAGs and README.md ([47afb28](https://www.github.com/hydra-genetics/cnv_sv/commit/47afb28ec3545f1ab5d1f4e0460d440986c6f602))
+* update docs/softwares.md ([d5fdce8](https://www.github.com/hydra-genetics/cnv_sv/commit/d5fdce851f04adb90f60f8588b387e99be8024bb))
+* update docs/softwares.md ([688c081](https://www.github.com/hydra-genetics/cnv_sv/commit/688c08145e10f4cbed7c608cf346dc52353ec07b))
+* update docs/softwares.md ([d76e841](https://www.github.com/hydra-genetics/cnv_sv/commit/d76e8411c74cec9f73e350bd48d9eb3254050720))
+* update docs/softwares.md ([4268631](https://www.github.com/hydra-genetics/cnv_sv/commit/4268631f82c8fef281c584ccc25a9949f22f4ade))
+* update the module output files ([02aca91](https://www.github.com/hydra-genetics/cnv_sv/commit/02aca91417bfabed6eb6ee1dc8583c609b9cc02b))
+
 ## [0.9.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.8.0...v0.9.0) (2025-05-14)
 
 
