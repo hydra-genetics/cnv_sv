@@ -61,7 +61,7 @@ rule sawfish_discover:
         expected_cn=get_expected_cn,
         disable_cnv=("--disable-cnv" if config.get("sawfish_discover", {}).get("disable_cnv", False) else ""),
         out_dir="cnv_sv/sawfish_discover/{sample}_{type}",
-        maf=(f"--maf {input.maf} " if config.get("sawfish_discover", {}).get("maf", False) else ""),
+        maf=lambda wildcards, input: "--maf {} ".format(input.maf) if config.get("sawfish_discover", {}).get("maf", False) else "",
     log:
         "cnv_sv/sawfish_discover/{sample}_{type}.sawfish_discover.log",
     benchmark:
