@@ -33,23 +33,23 @@ rule sawfish_discover:
         ),
         cn_bdg=(
             "cnv_sv/sawfish_discover/{sample}_{type}/copynum.bedgraph"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         cn_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/copynum.mpack"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         dp_mpack=temp("cnv_sv/sawfish_discover/{sample}_{type}/depth.mpack"),
         gc_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/genome.gclevels.mpack"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         gcbias_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/sample.gcbias.mpack"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         max_dp=temp("cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed"),
@@ -113,22 +113,22 @@ rule sawfish_joint_call_single:
         ),
         cn_bdg=(
             "cnv_sv/sawfish_discover/{sample}_{type}/copynum.bedgraph"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         cn_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/copynum.mpack"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         gc_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/genome.gclevels.mpack"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         gcbias_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/sample.gcbias.mpack"
-            if config.get("sawfish_discover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         max_dp="cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed",
