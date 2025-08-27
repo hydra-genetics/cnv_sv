@@ -149,7 +149,7 @@ rule sawfish_joint_call_single:
         gcbias_bw=(
             temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/gc_bias_corrected_depth.bw"
             )
-            if not config.get("sawfish_dicover", {}).get("disable_cnv", False)
+            if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
         gt_vcf=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/genotyped.sv.vcf.gz"),
