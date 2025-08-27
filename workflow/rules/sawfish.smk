@@ -8,7 +8,16 @@ rule sawfish_discover:
     input:
         bam=lambda wildcards: get_input_bam(wildcards)[0],
         bai=lambda wildcards: get_input_bam(wildcards)[1],
-        maf=("snv_indels/deepvariant_pacbio/{sample}_{type}.merged.vcf.gz" if config.get("sawfish_discover", {}).get("maf", False) else []),
+        maf=(
+            "snv_indels/deepvariant/{sample}_{type}.merged.vcf.gz"
+            if config.get("sawfish_discover", {}).get("maf", False)
+            else []
+        ),
+        maf_tbi=(
+            "snv_indels/deepvariant/{sample}_{type}.merged.vcf.gz.tbi"
+            if config.get("sawfish_discover", {}).get("maf", False)
+            else []
+        ),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         asm_bed=temp("cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed"),
@@ -155,7 +164,7 @@ rule sawfish_joint_call_single:
     params:
         extra=config.get("sawfish_joint_call", {}).get("extra", ""),
         in_dir=lambda w, input: os.path.dirname(input.settings_json),
-        out_dir=lambda w, output: output[0].rsplit('/', 3)[0],
+        out_dir=lambda w, output: output[0].rsplit("/", 3)[0],
         supporting_reads=(
             f"--report-supporting-reads" if config.get("sawfish_joint_call", {}).get("supporting_reads", False) else ""
         ),
