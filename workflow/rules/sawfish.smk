@@ -92,7 +92,7 @@ rule sawfish_discover:
         "{params.expected_cn} &> {log}"
 
 
-rule sawfish_joint_call_single_single:
+rule sawfish_joint_call_single:
     input:
         bam=lambda wildcards: get_input_bam(wildcards)[0],
         bai=lambda wildcards: get_input_bam(wildcards)[1],
