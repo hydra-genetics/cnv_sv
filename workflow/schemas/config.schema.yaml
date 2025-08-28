@@ -870,9 +870,9 @@ properties:
         type: string
         description: parameters that should be forwarded
 
-  sawfish_joint_call:
+  sawfish_joint_call_single:
     type: object
-    description: parameters for sawfish_joint_call
+    description: parameters for sawfish_joint_call_single
     properties:
       benchmark_repeats:
         type: integer

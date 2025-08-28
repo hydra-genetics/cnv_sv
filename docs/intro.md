@@ -46,7 +46,7 @@ The output consists of results files that describe different kinds of larger gen
 * `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.{locus}.svg`
-* `cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz`
+* `cnv_sv/sawfish_joint_call_single/{sample}_{type}.vcf.gz`
 * `cnv_sv/scanitd/{sample}_{type}.vcf`
 * `cnv_sv/smn_caller/{sample}_{type}.tsv`
 * `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz`

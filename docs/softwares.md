@@ -1035,27 +1035,27 @@ The discover step identifies candidate structural variant (SV) regions and assem
 
 ---
 
-## [sawfish_joint_call](https://github.com/PacificBiosciences/sawfish)
-Sawfish calls structural variants from mapped HiFi sequencing reads. It discovers germline variants from local sequence assembly and jointly genotypes variants across multiple samples.
-The joint call step takes the output of the sawfish 'discover' step for one to many samples and provides jointly genotyped SV calls over the sample set.
+## [sawfish_joint_call_single](https://github.com/PacificBiosciences/sawfish)
+Sawfish calls structural variants from mapped HiFi sequencing reads. It discovers germline variants from local sequence assembly and can jointly genotype variants across multiple samples.
+The joint call step takes the output of the sawfish 'discover' step for one to many samples and provides jointly genotyped SV calls over the sample set. The sawfish_joint_call_single performs calling for a single sample.
 
 ### :snake: Rule
 
-#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_joint_call#
+#SNAKEMAKE_RULE_SOURCE__sawfish__sawfish_joint_call_single#
 
 #### :left_right_arrow: input / output files
 
-#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_joint_call#
+#SNAKEMAKE_RULE_TABLE__sawfish__sawfish_joint_call_single#
 
 ### :wrench: Configuration
 
 #### Software settings (`config.yaml`)
 
-#CONFIGSCHEMA__sawfish_joint_call#
+#CONFIGSCHEMA__sawfish_joint_call_single#
 
 #### Resources settings (`resources.yaml`)
 
-#RESOURCESSCHEMA__sawfish_joint_call#
+#RESOURCESSCHEMA__sawfish_joint_call_single#
 
 ---
 
