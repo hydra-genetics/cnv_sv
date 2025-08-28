@@ -1371,9 +1371,6 @@ properties:
           cn_mpack:
             type: string
             description: Copy-number segmentation results in a 'MessagePack' file
-          dp_bw:
-            type: string
-            description: depth Bins 'BIGWIG' file
           dp_mpack:
             type: string
             description: depth Bins 'MessagePack' file
