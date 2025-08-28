@@ -1331,17 +1331,22 @@ properties:
           bai:
             type: string
             description: a 'bam' file index
+          maf:
+            type: string
+            description: Variant file used to generate minor allele frequency track for this sample, in compressed VCF format.
+          maf_tbi:
+            type: string
+            description: Tabix index file for the Variant file used for maf input parameter, in TBI format.
           ref:
             type: string
             description: fasta genome reference file
-
       output:
         type: object
         description: list of outputs
         properties:
           asm_bed:
             type: string
-            description: assemby regions bed file
+            description: assembly regions bed file
           bcf:
             type: string
             description: candidate SVs in bcf 
@@ -1357,37 +1362,47 @@ properties:
           cluster_bed:
             type: string
             description: breakpoint clusters 'bed' file
-          refine_txt:
+          cn_bed:
             type: string
-            description: cluster refinement debug 'text' file
+            description: expected copy-number 'bed' file
+          cn_bdg:
+            type: string
+            description: Copy-number segmentation results in a 'bedgraph' file
+          cn_mpack:
+            type: string
+            description: Copy-number segmentation results in a 'MessagePack' file
           dp_bw:
             type: string
             description: depth Bins 'BIGWIG' file
           dp_mpack:
             type: string
-            description: depth Bins 'MesagePack' file
-          settings_json:
-            type: string
-            description: sawfish discover settings 'json' file
-          cn_bed:
-            type: string
-            description: expected coopy number 'bed' file
+            description: depth Bins 'MessagePack' file
           gc_mpack:
             type: string
             description: genome gc levels 'MessagePack' file
-          max_dp:
-            type: string
-            description: max SV depth 'bed' file
-          stats_json:
-            type: string
-            description: sawfish discover run stats 'json' file
           gcbias_mpack:
             type: string
             description: sample gcbias 'MessagePack' file
+          maf_mpack:
+            type: string
+            description: minor allele frequency 'MessagePack' file
+          max_dp:
+            type: string
+            description: max SV depth 'bed' file
+          refine_txt:
+            type: string
+            description: cluster refinement debug 'text' file
+          settings_json:
+            type: string
+            description: sawfish discover settings 'json' file
+          stats_json:
+            type: string
+            description: sawfish discover run stats 'json' file
+          
 
-  sawfish_joint_call:
+  sawfish_joint_call_single:
     type: object
-    description: input and output parameters for sawfish_joint_call
+    description: input and output parameters for sawfish_joint_call_single
     properties:
       input:
         type: object
@@ -1420,50 +1435,61 @@ properties:
           cluster_bed:
             type: string
             description: breakpoint clusters 'bed' file
-          refine_txt:
+          cn_bdg:
             type: string
-            description: cluster refinement debug 'text' file
-          dp_bw:
+            description: copy-number segmentation results in a 'bedgraph' file
+          cn_mpack:
             type: string
-            description: depth Bins 'BIGWIG' file
-          dp_mpack:
-            type: string
-            description: depth Bins 'MesagePack' file
-          settings_json:
-            type: string
-            description: sawfish discover settings 'json' file
+            description: copy-number segmentation results in a 'MessagePack' file
           cn_bed:
             type: string
             description: expected coopy number 'bed' file
+          dp_mpack:
+            type: string
+            description: depth Bins 'MesagePack' file
           gc_mpack:
             type: string
             description: genome gc levels 'MessagePack' file
-          max_dp:
-            type: string
-            description: max SV depth 'bed' file
-          stats_json:
-            type: string
-            description: sawfish discover run stats 'json' file
           gcbias_mpack:
             type: string
             description: sample gcbias 'MessagePack' file
-
+          max_dp:
+            type: string
+            description: max SV depth 'bed' file
+          refine_txt:
+            type: string
+            description: cluster refinement debug 'text' file
+          settings_json:
+            type: string
+            description: sawfish discover settings 'json' file
+          stats_json:
+            type: string
+            description: sawfish discover run stats 'json' file
       output:
         type: object
         description: list of outputs
         properties:
-          log:
+          cn_bdg:
             type: string
-            description: sawfish joint-call log file
-          stats_json:
+            description: copy-number segmentation results in a 'bedgraph' file
+          dp_bw:
             type: string
-            description: sawfish joint-call run stats 'json' file
+            description: depth Bins 'BIGWIG' file
+          gcbias_bw:
+            type: string
+            description: sample gcbias corrected depth bins 'BigWig' file
           gt_vcf:
             type: string
             description: sawfish joint-call genotypes gzipped 'vcf' file
           gt_tbi:
             type: string
             description: sawfish joint-call genotypes vcf tabix file
+          log:
+            type: string
+            description: sawfish joint-call log file
+          maf_bw:
+            type: string
+            description: minor allele frequency track in 'BigWig' format'
           sample_vcf:
             type: string
             description: sample named sawfish joint-call genotypes gzipped 'vcf' file
@@ -1473,6 +1499,9 @@ properties:
           sr_json:
             type: string
             description: supporting reads 'json' file
+          stats_json:
+            type: string
+            description: sawfish joint-call run stats 'json' file
 
   scanitd:
     type: object

@@ -106,9 +106,6 @@ rule sawfish_joint_call_single:
         contig_bam="cnv_sv/sawfish_discover/{sample}_{type}/contig.alignment.bam",
         contig_csi="cnv_sv/sawfish_discover/{sample}_{type}/contig.alignment.bam.csi",
         cluster_bed="cnv_sv/sawfish_discover/{sample}_{type}/debug.breakpoint_clusters.bed",
-        refine_txt="cnv_sv/sawfish_discover/{sample}_{type}/debug.cluster.refinement.txt",
-        dp_mpack="cnv_sv/sawfish_discover/{sample}_{type}/depth.mpack",
-        settings_json="cnv_sv/sawfish_discover/{sample}_{type}/discover.settings.json",
         cn_bed=(
             "cnv_sv/sawfish_discover/{sample}_{type}/expected.copy.number.bed"
             if config.get("sawfish_discover", {}).get("expected_cn", False)
@@ -124,6 +121,7 @@ rule sawfish_joint_call_single:
             if not config.get("sawfish_discover", {}).get("disable_cnv", False)
             else []
         ),
+        dp_mpack="cnv_sv/sawfish_discover/{sample}_{type}/depth.mpack",
         gc_mpack=(
             "cnv_sv/sawfish_discover/{sample}_{type}/genome.gclevels.mpack"
             if not config.get("sawfish_discover", {}).get("disable_cnv", False)
@@ -138,7 +136,9 @@ rule sawfish_joint_call_single:
             "cnv_sv/sawfish_discover/{sample}_{type}/maf.mpack" if config.get("sawfish_discover", {}).get("maf", False) else []
         ),
         max_dp="cnv_sv/sawfish_discover/{sample}_{type}/max.depth.bed",
-        stats_json="cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json",
+        refine_txt="cnv_sv/sawfish_discover/{sample}_{type}/debug.cluster.refinement.txt",
+        settings_json="cnv_sv/sawfish_discover/{sample}_{type}/discover.settings.json",
+        stats_json="cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json",   
     output:
         cn_bdg=(
             temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/copynum.bedgraph")
@@ -155,12 +155,11 @@ rule sawfish_joint_call_single:
         gt_vcf=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/genotyped.sv.vcf.gz"),
         gt_tbi=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/genotyped.sv.vcf.gz.tbi"),
         log=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/sawfish.log"),
-        maf=(
+        maf_bw=(
             temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/samples/sample0001_{sample}_{type}/maf.bw")
             if config.get("sawfish_discover", {}).get("maf", False)
             else []
         ),
-        stats_json=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/run.stats.json"),
         sample_vcf=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}.vcf.gz"),
         sample_tbi=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}.vcf.gz.tbi"),
         sr_json=(
@@ -168,6 +167,7 @@ rule sawfish_joint_call_single:
             if config.get("sawfish_joint_call_single", {}).get("supporting_reads", False)
             else []
         ),
+        stats_json=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/run.stats.json"),
     params:
         extra=config.get("sawfish_joint_call_single", {}).get("extra", ""),
         in_dir=lambda w, input: os.path.dirname(input.settings_json),
