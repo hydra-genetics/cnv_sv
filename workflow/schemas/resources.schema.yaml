@@ -989,9 +989,9 @@ properties:
         type: string
         description: max execution time
 
-  sawfish_joint_call:
+  sawfish_joint_call_single:
     type: object
-    description: resource definitions for sawfish_joint_call
+    description: resource definitions for sawfish_joint_call_single
     properties:
       mem_mb:
         type: integer
