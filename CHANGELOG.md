@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.0.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.10.0...v1.0.0) (2025-08-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **sawfish:** update sawfish rules for sawfish v2 changes
+
+### Features
+
+* **sawfish:** update sawfish rules for sawfish v2 changes ([2c9868f](https://www.github.com/hydra-genetics/cnv_sv/commit/2c9868f99cf61ce2347482913c0293cc855539a4))
+
+
+### Bug Fixes
+
+* **hificnv:** add type in output files from hificnv, to reflect the new addotion of type in BAM RG SM ([b7b69c4](https://www.github.com/hydra-genetics/cnv_sv/commit/b7b69c4a2489eb7c9db870420138720735cd8354))
+
+
+### Documentation
+
+* remove dp_bw as output for sawfish discover ([b661ad0](https://www.github.com/hydra-genetics/cnv_sv/commit/b661ad0a8dcb89ef79e1ecdf6e84db9f5061a657))
+* update pacbio dag and restructure module output files ([876faa8](https://www.github.com/hydra-genetics/cnv_sv/commit/876faa8d06f41912239bf97900ea83e99fa4e5d2))
+* update rule name for docs ([cbd7ee2](https://www.github.com/hydra-genetics/cnv_sv/commit/cbd7ee218eb1c0983a7f959600bbe72a354e129b))
+* update the rule schema and softwares.md with changes to sawfish rules ([9635bec](https://www.github.com/hydra-genetics/cnv_sv/commit/9635bec0749a3419f4c3a89546dcc2955ca2c3ae))
+
 ## [0.10.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.9.0...v0.10.0) (2025-08-27)
 
 
