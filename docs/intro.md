@@ -19,17 +19,18 @@ Aligned and merged `.bam` files as well as different `.vcf` files depending on a
 * `snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz`
 
 ## Module output files
-The output consists of results files that describe different kinds of larger genomic aberrations, such as copy number aberrations (CNVs), structural variants (SVs) and repeat expansions.
+The output consists of result files that describe different kinds of larger genomic aberrations, such as copy number aberrations (CNVs), structural variants (SVs), and repeat expansions. The output files below are subdivided into short-read and long-read categories.
 
+Some short-read tools may run on long-read datasets; however, here we list them under short-read based on their documented and primary use case. A further subdivision for long-read is required, as some programs from Pacbio are designed and licensed for Pacbio data only.
+
+
+### Short-read
 * `cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv`
 * `cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns`
 * `cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf`
 * `cnv_sv/exomedepth_call/{sample}_{type}.txt`
 * `cnv_sv/expansionhunter/{sample}_{type}.vcf`
 * `cnv_sv/gatk_call_copy_ratio_segments/{sample}_{type}.clean.calledCNVs.seg`
-* `cnv_sv/hificnv/{sample}_{type}-depth.bw`
-* `cnv_sv/hificnv/{sample}_{type}-copynum.bedgraph`
-* `cnv_sv/hificnv/{sample}_{type}-vcf.gz`
 * `cnv_sv/jumble_vcf/{sample}_{type}.pathology.vcf`
 * `cnv_sv/manta_run_workflow_tn/{sample}/results/variants/somaticSV.vcf.gz`
 * `cnv_sv/manta_run_workflow_t/{sample}/results/variants/tumorSV.vcf.gz`
@@ -38,23 +39,32 @@ The output consists of results files that describe different kinds of larger gen
 * `cnv_sv/melt/{sample}_{type}/HERVK.final_comp.vcf`
 * `cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf`
 * `cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf`
-* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam`
-* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam.bai`
-* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.json`
-* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase_{gene}.vcf.gz`
 * `cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf`
 * `cnv_sv/purecn_purity_file/{sample}_{type}.purity.txt`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv`
 * `cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.{locus}.svg`
-* `cnv_sv/sawfish_joint_call/{sample}_{type}.vcf.gz`
 * `cnv_sv/scanitd/{sample}_{type}.vcf`
 * `cnv_sv/smn_caller/{sample}_{type}.tsv`
-* `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz`
-* `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz.tbi`
-* `cnv_sv/sniffles2_call/{sample}_{type}.snf`
 * `cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf`
 * `cnv_sv/tiddit/{sample}_{type}.vcf`
-* `cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz`
-* `cnv_sv/trgt_plot/{sample}_{type}_{locus}.svg`
 * `cnv_sv/upd/{sample}_{type}.upd_regions.bed`
 * `cnv_sv/upd/{sample}_{type}.upd_sites.bed`
+
+### Long-read
+
+#### Pacbio or ONT
+
+* `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz`
+* `cnv_sv/sniffles2_call/{sample}_{type}.snf`
+
+#### Pacbio only
+* `cnv_sv/hificnv/{sample}_{type}-depth.bw`
+* `cnv_sv/hificnv/{sample}_{type}-copynum.bedgraph`
+* `cnv_sv/hificnv/{sample}_{type}-vcf.gz`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam.bai`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.json`
+* `cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase_{gene}.vcf.gz`
+* `cnv_sv/sawfish_joint_call_single/{sample}_{type}.vcf.gz`
+* `cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz`
+* `cnv_sv/trgt_plot/{sample}_{type}_{locus}.svg`

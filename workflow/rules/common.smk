@@ -322,7 +322,7 @@ def compile_output_list(wildcards):
     files = {
         "cnv_sv/trgt_genotype": ["vcf.gz"],
         "cnv_sv/sniffles2_call": ["vcf.gz", "vcf.gz.tbi", "snf"],
-        "cnv_sv/sawfish_joint_call": ["vcf.gz"],
+        "cnv_sv/sawfish_joint_call_single": ["vcf.gz"],
     }
     output_files = [
         f"{prefix}/{sample}_{unit_type}.{suffix}"
