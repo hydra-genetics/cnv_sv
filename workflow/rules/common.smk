@@ -136,14 +136,17 @@ def get_expected_cn(wildcards):
     These bed are typically used to specify ploidy in the non-PAR regions of the sex chromosomes.
     """
 
-    sex = samples.loc[wildcards.sample].sex
+    try:
+        sex = samples.loc[wildcards.sample].sex
+    except AttributeError:
+        return ""
     if sex == "male":
         expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
         sawfish_param = f"--expected-cn {expected_cn}"
     elif sex == "female":
         expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
         sawfish_param = f"--expected-cn {expected_cn}"
-    else:  # when no sex in samples.tsv treat all regions as diploid
+    else:  # when sex not set to male or female in samples.tsv treat all regions as diploid
         sawfish_param = ""
 
     return sawfish_param
