@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/hydra-genetics/cnv_sv/compare/v1.0.0...v1.0.1) (2025-09-01)
+
+
+### Bug Fixes
+
+* better handle sample.tsv without a sex column ([990acf6](https://www.github.com/hydra-genetics/cnv_sv/commit/990acf698ce6a8613b1217c4dd23ee31d49bac0c))
+
+
+### Documentation
+
+* update README.md ([35c026d](https://www.github.com/hydra-genetics/cnv_sv/commit/35c026dd0d50465bac469e725aa15fe0b1a77b5c))
+
 ## [1.0.0](https://www.github.com/hydra-genetics/cnv_sv/compare/v0.10.0...v1.0.0) (2025-08-29)
 
 
