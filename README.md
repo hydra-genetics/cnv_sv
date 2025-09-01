@@ -2,7 +2,7 @@
 <h1><a href="https://hydra-genetics-cnv-sv.readthedocs.io">https://hydra-genetics-cnv-sv.readthedocs.io</a><h1>
 </p>
 
-# <img src="images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
+# <img src="docs/images/hydragenetics.png" width=40 /> hydra-genetics/cnv_sv
 
 Snakemake module containing steps to call copy number variants and structural variants
 
