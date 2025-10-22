@@ -36,8 +36,8 @@ rule melt:
         "{rule}: Calling mobile elements in {input.bam} with MELT"
     shell:
         """
-        (java -Xmx{resources.mem_mb}m -jar \
-        /projects/wp3/Software/MELTv2.2.2/MELT.jar \
+        export JAVA_OPTS="-Xmx{resources.mem_mb}m"
+        (MELT \
         Single \
         -bamfile {input.bam} \
         -h {input.ref} \
