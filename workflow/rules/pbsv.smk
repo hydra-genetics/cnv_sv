@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule pbsv_discover:
     input:
-        bam=lambda wildcards: get_input_bam(wildcards)[0],
-        bai=lambda wildcards: get_input_bam(wildcards)[1],
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned__bam(wildcards, config)[1],
     output:
         svsig=temp("cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz"),
     params:
