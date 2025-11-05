@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule sawfish_discover:
     input:
-        bam=lambda wildcards: get_input_bam(wildcards)[0],
-        bai=lambda wildcards: get_input_bam(wildcards)[1],
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
         maf=(
             "snv_indels/deepvariant/{sample}_{type}.merged.vcf.gz"
             if config.get("sawfish_discover", {}).get("maf", False)
@@ -99,8 +99,8 @@ rule sawfish_discover:
 
 rule sawfish_joint_call_single:
     input:
-        bam=lambda wildcards: get_input_bam(wildcards)[0],
-        bai=lambda wildcards: get_input_bam(wildcards)[1],
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
         ref=config.get("reference", {}).get("fasta", ""),
         asm_bed="cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed",
         bcf="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf",
