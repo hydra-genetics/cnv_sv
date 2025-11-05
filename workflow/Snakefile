@@ -33,7 +33,9 @@ include: "rules/tiddit.smk"
 include: "rules/trgt.smk"
 include: "rules/upd.smk"
 
+
 ruleorder: trgt_genotype > bgzip
+
 
 rule all:
     input:
