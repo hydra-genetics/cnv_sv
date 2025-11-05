@@ -20,9 +20,9 @@ rule melt:
     params:
         extra=config.get("melt", {}).get("extra", ""),
     log:
-        "cnv_sv/melt/{sample}_{type}/melt.output.log",
+        "cnv_sv/melt/{sample}_{type}.melt.output.log",
     benchmark:
-        repeat("cnv_sv/melt/{sample}_{type}/melt.benchmark.tsv", config.get("melt", {}).get("benchmark_repeats", 1))
+        repeat("cnv_sv/melt/{sample}_{type}.melt.benchmark.tsv", config.get("melt", {}).get("benchmark_repeats", 1))
     threads: config.get("melt", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("melt", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -36,8 +36,8 @@ rule melt:
         "{rule}: Calling mobile elements in {input.bam} with MELT"
     shell:
         """
-        (java -Xmx{resources.mem_mb}m -jar \
-        /projects/wp3/Software/MELTv2.2.2/MELT.jar \
+        export JAVA_OPTS="-Xmx{resources.mem_mb}m"
+        (MELT \
         Single \
         -bamfile {input.bam} \
         -h {input.ref} \
