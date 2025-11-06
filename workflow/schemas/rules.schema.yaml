@@ -1525,6 +1525,56 @@ properties:
             type: string
             description: vcf file with called internal tandem duplications (ITD)
 
+  scramble_cluster_analysis:
+    type: object
+    description: input and output parameters for scramble_cluster_analysis
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          clusters:
+            type: string
+            description: tab-delimited file with cluster consensus sequences from scramble_cluster_identifier
+          ref:
+            type: string
+            description: reference genome fasta file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          meis:
+            type: string
+            description: tab-delimited file with MEI calls
+          dels:
+            type: string
+            description: tab-delimited file with predicted deletions
+          vcf:
+            type: string
+            description: VCF file with all variant calls (if reference is provided)
+
+  scramble_cluster_identifier:
+    type: object
+    description: input and output parameters for scramble_cluster_identifier
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input BAM file
+          bai:
+            type: string
+            description: input BAM index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          clusters:
+            type: string
+            description: tab-delimited file with cluster consensus sequences
+            
   severus_t_only:
     type: object
     description: input and output parameters for severus_t_only
