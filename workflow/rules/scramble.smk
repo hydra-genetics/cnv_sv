@@ -17,17 +17,31 @@ rule scramble_cluster_identifier:
     benchmark:
         repeat(
             "cnv_sv/scramble_cluster_identifier/{sample}_{type}.output.benchmark.tsv",
-            config.get("scramble_cluster_identifier", {}).get("benchmark_repeats", 1)
+            config.get("scramble_cluster_identifier", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("scramble_cluster_identifier", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("scramble_cluster_identifier", {}).get(
+    "threads", config["default_resources"]["threads"]
+)
     resources:
-        mem_mb=config.get("scramble_cluster_identifier", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("scramble_cluster_identifier", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("scramble_cluster_identifier", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("scramble_cluster_identifier", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("scramble_cluster_identifier", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("scramble_cluster_identifier", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("scramble_cluster_identifier", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("scramble_cluster_identifier", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("scramble_cluster_identifier", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("scramble_cluster_identifier", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     container:
-        config.get("scramble_cluster_identifier", {}).get("container", config["default_container"])
+        config.get("scramble_cluster_identifier", {}).get(
+            "container", config["default_container"]
+        )
     message:
         "{rule}: identify read clusters in {input.bam} with SCRAMble"
     shell:
@@ -37,17 +51,25 @@ rule scramble_cluster_identifier:
         "> {output.clusters} "
         "2> {log}"
 
+
 rule scramble_cluster_analysis:
     input:
         clusters="cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt",
     output:
         meis=temp("cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt"),
-        dels=temp("cnv_sv/scramble_cluster_analysis/{sample}_{type}_PredictedDeletions.txt"),
+        dels=temp(
+            "cnv_sv/scramble_cluster_analysis/{sample}_{type}_PredictedDeletions.txt"
+        ),
         vcf="cnv_sv/scramble_cluster_analysis/{sample}_{type}.vcf",
     params:
         extra=config.get("scramble_cluster_analysis", {}).get("extra", ""),
-        install_dir=config.get("scramble_cluster_analysis", {}).get("install_dir", "/opt/scramble/cluster_analysis/bin"),
-        mei_refs=config.get("scramble_cluster_analysis", {}).get("mei_refs", "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"),
+        install_dir=config.get("scramble_cluster_analysis", {}).get(
+            "install_dir", "/opt/scramble/cluster_analysis/bin"
+        ),
+        mei_refs=config.get("scramble_cluster_analysis", {}).get(
+            "mei_refs",
+            "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa",
+        ),
         out_name=lambda wildcards: f"cnv_sv/scramble_cluster_analysis/{wildcards.sample}_{wildcards.type}",
         ref=config.get("scramble_cluster_analysis", {}).get("ref", ""),
     log:
@@ -55,17 +77,31 @@ rule scramble_cluster_analysis:
     benchmark:
         repeat(
             "cnv_sv/scramble_cluster_analysis/{sample}_{type}.output.benchmark.tsv",
-            config.get("scramble_cluster_analysis", {}).get("benchmark_repeats", 1)
+            config.get("scramble_cluster_analysis", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("scramble_cluster_analysis", {}).get("threads", config["default_resources"]["threads"])
+    threads: config.get("scramble_cluster_analysis", {}).get(
+    "threads", config["default_resources"]["threads"]
+)
     resources:
-        mem_mb=config.get("scramble_cluster_analysis", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("scramble_cluster_analysis", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("scramble_cluster_analysis", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("scramble_cluster_analysis", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("scramble_cluster_analysis", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=config.get("scramble_cluster_analysis", {}).get(
+            "mem_mb", config["default_resources"]["mem_mb"]
+        ),
+        mem_per_cpu=config.get("scramble_cluster_analysis", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
+        partition=config.get("scramble_cluster_analysis", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
+        threads=config.get("scramble_cluster_analysis", {}).get(
+            "threads", config["default_resources"]["threads"]
+        ),
+        time=config.get("scramble_cluster_analysis", {}).get(
+            "time", config["default_resources"]["time"]
+        ),
     container:
-        config.get("scramble_cluster_analysis", {}).get("container", config["default_container"])
+        config.get("scramble_cluster_analysis", {}).get(
+            "container", config["default_container"]
+        )
     message:
         "{rule}: analyze read clusters from {input.clusters} using SCRAMble"
     shell:
