@@ -145,6 +145,17 @@ scanitd:
   container: "docker://hydragenetics/scanitd:0.9.2"
   region_bed: "-t reference/scanITD_regions.bed"
 
+scramble_cluster_identifier:
+  container: "docker://hydragenetics/scramble:1.0.2"
+  extra: ""
+
+scramble_cluster_analysis:
+  container: "docker://hydragenetics/scramble:1.0.2"
+  extra: ""
+  install_dir: "/opt/scramble/cluster_analysis/bin"
+  mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
+  ref: "reference/HES45.fna"
+
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
   genome_version: '38'
