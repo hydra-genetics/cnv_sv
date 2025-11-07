@@ -53,6 +53,7 @@ rule scramble_cluster_identifier:
 rule scramble_cluster_analysis:
     input:
         clusters="cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt",
+        ref=lambda wildcards: config.get("scramble_cluster_analysis", {}).get("ref", ""),
     output:
         meis=temp("cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt"),
         dels=temp(
@@ -69,7 +70,7 @@ rule scramble_cluster_analysis:
             "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa",
         ),
         out_name=lambda wildcards: f"cnv_sv/scramble_cluster_analysis/{wildcards.sample}_{wildcards.type}",
-        ref=config.get("scramble_cluster_analysis", {}).get("ref", ""),
+        ref_param=lambda wildcards, input: f"--ref {input.ref}" if input.ref else "",
     log:
         "cnv_sv/scramble_cluster_analysis/{sample}_{type}.output.log",
     benchmark:
@@ -106,7 +107,7 @@ rule scramble_cluster_analysis:
         "--cluster-file {input.clusters} "
         "--install-dir {params.install_dir} "
         "--mei-refs {params.mei_refs} "
-        "--ref {params.ref} "
+        "{params.ref_param} "
         "--eval-dels "
         "--eval-meis "
         "{params.extra} "
