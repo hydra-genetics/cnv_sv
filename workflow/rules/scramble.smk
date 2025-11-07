@@ -19,9 +19,7 @@ rule scramble_cluster_identifier:
             "cnv_sv/scramble_cluster_identifier/{sample}_{type}.output.benchmark.tsv",
             config.get("scramble_cluster_identifier", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("scramble_cluster_identifier", {}).get(
-    "threads", config["default_resources"]["threads"]
-)
+    threads: config.get("scramble_cluster_identifier", {}).get("threads", config["default_resources"]["threads"]),
     resources:
         mem_mb=config.get("scramble_cluster_identifier", {}).get(
             "mem_mb", config["default_resources"]["mem_mb"]
@@ -79,9 +77,7 @@ rule scramble_cluster_analysis:
             "cnv_sv/scramble_cluster_analysis/{sample}_{type}.output.benchmark.tsv",
             config.get("scramble_cluster_analysis", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("scramble_cluster_analysis", {}).get(
-    "threads", config["default_resources"]["threads"]
-)
+    threads: config.get("scramble_cluster_analysis", {}).get("threads", config["default_resources"]["threads"]),
     resources:
         mem_mb=config.get("scramble_cluster_analysis", {}).get(
             "mem_mb", config["default_resources"]["mem_mb"]
