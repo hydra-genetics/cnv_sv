@@ -55,20 +55,12 @@ rule scramble_cluster_analysis:
         clusters="cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt",
         ref=lambda wildcards: config.get("scramble_cluster_analysis", {}).get("ref", ""),
     output:
-        meis=temp("cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt"),
-        dels=temp(
-            "cnv_sv/scramble_cluster_analysis/{sample}_{type}_PredictedDeletions.txt"
-        ),
-        vcf="cnv_sv/scramble_cluster_analysis/{sample}_{type}.vcf",
+        meis="cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt",
+        dels="cnv_sv/scramble_cluster_analysis/{sample}_{type}_PredictedDeletions.txt",
     params:
         extra=config.get("scramble_cluster_analysis", {}).get("extra", ""),
-        install_dir=config.get("scramble_cluster_analysis", {}).get(
-            "install_dir", "/opt/scramble/cluster_analysis/bin"
-        ),
-        mei_refs=config.get("scramble_cluster_analysis", {}).get(
-            "mei_refs",
-            "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa",
-        ),
+        install_dir=config.get("scramble_cluster_analysis", {}).get("install_dir", ""),
+        mei_refs=config.get("scramble_cluster_analysis", {}).get("mei_refs", ""),
         out_name=lambda wildcards: f"cnv_sv/scramble_cluster_analysis/{wildcards.sample}_{wildcards.type}",
         ref_param=lambda wildcards, input: f"--ref {input.ref}" if input.ref else "",
     log:
