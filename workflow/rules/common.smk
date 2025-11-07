@@ -394,10 +394,21 @@ def compile_output_list(wildcards):
         "cnv_sv/pindel_vcf": ["no_tc.vcf.gz"],
         "cnv_sv/tiddit": ["vcf.gz"],
         "cnv_sv/scanitd": ["vcf"],
-        "cnv_sv/scramble_cluster_analysis": ["_MEIs.txt", "_PredictedDeletions.txt"],
     }
     output_files += [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+    files = {
+        "cnv_sv/scramble_cluster_analysis": ["MEIs.txt", "PredictedDeletions.txt"],
+    }
+    output_files += [
+        "%s/%s_%s_%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
