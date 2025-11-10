@@ -21,25 +21,13 @@ rule scramble_cluster_identifier:
         )
     threads: config.get("scramble_cluster_identifier", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("scramble_cluster_identifier", {}).get(
-            "mem_mb", config["default_resources"]["mem_mb"]
-        ),
-        mem_per_cpu=config.get("scramble_cluster_identifier", {}).get(
-            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
-        ),
-        partition=config.get("scramble_cluster_identifier", {}).get(
-            "partition", config["default_resources"]["partition"]
-        ),
-        threads=config.get("scramble_cluster_identifier", {}).get(
-            "threads", config["default_resources"]["threads"]
-        ),
-        time=config.get("scramble_cluster_identifier", {}).get(
-            "time", config["default_resources"]["time"]
-        ),
+        mem_mb=config.get("scramble_cluster_identifier", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("scramble_cluster_identifier", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("scramble_cluster_identifier", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("scramble_cluster_identifier", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("scramble_cluster_identifier", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("scramble_cluster_identifier", {}).get(
-            "container", config["default_container"]
-        )
+        config.get("scramble_cluster_identifier", {}).get("container", config["default_container"])
     message:
         "{rule}: identify read clusters in {input.bam} with SCRAMble"
     shell:
@@ -72,25 +60,13 @@ rule scramble_cluster_analysis:
         )
     threads: config.get("scramble_cluster_analysis", {}).get("threads", config["default_resources"]["threads"])
     resources:
-        mem_mb=config.get("scramble_cluster_analysis", {}).get(
-            "mem_mb", config["default_resources"]["mem_mb"]
-        ),
-        mem_per_cpu=config.get("scramble_cluster_analysis", {}).get(
-            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
-        ),
-        partition=config.get("scramble_cluster_analysis", {}).get(
-            "partition", config["default_resources"]["partition"]
-        ),
-        threads=config.get("scramble_cluster_analysis", {}).get(
-            "threads", config["default_resources"]["threads"]
-        ),
-        time=config.get("scramble_cluster_analysis", {}).get(
-            "time", config["default_resources"]["time"]
-        ),
+        mem_mb=config.get("scramble_cluster_analysis", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("scramble_cluster_analysis", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("scramble_cluster_analysis", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("scramble_cluster_analysis", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("scramble_cluster_analysis", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("scramble_cluster_analysis", {}).get(
-            "container", config["default_container"]
-        )
+        config.get("scramble_cluster_analysis", {}).get("container", config["default_container"])
     message:
         "{rule}: analyze read clusters from {input.clusters} using SCRAMble"
     shell:
