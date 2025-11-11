@@ -404,8 +404,10 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    
+    # scramble: MEIs.txt is always generated
     files = {
-        "cnv_sv/scramble_cluster_analysis": ["MEIs.txt", "PredictedDeletions.txt"],
+        "cnv_sv/scramble_cluster_analysis": ["MEIs.txt"],
     }
     output_files += [
         "%s/%s_%s_%s" % (prefix, sample, unit_type, suffix)
@@ -416,6 +418,22 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    
+    # scramble: MEIs.vcf is generated when vcf: true
+    if config.get("scramble_cluster_analysis", {}).get("vcf", False):
+        files = {
+            "cnv_sv/scramble_cluster_analysis": ["MEIs.vcf"],
+        }
+        output_files += [
+            "%s/%s_%s_%s" % (prefix, sample, unit_type, suffix)
+            for prefix in files.keys()
+            for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+            for unit_type in get_unit_types(units, sample)
+            for platform in units.loc[(sample,)].platform
+            if platform not in ["ONT", "PACBIO"]
+            for suffix in files[prefix]
+        ]
+    
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
