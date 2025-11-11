@@ -9,7 +9,7 @@ rule scramble_cluster_identifier:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
     output:
-        clusters=temp("cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt"),
+        clusters="cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt",
     params:
         extra=config.get("scramble_cluster_identifier", {}).get("extra", ""),
     log:
@@ -70,13 +70,12 @@ rule scramble_cluster_analysis:
     message:
         "{rule}: analyze read clusters from {input.clusters} using SCRAMble"
     shell:
-        "SCRAMble.R "
-        "--out-name {params.out_name} "
-        "--cluster-file {input.clusters} "
+        "WORKDIR=$(pwd); "
+        "Rscript --vanilla /usr/local/bin/SCRAMble.R "
+        "--out-name $WORKDIR/{params.out_name} "
+        "--cluster-file $WORKDIR/{input.clusters} "
         "--install-dir {params.install_dir} "
         "--mei-refs {params.mei_refs} "
-        "{params.ref_param} "
-        "--eval-dels "
         "--eval-meis "
         "{params.extra} "
         "2> {log}"
