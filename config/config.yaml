@@ -89,7 +89,7 @@ scramble_cluster_analysis:
   extra: ""
   install_dir: "/opt/scramble/cluster_analysis/bin"
   mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
-  ref: ""  # Path to reference genome fasta file for additional VCF output
+  vcf: false  # Set to true to generate VCF output (requires reference genome in reference.fasta)
 
 scramble_cluster_identifier:
   container: "docker://hydragenetics/scramble:1.0.2"
