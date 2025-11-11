@@ -15,18 +15,18 @@ automap:
   extra: "--DP 2 --minsize 3 --chrX --binomial 0.0 --percaltlow 0.05 --percalthigh 0.95"
 
 cnvkit_batch:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
   method: "hybrid"
   normal_reference: "reference/cnvkit_Twist_PoN_chr1.cnn"
 
 cnvkit_call:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_diagram:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_scatter:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvkit_vcf:
   dup_limit: 2.5
@@ -34,7 +34,7 @@ cnvkit_vcf:
   hom_del_limit: 0.5
 
 cnvkit_seg:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.3.1"
@@ -87,7 +87,7 @@ jumble_vcf:
   hom_del_limit: 0.5
 
 jumble_cnvkit_call:
-  container: "docker://hydragenetics/cnvkit:0.9.9"
+  container: "docker://hydragenetics/cnvkit:0.9.11"
 
 jumble_run:
   container: "docker://hydragenetics/jumble:240530"
