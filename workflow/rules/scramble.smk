@@ -56,8 +56,7 @@ rule scramble_cluster_analysis:
         ref=config.get("reference", {}).get("fasta", ""),
         ref_flag=lambda wildcards: (
             f"--ref $(pwd)/{config.get('reference', {}).get('fasta', '')}"
-            if config.get("scramble_cluster_analysis", {}).get("vcf", False)
-            and config.get("reference", {}).get("fasta", "")
+            if config.get("scramble_cluster_analysis", {}).get("vcf", False) and config.get("reference", {}).get("fasta", "")
             else ""
         ),
     log:
