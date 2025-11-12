@@ -87,12 +87,12 @@ rule scramble_cluster_analysis:
         "if [ -n '{params.ref_flag}' ] && [ ! -f {output.vcf} ]; then "
         "  echo -e '##fileformat=VCFv4.2\\n"
         "##source=SCRAMBLE\\n"
-        "##INFO=<ID=SVTYPE,Number=1,Type=String,Description=\"Type of structural variant\">\\n"
-        "##INFO=<ID=SVLEN,Number=.,Type=Integer,Description=\"Difference in length between REF and ALT alleles\">\\n"
-        "##INFO=<ID=END,Number=.,Type=Integer,Description=\"End position for structural variants\">\\n"
-        "##INFO=<ID=MEINFO,Number=4,Type=String,Description=\"Mobile element info of the form NAME,START,END,POLARITY\">\\n"
-        "##ALT=<ID=INS:ME:ALU,Description=\"Insertion of ALU element\">\\n"
-        "##ALT=<ID=INS:ME:L1,Description=\"Insertion of L1 element\">\\n"
-        "##ALT=<ID=INS:ME:SVA,Description=\"Insertion of SVA element\">\\n"
+        '##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">\\n'
+        '##INFO=<ID=SVLEN,Number=.,Type=Integer,Description="Difference in length between REF and ALT alleles">\\n'
+        '##INFO=<ID=END,Number=.,Type=Integer,Description="End position for structural variants">\\n'
+        '##INFO=<ID=MEINFO,Number=4,Type=String,Description="Mobile element info of the form NAME,START,END,POLARITY">\\n'
+        '##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">\\n'
+        '##ALT=<ID=INS:ME:L1,Description="Insertion of L1 element">\\n'
+        '##ALT=<ID=INS:ME:SVA,Description="Insertion of SVA element">\\n'
         "#CHROM\\tPOS\\tID\\tREF\\tALT\\tQUAL\\tFILTER\\tINFO' > {output.vcf}; "
         "fi"
