@@ -43,18 +43,23 @@ rule scramble_cluster_analysis:
         clusters="cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt",
     output:
         meis="cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt",
-        vcf="cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.vcf"
-        if config.get("scramble_cluster_analysis", {}).get("vcf", False)
-        else [],
+        vcf=(
+            "cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.vcf"
+            if config.get("scramble_cluster_analysis", {}).get("vcf", False)
+            else []
+        ),
     params:
         extra=config.get("scramble_cluster_analysis", {}).get("extra", ""),
         install_dir=config.get("scramble_cluster_analysis", {}).get("install_dir", ""),
         mei_refs=config.get("scramble_cluster_analysis", {}).get("mei_refs", ""),
         out_name=lambda wildcards: f"cnv_sv/scramble_cluster_analysis/{wildcards.sample}_{wildcards.type}",
         ref=config.get("reference", {}).get("fasta", ""),
-        ref_flag=lambda wildcards: f"--ref $(pwd)/{config.get('reference', {}).get('fasta', '')}"
-        if config.get("scramble_cluster_analysis", {}).get("vcf", False) and config.get("reference", {}).get("fasta", "")
-        else "",
+        ref_flag=lambda wildcards: (
+            f"--ref $(pwd)/{config.get('reference', {}).get('fasta', '')}"
+            if config.get("scramble_cluster_analysis", {}).get("vcf", False)
+            and config.get("reference", {}).get("fasta", "")
+            else ""
+        ),
     log:
         "cnv_sv/scramble_cluster_analysis/{sample}_{type}.output.log",
     benchmark:
