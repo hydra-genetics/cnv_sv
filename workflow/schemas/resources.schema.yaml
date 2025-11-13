@@ -1029,9 +1029,9 @@ properties:
         type: string
         description: max execution time
 
-  scramble_cluster_identifier:
+  scramble_cluster_analysis:
     type: object
-    description: resource definitions for scramble_cluster_identifier
+    description: resource definitions for scramble_cluster_analysis
     properties:
       mem_mb:
         type: integer
@@ -1048,10 +1048,10 @@ properties:
       time:
         type: string
         description: max execution time
-
-  scramble_cluster_analysis:
+        
+  scramble_cluster_identifier:
     type: object
-    description: resource definitions for scramble_cluster_analysis
+    description: resource definitions for scramble_cluster_identifier
     properties:
       mem_mb:
         type: integer

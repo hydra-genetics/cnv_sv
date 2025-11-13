@@ -1536,9 +1536,6 @@ properties:
           clusters:
             type: string
             description: tab-delimited file with cluster consensus sequences from scramble_cluster_identifier
-          ref:
-            type: string
-            description: reference genome fasta file
       output:
         type: object
         description: list of outputs
@@ -1546,12 +1543,6 @@ properties:
           meis:
             type: string
             description: tab-delimited file with MEI calls
-          dels:
-            type: string
-            description: tab-delimited file with predicted deletions
-          vcf:
-            type: string
-            description: VCF file with all variant calls (if reference is provided)
 
   scramble_cluster_identifier:
     type: object
@@ -1574,7 +1565,26 @@ properties:
           clusters:
             type: string
             description: tab-delimited file with cluster consensus sequences
-            
+
+  scramble_vcf:
+    type: object
+    description: input and output parameters for scramble_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          meis:
+            type: string
+            description: tab-delimited file with MEI calls from scramble_cluster_analysis
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: VCF file with MEI variant calls
+
   severus_t_only:
     type: object
     description: input and output parameters for severus_t_only

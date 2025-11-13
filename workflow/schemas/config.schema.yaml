@@ -901,6 +901,51 @@ properties:
         type: string
         description: Optional bed file with genome regions where ITD should be called. If used the file should be preceded by the -t option (-t region_bed file). 
 
+  scramble_cluster_analysis:
+    description: parameters for scramble_cluster_analysis
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded (e.g. -n, -m, and --min-del-len for cluster size, MEI score, and minimum deletion length thresholds)
+      install_dir:
+        type: string
+        description: path to SCRAMble installation directory (default "/opt/scramble/cluster_analysis/bin")
+      mei_refs:
+        type: string
+        description: path to MEI consensus sequences fasta file (default "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa")
+
+  scramble_cluster_identifier:
+    description: parameters for scramble_cluster_identifier
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded (e.g. -m and -s for min soft clipped bases and reads)
+
+  scramble_vcf:
+    description: parameters for scramble_vcf
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   severus_t_only:
     description: parameters for severus_t_only
     type: object
@@ -1152,41 +1197,4 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
-
-  scramble_cluster_analysis:
-    description: parameters for scramble_cluster_analysis
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded (e.g. -n, -m, and --min-del-len for cluster size, MEI score, and minimum deletion length thresholds)
-      install_dir:
-        type: string
-        description: path to SCRAMble installation directory (default "/opt/scramble/cluster_analysis/bin")
-      mei_refs:
-        type: string
-        description: path to MEI consensus sequences fasta file (default "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa")
-      ref:
-        type: string
-        description: path to reference genome fasta file
-
-  scramble_cluster_identifier:
-    description: parameters for scramble_cluster_identifier
-    type: object
-    properties:
-      benchmark_repeats:
-        type: integer
-        description: set number of times benchmark should be repeated
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded (e.g. -m and -s for min soft clipped bases and reads)
 
