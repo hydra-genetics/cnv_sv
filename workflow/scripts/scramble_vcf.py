@@ -1,9 +1,9 @@
 from datetime import date
 
-meis_in = open(snakemake.input.meis)
-vcf_out = open(snakemake.output.vcf, "w")
-sample_name = snakemake.params.sample_name
-caller = snakemake.params.caller
+meis_in = open(snakemake.input.meis)  # noqa: F821
+vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
+sample_name = snakemake.params.sample_name  # noqa: F821
+caller = snakemake.params.caller  # noqa: F821
 
 
 def write_vcf_header(sample_name):
@@ -11,13 +11,16 @@ def write_vcf_header(sample_name):
     vcf_out.write("##fileDate=%s\n" % str(date.today()))
     vcf_out.write("##source=SCRAMBLE\n")
     vcf_out.write(
-        "##INFO=<ID=END,Number=1,Type=Integer,Description=\"End position of the variant described in this record\">\n")
+        "##INFO=<ID=END,Number=1,Type=Integer,"
+        "Description=\"End position of the variant described in this record\">\n")
     vcf_out.write(
-        "##INFO=<ID=SVLEN,Number=.,Type=Integer,Description=\"Difference in length between REF and ALT alleles\">\n")
+        "##INFO=<ID=SVLEN,Number=.,Type=Integer,"
+        "Description=\"Difference in length between REF and ALT alleles\">\n")
     vcf_out.write(
         "##INFO=<ID=SVTYPE,Number=1,Type=String,Description=\"Type of structural variant\">\n")
     vcf_out.write(
-        "##INFO=<ID=MEINFO,Number=4,Type=String,Description=\"Mobile element info of the form NAME,START,END,POLARITY\">\n")
+        "##INFO=<ID=MEINFO,Number=4,Type=String,"
+        "Description=\"Mobile element info of the form NAME,START,END,POLARITY\">\n")
     vcf_out.write(
         "##INFO=<ID=CALLER,Number=1,Type=String,Description=\"Caller\">\n")
     vcf_out.write(
