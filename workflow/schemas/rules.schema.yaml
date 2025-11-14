@@ -1525,6 +1525,66 @@ properties:
             type: string
             description: vcf file with called internal tandem duplications (ITD)
 
+  scramble_cluster_analysis:
+    type: object
+    description: input and output parameters for scramble_cluster_analysis
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          clusters:
+            type: string
+            description: tab-delimited file with cluster consensus sequences from scramble_cluster_identifier
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          meis:
+            type: string
+            description: tab-delimited file with MEI calls
+
+  scramble_cluster_identifier:
+    type: object
+    description: input and output parameters for scramble_cluster_identifier
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input BAM file
+          bai:
+            type: string
+            description: input BAM index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          clusters:
+            type: string
+            description: tab-delimited file with cluster consensus sequences
+
+  scramble_vcf:
+    type: object
+    description: input and output parameters for scramble_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          meis:
+            type: string
+            description: tab-delimited file with MEI calls from scramble_cluster_analysis
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: VCF file with MEI variant calls
+
   severus_t_only:
     type: object
     description: input and output parameters for severus_t_only

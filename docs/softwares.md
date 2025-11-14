@@ -1529,3 +1529,49 @@ SAVANA is a somatic structural variant (SV) and copy number aberrations (CNA) ca
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__savana_ont_tn#
+
+---
+
+## [scramble_cluster_identifier](https://github.com/GeneDx/scramble)
+The Soft Clipped Read Alignment Mapper (SCRAMble) is a mobile element insertion (MEI) detection tool, written in R, that identifies soft clipped reads and calls MEI and deletions. It is primarily developed for application to targeted capture sequencing (exome sequencing)
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__scramble__scramble_cluster_identifier#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__scramble__scramble_cluster_identifier#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__scramble_cluster_identifier#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__scramble_cluster_identifier#
+
+---
+
+## [scramble_cluster_analysis](https://github.com/GeneDx/scramble)
+The Soft Clipped Read Alignment Mapper (SCRAMble) is a mobile element insertion (MEI) detection tool, written in R, that identifies soft clipped reads and calls MEI and deletions. It is primarily developed for application to targeted capture sequencing (exome sequencing)
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__scramble__scramble_cluster_analysis#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__scramble__scramble_cluster_analysis#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__scramble_cluster_analysis#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__scramble_cluster_analysis#
