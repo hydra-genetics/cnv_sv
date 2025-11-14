@@ -85,15 +85,18 @@ for line in meis_in:
     id = "."
     qual = "."
     filter = "PASS"
-
-    # Estimate SVLEN (TODO: add actual consensus length if available)
-    svlen = "."
-    if mei_type == "ALU":
-        svlen = "300"
-    elif mei_type == "L1":
-        svlen = "6000"
-    elif mei_type == "SVA":
-        svlen = "2000"
+    # Calculate SVLEN from consensus sequence if available
+    if consensus and consensus != "NA" and consensus != "None Found":
+        svlen = str(len(consensus))
+    else:
+        if mei_type == "ALU":
+            svlen = "300"
+        elif mei_type == "L1":
+            svlen = "6000"
+        elif mei_type == "SVA":
+            svlen = "2000"
+        else:
+            svlen = "."
 
     end = str(pos_int + 1)
     info = f"SVTYPE=INS;END={end}"
@@ -110,8 +113,7 @@ for line in meis_in:
         info += f";POLYA_LEN={polya_len}"
     if polya_score and polya_score != "NA" and polya_score != "None Found":
         info += f";POLYA_SCORE={polya_score}"
-
-    # Genotype - assume heterozygous for MEI insertions (TODO: doublecheck assumption)
+    # assume heterozygous for MEIs
     format_field = "GT"
     data = "0/1"
 
