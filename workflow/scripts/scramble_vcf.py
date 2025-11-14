@@ -46,12 +46,14 @@ def write_vcf_header(sample_name):
 
 
 header_map = {}
+header_written = False
 for line in meis_in:
     columns = line.strip().split("\t")
     if columns[0] == "Insertion" or columns[0].startswith("#"):
         header_map = {column_name: index for index,
                       column_name in enumerate(columns)}
         write_vcf_header(sample_name)
+        header_written = True
         continue
     if not line.strip():
         continue
@@ -117,4 +119,9 @@ for line in meis_in:
         chrom, pos, id, ref, alt, qual, filter, info, format_field, data
     )
     vcf_out.write(out_line)
+
+# Write header even if no MEIs found
+if not header_written:
+    write_vcf_header(sample_name)
+
 vcf_out.close()
