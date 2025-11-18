@@ -3,6 +3,7 @@ import logging
 
 log = logging.getLogger()
 
+
 def write_vcf_header(vcf_out, sample_name):
     vcf_out.write("##fileformat=VCFv4.2\n")
     vcf_out.write("##fileDate=%s\n" % str(date.today()))
@@ -41,21 +42,22 @@ def write_vcf_header(vcf_out, sample_name):
     vcf_out.write(
         "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n" % sample_name)
 
+
 def main():
     snakemake.log_fmt_shell(stdout=False, stderr=True)  # noqa: F821
-    
+
     meis_in = open(snakemake.input.meis)  # noqa: F821
     vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
     sample_name = snakemake.params.sample_name  # noqa: F821
     caller = snakemake.params.caller  # noqa: F821
-    
+
     header_map = {}
     header_written = False
     for line in meis_in:
         columns = line.strip().split("\t")
         if columns[0] == "Insertion" or columns[0].startswith("#"):
             header_map = {column_name: index for index,
-                        column_name in enumerate(columns)}
+                          column_name in enumerate(columns)}
             write_vcf_header(vcf_out, sample_name)
             header_written = True
             continue
@@ -131,6 +133,7 @@ def main():
         write_vcf_header(vcf_out, sample_name)
 
     vcf_out.close()
+
 
 if __name__ == "__main__":
     main()
