@@ -18,6 +18,7 @@ rule melt:
         sva=temp("cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf"),
     params:
         extra=config.get("melt", {}).get("extra", ""),
+        tmpdir=lambda wildcards: f"cnv_sv/melt/{wildcards.sample}_{wildcards.type}",
     log:
         "cnv_sv/melt/{sample}_{type}.melt.output.log",
     benchmark:
@@ -42,7 +43,7 @@ rule melt:
         -h {input.ref} \
         -t {input.mei} \
         -n {input.bed} \
-        -w {output.tmpdir} \
+        -w {params.tmpdir} \
         {params.extra}) \
         &> {log}
         """
