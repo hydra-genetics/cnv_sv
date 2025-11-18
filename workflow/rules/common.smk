@@ -13,6 +13,7 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+from hydra_genetics.utils.misc import get_input_aligned_bam
 
 min_version("7.8.3")
 

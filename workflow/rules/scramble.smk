@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule scramble_cluster_identifier:
     input:
-        bam=get_input_aligned_bam()["bam"],
-        bai=get_input_aligned_bam()["bai"],
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
     output:
         clusters="cnv_sv/scramble_cluster_identifier/{sample}_{type}.clusters.txt",
     params:
