@@ -18,6 +18,8 @@ Aligned and merged `.bam` files as well as different `.vcf` files depending on a
 * `snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf`
 * `snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz`
 
+Certain tools in this module (e.g. cnvkit batch, hificnv, pbsv, severus, sniffles2) use functions to compile paths to input BAM files. Read more about these functions [here](https://hydra-genetics.readthedocs.io/en/latest/development/input_functions/).
+
 ## Module output files
 The output consists of result files that describe different kinds of larger genomic aberrations, such as copy number aberrations (CNVs), structural variants (SVs), and repeat expansions. The output files below are subdivided into short-read and long-read categories.
 
