@@ -44,10 +44,10 @@ rule melt:
         -t {input.mei} \
         -n {input.bed} \
         -w {output.tmpdir} \
-        {params.extra}) \
+        {params.extra} && \
         cp {output.tmpdir}/ALU.final_comp.vcf {output.alu} && \
         cp {output.tmpdir}/HERVK.final_comp.vcf {output.hervk} && \
         cp {output.tmpdir}/LINE1.final_comp.vcf {output.line1} && \
-        cp {output.tmpdir}/SVA.final_comp.vcf {output.sva} && \
+        cp {output.tmpdir}/SVA.final_comp.vcf {output.sva}) \
         &> {log}
         """
