@@ -12,10 +12,10 @@ rule melt:
         mei=config.get("melt", {}).get("mei", ""),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
-        alu=temp("cnv_sv/melt/{sample}_{type}/ALU.final_comp.vcf"),
-        hervk=temp("cnv_sv/melt/{sample}_{type}/HERVK.final_comp.vcf"),
-        line1=temp("cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf"),
-        sva=temp("cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf"),
+        alu=temp("cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf"),
+        hervk=temp("cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf"),
+        line1=temp("cnv_sv/melt/{sample}_{type}.LINE1.final_comp.vcf"),
+        sva=temp("cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf"),
         tmpdir=temp(directory("cnv_sv/melt/{sample}_{type}")),
     params:
         extra=config.get("melt", {}).get("extra", ""),
@@ -45,5 +45,9 @@ rule melt:
         -n {input.bed} \
         -w {output.tmpdir} \
         {params.extra}) \
+        cp {output.tmpdir}/ALU.final_comp.vcf {output.alu} && \
+        cp {output.tmpdir}/HERVK.final_comp.vcf {output.hervk} && \
+        cp {output.tmpdir}/LINE1.final_comp.vcf {output.line1} && \
+        cp {output.tmpdir}/SVA.final_comp.vcf {output.sva} && \
         &> {log}
         """
