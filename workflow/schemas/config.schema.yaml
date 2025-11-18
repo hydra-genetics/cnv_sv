@@ -920,6 +920,9 @@ properties:
       mei_refs:
         type: string
         description: path to MEI consensus sequences fasta file (default "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa")
+      out_name:
+        type: string
+        description: prefix for output files (default "scramble_cluster_analysis/[sample]_[type]")
 
   scramble_cluster_identifier:
     description: parameters for scramble_cluster_identifier
@@ -945,6 +948,15 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      sample_name:
+        type: string
+        description: sample name to be used in the VCF file
+      caller: 
+        type: string
+        description: name of the caller to be used in the VCF file (default "scramble")
 
   severus_t_only:
     description: parameters for severus_t_only
@@ -1197,4 +1209,3 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded, e.g. "--vep" if population AF had been annotated with vep
-
