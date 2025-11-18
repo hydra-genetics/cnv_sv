@@ -44,86 +44,89 @@ def write_vcf_header(sample_name):
     vcf_out.write(
         "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n" % sample_name)
 
-
-header_map = {}
-header_written = False
-for line in meis_in:
-    columns = line.strip().split("\t")
-    if columns[0] == "Insertion" or columns[0].startswith("#"):
-        header_map = {column_name: index for index,
-                      column_name in enumerate(columns)}
-        write_vcf_header(sample_name)
-        header_written = True
-        continue
-    if not line.strip():
-        continue
-    location = columns[header_map.get('Insertion', 0)]
-    if ':' not in location:
-        continue
-    chrom, pos = location.split(':')
-    try:
-        pos_int = int(pos)
-        if pos_int <= 0:
+def main():
+    header_map = {}
+    header_written = False
+    for line in meis_in:
+        columns = line.strip().split("\t")
+        if columns[0] == "Insertion" or columns[0].startswith("#"):
+            header_map = {column_name: index for index,
+                        column_name in enumerate(columns)}
+            write_vcf_header(sample_name)
+            header_written = True
             continue
-    except ValueError:
-        continue
-    if not chrom.startswith("chr"):
-        chrom = f"chr{chrom}"
-    mei_type = columns[header_map.get('MEI_Family', 1)].upper()
-    if mei_type == "LINE1":
-        mei_type = "L1"
-    orientation = columns[header_map.get('Orientation', 2)]
-    polarity = "+" if orientation == "Plus" else "-"
-    support = columns[header_map.get('Support', 3)]
-    score = columns[header_map.get('Score', 4)]
-    polya_len = columns[header_map.get('polyA_Position', 5)]
-    polya_score = columns[header_map.get('polyA_Percent_Match', 6)]
-    consensus = columns[header_map.get('Consensus', 7)]
-    clip_side = columns[header_map.get('Clipped_Side', 8)]
-    ref = "N"
-    alt = f"<INS:ME:{mei_type}>"
-    id = "."
-    qual = "."
-    filter = "PASS"
-    # Calculate SVLEN from consensus sequence if available
-    if consensus and consensus != "NA" and consensus != "None Found":
-        svlen = str(len(consensus))
-    else:
-        if mei_type == "ALU":
-            svlen = "300"
-        elif mei_type == "L1":
-            svlen = "6000"
-        elif mei_type == "SVA":
-            svlen = "2000"
+        if not line.strip():
+            continue
+        location = columns[header_map.get('Insertion', 0)]
+        if ':' not in location:
+            continue
+        chrom, pos = location.split(':')
+        try:
+            pos_int = int(pos)
+            if pos_int <= 0:
+                continue
+        except ValueError:
+            continue
+        if not chrom.startswith("chr"):
+            chrom = f"chr{chrom}"
+        mei_type = columns[header_map.get('MEI_Family', 1)].upper()
+        if mei_type == "LINE1":
+            mei_type = "L1"
+        orientation = columns[header_map.get('Orientation', 2)]
+        polarity = "+" if orientation == "Plus" else "-"
+        support = columns[header_map.get('Support', 3)]
+        score = columns[header_map.get('Score', 4)]
+        polya_len = columns[header_map.get('polyA_Position', 5)]
+        polya_score = columns[header_map.get('polyA_Percent_Match', 6)]
+        consensus = columns[header_map.get('Consensus', 7)]
+        clip_side = columns[header_map.get('Clipped_Side', 8)]
+        ref = "N"
+        alt = f"<INS:ME:{mei_type}>"
+        id = "."
+        qual = "."
+        filter = "PASS"
+        # Calculate SVLEN from consensus sequence if available
+        if consensus and consensus != "NA" and consensus != "None Found":
+            svlen = str(len(consensus))
         else:
-            svlen = "."
+            if mei_type == "ALU":
+                svlen = "300"
+            elif mei_type == "L1":
+                svlen = "6000"
+            elif mei_type == "SVA":
+                svlen = "2000"
+            else:
+                svlen = "."
 
-    end = str(pos_int + 1)
-    info = f"SVTYPE=INS;END={end}"
-    if svlen != ".":
-        info += f";SVLEN={svlen}"
-    info += f";MEINFO={mei_type},{pos},{end},{polarity}"
-    info += f";CALLER={caller}"
-    info += f";SUPPORT={support}"
-    if score and score != "NA":
-        info += f";SCORE={score}"
-    if clip_side and clip_side != "NA":
-        info += f";CLIP_SIDE={clip_side}"
-    if polya_len and polya_len != "NA" and polya_len != "None Found":
-        info += f";POLYA_LEN={polya_len}"
-    if polya_score and polya_score != "NA" and polya_score != "None Found":
-        info += f";POLYA_SCORE={polya_score}"
-    # assume heterozygous for MEIs
-    format_field = "GT"
-    data = "0/1"
+        end = str(pos_int + 1)
+        info = f"SVTYPE=INS;END={end}"
+        if svlen != ".":
+            info += f";SVLEN={svlen}"
+        info += f";MEINFO={mei_type},{pos},{end},{polarity}"
+        info += f";CALLER={caller}"
+        info += f";SUPPORT={support}"
+        if score and score != "NA":
+            info += f";SCORE={score}"
+        if clip_side and clip_side != "NA":
+            info += f";CLIP_SIDE={clip_side}"
+        if polya_len and polya_len != "NA" and polya_len != "None Found":
+            info += f";POLYA_LEN={polya_len}"
+        if polya_score and polya_score != "NA" and polya_score != "None Found":
+            info += f";POLYA_SCORE={polya_score}"
+        # assume heterozygous for MEIs
+        format_field = "GT"
+        data = "0/1"
 
-    out_line = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (
-        chrom, pos, id, ref, alt, qual, filter, info, format_field, data
-    )
-    vcf_out.write(out_line)
+        out_line = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (
+            chrom, pos, id, ref, alt, qual, filter, info, format_field, data
+        )
+        vcf_out.write(out_line)
 
-# Write header even if no MEIs found
-if not header_written:
-    write_vcf_header(sample_name)
+    # Write header even if no MEIs found
+    if not header_written:
+        write_vcf_header(sample_name)
 
-vcf_out.close()
+    vcf_out.close()
+
+if __name__ == "__main__":
+    main()
