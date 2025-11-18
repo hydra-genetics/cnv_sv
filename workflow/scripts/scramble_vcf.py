@@ -1,12 +1,9 @@
 from datetime import date
+import logging
 
-meis_in = open(snakemake.input.meis)  # noqa: F821
-vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
-sample_name = snakemake.params.sample_name  # noqa: F821
-caller = snakemake.params.caller  # noqa: F821
+log = logging.getLogger()
 
-
-def write_vcf_header(sample_name):
+def write_vcf_header(vcf_out, sample_name):
     vcf_out.write("##fileformat=VCFv4.2\n")
     vcf_out.write("##fileDate=%s\n" % str(date.today()))
     vcf_out.write("##source=SCRAMBLE\n")
@@ -45,6 +42,13 @@ def write_vcf_header(sample_name):
         "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n" % sample_name)
 
 def main():
+    snakemake.log_fmt_shell(stdout=False, stderr=True)  # noqa: F821
+    
+    meis_in = open(snakemake.input.meis)  # noqa: F821
+    vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
+    sample_name = snakemake.params.sample_name  # noqa: F821
+    caller = snakemake.params.caller  # noqa: F821
+    
     header_map = {}
     header_written = False
     for line in meis_in:
@@ -52,7 +56,7 @@ def main():
         if columns[0] == "Insertion" or columns[0].startswith("#"):
             header_map = {column_name: index for index,
                         column_name in enumerate(columns)}
-            write_vcf_header(sample_name)
+            write_vcf_header(vcf_out, sample_name)
             header_written = True
             continue
         if not line.strip():
@@ -124,7 +128,7 @@ def main():
 
     # Write header even if no MEIs found
     if not header_written:
-        write_vcf_header(sample_name)
+        write_vcf_header(vcf_out, sample_name)
 
     vcf_out.close()
 
