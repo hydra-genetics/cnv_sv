@@ -16,7 +16,6 @@ rule melt:
         hervk=temp("cnv_sv/melt/{sample}_{type}/HERVK.final_comp.vcf"),
         line1=temp("cnv_sv/melt/{sample}_{type}/LINE1.final_comp.vcf"),
         sva=temp("cnv_sv/melt/{sample}_{type}/SVA.final_comp.vcf"),
-        tmpdir=temp(directory("cnv_sv/melt/{sample}_{type}")),
     params:
         extra=config.get("melt", {}).get("extra", ""),
     log:
