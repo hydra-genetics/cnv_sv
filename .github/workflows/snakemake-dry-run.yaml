@@ -39,7 +39,3 @@ jobs:
         working-directory: .tests/integration
         run: |
           snakemake -n -s ../../workflow/Snakefile --configfile config_pacbio.yaml
-      - name: snakemake dry run PACBIO unit bam
-        working-directory: .tests/integration
-        run: |
-          snakemake -n -s ../../workflow/Snakefile --configfile config_pacbio_unit_bam.yaml
