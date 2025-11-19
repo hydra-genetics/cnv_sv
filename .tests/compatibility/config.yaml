@@ -2,7 +2,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:3.0.0"
+default_container: "docker://hydragenetics/common:3.3.0"
 
 reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"

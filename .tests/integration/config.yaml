@@ -2,7 +2,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:3.0.0"
+default_container: "docker://hydragenetics/common:3.3.0"
 
 reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
@@ -154,9 +154,6 @@ scramble_cluster_analysis:
   extra: ""
   install_dir: "/opt/scramble/cluster_analysis/bin"
   mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
-
-scramble_vcf:
-  container: "docker://hydragenetics/common:3.0.0"
 
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"

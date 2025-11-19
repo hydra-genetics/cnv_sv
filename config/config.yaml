@@ -4,7 +4,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:3.0.0"
+default_container: "docker://hydragenetics/common:3.3.0"
 
 automap:
   container: "docker://hydragenetics/automap:1.2"
@@ -93,9 +93,6 @@ scramble_cluster_analysis:
 scramble_cluster_identifier:
   container: "docker://hydragenetics/scramble:1.0.2"
   extra: ""
-
-scramble_vcf:
-  container: "docker://hydragenetics/common:3.0.0"
 
 severus_t_only:
   container: "docker://hydragenetics/severus:1.5"
