@@ -34,6 +34,9 @@ include: "rules/trgt.smk"
 include: "rules/upd.smk"
 
 
+ruleorder: trgt_genotype > bgzip
+
+
 rule all:
     input:
         unpack(compile_output_list),

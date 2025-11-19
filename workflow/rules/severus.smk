@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule severus_t_only:
     input:
-        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
         pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
@@ -59,8 +59,8 @@ rule severus_t_only:
 
 rule severus_tn:
     input:
-        bam_t=lambda wildcards: get_input_bam(wildcards)[0],
-        bam_n=lambda wildcards: get_input_bam(wildcards)[0],
+        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
+        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}")),

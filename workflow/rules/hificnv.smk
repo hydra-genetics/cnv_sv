@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule hificnv:
     input:
-        bam=lambda wildcards: get_input_bam(wildcards)[0],
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
     output:
         vcf=temp("cnv_sv/hificnv/{sample}_{type}.vcf.gz"),
         bw=temp("cnv_sv/hificnv/{sample}_{type}.depth.bw"),
