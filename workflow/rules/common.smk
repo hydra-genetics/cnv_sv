@@ -341,6 +341,34 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+
+    files = {
+        "cnv_sv/scramble_cluster_analysis": ["MEIs.txt"],
+    }
+    output_files += [
+        "%s/%s_%s_%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
+    files = {
+        "cnv_sv/scramble_vcf": ["vcf"],
+    }
+    output_files += [
+        "%s/%s_%s.%s.%s" % (prefix, sample, unit_type, tc_method, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
+        for tc_method in ["no_tc", "pathology"]
+        for suffix in files[prefix]
+    ]
+
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])

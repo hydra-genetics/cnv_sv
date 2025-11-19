@@ -1029,6 +1029,66 @@ properties:
         type: string
         description: max execution time
 
+  scramble_cluster_analysis:
+    type: object
+    description: resource definitions for scramble_cluster_analysis
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+        
+  scramble_cluster_identifier:
+    type: object
+    description: resource definitions for scramble_cluster_identifier
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  scramble_vcf:
+    type: object
+    description: resource definitions for scramble_vcf
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   severus_t_only:
     description: resource definitions for severus_t_only
     type: object
@@ -1331,3 +1391,4 @@ properties:
 
   required:
     - default_resources
+

@@ -4,7 +4,7 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://hydragenetics/common:3.0.0"
+default_container: "docker://hydragenetics/common:3.3.0"
 
 automap:
   container: "docker://hydragenetics/automap:1.2"
@@ -83,6 +83,16 @@ savana_pb_to:
     min_support: 10
     genome_version: "1000g_hg38"
     extra: ""
+
+scramble_cluster_analysis:
+  container: "docker://hydragenetics/scramble:1.0.2"
+  extra: ""
+  install_dir: "/opt/scramble/cluster_analysis/bin"
+  mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
+
+scramble_cluster_identifier:
+  container: "docker://hydragenetics/scramble:1.0.2"
+  extra: ""
 
 severus_t_only:
   container: "docker://hydragenetics/severus:1.5"
