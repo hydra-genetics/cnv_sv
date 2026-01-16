@@ -226,7 +226,8 @@ def process_segments(
                 logging.error("Error processing line: %s. Error: %s", line.strip(), e)
 
 
-if __name__ == "__main__":
+def run_snakemake() -> None:
+    """Entry point for Snakemake."""
     logging.basicConfig(level=logging.INFO)
     process_segments(
         seg_path=snakemake.input.segment,
@@ -237,3 +238,7 @@ if __name__ == "__main__":
         het_del_limit=snakemake.params.het_del_limit,
         dup_limit=snakemake.params.dup_limit,
     )
+
+
+if __name__ == "__main__":
+    run_snakemake()
