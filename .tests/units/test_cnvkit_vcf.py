@@ -115,3 +115,45 @@ def test_process_segments():
     # Since we can't easily distinguish which file is which with a simple mock_open patch
     # when two files are open at once, let's just assert that write was called.
     assert m_open().write.called
+
+
+def test_process_segments_missing_columns():
+    # Segment content missing 'depth', 'baf', 'log2', and 'probes'
+    seg_content = (
+        "chromosome\tstart\tend\n"
+        "1\t100\t200\n"
+    )
+    
+    m_open = mock_open(read_data=seg_content)
+    
+    with patch("builtins.open", m_open):
+        process_segments(
+            seg_path="in.seg",
+            vcf_path="out.vcf",
+            sample_name="sample1",
+            caller="cnvkit",
+            hom_del_limit=0.5,
+            het_del_limit=1.5,
+            dup_limit=2.5
+        )
+    
+    # Verify that write was called (which means it didn't crash)
+    assert m_open().write.called
+
+    # Check that it actually wrote something that looks like a VCF record for the segment
+    # The header is written first, then the record.
+    # We can inspect call_args_list of the write method
+    calls = [call[0][0] for call in m_open().write.call_args_list]
+    # The last call should be the VCF record
+    record = calls[-1]
+    assert "chr1\t100" in record
+    # Since depth was missing, it should be "0" in format/data
+    assert "DP" in record
+    assert ":0" in record 
+    # Since baf column was missing, it should be BAF=0.0 in info
+    assert "BAF=0.0" in record
+    # Since log2 was missing, it should be LOG_ODDS_RATIO=0.0 in info
+    assert "LOG_ODDS_RATIO=0.0" in record
+    # Since probes was missing, it should be PROBES=0 in info and format/data
+    assert "PROBES=0" in record
+    assert ":0:" in record # CNQ field (probes)
