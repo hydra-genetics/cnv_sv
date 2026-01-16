@@ -188,6 +188,17 @@ def process_segments(
             if columns[0] == "chromosome":
                 header_map = {name: i for i, name in enumerate(columns)}
                 write_vcf_header(vcf_out, sample_name, caller)
+
+                # Warn if baf, depth, log2 or probes columns are missing
+                if "baf" not in header_map:
+                    logging.warning("Input file %s missing 'baf' column. Using default values.", seg_path)
+                if "depth" not in header_map:
+                    logging.warning("Input file %s missing 'depth' column. Using default values.", seg_path)
+                if "log2" not in header_map:
+                    logging.warning("Input file %s missing 'log2' column. Using default values.", seg_path)
+                if "probes" not in header_map:
+                    logging.warning("Input file %s missing 'probes' column. Using default values.", seg_path)
+
                 continue
 
             if not header_map:
@@ -198,10 +209,10 @@ def process_segments(
                 chrom = columns[header_map["chromosome"]]
                 start = columns[header_map["start"]]
                 end = columns[header_map["end"]]
-                probes = columns[header_map["probes"]]
-                log2 = columns[header_map["log2"]]
-                baf = columns[header_map.get("baf", "")] if "baf" in header_map else ""
-                depth = columns[header_map.get("depth", "")] if "depth" in header_map else "0"
+                probes = columns[header_map["probes"]] if "probes" in header_map else "0"
+                log2 = columns[header_map["log2"]] if "log2" in header_map else "0.0"
+                baf = columns[header_map["baf"]] if "baf" in header_map else ""
+                depth = columns[header_map["depth"]] if "depth" in header_map else "0"
 
                 cn, alt, gt = calculate_cn_and_gt(
                     float(log2), hom_del_limit, het_del_limit, dup_limit
