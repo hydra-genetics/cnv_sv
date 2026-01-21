@@ -181,9 +181,9 @@ def process_segments(
     header_map: Dict[str, int] = {}
     with open(seg_path, "r") as seg_in, open(vcf_path, "w") as vcf_out:
         for line in seg_in:
-            columns = line.strip().split("\t")
-            if not columns:
+            if line.strip() == "":
                 continue
+            columns = line.rstrip("\r\n").split("\t")
 
             if columns[0] == "chromosome":
                 header_map = {name: i for i, name in enumerate(columns)}
