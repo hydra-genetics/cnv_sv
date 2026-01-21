@@ -157,3 +157,60 @@ def test_process_segments_missing_columns():
     # Since probes was missing, it should be PROBES=0 in info and format/data
     assert "PROBES=0" in record
     assert ":0:" in record # CNQ field (probes)
+
+
+def test_process_segments_edge_cases():
+    # Segment content with trailing empty fields, blank lines, and whitespace lines
+    seg_content = (
+        "chromosome\tstart\tend\tprobes\tlog2\tdepth\tbaf\n"
+        "1\t100\t200\t10\t-1.0\t\t\n"  # Trailing empty fields (depth, baf)
+        "\n"  # Truly blank line
+        "   \n" # Whitespace-only line
+        "2\t300\t400\t20\t1.0\t100.0\t0.1\n"
+    )
+    
+    m_open = mock_open(read_data=seg_content)
+    
+    with patch("builtins.open", m_open):
+        process_segments(
+            seg_path="in.seg",
+            vcf_path="out.vcf",
+            sample_name="sample1",
+            caller="cnvkit",
+            hom_del_limit=0.5,
+            het_del_limit=1.5,
+            dup_limit=2.5
+        )
+    
+    calls = [call[0][0] for call in m_open().write.call_args_list]
+    
+    # We expect:
+    # 1. Header calls (multiple)
+    # 2. Record for chr1
+    # 3. Record for chr2
+    
+    # Extract records (those that don't start with #)
+    records = [c for c in calls if not c.startswith("#")]
+    assert len(records) == 2
+    
+    # Check first record (trailing empty tabs)
+    # Depth and BAF were empty strings in columns
+    # In cnvkit_vcf.py:
+    # baf = columns[header_map["baf"]] if "baf" in header_map else ""
+    # depth = columns[header_map["depth"]] if "depth" in header_map else "0"
+    # If they are "", then depth becomes "" and baf becomes ""
+    record1 = records[0]
+    assert "chr1\t100" in record1
+    # Format field: GT:CN:CNQ:DP:BAF (if baf exists)
+    # Data field: gt:cn:probes:depth:baf
+    # Since depth was "" and baf was "", they should be at the end
+    # Actually, in create_vcf_record:
+    # data_fields = [gt, str(cn), probes, depth]
+    # if baf: data_fields.append(baf)
+    # So if baf is "", it won't be appended to format_fields or data_fields if we check `if baf:`
+    # Wait, let's look at cnvkit_vcf.py:151: if baf:
+    assert record1.endswith("0/1:1.0:10:\n") # DP is "", BAF is skipped
+    
+    # Check second record (after blank lines)
+    record2 = records[1]
+    assert "chr2\t300" in record2
