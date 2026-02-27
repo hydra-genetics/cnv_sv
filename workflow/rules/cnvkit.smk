@@ -38,7 +38,7 @@ rule cnvkit_batch:
     message:
         "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
     wrapper:
-        "v9.1.0/bio/cnvkit/batch"
+        "v9.2.0/bio/cnvkit/batch"
 
 
 rule cnvkit_call:
