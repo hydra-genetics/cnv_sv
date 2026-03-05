@@ -103,7 +103,7 @@ rule melt_vcf:
     params:
         extra=config.get("melt_vcf", {}).get("extra", ""),
     log:
-        "cnv_sv/melt/{sample}_{type}.vcf.log",
+        "cnv_sv/melt/{sample}_{type}.melt_vcf.log",
     benchmark:
         repeat("cnv_sv/melt/{sample}_{type}.vcf.benchmark.tsv", config.get("melt_vcf", {}).get("benchmark_repeats", 1))
     threads: config.get("melt_vcf", {}).get("threads", config["default_resources"]["threads"])
