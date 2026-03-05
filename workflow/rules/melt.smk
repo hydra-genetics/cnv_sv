@@ -116,6 +116,6 @@ rule melt_vcf:
     container:
         config.get("melt_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: noramlise the VCF file {input.vcf}"
+        "{rule}: normalise the VCF file {input.vcf}"
     script:
         "../scripts/melt_vcf.py"
