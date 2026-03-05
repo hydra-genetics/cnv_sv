@@ -118,4 +118,4 @@ rule melt_vcf:
     message:
         "{rule}: noramlise the VCF file {input.vcf}"
     script:
-        "../scripts/fix_melt_vcf.py"
+        "../scripts/melt_vcf.py"
