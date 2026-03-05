@@ -89,7 +89,7 @@ rule melt_concat:
     shell:
         """
         bcftools concat \\
-        -a {input.alu} {input.hervk} {input.line1} {input.sva} \\
+        -a {input.alu_vcf} {input.hervk_vcf} {input.line1_vcf} {input.sva_vcf} \\
         | bcftools sort -Oz -o {output.vcf} \\
         &> {log}
         """
