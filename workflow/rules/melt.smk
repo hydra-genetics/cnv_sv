@@ -58,10 +58,14 @@ rule melt:
 
 rule melt_concat:
     input:
-        alu="cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf",
-        hervk="cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf",
-        line1="cnv_sv/melt/{sample}_{type}.LINE1.final_comp.vcf",
-        sva="cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf",
+        alu_vcf="cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf.gz",
+        alu_tbi="cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf.gz.tbi",
+        hervk_vcf="cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf.gz",
+        hervk_tbi="cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf.gz.tbi",
+        line1_vcf="cnv_sv/melt/{sample}_{type}.LINE1.final_comp.vcf.gz",
+        line1_tbi="cnv_sv/melt/{sample}_{type}.LINE1.final_comp.vcf.gz.tbi",
+        sva_vcf="cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf.gz",
+        sva_tbi="cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf.gz.tbi",
     output:
         vcf="cnv_sv/melt/{sample}_{type}.concat.vcf.gz",
     log:

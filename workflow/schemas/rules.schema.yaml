@@ -850,18 +850,30 @@ properties:
         type: object
         description: list of inputs
         properties:
-          alu:
+          alu_vcf:
             type: string
             description: a 'vcf' file with ALUs
-          hervk:
+          alu_tbi:
+            type: string
+            description: a 'tbi' file for the ALUs vcf file
+          hervk_vcf:
             type: string
             description: a 'vcf' file with HERVKs
-          line1:
+          hervk_tbi:
             type: string
-            description: a 'vcf' file with LINE1s
-          sva:
+            description: a 'tbi' file for the HERVKs vcf file
+          sva_vcf:
             type: string
             description: a 'vcf' file with SVAs
+          sva_tbi:
+            type: string
+            description: a 'tbi' file for the SVAs vcf file
+          line1_vcf:
+            type: string
+            description: a 'vcf' file with LINE1s
+          line1_tbi:
+            type: string
+            description: a 'tbi' file for the LINE1s vcf file
       output:
         type: object
         description: list of outputs
