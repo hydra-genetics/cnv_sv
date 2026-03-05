@@ -515,6 +515,34 @@ properties:
       mei:
         type: string
         description: list of MEI.zip files with one file per line (MELTv2.2.2/me_refs/*zip)
+  
+  melt_concat:
+    type: object
+    description: parameters for melt_concat
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  melt_vcf:
+    type: object
+    description: parameters for melt_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   paraphase:
     type: object

@@ -22,7 +22,10 @@ rule melt:
     log:
         "cnv_sv/melt/{sample}_{type}.melt.output.log",
     benchmark:
-        repeat("cnv_sv/melt/{sample}_{type}.melt.benchmark.tsv", config.get("melt", {}).get("benchmark_repeats", 1))
+        repeat(
+            "cnv_sv/melt/{sample}_{type}.melt.benchmark.tsv",
+            config.get("melt", {}).get("benchmark_repeats", 1),
+        )
     threads: config.get("melt", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("melt", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -51,3 +54,64 @@ rule melt:
         cp {output.tmpdir}/SVA.final_comp.vcf {output.sva}) \
         &> {log}
         """
+
+
+rule melt_concat:
+    input:
+        alu="cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf",
+        hervk="cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf",
+        line1="cnv_sv/melt/{sample}_{type}.LINE1.final_comp.vcf",
+        sva="cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf",
+    output:
+        vcf="cnv_sv/melt/{sample}_{type}.concat.vcf.gz",
+    log:
+        "cnv_sv/melt/{sample}_{type}.vcf.log",
+    benchmark:
+        repeat(
+            "cnv_sv/melt/{sample}_{type}.vcf.benchmark.tsv",
+            config.get("melt_concat", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("melt_concat", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("melt_concat", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("melt_concat", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("melt_concat", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("melt_concat", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("melt_concat", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("melt_concat", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Concatenating MELT variant files for {wildcards.sample}_{wildcards.type}"
+    shell:
+        """
+        bcftools concat \\
+        -a {input.alu} {input.hervk} {input.line1} {input.sva} \\
+        | bcftools sort -Oz -o {output.vcf} \\
+        &> {log}
+        """
+
+
+rule melt_vcf:
+    input:
+        vcf="cnv_sv/melt/{sample}_{type}.concat.vcf.gz",
+    output:
+        vcf="cnv_sv/melt/{sample}_{type}.vcf",
+    params:
+        extra=config.get("melt_vcf", {}).get("extra", ""),
+    log:
+        "cnv_sv/melt/{sample}_{type}.vcf.log",
+    benchmark:
+        repeat("cnv_sv/melt/{sample}_{type}.vcf.benchmark.tsv", config.get("melt_vcf", {}).get("benchmark_repeats", 1))
+    threads: config.get("melt_vcf", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("melt_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("melt_vcf", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("melt_vcf", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("melt_vcf", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("melt_vcf", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("melt_vcf", {}).get("container", config["default_container"])
+    message:
+        "{rule}: noramlise the VCF file {input.vcf}"
+    script:
+        "../scripts/fix_melt_vcf.py"

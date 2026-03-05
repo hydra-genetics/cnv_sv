@@ -842,6 +842,53 @@ properties:
             type: string
             description: Working directory with all the outputs
   
+  melt_concat:
+    type: object
+    description: input and output parameters for melt_concat
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          alu:
+            type: string
+            description: a 'vcf' file with ALUs
+          hervk:
+            type: string
+            description: a 'vcf' file with HERVKs
+          line1:
+            type: string
+            description: a 'vcf' file with LINE1s
+          sva:
+            type: string
+            description: a 'vcf' file with SVAs
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a compressed vcf '.vcf.gz' MELT insertion calls
+
+  melt_vcf:
+    type: object
+    description: input and output parameters for melt_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: a compressed vcf '.vcf.gz' MELT insertion calls
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: a 'vcf' file with standardised MELT insertion calls
+  
   paraphase:
     type: object
     description: input and output parameters for paraphase
