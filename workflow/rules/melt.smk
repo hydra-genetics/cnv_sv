@@ -67,9 +67,9 @@ rule melt_concat:
         sva_vcf="cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf.gz",
         sva_tbi="cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf.gz.tbi",
     output:
-        vcf="cnv_sv/melt/{sample}_{type}.concat.vcf.gz",
+        vcf=temp("cnv_sv/melt/{sample}_{type}.concat.vcf.gz"),
     log:
-        "cnv_sv/melt/{sample}_{type}.vcf.log",
+        "cnv_sv/melt/{sample}_{type}.concat.vcf.log",
     benchmark:
         repeat(
             "cnv_sv/melt/{sample}_{type}.vcf.benchmark.tsv",
@@ -99,7 +99,7 @@ rule melt_vcf:
     input:
         vcf="cnv_sv/melt/{sample}_{type}.concat.vcf.gz",
     output:
-        vcf="cnv_sv/melt/{sample}_{type}.vcf",
+        vcf=temp("cnv_sv/melt/{sample}_{type}.vcf"),
     params:
         extra=config.get("melt_vcf", {}).get("extra", ""),
     log:
