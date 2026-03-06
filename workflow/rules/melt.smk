@@ -100,8 +100,6 @@ rule melt_vcf:
         vcf="cnv_sv/melt/{sample}_{type}.concat.vcf.gz",
     output:
         vcf=temp("cnv_sv/melt/{sample}_{type}.vcf"),
-    params:
-        extra=config.get("melt_vcf", {}).get("extra", ""),
     log:
         "cnv_sv/melt/{sample}_{type}.melt_vcf.log",
     benchmark:
