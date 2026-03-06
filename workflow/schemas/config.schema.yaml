@@ -526,9 +526,6 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded
 
   melt_vcf:
     type: object
@@ -540,9 +537,7 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: parameters that should be forwarded
+
 
   paraphase:
     type: object
