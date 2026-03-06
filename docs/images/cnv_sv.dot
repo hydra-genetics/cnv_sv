@@ -40,6 +40,12 @@ digraph snakemake_dag {
 	32[label = "upd_regions", color = "0.31 0.6 0.85", style="rounded"];
 	33[label = "upd_sites", color = "0.13 0.6 0.85", style="rounded"];
 	34[label = "exomedepth_call", color = "0.46 0.6 0.85", style="rounded"];
+	38[label = "melt", color = "0.20 0.6 0.85", style="rounded"];
+	39[label = "melt_concat", color = "0.20 0.6 0.85", style="rounded"];
+	40[label = "melt_vcf", color = "0.20 0.6 0.85", style="rounded"];
+	41[label = "scramble_cluster_identifier", color = "0.44 0.6 0.85", style="rounded"];
+	42[label = "scramble_cluster_analysis", color = "0.44 0.6 0.85", style="rounded"];
+	43[label = "scramble_vcf", color = "0.44 0.6 0.85", style="rounded"];
     35 -> 36
     36 -> 37
     37 -> 15
@@ -56,6 +62,7 @@ digraph snakemake_dag {
 	33 -> 0
 	4 -> 0
 	23 -> 0
+	42 -> 0
 	2 -> 1
 	2 -> 3
 	2 -> 4
@@ -87,4 +94,10 @@ digraph snakemake_dag {
 	29 -> 28
 	31 -> 30
 	21 -> 34
-}            
+	38 -> 39
+	39 -> 40
+	40 -> 5
+	41 -> 42
+	42 -> 43
+	43 -> 5
+}

@@ -1,0 +1,56 @@
+##fileformat=VCFv4.2
+##fileDate=Feb 27, 2026 3:44:52 PM
+##source=MELTv2.2.2
+##reference=GCA_000001405.15_GRCh38_no_alt_analysis_set_GRCmasked.fasta
+##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">
+##contig=<ID=chr1,length=248956422>
+##contig=<ID=chr2,length=242193529>
+##contig=<ID=chr3,length=198295559>
+##contig=<ID=chr4,length=190214555>
+##contig=<ID=chr5,length=181538259>
+##contig=<ID=chr6,length=170805979>
+##contig=<ID=chr7,length=159345973>
+##contig=<ID=chr8,length=145138636>
+##contig=<ID=chr9,length=138394717>
+##contig=<ID=chr10,length=133797422>
+##contig=<ID=chr11,length=135086622>
+##contig=<ID=chr12,length=133275309>
+##contig=<ID=chr13,length=114364328>
+##contig=<ID=chr14,length=107043718>
+##contig=<ID=chr15,length=101991189>
+##contig=<ID=chr16,length=90338345>
+##contig=<ID=chr17,length=83257441>
+##contig=<ID=chr18,length=80373285>
+##contig=<ID=chr19,length=58617616>
+##contig=<ID=chr20,length=64444167>
+##contig=<ID=chr21,length=46709983>
+##contig=<ID=chr22,length=50818468>
+##contig=<ID=chrX,length=156040895>
+##contig=<ID=chrY,length=57227415>
+##INFO=<ID=ASSESS,Number=1,Type=Integer,Description="Provides information on evidence availible to decide insertion site.0 = No overlapping reads at site;1 = Imprecise breakpoint due to greater than expected distance between evidence;2 = discordant pair evidence only -- No split read information;3 = left side TSD evidence only;4 = right side TSD evidence only;5 = TSD decided with split reads, highest possible quality">
+##INFO=<ID=TSD,Number=1,Type=String,Description="Precise Target Site Duplication for bases, if unknown, value will be NULL">
+##INFO=<ID=INTERNAL,Number=2,Type=String,Description="If insertion internal or close to a gene, listed here followed by a discriptor of the location in the gene (either INTRON, EXON_#, 5_UTR, 3_UTR, PROMOTER, or TERMINATOR). If multiple genes intersected, will be seperated by '\|'">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference in length between REF and ALT alleles; If unknown, will be -1">
+##INFO=<ID=MEINFO,Number=4,Type=String,Description="Mobile element info of the form NAME,START,END,POLARITY; If START or END is unknown, will be -1; If POLARITY is unknown, will be 'null'">
+##INFO=<ID=DIFF,Number=.,Type=String,Description="Coverage and Differences in relation to the ALU reference. Form is %2XCoverage:Differences, with differences delimited by ','">
+##INFO=<ID=LP,Number=1,Type=Integer,Description="Total number of discordant pairs supporting the left side of the breakpont">
+##INFO=<ID=RP,Number=1,Type=Integer,Description="Total number of discordant pairs supporting the right side of the breakpont">
+##INFO=<ID=RA,Number=1,Type=Float,Description="Ratio between LP and RP, reported as log2(LP / RP)">
+##INFO=<ID=PRIOR,Number=1,Type=String,Description="True if this site was not discovered in this dataset, but was included on a provided priors list">
+##INFO=<ID=SR,Number=1,Type=Integer,Description="Total number of SRs at the estimated breakpoint for this site. Recomended to filter sites with <= 2 SRs">
+##FILTER=<ID=s25,Description="Greater than 25.0% of samples do not have data">
+##FILTER=<ID=rSD,Description="Ratio of LP to RP is greater than 2.0 standard deviations">
+##FILTER=<ID=hDP,Description="More than the expected number of discordant pairs at this site are also split">
+##FILTER=<ID=ac0,Description="No individuals in this VCF file were identified with this insertion">
+##FILTER=<ID=lc,Description="MEI is embeded in a low complexity region">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=GL,Number=3,Type=Float,Description="Genotype likelihood">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
+##FORMAT=<ID=AD,Number=1,Type=Integer,Description="Number of ALT reads">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	HD832.HES45_T
+chr1	2421471	.	G	<INS:ME:ALU>	.	hDP;ac0	TSD=null;ASSESS=1;INTERNAL=NM_002617,PROMOTER;SVTYPE=ALU;SVLEN=274;MEINFO=AluY,6,280,+;DIFF=0.55:g15c,g49a,g54a,g58a,t133a,c138t,c142t,g143a,g146t,c150t,g152c,g153a,g155a,g159a,g162a,t170a,g175a,g183c,c198t,c213t,g217a,c230t,g237a,c238t,c241t,c243t,c268t,g277a;LP=6;RP=3;RA=1;PRIOR=false;SR=0	GT:GL:DP:AD	0/0:-0,-24.08,-480:40:0
+chr1	5874241	.	G	<INS:ME:ALU>	.	lc	TSD=AAAGAAAATTAGG;ASSESS=5;INTERNAL=NR_111987,INTRONIC;SVTYPE=ALU;SVLEN=243;MEINFO=AluYb8,38,281,+;DIFF=0.86:c57t,c64t,c98a,t144c,g211a,c230t,c236t,i252gcagtcc,c248g,a252g;LP=12;RP=19;RA=-0.663;PRIOR=false;SR=15	GT:GL:DP:AD	0/1:-312,-33.11,-300:55:30
+chr1	8386575	.	T	<INS:ME:ALU>	.	PASS	TSD=GAACTCTT;ASSESS=5;INTERNAL=NM_001042681,INTRONIC;SVTYPE=ALU;SVLEN=281;MEINFO=AluYa5,0,281,-;DIFF=1:t89c,c96a,g145a,c174t,g237c,g261a;LP=17;RP=10;RA=0.766;PRIOR=false;SR=14	GT:GL:DP:AD	0/1:-290,-33.11,-318:55:28
+chr1	8441947	.	T	<INS:ME:ALU>	.	PASS	TSD=CAATACACACACTTTTT;ASSESS=5;INTERNAL=NM_001042681,INTRONIC;SVTYPE=ALU;SVLEN=279;MEINFO=AluYb3a1,2,281,-;DIFF=1:a28g,c57t,c64t,t144c,c174g,g211a,c236t,i252gcagtcc,c248g,a252g;LP=15;RP=9;RA=0.737;PRIOR=false;SR=10	GT:GL:DP:AD	0/1:-134,-25.89,-350:43:13
+chr1	20618258	.	C	<INS:ME:ALU>	.	PASS	TSD=CACTGTTCAGTTTC;ASSESS=5;INTERNAL=NM_001785,INTRONIC;SVTYPE=ALU;SVLEN=280;MEINFO=AluYe,1,281,-;DIFF=1:t144a,i207ga,t219c,c236t,d264,d281;LP=23;RP=8;RA=1.524;PRIOR=false;SR=21	GT:GL:DP:AD	0/1:-312,-36.12,-352:60:30

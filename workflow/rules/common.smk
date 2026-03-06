@@ -200,20 +200,26 @@ def get_locus_str(loci):
 
 def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
     vcf_dict = {}
-    for v in config.get("svdb_merge", {}).get("tc_method"):
-        tc_method = v["name"]
-        callers = v["cnv_caller"]
+    # Use .get() safely to avoid KeyError
+    tc_configs = config.get("svdb_merge", {}).get("tc_method", [])
+
+    for v in tc_configs:
+        tc_name = v["name"]
+        callers = v.get("cnv_caller", [])
+
         for caller in callers:
-            if add_suffix:
-                caller_suffix = f":{caller}"
-            else:
-                caller_suffix = ""
-            if tc_method in vcf_dict:
-                vcf_dict[tc_method].append(
-                    f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"
-                )
-            else:
-                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"]
+            caller_suffix = f":{caller}" if add_suffix else ""
+
+            # Using a template string is much safer in Python 3.12
+            path_template = "cnv_sv/{caller}_vcf/{sample}_{type}.{tc}.vcf{suffix}"
+            path = path_template.format(
+                caller=caller, sample=wildcards.sample, type=wildcards.type, tc=tc_name, suffix=caller_suffix
+            )
+
+            if tc_name not in vcf_dict:
+                vcf_dict[tc_name] = []
+            vcf_dict[tc_name].append(path)
+
     return vcf_dict[wildcards.tc_method]
 
 
@@ -331,6 +337,7 @@ def compile_output_list(wildcards):
         "cnv_sv/pindel_vcf": ["no_tc.vcf.gz"],
         "cnv_sv/tiddit": ["vcf.gz"],
         "cnv_sv/scanitd": ["vcf"],
+        # "cnv_sv/melt": ["vcf.gz"],
     }
     output_files += [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
@@ -479,7 +486,9 @@ def compile_output_list(wildcards):
     #     for unit_type in get_unit_types(units, sample)
     # ]
 
-    # Can't access the newest version of MELT for integration-test right now. Add later when we have docker with newest version of MELT.
+    # Due to the licensing restrictions we are not make a hydra-genetics docker available for MELT.
+    # Therefore an integration test for MELT is not possible.
+    # Test output files from MELT are included in the test data, to ensure dowmstream tools can be tested.
     # files = {
     #    "melt": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf", HERVK.final_comp.vcf],
     # }
