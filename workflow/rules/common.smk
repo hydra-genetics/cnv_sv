@@ -445,6 +445,22 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    output_files += [
+        f"cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{unit_type}_sv.vcf"
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+    ]
+
+    output_files += [
+        f"cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_T_sv.vcf"
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"] and unit_type == "T"
+    ]
+
     files = {
         "cnv_sv/pbsv_discover": ["svsig.gz"],
         "cnv_sv/pbsv_call": ["vcf"],
