@@ -13,7 +13,7 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
-from hydra_genetics.utils.misc import get_input_aligned_bam
+from hydra_genetics.utils.misc import get_input_aligned_bam, get_input_haplotagged_bam
 
 min_version("7.8.3")
 
@@ -254,6 +254,25 @@ def get_trgt_loci(wildcards):
     return rep_ids
 
 
+def get_severus_tn_input(wildcards):
+    """
+    Get haplotagged BAM paths for both tumor (T) and normal (N) for severus_tn.
+    Respects haplotag_path and haplotag_suffix from config, same as get_input_haplotagged_bam.
+    """
+    from types import SimpleNamespace
+
+    wc_t = SimpleNamespace(sample=wildcards.sample, type="T")
+    wc_n = SimpleNamespace(sample=wildcards.sample, type="N")
+    bam_t, bai_t = get_input_haplotagged_bam(wc_t, config)
+    bam_n, bai_n = get_input_haplotagged_bam(wc_n, config)
+    return {
+        "bam_t": bam_t,
+        "bai_t": bai_t,
+        "bam_n": bam_n,
+        "bai_n": bai_n,
+    }
+
+
 def get_tr_bed(wildcards):
     tr_bed = config.get("sniffles2_call", {}).get("tandem_repeats", "")
 
@@ -426,6 +445,22 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    output_files += [
+        f"cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{unit_type}_sv.vcf"
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+    ]
+
+    output_files += [
+        f"cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_T_sv.vcf"
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"] and unit_type == "T"
+    ]
+
     files = {
         "cnv_sv/pbsv_discover": ["svsig.gz"],
         "cnv_sv/pbsv_call": ["vcf"],

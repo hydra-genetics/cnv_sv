@@ -6,17 +6,18 @@ __license__ = "GPL-3"
 
 rule severus_t_only:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[1],
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
         pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
         dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}_out_dir")),
         b_double=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_breakpoint_double.csv"),
         qual=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_read_qual.txt"),
-        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
+        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_sv.vcf"),
         all_b_clusters=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
         all_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
-        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
+        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_sv.vcf"),
         somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
         somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
     params:
@@ -59,17 +60,19 @@ rule severus_t_only:
 
 rule severus_tn:
     input:
-        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
-        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
+        bam_t=lambda wildcards: get_severus_tn_input(wildcards)["bam_t"],
+        bai_t=lambda wildcards: get_severus_tn_input(wildcards)["bai_t"],
+        bam_n=lambda wildcards: get_severus_tn_input(wildcards)["bam_n"],
+        bai_n=lambda wildcards: get_severus_tn_input(wildcards)["bai_n"],
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}")),
         b_double=temp("cnv_sv/severus_tn/{sample}/{sample}_{type}_breakpoint_double.csv"),
         qual=temp("cnv_sv/severus_tn/{sample}/{sample}_{type}_read_qual.txt"),
-        all_sv_vcf=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
+        all_sv_vcf=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_sv.vcf"),
         all_b_clusters=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
         all_b_clusters_list=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
-        somatic_sv_vcf=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
+        somatic_sv_vcf=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_sv.vcf"),
         somatic_b_clusters=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
         somatic_b_clusters_list=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
     params:
