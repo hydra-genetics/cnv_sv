@@ -64,4 +64,3 @@ severus_t_only:
 severus_tn:
   container: "docker://hydragenetics/severus:1.5"
   vntr: "reference/human_GRCh38_no_alt_analysis_set.trf.bed"
-  pon: "reference/PoN_1000G_hg38.tsv.gz"
