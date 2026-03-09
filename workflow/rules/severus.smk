@@ -60,7 +60,10 @@ rule severus_t_only:
 
 rule severus_tn:
     input:
-        unpack(get_severus_tn_input),
+        bam_t=lambda wildcards: get_severus_tn_input(wildcards)["bam_t"],
+        bai_t=lambda wildcards: get_severus_tn_input(wildcards)["bai_t"],
+        bam_n=lambda wildcards: get_severus_tn_input(wildcards)["bam_n"],
+        bai_n=lambda wildcards: get_severus_tn_input(wildcards)["bai_n"],
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}")),
