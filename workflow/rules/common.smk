@@ -446,7 +446,7 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
     output_files += [
-        f"cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{unit_type}_sv.vcf"
+        f"cnv_sv/severus_t_only/{sample}_{unit_type}_somatic_sv.vcf"
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
@@ -454,7 +454,7 @@ def compile_output_list(wildcards):
     ]
 
     output_files += [
-        f"cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_T_sv.vcf"
+        f"cnv_sv/severus_tn/{sample}_T_somatic_sv.vcf"
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
