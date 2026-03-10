@@ -1,0 +1,203 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+    paths:
+      - "workflow/**"
+      - ".tests/**"
+      - "requirements.txt"
+      - "requirements.test.txt"
+      - ".github/workflows/ci.yaml"
+  pull_request:
+    branches:
+      - develop
+      - master
+    paths:
+      - "workflow/**"
+      - ".tests/**"
+      - "requirements.txt"
+      - "requirements.test.txt"
+      - ".github/workflows/ci.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Stage 1 - fast checks run in parallel
+  lint:
+    name: Lint workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Linting
+        working-directory: .tests/integration
+        run: snakemake --lint -n -s ../../workflow/Snakefile --configfile config.yaml
+
+  pycodestyle:
+    name: pycodestyle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements.test.txt
+      - name: Check python syntax
+        run: pycodestyle --max-line-length=130 --statistics workflow/scripts
+
+  snakefmt:
+    name: Snakefmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_SNAKEMAKE_SNAKEFMT: true
+          OUTPUT_FOLDER: .github/linters/report
+
+  # Stage 2 - dry run after stage 1 passes
+  dry-run:
+    name: Snakemake dry run
+    needs: [lint, pycodestyle, snakefmt]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements.test.txt
+      - name: Snakemake dry run
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfile config.yaml
+      - name: Snakemake dry run PACBIO
+        working-directory: .tests/integration
+        run: snakemake -n -s ../../workflow/Snakefile --configfile config_pacbio.yaml
+
+  # Stage 3 - heavier checks run in parallel after dry run passes
+  pytest:
+    name: pytest
+    needs: [dry-run]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements.test.txt
+      - name: pytest
+        run: pytest workflow/scripts
+
+  compatibility:
+    name: Compatibility test
+    needs: [dry-run]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v5.2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements.test.txt
+      - name: Snakemake dry run
+        working-directory: .tests/compatibility
+        run: snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml
+
+  # Stage 4 - full integration test, push only
+  integration:
+    name: Integration test
+    needs: [pytest, compatibility]
+    # if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: true
+      - name: Install Apptainer
+        uses: eWaterCycle/setup-apptainer@v2
+        with:
+          apptainer-version: 1.4.5  # Optional: defaults to latest stable
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements.test.txt
+      - name: Cache SIMG images
+        id: cache-simg
+        uses: actions/cache@v4
+        with:
+          # Path to the folder where you store your .simg files
+          path: ~/singularity_containers
+          # Key based on your workflow file or a list of images
+          key: ${{ runner.os }}-simg-${{ hashFiles('pull_images.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-simg-
+      - name: Integration test - small dataset
+        working-directory: .tests/integration
+        run: |
+          mkdir -p ~/singularity_containers &&
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfile config.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+      - name: Integration test - small dataset PACBIO
+        working-directory: .tests/integration
+        run: |
+          mkdir -p ~/singularity_containers &&
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfile config_pacbio.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/

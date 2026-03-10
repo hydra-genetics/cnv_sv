@@ -3,31 +3,47 @@ name: build mkdocs
 on:
   push:
     branches:
-     - develop
-     - master
+      - develop
+      - master
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "requirements.txt"
+      - "requirements.test.txt"
   pull_request:
     branches:
-     - develop
-     - master
+      - develop
+      - master
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "requirements.txt"
+      - "requirements.test.txt"
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-mkdocs:
     name: build mkdocs
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python 3.8
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-      - name: Install requirements.txt
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+            docs/requirements.txt
+      - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: Install requirements.test.txt
-        run: |
           pip install -r requirements.test.txt
           pip install -r docs/requirements.txt
       - name: build mkdocs
-        run: |
-          mkdocs build
+        run: mkdocs build
