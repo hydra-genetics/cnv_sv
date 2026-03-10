@@ -41,7 +41,7 @@ rule severus_t_only:
     message:
         "{rule}: use Severus in tumor only mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:
-        "severus --target-bam {input.bam} "
+        "( severus --target-bam {input.bam} "
         "--out-dir {output.dir} "
         "-t {threads} "
         "--vntr-bed {input.vntr} "
@@ -54,7 +54,7 @@ rule severus_t_only:
         "cp {output.dir}/all_SVs/breakpoint_clusters_list.tsv {output.all_b_clusters_list} && "
         "cp {output.dir}/somatic_SVs/severus_somatic.vcf {output.somatic_sv_vcf} && "
         "cp {output.dir}/somatic_SVs/breakpoint_clusters.tsv {output.somatic_b_clusters} && "
-        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} ) "
         "&> {log} "
 
 
@@ -96,7 +96,7 @@ rule severus_tn:
     message:
         "{rule}: use Severus in tumor-normal mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:
-        "severus --target-bam {input.bam_t} "
+        "( severus --target-bam {input.bam_t} "
         "--control-bam {input.bam_n} "
         "--out-dir {output.dir} "
         "-t {threads} "
@@ -109,5 +109,5 @@ rule severus_tn:
         "cp {output.dir}/all_SVs/breakpoint_clusters_list.tsv {output.all_b_clusters_list} && "
         "cp {output.dir}/somatic_SVs/severus_somatic.vcf {output.somatic_sv_vcf} && "
         "cp {output.dir}/somatic_SVs/breakpoint_clusters.tsv {output.somatic_b_clusters} && "
-        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} ) "
         "&> {log} "
