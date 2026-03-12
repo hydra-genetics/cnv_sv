@@ -11,6 +11,7 @@ rule jumble_run:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         cnv_png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.png"),
+        cnvkit_bins=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.cnr"),
         cnvkit_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.cns"),
         dna_copy_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}_dnacopy.seg"),
         jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble.csv"),
