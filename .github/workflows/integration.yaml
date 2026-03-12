@@ -35,9 +35,10 @@ jobs:
         run: |
           echo "Free space:"
           df -h
-      - name: Install apptainer/singularity
-        run: |
-          sudo add-apt-repository -y ppa:apptainer/ppa && sudo apt install -y software-properties-common && sudo apt install -y apptainer-suid
+      - name: Install Apptainer
+        uses: eWaterCycle/setup-apptainer@v2
+        with:
+          apptainer-version: 1.4.5  # Optional: defaults to latest stable
       - name: Install requirements.txt
         run: |
           pip install -r requirements.txt
