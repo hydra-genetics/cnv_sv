@@ -44,13 +44,24 @@ jobs:
       - name: Install requirements.test.txt
         run: |
           pip install -r requirements.test.txt
+      - name: Cache SIMG images
+        id: cache-simg
+        uses: actions/cache@v4
+        with:
+          # Path to the folder where you store your .simg files
+          path: ~/singularity_containers
+          # Key based on your workflow file or a list of images
+          key: ${{ runner.os }}-simg-${{ hashFiles('pull_images.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-simg-
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
-          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
+          mkdir -p ~/singularity_containers &&
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
       - name: Integration test - small dataset PACBIO
         working-directory: .tests/integration
         run: |
-          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config_pacbio.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs  --configfile config_pacbio.yaml --use-singularity --singularity-args  " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
 
     
