@@ -42,7 +42,7 @@ jumble_cnvkit_call:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
 jumble_run:
-  container: "docker://hydragenetics/jumble:240530"
+  container: "docker://hydragenetics/jumble:260310"
   normal_reference: ""
 
 manta_config_n:
