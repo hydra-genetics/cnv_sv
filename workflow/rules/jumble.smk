@@ -10,13 +10,14 @@ rule jumble_run:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
-        cnvkit_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns"),
-        cnvkit_bins=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cnr"),
-        counts=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.counts.RDS"),
-        dna_copy_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam_dnacopy.seg"),
-        jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble.RDS"),
-        png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.png"),
-        snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.jumble_snps.RDS"),
+        cnv_png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.png"),
+        cnvkit_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.cns"),
+        dna_copy_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}_dnacopy.seg"),
+        jumble_segments=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble.csv"),
+        gis_png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.gis.png"),
+        gis_csv=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble_gis.csv"),
+        qc_csv=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.qc.csv"),
+        snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble_snps.csv"),
     params:
         reference=config.get("jumble_run", {}).get("normal_reference", ""),
     log:
@@ -49,7 +50,7 @@ rule jumble_run:
 
 rule jumble_cnvkit_call:
     input:
-        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.bam.cns",
+        segment="cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.cns",
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
         tc_file=get_tc_file,
     output:
