@@ -520,6 +520,11 @@ def compile_output_list(wildcards):
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     # ]
+    # output_files += [
+    #     "cnv_sv/jumble_run/%s_%s/%s_%s.jumble_gis.csv" % (sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
 
     # Due to the licensing restrictions we are not make a hydra-genetics docker available for MELT.
     # Therefore an integration test for MELT is not possible.

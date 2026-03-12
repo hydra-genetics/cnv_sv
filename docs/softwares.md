@@ -473,7 +473,7 @@ HiFiCNV is a tool for calling copy number variants (CNVs) from HiFi sequencing d
 ## Jumble
 
 ### [jumble_run](https://github.com/ClinSeq/jumble)
-The somatic CNV caller Jumble calls is an improved CNVkit caller using a PoN for references
+The somatic CNV caller Jumble is an improved CNVkit caller using a PoN for references. It also produces Genomic Instability Score (GIS) based HRD scores.
 
 #### :snake: Rule
 
