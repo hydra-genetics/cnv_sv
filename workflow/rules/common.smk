@@ -521,7 +521,7 @@ def compile_output_list(wildcards):
     #     for unit_type in get_unit_types(units, sample)
     # ]
     # output_files += [
-    #     "cnv_sv/jumble_run/%s_%s/%s_%s.jumble_gis.csv" % (sample, unit_type)
+    #     "cnv_sv/jumble_run/%s_%s/%s_%s.jumble_gis.csv" % (sample, unit_type, sample, unit_type)
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     # ]
