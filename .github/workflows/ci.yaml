@@ -188,9 +188,9 @@ jobs:
           # Path to the folder where you store your .simg files
           path: ~/singularity_containers
           # Key based on your workflow file or a list of images
-          key: ${{ runner.os }}-simg-${{ hashFiles('pull_images.sh') }}
+          key: ${{ runner.os }}-simg-${{ hashFiles('config/**/*.yaml', '.tests/integration/*.yaml', 'workflow/Snakefile') }}
           restore-keys: |
-            ${{ runner.os }}-simg-
+            ${{ runner.os }}-simg
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
