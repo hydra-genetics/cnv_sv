@@ -573,27 +573,30 @@ properties:
         type: object
         description: list of outputs
         properties:
+          cnv_png:
+            type: string
+            description: visualization of the copy number data
           cnvkit_segments:
             type: string
             description: called CNV segments in CNVkit format
-          cnvkit_bins:
-            type: string
-            description: values for CNV bins in CNVkit format
-          counts:
-            type: string
-            description: read counts
           dna_copy_segments:
             type: string
             description: called CNV segments in DNAcopy format
           jumble_segments:
             type: string
             description: called CNV segments in jumble format
-          png:
+          gis_png:
             type: string
-            description: visualization of the results
+            description: HRD GIS score graph
+          gis_csv:
+            type: string
+            description: HRD GIS score data table
+          qc_csv:
+            type: string
+            description: cnv qc data
           snps:
             type: string
-            description: read counts for the SNPs
+            description: read counts for the SNPs in csv format
 
   manta_config_tn:
     type: object
