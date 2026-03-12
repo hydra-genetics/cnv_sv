@@ -13,7 +13,7 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
-from hydra_genetics.utils.misc import get_longread_bam, get_input_aligned_bam
+from hydra_genetics.utils.misc import get_input_aligned_bam, get_input_haplotagged_bam
 
 min_version("7.8.3")
 
@@ -200,20 +200,26 @@ def get_locus_str(loci):
 
 def get_vcfs_for_svdb_merge(wildcards, add_suffix=False):
     vcf_dict = {}
-    for v in config.get("svdb_merge", {}).get("tc_method"):
-        tc_method = v["name"]
-        callers = v["cnv_caller"]
+    # Use .get() safely to avoid KeyError
+    tc_configs = config.get("svdb_merge", {}).get("tc_method", [])
+
+    for v in tc_configs:
+        tc_name = v["name"]
+        callers = v.get("cnv_caller", [])
+
         for caller in callers:
-            if add_suffix:
-                caller_suffix = f":{caller}"
-            else:
-                caller_suffix = ""
-            if tc_method in vcf_dict:
-                vcf_dict[tc_method].append(
-                    f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"
-                )
-            else:
-                vcf_dict[tc_method] = [f"cnv_sv/{caller}_vcf/{wildcards.sample}_{wildcards.type}.{tc_method}.vcf{caller_suffix}"]
+            caller_suffix = f":{caller}" if add_suffix else ""
+
+            # Using a template string is much safer in Python 3.12
+            path_template = "cnv_sv/{caller}_vcf/{sample}_{type}.{tc}.vcf{suffix}"
+            path = path_template.format(
+                caller=caller, sample=wildcards.sample, type=wildcards.type, tc=tc_name, suffix=caller_suffix
+            )
+
+            if tc_name not in vcf_dict:
+                vcf_dict[tc_name] = []
+            vcf_dict[tc_name].append(path)
+
     return vcf_dict[wildcards.tc_method]
 
 
@@ -246,6 +252,25 @@ def get_trgt_loci(wildcards):
             rep_id = cols[3].split(";")[0]
             rep_ids.append(rep_id.split("=")[1])
     return rep_ids
+
+
+def get_severus_tn_input(wildcards):
+    """
+    Get haplotagged BAM paths for both tumor (T) and normal (N) for severus_tn.
+    Respects haplotag_path and haplotag_suffix from config, same as get_input_haplotagged_bam.
+    """
+    from types import SimpleNamespace
+
+    wc_t = SimpleNamespace(sample=wildcards.sample, type="T")
+    wc_n = SimpleNamespace(sample=wildcards.sample, type="N")
+    bam_t, bai_t = get_input_haplotagged_bam(wc_t, config)
+    bam_n, bai_n = get_input_haplotagged_bam(wc_n, config)
+    return {
+        "bam_t": bam_t,
+        "bai_t": bai_t,
+        "bam_n": bam_n,
+        "bai_n": bai_n,
+    }
 
 
 def get_tr_bed(wildcards):
@@ -331,6 +356,7 @@ def compile_output_list(wildcards):
         "cnv_sv/pindel_vcf": ["no_tc.vcf.gz"],
         "cnv_sv/tiddit": ["vcf.gz"],
         "cnv_sv/scanitd": ["vcf"],
+        # "cnv_sv/melt": ["vcf.gz"],
     }
     output_files += [
         "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
@@ -341,6 +367,34 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+
+    files = {
+        "cnv_sv/scramble_cluster_analysis": ["MEIs.txt"],
+    }
+    output_files += [
+        "%s/%s_%s_%s" % (prefix, sample, unit_type, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
+        for suffix in files[prefix]
+    ]
+
+    files = {
+        "cnv_sv/scramble_vcf": ["vcf"],
+    }
+    output_files += [
+        "%s/%s_%s.%s.%s" % (prefix, sample, unit_type, tc_method, suffix)
+        for prefix in files.keys()
+        for sample in get_samples(samples[pd.isnull(samples["trioid"])])
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform not in ["ONT", "PACBIO"]
+        for tc_method in ["no_tc", "pathology"]
+        for suffix in files[prefix]
+    ]
+
     output_files += [
         "cnv_sv/reviewer/%s_%s/" % (sample, unit_type)
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
@@ -391,6 +445,22 @@ def compile_output_list(wildcards):
         if platform not in ["ONT", "PACBIO"]
         for suffix in files[prefix]
     ]
+    output_files += [
+        f"cnv_sv/severus_t_only/{sample}_{unit_type}_somatic_sv.vcf"
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+    ]
+
+    output_files += [
+        f"cnv_sv/severus_tn/{sample}_T_somatic_sv.vcf"
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"] and unit_type == "T"
+    ]
+
     files = {
         "cnv_sv/pbsv_discover": ["svsig.gz"],
         "cnv_sv/pbsv_call": ["vcf"],
@@ -450,8 +520,15 @@ def compile_output_list(wildcards):
     #     for sample in get_samples(samples)
     #     for unit_type in get_unit_types(units, sample)
     # ]
+    # output_files += [
+    #     "cnv_sv/jumble_run/%s_%s/%s_%s.jumble_gis.csv" % (sample, unit_type, sample, unit_type)
+    #     for sample in get_samples(samples)
+    #     for unit_type in get_unit_types(units, sample)
+    # ]
 
-    # Can't access the newest version of MELT for integration-test right now. Add later when we have docker with newest version of MELT.
+    # Due to the licensing restrictions we are not make a hydra-genetics docker available for MELT.
+    # Therefore an integration test for MELT is not possible.
+    # Test output files from MELT are included in the test data, to ensure dowmstream tools can be tested.
     # files = {
     #    "melt": ["ALU.final_comp.vcf", "LINE1.final_comp.vcf", "SVA.final_comp.vcf", HERVK.final_comp.vcf],
     # }

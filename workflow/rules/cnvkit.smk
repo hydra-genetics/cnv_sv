@@ -38,7 +38,7 @@ rule cnvkit_batch:
     message:
         "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
     wrapper:
-        "v3.3.6/bio/cnvkit/batch"
+        "v9.2.0/bio/cnvkit/batch"
 
 
 rule cnvkit_call:
@@ -70,7 +70,7 @@ rule cnvkit_call:
     message:
         "{rule}: call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
     wrapper:
-        "v3.3.6/bio/cnvkit/call"
+        "v5.2.1/bio/cnvkit/call"
 
 
 rule cnvkit_diagram:
@@ -100,7 +100,7 @@ rule cnvkit_diagram:
     message:
         "{rule}: chromosome plot cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.pdf"
     wrapper:
-        "v3.3.6/bio/cnvkit/diagram"
+        "v5.2.1/bio/cnvkit/diagram"
 
 
 rule cnvkit_scatter:
@@ -197,4 +197,4 @@ rule cnvkit_export_seg:
     message:
         "{rule}: export cnvkit segments into seg in {output.seg}"
     wrapper:
-        "v3.3.6/bio/cnvkit/export"
+        "v8.1.1/bio/cnvkit/export"

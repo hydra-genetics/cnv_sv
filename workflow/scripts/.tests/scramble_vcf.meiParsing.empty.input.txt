@@ -1,0 +1,1 @@
+Insertion	MEI_Family	Orientation	Support	Score	polyA_Position	polyA_Percent_Match	Consensus	Clipped_Side

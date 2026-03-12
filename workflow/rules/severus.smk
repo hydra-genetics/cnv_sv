@@ -6,26 +6,27 @@ __license__ = "GPL-3"
 
 rule severus_t_only:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[1],
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
         pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
-        dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}_out_dir")),
-        b_double=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_breakpoint_double.csv"),
-        qual=temp("cnv_sv/severus_t_only/{sample}/{sample}_{type}_read_qual.txt"),
-        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
-        all_b_clusters=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
-        all_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
-        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
-        somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
-        somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
+        dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}/out_dir")),
+        b_double=temp("cnv_sv/severus_t_only/{sample}_{type}_breakpoint_double.csv"),
+        qual=temp("cnv_sv/severus_t_only/{sample}_{type}_read_qual.txt"),
+        all_sv_vcf=temp("cnv_sv/severus_t_only/{sample}_{type}_all_sv.vcf"),
+        all_b_clusters=temp("cnv_sv/severus_t_only/{sample}_{type}_all_breakpoint_clusters.tsv"),
+        all_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}_{type}_all_breakpoint_clusters_list.tsv"),
+        somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}_{type}_somatic_sv.vcf"),
+        somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}_{type}_somatic_breakpoint_clusters.tsv"),
+        somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}_{type}_somatic_breakpoint_clusters_list.tsv"),
     params:
         extra=config.get("severus_t_only", {}).get("extra", ""),
     log:
-        "cnv_sv/severus_t_only/{sample}/{sample}_{type}.severus_t_only.log",
+        "cnv_sv/severus_t_only/{sample}_{type}.severus_t_only.log",
     benchmark:
         repeat(
-            "cnv_sv/severus_t_only/{sample}/{sample}_{type}.severus_t_only.benchmark.tsv",
+            "cnv_sv/severus_t_only/{sample}_{type}.severus_t_only.benchmark.tsv",
             config.get("severus_t_only", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("severus_t_only", {}).get("threads", config["default_resources"]["threads"])
@@ -38,9 +39,9 @@ rule severus_t_only:
     container:
         config.get("severus_t_only", {}).get("container", config["default_container"])
     message:
-        "{rule}: use Severus in tumor only mode to call SV in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
+        "{rule}: use Severus in tumor only mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:
-        "severus --target-bam {input.bam} "
+        "( severus --target-bam {input.bam} "
         "--out-dir {output.dir} "
         "-t {threads} "
         "--vntr-bed {input.vntr} "
@@ -53,32 +54,34 @@ rule severus_t_only:
         "cp {output.dir}/all_SVs/breakpoint_clusters_list.tsv {output.all_b_clusters_list} && "
         "cp {output.dir}/somatic_SVs/severus_somatic.vcf {output.somatic_sv_vcf} && "
         "cp {output.dir}/somatic_SVs/breakpoint_clusters.tsv {output.somatic_b_clusters} && "
-        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} ) "
         "&> {log} "
 
 
 rule severus_tn:
     input:
-        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
-        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
+        bam_t=lambda wildcards: get_severus_tn_input(wildcards)["bam_t"],
+        bai_t=lambda wildcards: get_severus_tn_input(wildcards)["bai_t"],
+        bam_n=lambda wildcards: get_severus_tn_input(wildcards)["bam_n"],
+        bai_n=lambda wildcards: get_severus_tn_input(wildcards)["bai_n"],
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
-        dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}")),
-        b_double=temp("cnv_sv/severus_tn/{sample}/{sample}_{type}_breakpoint_double.csv"),
-        qual=temp("cnv_sv/severus_tn/{sample}/{sample}_{type}_read_qual.txt"),
-        all_sv_vcf=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_sv.vcf.gz"),
-        all_b_clusters=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_breakpoint_clusters.tsv"),
-        all_b_clusters_list=temp("cnv_sv/severus_tn/{sample}/all_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
-        somatic_sv_vcf=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_sv.vcf.gz"),
-        somatic_b_clusters=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters.tsv"),
-        somatic_b_clusters_list=temp("cnv_sv/severus_tn/{sample}/somatic_sv/{sample}_{type}_breakpoint_clusters_list.tsv"),
+        dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}/out_dir")),
+        b_double=temp("cnv_sv/severus_tn/{sample}_{type}_breakpoint_double.csv"),
+        qual=temp("cnv_sv/severus_tn/{sample}_{type}_read_qual.txt"),
+        all_sv_vcf=temp("cnv_sv/severus_tn/{sample}_{type}_all_sv.vcf"),
+        all_b_clusters=temp("cnv_sv/severus_tn/{sample}_{type}_all_breakpoint_clusters.tsv"),
+        all_b_clusters_list=temp("cnv_sv/severus_tn/{sample}_{type}_all_breakpoint_clusters_list.tsv"),
+        somatic_sv_vcf=temp("cnv_sv/severus_tn/{sample}_{type}_somatic_sv.vcf"),
+        somatic_b_clusters=temp("cnv_sv/severus_tn/{sample}_{type}_somatic_breakpoint_clusters.tsv"),
+        somatic_b_clusters_list=temp("cnv_sv/severus_tn/{sample}_{type}_somatic_breakpoint_clusters_list.tsv"),
     params:
         extra=config.get("severus_tn", {}).get("extra", ""),
     log:
-        "cnv_sv/severus_tn/{sample}/{sample}_{type}.severus_tn.log",
+        "cnv_sv/severus_tn/{sample}_{type}.severus_tn.log",
     benchmark:
         repeat(
-            "cnv_sv/severus_tn/{sample}/{sample}_{type}.severus_tn.benchmark.tsv",
+            "cnv_sv/severus_tn/{sample}_{type}.severus_tn.benchmark.tsv",
             config.get("severus_tn", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("severus_tn", {}).get("threads", config["default_resources"]["threads"])
@@ -91,9 +94,9 @@ rule severus_tn:
     container:
         config.get("severus_tn", {}).get("container", config["default_container"])
     message:
-        "{rule}: use Severus in tumor-normal mode to call SV in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
+        "{rule}: use Severus in tumor-normal mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:
-        "severus --target-bam {input.bam_t} "
+        "( severus --target-bam {input.bam_t} "
         "--control-bam {input.bam_n} "
         "--out-dir {output.dir} "
         "-t {threads} "
@@ -106,5 +109,5 @@ rule severus_tn:
         "cp {output.dir}/all_SVs/breakpoint_clusters_list.tsv {output.all_b_clusters_list} && "
         "cp {output.dir}/somatic_SVs/severus_somatic.vcf {output.somatic_sv_vcf} && "
         "cp {output.dir}/somatic_SVs/breakpoint_clusters.tsv {output.somatic_b_clusters} && "
-        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} "
+        "cp {output.dir}/somatic_SVs/breakpoint_clusters_list.tsv {output.somatic_b_clusters_list} ) "
         "&> {log} "

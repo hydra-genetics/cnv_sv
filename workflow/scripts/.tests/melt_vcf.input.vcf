@@ -1,0 +1,17 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##source=MELTv2.2.2
+##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">
+##ALT=<ID=INS:ME:HERVK,Description="Insertion of HERVK element">
+##ALT=<ID=INS:ME:LINE1,Description="Insertion of LINE1 element">
+##ALT=<ID=INS:ME:SVA,Description="Insertion of SVA element">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference in length between REF and ALT alleles">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=GL,Number=3,Type=Float,Description="Genotype likelihood">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMPLE1
+chr1	100	.	A	<INS:ME:ALU>	.	PASS	SVTYPE=ALU;SVLEN=280	GT:GL:DP	0/1:-10,-5,-30:20
+chr1	200	.	T	<INS:ME:SVA>	.	PASS	SVTYPE=SVA;SVLEN=500	GT:GL:DP	0/1:-15,-6,-40:25
+chr1	300	.	G	<INS:ME:LINE1>	.	PASS	SVTYPE=LINE1;SVLEN=3000	GT:GL:DP	0/1:-20,-8,-50:30
+chr1	400	.	C	<INS:ME:HERVK>	.	PASS	SVTYPE=HERVK;SVLEN=8000	GT:GL:DP	0/1:-25,-9,-60:35
