@@ -8,10 +8,13 @@ name: release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: google-github-actions/release-please-action@v4
         id: release
         with:
-          release-type: python
-          package-name: cnv_sv
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
           default-branch: master
