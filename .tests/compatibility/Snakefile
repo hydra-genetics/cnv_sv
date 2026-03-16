@@ -39,9 +39,6 @@ module cnv_sv:
         config
 
 
-use rule * from alignment as alignment_*
-
-
 def compile_output_list(wildcards):
     files = {
         "cnv_sv/cnvkit_call": ["loh.cns"],
