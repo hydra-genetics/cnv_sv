@@ -153,7 +153,7 @@ jobs:
   integration:
     name: Integration test
     needs: [pytest, compatibility]
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -180,7 +180,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -r requirements.test.txt
       - name: Cache SIMG images
         id: cache-simg
         uses: actions/cache@v4
@@ -195,9 +194,9 @@ jobs:
         working-directory: .tests/integration
         run: |
           mkdir -p ~/singularity_containers &&
-          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfile config.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
       - name: Integration test - small dataset PACBIO
         working-directory: .tests/integration
         run: |
           mkdir -p ~/singularity_containers &&
-          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfile config_pacbio.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config_pacbio.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
