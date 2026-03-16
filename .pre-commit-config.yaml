@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: snakefmt
         name: snakefmt
-        entry: snakefmt
+        entry: snakefmt --check  --config .github/linters/.snakefmt.toml
         language: system
         files: (\.smk$|(^|/)Snakefile$)
 
