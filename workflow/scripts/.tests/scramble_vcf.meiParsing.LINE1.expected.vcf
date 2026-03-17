@@ -11,9 +11,7 @@
 ##INFO=<ID=CLIP_SIDE,Number=1,Type=String,Description="Side of soft-clipping (left/right)">
 ##INFO=<ID=POLYA_LEN,Number=1,Type=Integer,Description="Length of polyA tail">
 ##INFO=<ID=POLYA_SCORE,Number=1,Type=Float,Description="PolyA alignment score">
-##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">
-##ALT=<ID=INS:ME:L1,Description="Insertion of L1 element">
-##ALT=<ID=INS:ME:SVA,Description="Insertion of SVA element">
+##ALT=<ID=INS,Description="Insertion">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TEST_LINE1_N
-chr22	29683123	.	N	<INS:ME:L1>	.	PASS	SVTYPE=INS;END=29683123;SVLEN=285;MEINFO=L1,29683123,29683123,+;CALLER=scramble;SUPPORT=25;SCORE=450.8;CLIP_SIDE=left	GT	0/1
+chr22	29683123	.	N	<INS>	.	PASS	SVTYPE=INS;END=29683123;SVLEN=285;MEINFO=L1,29683123,29683123,+;CALLER=scramble;SUPPORT=25;SCORE=450.8;CLIP_SIDE=left	GT	0/1

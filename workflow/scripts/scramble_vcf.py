@@ -32,11 +32,7 @@ def write_vcf_header(vcf_out, sample_name):
     vcf_out.write(
         "##INFO=<ID=POLYA_SCORE,Number=1,Type=Float,Description=\"PolyA alignment score\">\n")
     vcf_out.write(
-        "##ALT=<ID=INS:ME:ALU,Description=\"Insertion of ALU element\">\n")
-    vcf_out.write(
-        "##ALT=<ID=INS:ME:L1,Description=\"Insertion of L1 element\">\n")
-    vcf_out.write(
-        "##ALT=<ID=INS:ME:SVA,Description=\"Insertion of SVA element\">\n")
+        "##ALT=<ID=INS,Description=\"Insertion\">\n")
     vcf_out.write(
         "##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n")
     vcf_out.write(
@@ -45,7 +41,7 @@ def write_vcf_header(vcf_out, sample_name):
 
 def process_meis_to_vcf(meis_in, vcf_out, sample_name, caller):
     """Process SCRAMBLE MEI file and write to VCF format.
-    
+
     Args:
         meis_in: Input file handle containing SCRAMBLE MEI data
         vcf_out: Output file handle for VCF
@@ -88,7 +84,7 @@ def process_meis_to_vcf(meis_in, vcf_out, sample_name, caller):
         consensus = columns[header_map.get('Consensus', 7)]
         clip_side = columns[header_map.get('Clipped_Side', 8)]
         ref = "N"
-        alt = f"<INS:ME:{mei_type}>"
+        alt = f"<INS>"
         id = "."
         qual = "."
         filter = "PASS"

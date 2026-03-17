@@ -15,7 +15,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPT_DIR = os.path.abspath(os.path.join(TEST_DIR, "../../workflow/scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-from scramble_vcf import write_vcf_header, process_meis_to_vcf
+from scramble_vcf import write_vcf_header, process_meis_to_vcf  # noqa: E402
 
 
 class TestWriteVcfHeader(unittest.TestCase):
@@ -91,7 +91,7 @@ class TestMeiParsing(unittest.TestCase):
     def _run_mei_conversion(self, input_file, output_file, expected_file, sample_name):
         """Helper method to run MEI conversion and compare output"""
         caller = "scramble"
-        
+
         with open(input_file, "r") as meis_in:
             with open(output_file, "w") as vcf_out:
                 process_meis_to_vcf(meis_in, vcf_out, sample_name, caller)
