@@ -135,7 +135,7 @@ rule scramble_sort:
         "{rule}: sort and reheader {input.vcf} with bcftools"
     shell:
         """
-        bcftools rehearder \\
+        bcftools reheader \\
         -f {input.fai}  {input.vcf} \\
         | bcftools sort -Oz -o {output.vcf} \\
         &> {log}
