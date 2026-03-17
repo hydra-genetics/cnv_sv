@@ -382,16 +382,15 @@ def compile_output_list(wildcards):
     ]
 
     files = {
-        "cnv_sv/scramble_sort": ["vcf"],
+        "cnv_sv/scramble": ["sorted.vcf.gz"],
     }
     output_files += [
-        "%s/%s_%s.%s.%s" % (prefix, sample, unit_type, tc_method, suffix)
+        "%s/%s_%s.%s" % (prefix, sample, unit_type, suffix)
         for prefix in files.keys()
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
         if platform not in ["ONT", "PACBIO"]
-        for tc_method in ["no_tc", "pathology"]
         for suffix in files[prefix]
     ]
 
