@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - "workflow/**"
-      - ".config/**"
+      - "config/**"
       - ".tests/**"
       - "requirements.txt"
       - "requirements.test.txt"
@@ -18,7 +18,7 @@ on:
       - master
     paths:
       - "workflow/**"
-      - ".config/**"
+      - "config/**"
       - ".tests/**"
       - "requirements.txt"
       - "requirements.test.txt"
