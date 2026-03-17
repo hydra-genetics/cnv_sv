@@ -385,7 +385,7 @@ def compile_output_list(wildcards):
         "cnv_sv/scramble_vcf": ["sorted.vcf.gz"],
     }
     output_files += [
-f"{prefix}/{sample}_{unit_type}.{suffix}"
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
         for prefix in files.keys()
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
