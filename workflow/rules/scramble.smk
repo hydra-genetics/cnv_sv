@@ -82,15 +82,15 @@ rule scramble_vcf:
     input:
         meis="cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt",
     output:
-        vcf="cnv_sv/scramble_vcf/{sample}_{type}.{tc_method}.vcf",
+        vcf=temp("cnv_sv/scramble_vcf/{sample}_{type}.vcf"),
     params:
         sample_name=lambda wildcards: f"{wildcards.sample}_{wildcards.type}",
         caller="scramble",
     log:
-        "cnv_sv/scramble_vcf/{sample}_{type}.{tc_method}.output.log",
+        "cnv_sv/scramble_vcf/{sample}_{type}.vcf.log",
     benchmark:
         repeat(
-            "cnv_sv/scramble_vcf/{sample}_{type}.{tc_method}.output.benchmark.tsv",
+            "cnv_sv/scramble_vcf/{sample}_{type}.vcf.benchmark.tsv",
             config.get("scramble_vcf", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("scramble_vcf", {}).get("threads", config["default_resources"]["threads"])
@@ -106,3 +106,37 @@ rule scramble_vcf:
         "{rule}: convert {input.meis} to VCF format"
     script:
         "../scripts/scramble_vcf.py"
+
+
+rule scramble_sort:
+    input:
+        vcf="cnv_sv/scramble_vcf/{sample}_{type}.vcf.gz",
+        tbi="cnv_sv/scramble_vcf/{sample}_{type}.vcf.gz.tbi",
+        fai=config.get("reference", {}).get("fai", ""),
+    output:
+        vcf=temp("cnv_sv/scramble_vcf/{sample}_{type}.sorted.vcf.gz"),
+    log:
+        "cnv_sv/scramble_vcf/{sample}_{type}.sorted.vcf.gz.log",
+    benchmark:
+        repeat(
+            "cnv_sv/scramble_vcf/{sample}_{type}.sorted.vcf.gz.benchmark.tsv",
+            config.get("scramble_sort", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("scramble_sort", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("scramble_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("scramble_sort", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("scramble_sort", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("scramble_sort", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("scramble_sort", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("scramble_sort", {}).get("container", config["default_container"])
+    message:
+        "{rule}: sort and reheader {input.vcf} with bcftools"
+    shell:
+        """
+        bcftools rehearder \\
+        -f {input.fai}  {input.vcf} \\
+        | bcftools sort -Oz -o {output.vcf} \\
+        &> {log}
+        """

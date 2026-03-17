@@ -382,7 +382,7 @@ def compile_output_list(wildcards):
     ]
 
     files = {
-        "cnv_sv/scramble_vcf": ["vcf"],
+        "cnv_sv/scramble_sort": ["vcf"],
     }
     output_files += [
         "%s/%s_%s.%s.%s" % (prefix, sample, unit_type, tc_method, suffix)

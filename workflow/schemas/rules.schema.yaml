@@ -1647,6 +1647,31 @@ properties:
             type: string
             description: VCF file with MEI variant calls
 
+  scramble_sort:
+    type: object
+    description: input and output parameters for scramble_sort
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: compressed VCF file with MEI variant calls from scramble_vcf
+          tbi:
+            type: string
+            description: index file for the compressed VCF
+          fai:
+            type: string
+            description: reference genome index file for reheadering
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: sorted and reheadered compressed VCF file with MEI variant calls
+
   severus_t_only:
     type: object
     description: input and output parameters for severus_t_only

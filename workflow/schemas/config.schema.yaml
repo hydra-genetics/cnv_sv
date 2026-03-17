@@ -981,6 +981,20 @@ properties:
         type: string
         description: name of the caller to be used in the VCF file (default "scramble")
 
+  scramble_sort:
+    description: parameters for scramble_sort
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   severus_t_only:
     description: parameters for severus_t_only
     type: object

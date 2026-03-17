@@ -8,6 +8,7 @@ reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
   fasta: "reference/HES45.fna"
+  fai: "reference/HES45.fna.fai"
 
 automap:
   container: "docker://hydragenetics/automap:1.2"
