@@ -43,14 +43,15 @@ def write_vcf_header(vcf_out, sample_name):
         "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n" % sample_name)
 
 
-def main():
-    snakemake.log_fmt_shell(stdout=False, stderr=True)  # noqa: F821
-
-    meis_in = open(snakemake.input.meis)  # noqa: F821
-    vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
-    sample_name = snakemake.params.sample_name  # noqa: F821
-    caller = snakemake.params.caller  # noqa: F821
-
+def process_meis_to_vcf(meis_in, vcf_out, sample_name, caller):
+    """Process SCRAMBLE MEI file and write to VCF format.
+    
+    Args:
+        meis_in: Input file handle containing SCRAMBLE MEI data
+        vcf_out: Output file handle for VCF
+        sample_name: Name of the sample
+        caller: Name of the caller tool
+    """
     header_map = {}
     header_written = False
     for line in meis_in:
@@ -104,7 +105,7 @@ def main():
             else:
                 svlen = "."
 
-        end = str(pos_int + 1)
+        end = str(pos_int)
         info = f"SVTYPE=INS;END={end}"
         if svlen != ".":
             info += f";SVLEN={svlen}"
@@ -131,6 +132,17 @@ def main():
     # Write header even if no MEIs found
     if not header_written:
         write_vcf_header(vcf_out, sample_name)
+
+
+def main():
+    snakemake.log_fmt_shell(stdout=False, stderr=True)  # noqa: F821
+
+    meis_in = open(snakemake.input.meis)  # noqa: F821
+    vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
+    sample_name = snakemake.params.sample_name  # noqa: F821
+    caller = snakemake.params.caller  # noqa: F821
+
+    process_meis_to_vcf(meis_in, vcf_out, sample_name, caller)
 
     vcf_out.close()
 
