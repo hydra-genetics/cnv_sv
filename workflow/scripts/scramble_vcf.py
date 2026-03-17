@@ -32,25 +32,22 @@ def write_vcf_header(vcf_out, sample_name):
     vcf_out.write(
         "##INFO=<ID=POLYA_SCORE,Number=1,Type=Float,Description=\"PolyA alignment score\">\n")
     vcf_out.write(
-        "##ALT=<ID=INS:ME:ALU,Description=\"Insertion of ALU element\">\n")
-    vcf_out.write(
-        "##ALT=<ID=INS:ME:L1,Description=\"Insertion of L1 element\">\n")
-    vcf_out.write(
-        "##ALT=<ID=INS:ME:SVA,Description=\"Insertion of SVA element\">\n")
+        "##ALT=<ID=INS,Description=\"Insertion\">\n")
     vcf_out.write(
         "##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n")
     vcf_out.write(
         "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n" % sample_name)
 
 
-def main():
-    snakemake.log_fmt_shell(stdout=False, stderr=True)  # noqa: F821
+def process_meis_to_vcf(meis_in, vcf_out, sample_name, caller):
+    """Process SCRAMBLE MEI file and write to VCF format.
 
-    meis_in = open(snakemake.input.meis)  # noqa: F821
-    vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
-    sample_name = snakemake.params.sample_name  # noqa: F821
-    caller = snakemake.params.caller  # noqa: F821
-
+    Args:
+        meis_in: Input file handle containing SCRAMBLE MEI data
+        vcf_out: Output file handle for VCF
+        sample_name: Name of the sample
+        caller: Name of the caller tool
+    """
     header_map = {}
     header_written = False
     for line in meis_in:
@@ -87,7 +84,7 @@ def main():
         consensus = columns[header_map.get('Consensus', 7)]
         clip_side = columns[header_map.get('Clipped_Side', 8)]
         ref = "N"
-        alt = f"<INS:ME:{mei_type}>"
+        alt = f"<INS>"
         id = "."
         qual = "."
         filter = "PASS"
@@ -104,7 +101,7 @@ def main():
             else:
                 svlen = "."
 
-        end = str(pos_int + 1)
+        end = str(pos_int)
         info = f"SVTYPE=INS;END={end}"
         if svlen != ".":
             info += f";SVLEN={svlen}"
@@ -131,6 +128,17 @@ def main():
     # Write header even if no MEIs found
     if not header_written:
         write_vcf_header(vcf_out, sample_name)
+
+
+def main():
+    snakemake.log_fmt_shell(stdout=False, stderr=True)  # noqa: F821
+
+    meis_in = open(snakemake.input.meis)  # noqa: F821
+    vcf_out = open(snakemake.output.vcf, "w")  # noqa: F821
+    sample_name = snakemake.params.sample_name  # noqa: F821
+    caller = snakemake.params.caller  # noqa: F821
+
+    process_meis_to_vcf(meis_in, vcf_out, sample_name, caller)
 
     vcf_out.close()
 

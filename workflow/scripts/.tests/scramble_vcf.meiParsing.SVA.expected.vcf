@@ -1,5 +1,5 @@
 ##fileformat=VCFv4.2
-##fileDate=2025-01-01
+##fileDate=2026-03-17
 ##source=SCRAMBLE
 ##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
 ##INFO=<ID=SVLEN,Number=.,Type=Integer,Description="Difference in length between REF and ALT alleles">
@@ -11,9 +11,7 @@
 ##INFO=<ID=CLIP_SIDE,Number=1,Type=String,Description="Side of soft-clipping (left/right)">
 ##INFO=<ID=POLYA_LEN,Number=1,Type=Integer,Description="Length of polyA tail">
 ##INFO=<ID=POLYA_SCORE,Number=1,Type=Float,Description="PolyA alignment score">
-##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">
-##ALT=<ID=INS:ME:L1,Description="Insertion of L1 element">
-##ALT=<ID=INS:ME:SVA,Description="Insertion of SVA element">
+##ALT=<ID=INS,Description="Insertion">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TEST_SVA_N
-chr7	6453123	.	N	<INS:ME:SVA>	.	PASS	SVTYPE=INS;END=6453124;SVLEN=2000;MEINFO=SVA,6453123,6453124,+;CALLER=scramble;SUPPORT=12	GT	0/1
+chr7	6453123	.	N	<INS>	.	PASS	SVTYPE=INS;END=6453123;SVLEN=2000;MEINFO=SVA,6453123,6453123,+;CALLER=scramble;SUPPORT=12;SCORE=320.4;CLIP_SIDE=left	GT	0/1
