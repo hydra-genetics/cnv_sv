@@ -11,7 +11,7 @@ rule melt:
         bed=config.get("melt", {}).get("bed", ""),
         mei=config.get("melt", {}).get("mei", ""),
         ref=config.get("reference", {}).get("fasta", ""),
-        metrics="qc/picard_collect_multiple_metrics/{sample}_{type}.insert_size_metrics",
+        metrics="qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt",
     output:
         alu=temp("cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf"),
         hervk=temp("cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf"),
