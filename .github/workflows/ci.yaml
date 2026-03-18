@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - "workflow/**"
-      - ".config/**`
+      - "config/**"
       - ".tests/**"
       - "requirements.txt"
       - "requirements.test.txt"
@@ -18,7 +18,7 @@ on:
       - master
     paths:
       - "workflow/**"
-      - ".config/**`
+      - "config/**"
       - ".tests/**"
       - "requirements.txt"
       - "requirements.test.txt"
@@ -94,11 +94,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
-            requirements.test.txt
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -r requirements.test.txt
       - name: Snakemake dry run
         working-directory: .tests/integration
         run: snakemake -n -s ../../workflow/Snakefile --configfile config.yaml
@@ -142,11 +140,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
-            requirements.test.txt
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install -r requirements.test.txt
       - name: Snakemake dry run
         working-directory: .tests/compatibility
         run: snakemake -n -s Snakefile --show-failed-logs --configfiles config.yaml
@@ -165,7 +161,6 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
-            requirements.test.txt
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
