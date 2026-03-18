@@ -118,6 +118,21 @@ def get_tc_file(wildcards):
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
 
+def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
+    """
+    Parse the Picard insert_size_metrics file and return the median insert size.
+    """
+
+    # Read the metrics file with pandas, skipping comment lines
+    df = pd.read_table(input.metrics, comment="#", nrows=1)
+    
+    if "MEDIAN_INSERT_SIZE" not in df.columns:
+        raise ValueError(f"MEDIAN_INSERT_SIZE column not found in {input.metrics}")
+    
+    median_insert_size = int(float(df["MEDIAN_INSERT_SIZE"].iloc[0]))
+    return median_insert_size
+
+
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
