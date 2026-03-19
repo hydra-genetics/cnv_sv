@@ -110,7 +110,7 @@ rule scramble_vcf:
     container:
         config.get("scramble_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: convert {input.meis} to VCF format"
+        "{rule}: convert the scramble {input.meis} to VCF format"
     script:
         "../scripts/scramble_vcf.py"
 
@@ -118,7 +118,6 @@ rule scramble_vcf:
 rule scramble_sort:
     input:
         vcf="cnv_sv/scramble_vcf/{sample}_{type}.vcf.gz",
-        tbi="cnv_sv/scramble_vcf/{sample}_{type}.vcf.gz.tbi",
         fai=config.get("reference", {}).get("fai", ""),
     output:
         vcf=temp("cnv_sv/scramble_vcf/{sample}_{type}.sorted.vcf.gz"),
