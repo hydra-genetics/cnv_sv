@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule purecn_coverage:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
     output:
         purecn=temp(
             expand(

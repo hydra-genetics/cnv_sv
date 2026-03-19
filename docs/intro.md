@@ -23,6 +23,8 @@ Certain tools in this module use functions to compile paths to input BAM files, 
 ### `get_input_aligned_bam(wildcards, config)`
 Returns a `(bam, bai)` tuple. If `aligner` is set in `config`, the path is `alignment/{aligner}_align/{sample}_{type}.bam`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `cnvkit_batch`, `hificnv`, `paraphase`, `pbsv_discover`, `sawfish_discover`, `sawfish_joint_call_single`, `scramble_alignment_score`, `sniffles2_call`, `trgt_genotype`.
 
+Further information on `get_input_aligned_bam`can be found [here](https://github.com/hydra-genetics/hydra-genetics/blob/develop/docs/development/input_functions.md)
+
 ### `get_input_haplotagged_bam(wildcards, config)`
 Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path` (custom directory) and `haplotag_suffix` (e.g. `haplotagged` → `{sample}_{type}.haplotagged.bam`) from `config`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `severus_t_only`.
 
