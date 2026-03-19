@@ -1,18 +1,24 @@
 ##fileformat=VCFv4.2
-##fileDate=2025-01-01
-##source=SCRAMBLE
-##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
-##INFO=<ID=SVLEN,Number=.,Type=Integer,Description="Difference in length between REF and ALT alleles">
-##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
-##INFO=<ID=MEINFO,Number=4,Type=String,Description="Mobile element info of the form NAME,START,END,POLARITY">
-##INFO=<ID=CALLER,Number=1,Type=String,Description="Caller">
-##INFO=<ID=SUPPORT,Number=1,Type=Integer,Description="Number of supporting reads">
-##INFO=<ID=SCORE,Number=1,Type=Float,Description="SCRAMBLE alignment score">
-##INFO=<ID=CLIP_SIDE,Number=1,Type=String,Description="Side of soft-clipping (left/right)">
-##INFO=<ID=POLYA_LEN,Number=1,Type=Integer,Description="Length of polyA tail">
-##INFO=<ID=POLYA_SCORE,Number=1,Type=Float,Description="PolyA alignment score">
+##fileDate=2026-03-19
+##source=scramble
 ##ALT=<ID=INS,Description="Insertion">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference in length between REF and ALT alleles">
+##INFO=<ID=MEINFO,Number=4,Type=String,Description="Mobile element info of the form NAME,START,END,POLARITY">
+##INFO=<ID=ALGORITHMS,Number=.,Type=String,Description="Source algorithms">
+##INFO=<ID=Alignment_Score,Number=1,Type=Float,Description="SCRAMble alignment score">
+##INFO=<ID=Alignment_Percent_Length,Number=1,Type=Float,Description="SCRAMble alignment percent length">
+##INFO=<ID=Alignment_Percent_Identity,Number=1,Type=Float,Description="SCRAMble alignment percent identity">
+##INFO=<ID=Clipped_Reads_In_Cluster,Number=1,Type=Integer,Description="Number of clipped reads in cluster">
+##INFO=<ID=Start_In_MEI,Number=.,Type=Integer,Description="Start of alignment to canonical MEI sequence">
+##INFO=<ID=Stop_In_MEI,Number=.,Type=Integer,Description="End of alignment to canonical MEI sequence">
+##INFO=<ID=polyA_Position,Number=.,Type=Integer,Description="Position of poly-A tail">
+##INFO=<ID=polyA_SupportingReads,Number=.,Type=Integer,Description="Number of reads supporting poly-A tail">
+##INFO=<ID=TSD_length,Number=.,Type=Integer,Description="Target site duplication length">
+##FILTER=<ID=LowQual,Description="Low quality variant">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TEST_ALU_N
-chr13	32889611	.	N	<INS>	.	PASS	SVTYPE=INS;END=32889611;SVLEN=292;MEINFO=ALU,32889611,32889611,+;CALLER=scramble;SUPPORT=15;SCORE=250.5;CLIP_SIDE=left;POLYA_LEN=285;POLYA_SCORE=95.2	GT	0/1
-chr6	10785432	.	N	<INS>	.	PASS	SVTYPE=INS;END=10785432;SVLEN=300;MEINFO=ALU,10785432,10785432,-;CALLER=scramble;SUPPORT=8;SCORE=180.3;CLIP_SIDE=right	GT	0/1
+chrX	5241433	scramble_TEST_ALU_N_chrX_0	N	<INS>	.	LowQual	SVTYPE=INS;END=5241433;SVLEN=217;MEINFO=alu,5241433,5241433,+;ALGORITHMS=scramble;Alignment_Score=71.39;Alignment_Percent_Length=90.54;Alignment_Percent_Identity=85.07;Clipped_Reads_In_Cluster=7;Start_In_MEI=65;Stop_In_MEI=131	GT	0/1
+chrX	117704901	scramble_TEST_ALU_N_chrX_1	N	<INS>	.	PASS	SVTYPE=INS;END=117704901;SVLEN=281;MEINFO=alu,117704901,117704901,+;ALGORITHMS=scramble;Alignment_Score=158.95;Alignment_Percent_Length=100.00;Alignment_Percent_Identity=100.00;Clipped_Reads_In_Cluster=5;Start_In_MEI=1;Stop_In_MEI=69;polyA_Position=117704887;polyA_SupportingReads=5;TSD_length=14	GT	0/1
+chrY	4509458	scramble_TEST_ALU_N_chrY_2	N	<INS>	.	PASS	SVTYPE=INS;END=4509458;SVLEN=280;MEINFO=alu,4509458,4509458,+;ALGORITHMS=scramble;Alignment_Score=156.65;Alignment_Percent_Length=100.00;Alignment_Percent_Identity=100.00;Clipped_Reads_In_Cluster=8;Start_In_MEI=2;Stop_In_MEI=69	GT	0/1

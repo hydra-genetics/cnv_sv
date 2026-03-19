@@ -85,7 +85,14 @@ rule scramble_vcf:
         vcf=temp("cnv_sv/scramble_vcf/{sample}_{type}.vcf"),
     params:
         sample_name=lambda wildcards: f"{wildcards.sample}_{wildcards.type}",
-        caller="scramble",
+        min_alignment_score=config.get("scramble_vcf", {}).get("min_alignment_score", 70),
+        min_clipped_reads=config.get("scramble_vcf", {}).get("min_clipped_reads", 5),
+        min_alignment_percent_length=config.get("scramble_vcf", {}).get("min_alignment_percent_length", 90),
+        min_alignment_percent_identity=config.get("scramble_vcf", {}).get("min_alignment_percent_identity", 90),
+        alu_size=config.get("scramble_vcf", {}).get("alu_size", 282),
+        sva_size=config.get("scramble_vcf", {}).get("sva_size", 1362),
+        l1_size=config.get("scramble_vcf", {}).get("l1_size", 6023),
+        cluster_distance=config.get("scramble_vcf", {}).get("cluster_distance", 300),
     log:
         "cnv_sv/scramble_vcf/{sample}_{type}.vcf.log",
     benchmark:

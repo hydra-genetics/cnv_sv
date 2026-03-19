@@ -1,1 +1,1 @@
-Insertion	MEI_Family	Orientation	Support	Score	polyA_Position	polyA_Percent_Match	Consensus	Clipped_Side
+Insertion	MEI_Family	Insertion_Direction	Clipped_Reads_In_Cluster	Alignment_Score	Alignment_Percent_Length	Alignment_Percent_Identity	Clipped_Sequence	Clipped_Side	Start_In_MEI	Stop_In_MEI	polyA_Position	polyA_Seq	polyA_SupportingReads	TSD	TSD_length
