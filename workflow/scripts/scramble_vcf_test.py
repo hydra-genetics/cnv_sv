@@ -10,6 +10,7 @@ __license__ = "GPL-3"
 import sys
 import os
 import unittest
+import tempfile
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPT_DIR = os.path.abspath(os.path.join(TEST_DIR, "../../workflow/scripts"))
@@ -88,13 +89,22 @@ class TestMeiParsing(unittest.TestCase):
 
         self._run_mei_conversion(input_file, output_file, expected_file, sample_name)
 
+    def test_mei_conversion_clustered(self):
+        """Test that two nearby records with opposite Clipped_Side are clustered into one"""
+        input_file = "workflow/scripts/.tests/scramble_vcf.meiParsing.clustered.input.txt"
+        expected_file = "workflow/scripts/.tests/scramble_vcf.meiParsing.clustered.expected.vcf"
+        tmp = tempfile.NamedTemporaryFile(suffix=".vcf", delete=False)
+        tmp.close()
+        output_file = tmp.name
+        self.addCleanup(lambda: os.path.exists(output_file) and os.remove(output_file))
+        sample_name = "TEST_CLUSTERED_N"
+
+        self._run_mei_conversion(input_file, output_file, expected_file, sample_name)
+
     def _run_mei_conversion(self, input_file, output_file, expected_file, sample_name):
         """Helper method to run MEI conversion and compare output"""
-        caller = "scramble"
-
-        with open(input_file, "r") as meis_in:
-            with open(output_file, "w") as vcf_out:
-                process_meis_to_vcf(meis_in, vcf_out, sample_name, caller)
+        with open(output_file, "w") as vcf_out:
+            process_meis_to_vcf(input_file, vcf_out, sample_name)
 
         # Compare output with expected (skip date line)
         with open(expected_file, "r") as expected:

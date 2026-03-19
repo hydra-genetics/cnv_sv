@@ -18,6 +18,5 @@
 ##INFO=<ID=TSD_length,Number=.,Type=Integer,Description="Target site duplication length">
 ##FILTER=<ID=LowQual,Description="Low quality variant">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
-#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TEST_SVA_N
-chr9	69088245	scramble_TEST_SVA_N_chr9_0	N	<INS>	.	LowQual	SVTYPE=INS;END=69088245;SVLEN=1156;MEINFO=sva,69088245,69088245,+;ALGORITHMS=scramble;Alignment_Score=50.67;Alignment_Percent_Length=93.02;Alignment_Percent_Identity=87.50;Clipped_Reads_In_Cluster=7;Start_In_MEI=206;Stop_In_MEI=245	GT	0/1
-chrUn_GL000219v1	143248	scramble_TEST_SVA_N_chrUn_GL000219v1_1	N	<INS>	.	PASS	SVTYPE=INS;END=143248;SVLEN=331;MEINFO=sva,143248,143248,+;ALGORITHMS=scramble;Alignment_Score=105.49;Alignment_Percent_Length=93.42;Alignment_Percent_Identity=90.14;Clipped_Reads_In_Cluster=9;Start_In_MEI=1031;Stop_In_MEI=1101	GT	0/1
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TEST_CLUSTERED_N
+chr1	1667010	scramble_TEST_CLUSTERED_N_chr1_0	N	<INS>	.	LowQual	SVTYPE=INS;END=1667010;SVLEN=88;MEINFO=alu,1667010,1667010,+;ALGORITHMS=scramble;Alignment_Score=61.19;Alignment_Percent_Length=95.95;Alignment_Percent_Identity=94.37;Clipped_Reads_In_Cluster=17;Start_In_MEI=54,107;Stop_In_MEI=88,142	GT	0/1

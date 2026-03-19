@@ -1658,9 +1658,6 @@ properties:
           vcf:
             type: string
             description: compressed VCF file with MEI variant calls from scramble_vcf
-          tbi:
-            type: string
-            description: index file for the compressed VCF
           fai:
             type: string
             description: reference genome index file for reheadering
