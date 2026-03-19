@@ -34,13 +34,13 @@ INT_COLUMNS = [
     "polyA_Position", "polyA_SupportingReads", "TSD_length",
 ]
 
-## When merging two-sided calls, we want to keep all values for these columns (e.g. polyA_Position=123,456) since they may differ between the two break-ends and be informative for filtering, but they are not numeric values that can be averaged like the alignment score metrics.
+# When merging two-sided calls, keep all values for these columns
+# (e.g. polyA_Position=123,456) since they may differ between the two
+# break-ends. They are not numeric values that can be averaged.
 MERGED_INT_COLUMNS = [
     "Start_In_MEI", "Stop_In_MEI",
     "polyA_Position", "polyA_SupportingReads", "TSD_length",
 ]
-
-
 
 
 def preprocess_scramble_table(path):
@@ -321,15 +321,16 @@ def write_vcf_records(vcf_out, df, sample_name):
             f"{chrom}\t{pos}\t{record_id}\tN\t<INS>\t.\t{filt}\t{info}\tGT\t0/1\n")
 
 
-def process_meis_to_vcf(meis_file, vcf_out, sample_name,
-                         min_score=DEFAULT_MIN_ALIGNMENT_SCORE,
-                         min_reads=DEFAULT_MIN_CLIPPED_READS,
-                         min_pct_length=DEFAULT_MIN_ALIGNMENT_PERCENT_LENGTH,
-                         min_pct_identity=DEFAULT_MIN_ALIGNMENT_PERCENT_IDENTITY,
-                         alu_size=DEFAULT_ALU_SIZE,
-                         sva_size=DEFAULT_SVA_SIZE,
-                         l1_size=DEFAULT_L1_SIZE,
-                         cluster_distance=DEFAULT_CLUSTER_DISTANCE):
+def process_meis_to_vcf(
+        meis_file, vcf_out, sample_name,
+        min_score=DEFAULT_MIN_ALIGNMENT_SCORE,
+        min_reads=DEFAULT_MIN_CLIPPED_READS,
+        min_pct_length=DEFAULT_MIN_ALIGNMENT_PERCENT_LENGTH,
+        min_pct_identity=DEFAULT_MIN_ALIGNMENT_PERCENT_IDENTITY,
+        alu_size=DEFAULT_ALU_SIZE,
+        sva_size=DEFAULT_SVA_SIZE,
+        l1_size=DEFAULT_L1_SIZE,
+        cluster_distance=DEFAULT_CLUSTER_DISTANCE):
     """Process SCRAMble MEI file and write to VCF format.
 
     Adapted from GATK-SV make_scramble_vcf.py. Reads the MEI table with pandas,
