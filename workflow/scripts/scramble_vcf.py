@@ -356,8 +356,6 @@ def process_meis_to_vcf(
         return
 
     df = calculate_svlen(df, alu_size, sva_size, l1_size, cluster_distance)
-    df = calculate_svlen(df, alu_size, sva_size, l1_size, cluster_distance)
-    if df.empty:
     if df.empty:
         return
 

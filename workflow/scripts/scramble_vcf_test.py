@@ -10,6 +10,7 @@ __license__ = "GPL-3"
 import sys
 import os
 import unittest
+import tempfile
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPT_DIR = os.path.abspath(os.path.join(TEST_DIR, "../../workflow/scripts"))
@@ -92,7 +93,10 @@ class TestMeiParsing(unittest.TestCase):
         """Test that two nearby records with opposite Clipped_Side are clustered into one"""
         input_file = "workflow/scripts/.tests/scramble_vcf.meiParsing.clustered.input.txt"
         expected_file = "workflow/scripts/.tests/scramble_vcf.meiParsing.clustered.expected.vcf"
-        output_file = input_file.replace(".input.txt", ".actual.vcf")
+        tmp = tempfile.NamedTemporaryFile(suffix=".vcf", delete=False)
+        tmp.close()
+        output_file = tmp.name
+        self.addCleanup(lambda: os.path.exists(output_file) and os.remove(output_file))
         sample_name = "TEST_CLUSTERED_N"
 
         self._run_mei_conversion(input_file, output_file, expected_file, sample_name)
