@@ -1,8 +1,15 @@
 {
-  "release-type": "python",
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": {
     ".": {
-      "package-name": "cnv_sv"
+      "release-type": "simple",
+      "package-name": "cnv_sv",
+      "changelog-path": "CHANGELOG.md",
+      "include-v-in-tag": true,
+      "include-component-in-tag": false,
+      "draft": false,
+      "prerelease": false
     }
-  }
+  },
+  "bootstrap-sha": "8007f6e728b99c806a547a84c05fd2af905a9dfd"
 }
