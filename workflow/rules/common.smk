@@ -268,6 +268,7 @@ def get_trgt_loci(wildcards):
             rep_ids.append(rep_id.split("=")[1])
     return rep_ids
 
+
 def get_tr_bed(wildcards):
     tr_bed = config.get("sniffles2_call", {}).get("tandem_repeats", "")
 

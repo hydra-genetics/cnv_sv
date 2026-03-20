@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule severus_t_only:
     input:
-        bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type='T')[0],
-        bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type='T')[1],
+        bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[0],
+        bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[1],
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
         pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
@@ -60,10 +60,10 @@ rule severus_t_only:
 
 rule severus_tn:
     input:
-        bam_t=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type='T')[0],
-        bai_t=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type='T')[1],
-        bam_n=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type='N')[0],
-        bai_n=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type='N')[1],
+        bam_t=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[0],
+        bai_t=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[1],
+        bam_n=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="N")[0],
+        bai_n=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="N")[1],
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}/out_dir")),
