@@ -18,7 +18,7 @@ Aligned and merged `.bam` files as well as different `.vcf` files depending on a
 * `snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf`
 * `snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz`
 
-Certain tools in this module use functions to compile paths to input BAM files, allowing the aligner or haplotagger to be configured without modifying individual rules. Read more about the hydra-genetics input functions [here](https://hydra-genetics.readthedocs.io/en/latest/development/input_functions/).
+Certain tools in this module use functions to compile paths to input BAM files, allowing the aligner or haplotagger to be configured without modifying individual rules. Read more about the hydra-genetics input functions in the [hydra-genetics documentation](https://hydra-genetics.readthedocs.io/en/latest/development/input_functions/).
 
 ### `get_input_aligned_bam(wildcards, config)`
 Returns a `(bam, bai)` tuple. If `aligner` is set in `config`, the path is `alignment/{aligner}_align/{sample}_{type}.bam`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `cnvkit_batch`, `hificnv`, `paraphase`, `pbsv_discover`, `sawfish_discover`, `sawfish_joint_call_single`, `scramble_alignment_score`, `sniffles2_call`, `trgt_genotype`.
@@ -26,8 +26,6 @@ Returns a `(bam, bai)` tuple. If `aligner` is set in `config`, the path is `alig
 ### `get_input_haplotagged_bam(wildcards, config)`
 Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path` (custom directory) and `haplotag_suffix` (e.g. `haplotagged` → `{sample}_{type}.haplotagged.bam`) from `config`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `severus_t_only`.
 
-### `get_severus_tn_input(wildcards)` *(defined in `workflow/rules/common.smk`)*
-Returns a dict `{"bam_t": ..., "bam_n": ...}` for use with Snakemake's `unpack()`. Calls `get_input_haplotagged_bam` twice with fixed `type="T"` and `type="N"` for the same sample, regardless of `wildcards.type`. Inherits `haplotag_path` and `haplotag_suffix` config behaviour. Used by: `severus_tn`.
 
 ## Module output files
 The output consists of result files that describe different kinds of larger genomic aberrations, such as copy number aberrations (CNVs), structural variants (SVs), and repeat expansions. The output files below are subdivided into short-read and long-read categories.

@@ -269,25 +269,6 @@ def get_trgt_loci(wildcards):
     return rep_ids
 
 
-def get_severus_tn_input(wildcards):
-    """
-    Get haplotagged BAM paths for both tumor (T) and normal (N) for severus_tn.
-    Respects haplotag_path and haplotag_suffix from config, same as get_input_haplotagged_bam.
-    """
-    from types import SimpleNamespace
-
-    wc_t = SimpleNamespace(sample=wildcards.sample, type="T")
-    wc_n = SimpleNamespace(sample=wildcards.sample, type="N")
-    bam_t, bai_t = get_input_haplotagged_bam(wc_t, config)
-    bam_n, bai_n = get_input_haplotagged_bam(wc_n, config)
-    return {
-        "bam_t": bam_t,
-        "bai_t": bai_t,
-        "bam_n": bam_n,
-        "bai_n": bai_n,
-    }
-
-
 def get_tr_bed(wildcards):
     tr_bed = config.get("sniffles2_call", {}).get("tandem_repeats", "")
 

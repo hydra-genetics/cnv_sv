@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule tiddit:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
         ref=config["reference"]["fasta"],
     output:
         folder=temp(directory("cnv_sv/tiddit/{sample}_{type}_tiddit")),

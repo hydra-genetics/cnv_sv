@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule purecn_coverage:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
     output:
         purecn=temp(
             expand(
@@ -97,7 +97,7 @@ checkpoint purecn:
 rule purecn_copy_output:
     input:
         file_dir=lambda wildcards: checkpoints.purecn.get(**wildcards).output.outdir,
-        files=lambda wildcards: f"{checkpoints.purecn.get(**wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
+        files=lambda wildcards: f"{checkpoints.purecn.get(** wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
     output:
         files=temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
     wildcard_constraints:
