@@ -5,7 +5,7 @@ units: "units_pacbio.tsv"
 default_container: "docker://hydragenetics/common:3.0.0"
 
 aligner: "pbmm2"
-haplotag_path: "alignment/pbmm2_align"
+phaser: "hiphase"
 
 
 reference:
