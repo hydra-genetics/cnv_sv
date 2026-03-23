@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule pindel_generate_config:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         metrics="qc/picard_collect_multiple_metrics/{sample}_{type}.insert_size_metrics",
     output:
         config=temp("cnv_sv/pindel/{sample}_{type}.cfg"),
@@ -34,8 +34,7 @@ rule pindel_generate_config:
 
 rule pindel_call:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         config="cnv_sv/pindel/{sample}_{type}.cfg",
         ref=config["reference"]["fasta"],
         include_bed=config.get("pindel_call", {}).get("include_bed", []),

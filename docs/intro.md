@@ -21,10 +21,22 @@ Aligned and merged `.bam` files as well as different `.vcf` files depending on a
 Certain tools in this module use functions to compile paths to input BAM files, allowing the aligner or haplotagger to be configured without modifying individual rules. Read more about the hydra-genetics input functions in the [hydra-genetics documentation](https://hydra-genetics.readthedocs.io/en/latest/development/input_functions/).
 
 ### `get_input_aligned_bam(wildcards, config)`
-Returns a `(bam, bai)` tuple. If `aligner` is set in `config`, the path is `alignment/{aligner}_align/{sample}_{type}.bam`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `cnvkit_batch`, `hificnv`, `paraphase`, `pbsv_discover`, `sawfish_discover`, `sawfish_joint_call_single`, `scramble_alignment_score`, `sniffles2_call`, `trgt_genotype`.
+Returns a `(bam, bai)` tuple. If `aligner` is set in `config`, the path is `alignment/{aligner}_align/{sample}_{type}.bam`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `cnvkit_batch`, `gatk_collect_allelic_counts`, `gatk_collect_read_counts`, `hificnv`, `jumble_run`, `manta_config_n`, `manta_config_t`, `manta_config_tn`, `manta_run_workflow_n`, `manta_run_workflow_t`, `manta_run_workflow_tn`, `melt`, `paraphase`, `pbsv_discover`, `pindel_call`, `pindel_generate_config`, `purecn`, `purecn_coverage`, `sawfish_discover`, `sawfish_joint_call_single`, `scanitd`, `scramble_alignment_score`, `sniffles2_call`, `trgt_genotype`.
 
 ### `get_input_haplotagged_bam(wildcards, config)`
-Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path` (custom directory) and `haplotag_suffix` (e.g. `haplotagged` → `{sample}_{type}.haplotagged.bam`) from `config`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `severus_t_only`.
+Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path` (custom directory) and `haplotag_suffix` (e.g. `haplotagged` → `{sample}_{type}.haplotagged.bam`) from `config`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `savana_ont_tn`, `savana_ont_to`, `savana_pb_tn`, `savana_pb_to`, `severus_tn`, `severus_t_only`.
+
+### Use of `unpack()` with input functions
+Many rules in this module use the `unpack()` function to handle multiple input files (e.g., a BAM file and its index) returned as a named tuple by the input functions. For example:
+
+```snakemake
+rule example_rule:
+    input:
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
+        ...
+```
+
+This ensures that rules automatically receive both the alignment file and its index without having to specify them individually in every rule.
 
 
 ## Module output files

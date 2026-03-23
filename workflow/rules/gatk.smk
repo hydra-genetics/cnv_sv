@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule gatk_collect_read_counts:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
     output:
         hdf5=temp("cnv_sv/gatk_collect_read_counts/{sample}_{type}.counts.hdf5"),
@@ -43,8 +42,7 @@ rule gatk_collect_read_counts:
 
 rule gatk_collect_allelic_counts:
     input:
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
         ref=config["reference"]["fasta"],
     output:

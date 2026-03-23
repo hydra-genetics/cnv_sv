@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule savana_pb_to:
     input:
-        bam="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
-        bai="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
+        unpack(get_tumor_haplotagged_bam),
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
@@ -40,7 +39,7 @@ rule savana_pb_to:
     message:
         "{rule}: run savana on {input.bam}"
     shell:
-        "savana to --tumour {input.bam} "
+        "savana to --tumour {input.bam_t} "
         "--outdir {params.dir} "
         "--ref {input.ref} "
         "--ref_index {input.fai} "
@@ -52,10 +51,8 @@ rule savana_pb_to:
 
 rule savana_pb_tn:
     input:
-        bam_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bai_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bam_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
-        bai_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
+        unpack(get_tumor_haplotagged_bam),
+        unpack(get_normal_haplotagged_bam),
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
@@ -97,8 +94,7 @@ rule savana_pb_tn:
 
 rule savana_ont_to:
     input:
-        bam="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
-        bai="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
+        unpack(get_tumor_haplotagged_bam),
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:
@@ -131,7 +127,7 @@ rule savana_ont_to:
     message:
         "{rule}: run savana on {input.bam}"
     shell:
-        "savana to --tumour {input.bam} "
+        "savana to --tumour {input.bam_t} "
         "--outdir {params.dir} "
         "--ref {input.ref} "
         "--ref_index {input.fai} "
@@ -142,10 +138,8 @@ rule savana_ont_to:
 
 rule savana_ont_tn:
     input:
-        bam_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bai_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bam_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
-        bai_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
+        unpack(get_tumor_haplotagged_bam),
+        unpack(get_normal_haplotagged_bam),
         ref=config.get("reference", {}).get("fasta", ""),
         fai=config.get("reference", {}).get("fai", ""),
     output:

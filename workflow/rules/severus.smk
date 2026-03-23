@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule severus_t_only:
     input:
-        bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[0],
-        bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[1],
+        unpack(lambda wildcards:  get_input_haplotagged_bam(wildcards, config, set_type="T")),
         vntr=config.get("severus_t_only", {}).get("vntr", ""),
         pon=config.get("severus_t_only", {}).get("pon", ""),
     output:
@@ -41,7 +40,7 @@ rule severus_t_only:
     message:
         "{rule}: use Severus in tumor only mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:
-        "( severus --target-bam {input.bam} "
+        "( severus --target-bam {input.bam_t} "
         "--out-dir {output.dir} "
         "-t {threads} "
         "--vntr-bed {input.vntr} "
@@ -60,10 +59,8 @@ rule severus_t_only:
 
 rule severus_tn:
     input:
-        bam_t=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[0],
-        bai_t=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="T")[1],
-        bam_n=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="N")[0],
-        bai_n=lambda wildcards: get_input_haplotagged_bam(wildcards, config, set_type="N")[1],
+        unpack(get_tumor_haplotagged_bam),
+        unpack(get_normal_haplotagged_bam),
         vntr=config.get("severus_tn", {}).get("vntr", ""),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}/out_dir")),

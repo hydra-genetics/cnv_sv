@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule expansionhunter:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
         ref=config.get("reference", {}).get("fasta", ""),
         sex="qc/peddy/peddy.sex_check.csv",

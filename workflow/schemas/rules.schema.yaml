@@ -51,12 +51,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: input 'bam' file
-          bai:
-            type: string
-            description: input 'bam' index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
       output:
         type: object
         description: list of outputs
@@ -198,12 +195,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: input 'bam' file
-          bai:
-            type: string
-            description: input 'bam' index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
           vcf:
             type: string
             description: a 'vcf' file with germline SNPs used for BAF information
@@ -264,9 +258,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
           bedfile:
             type: string
             description: a 'bed' file with regions to be analyzed
@@ -295,12 +289,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
           cat:
             type: string
             description: file with catalog of variants to analyze
@@ -332,12 +323,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
       output:
         type: object
         description: list of outputs
@@ -354,12 +342,15 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
+          interval:
             type: string
-            description: a 'bam' file index
+            description: a 'vcf' file with SNP positions used to collect allelic counts
+          ref:
+            type: string
+            description: fasta genome reference file
       output:
         type: object
         description: list of outputs
@@ -491,9 +482,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
       output:
         type: object
         description: list of outputs
@@ -560,12 +551,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: bam file
-          bai:
-            type: string
-            description: bam index file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam` and `bai` file paths
           vcf:
             type: string
             description: vcf file with called germline SNPs used for improved visualization
@@ -606,18 +594,12 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_t:
+          unpack:
             type: string
-            description: a tumor 'bam' file
-          bai_t:
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam_t` and `bai_t` for tumor and `bam_n` and `bai_n` for normal
+          ref:
             type: string
-            description: a tumor 'bam' file index
-          bam_n:
-            type: string
-            description: a normal 'bam' file from the same sample
-          bai_n:
-            type: string
-            description: a normal 'bam' file index
+            description: reference genome in fasta format
       output:
         type: object
         description: list of outputs
@@ -634,18 +616,12 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_t:
+          unpack:
             type: string
-            description: a tumor 'bam' file
-          bai_t:
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs with `bam_t` and `bai_t` for tumor and `bam_n` and `bai_n` for normal
+          ref:
             type: string
-            description: a tumor 'bam' file index
-          bam_n:
-            type: string
-            description: a normal 'bam' file from the same sample
-          bai_n:
-            type: string
-            description: a normal 'bam' file index
+            description: reference genome in fasta format
           scrpt:
             type: string
             description: a python script with configurations that is used in the manta analysis
@@ -689,12 +665,12 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_t:
+          unpack:
             type: string
-            description: a tumor 'bam' file
-          bai_t:
+            description: BAM file and index provided by the `get_tumor_aligned_bam` input function, returning a named inputs  `bam_t` and `bai_t`
+          ref:
             type: string
-            description: a tumor 'bam' file index
+            description: reference genome in fasta format
       output:
         type: object
         description: list of outputs
@@ -711,12 +687,12 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_t:
+          unpack:
             type: string
-            description: a tumor 'bam' file
-          bai_t:
+            description: BAM file and index provided by the `get_tumor_aligned_bam` input function, returning a named inputs  `bam_t` and `bai_t`
+          ref:
             type: string
-            description: a tumor 'bam' file index
+            description: reference genome in fasta format
           scrpt:
             type: string
             description: a python script with configurations that is used in the manta analysis
@@ -754,12 +730,12 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_n:
+          unpack:
             type: string
-            description: a normal 'bam' file
-          bai_n:
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam_n` and `bai_n`
+          ref:
             type: string
-            description: a normal 'bam' file index
+            description: reference genome in fasta format
       output:
         type: object
         description: list of outputs
@@ -776,12 +752,12 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_n:
+          unpack:
             type: string
-            description: a normal 'bam' file
-          bai_n:
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam_n` and `bai_n`
+          ref:
             type: string
-            description: a normal 'bam' file index
+            description: reference genome in fasta format
           scrpt:
             type: string
             description: a python script with configurations that is used in the manta analysis
@@ -813,9 +789,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: Input de-duplicated bam file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam` and `bai`
           ref:
             type: string
             description: Reference genome
@@ -912,12 +888,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam` and `bai`
           ref:
             type: string
             description: fasta genome reference file
@@ -947,12 +920,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bai' file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam` and `bai`
       output:
         type: object
         description: list of outputs
@@ -991,9 +961,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam` and `bai`
           metrics:
             type: string
             description: a insert size metrics file generated by picard_collect_multiple_metrics
@@ -1013,12 +983,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam` and `bai`
           config:
             type: string
             description: the config file generated by pindel_generate_config
@@ -1057,12 +1024,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named inputs  `bam` and `bai`
       output:
         type: object
         description: list of outputs
@@ -1202,12 +1166,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: mapped and haplotagged BAM file
-          bai:
-            type: string
-            description: BAM index file
+            description: BAM file and index provided by the `get_tumor_haplotagged_bam` input function, returning a named inputs  `bam_t` and `bai_t`
           ref:
             type: string
             description: reference genome file in FASTA format
@@ -1245,18 +1206,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_n:
+          unpack:
             type: string
-            description: mapped and haplotagged BAM file (normal)
-          bai_n:
-            type: string
-            description: normal BAM index file
-          bam_t:
-            type: string
-            description: mapped and haplotagged BAM file (tumor)
-          bai_t:
-            type: string
-            description: tumor BAM index file
+            description: BAM files and indices provided by `get_tumor_haplotagged_bam` and `get_normal_haplotagged_bam` input functions, returning a named inputs  `bam_t`, `bai_t` for tumor and `bam_n` and `bai_n` for normal
           ref:
             type: string
             description: reference genome file in FASTA format
@@ -1294,12 +1246,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: mapped and haplotagged BAM file
-          bai:
-            type: string
-            description: BAM index file
+            description: BAM file and index provided by the `get_tumor_haplotagged_bam` input function, returning a named inputs  `bam_t` and `bai_t` for tumor
           ref:
             type: string
             description: reference genome file in FASTA format
@@ -1337,18 +1286,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_n:
+          unpack:
             type: string
-            description: mapped and haplotagged BAM file (normal)
-          bai_n:
-            type: string
-            description: normal BAM index file
-          bam_t:
-            type: string
-            description: mapped and haplotagged BAM file (tumor)
-          bai_t:
-            type: string
-            description: tumor BAM index file
+            description: BAM files and indices provided by `get_tumor_haplotagged_bam` and `get_normal_haplotagged_bam`  input functions, returning a named inputs  `bam_t`, `bai_t` for tumor and `bam_n` and `bai_n` for normal
           ref:
             type: string
             description: reference genome file in FASTA format
@@ -1387,12 +1327,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
           maf:
             type: string
             description: Variant file used to generate minor allele frequency track for this sample, in compressed VCF format.
@@ -1467,12 +1404,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
           ref:
             type: string
             description: fasta genome reference file
@@ -1570,12 +1504,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: input 'bam' file
-          bai:
-            type: string
-            description: input 'bam' index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
           ref:
             type: string
             description: fasta reference genome file
@@ -1614,12 +1545,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: input BAM file
-          bai:
-            type: string
-            description: input BAM index file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
       output:
         type: object
         description: list of outputs
@@ -1677,9 +1605,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: mapped and phased reads in BAM format
+            description: BAM file and index provided by the `get_tumor_haplotagged_bam` input function, returning a named inputs with `bam_t` and `bai_t` file paths
           vntr:
             type: string
             description: path to bed file for tandem repeat regions (must be ordered)
@@ -1723,12 +1651,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam_t:
+          unpack:
             type: string
-            description: mapped and phased tumor reads in BAM format
-          bam_n:
-            type: string
-            description: mapped and phased normal reads in BAM format
+            description: BAM file and index provided by the `get_tumor_haplotagged_bam` input function, returning a named inputs with `bam_t` and `bai_t` file paths
           vntr:
             type: string
             description: path to bed file for tandem repeat regions (must be ordered)
@@ -1772,12 +1697,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: a 'bam' file index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
       output:
         type: object
         description: list of outputs
@@ -1835,12 +1757,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: input 'bam' index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
           ref:
             type: string
             description: fasta genome reference file
@@ -1921,9 +1840,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
       output:
         type: object
         description: list of outputs
@@ -1946,12 +1865,9 @@ properties:
         type: object
         description: list of inputs
         properties:
-          bam:
+          unpack:
             type: string
-            description: a 'bam' file
-          bai:
-            type: string
-            description: input 'bam' index
+            description: BAM file and index provided by the `get_input_aligned_bam` input function, returning a named tuple with `bam` and `bai` file paths
           bed:
             type: string
             description: a 'bed' file specify STRs in the reference genome to genotype

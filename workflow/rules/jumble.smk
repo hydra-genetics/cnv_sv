@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule jumble_run:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         cnv_png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.png"),

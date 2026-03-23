@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule trgt_genotype:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         bed=config.get("trgt_genotype", {}).get("bed", ""),
         ref=config.get("reference", {}).get("fasta", ""),
     output:

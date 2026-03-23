@@ -13,7 +13,10 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
-from hydra_genetics.utils.misc import get_input_aligned_bam, get_input_haplotagged_bam
+from hydra_genetics.utils.misc import *
+
+
+
 
 min_version("7.8.3")
 
@@ -49,6 +52,22 @@ wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
     file="^cnv_sv/.+",
+
+
+def get_tumor_aligned_bam(wildcards):
+    return get_input_aligned_bam(wildcards, config, set_type="T")
+
+
+def get_normal_aligned_bam(wildcards):
+    return get_input_aligned_bam(wildcards, config, set_type="N")
+
+
+def get_tumor_haplotagged_bam(wildcards):
+    return get_input_haplotagged_bam(wildcards, config, set_type="T")
+
+
+def get_normal_haplotagged_bam(wildcards):
+    return get_input_haplotagged_bam(wildcards, config, set_type="N")
 
 
 def get_karyotype(wildcards):

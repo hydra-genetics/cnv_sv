@@ -6,8 +6,7 @@ __license__ = "GPL-3"
 
 rule sniffles2_call:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        unpack(lambda wildcards: get_input_aligned_bam(wildcards, config)),
         ref=config.get("reference", {}).get("fasta", ""),
     output:
         vcf=temp("cnv_sv/sniffles2_call/{sample}_{type}.vcf"),

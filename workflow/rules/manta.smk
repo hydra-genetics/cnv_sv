@@ -6,11 +6,9 @@ __license__ = "GPL-3"
 
 rule manta_config_tn:
     input:
-        bam_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[0],
-        bai_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[1],
-        bam_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[0],
-        bai_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[1],
-        ref=config["reference"]["fasta"],
+        unpack(get_tumor_aligned_bam),
+        unpack(get_normal_aligned_bam),
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py"),
     params:
@@ -44,11 +42,9 @@ rule manta_config_tn:
 
 rule manta_run_workflow_tn:
     input:
-        bam_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[0],
-        bai_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[1],
-        bam_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[0],
-        bai_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[1],
-        ref=config["reference"]["fasta"],
+        unpack(get_tumor_aligned_bam),
+        unpack(get_normal_aligned_bam),
+        ref=config.get("reference", {}).get("fasta", ""),
         scrpt="cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py",
     output:
         cand_si_vcf=temp("cnv_sv/manta_run_workflow_tn/{sample}/results/variants/candidateSmallIndels.vcf.gz"),
@@ -86,9 +82,8 @@ rule manta_run_workflow_tn:
 
 rule manta_config_t:
     input:
-        bam_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[0],
-        bai_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[1],
-        ref=config["reference"]["fasta"],
+        unpack(get_tumor_aligned_bam),
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py"),
     params:
@@ -121,9 +116,8 @@ rule manta_config_t:
 
 rule manta_run_workflow_t:
     input:
-        bam_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[0],
-        bai_t=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="T")[1],
-        ref=config["reference"]["fasta"],
+        unpack(get_tumor_aligned_bam),
+        ref=config.get("reference", {}).get("fasta", ""),
         scrpt="cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py",
     output:
         cand_si_vcf=temp("cnv_sv/manta_run_workflow_t/{sample}/results/variants/candidateSmallIndels.vcf.gz"),
@@ -159,9 +153,8 @@ rule manta_run_workflow_t:
 
 rule manta_config_n:
     input:
-        bam_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[0],
-        bai_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[1],
-        ref=config["reference"]["fasta"],
+        unpack(get_normal_aligned_bam),
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py"),
     params:
@@ -194,9 +187,8 @@ rule manta_config_n:
 
 rule manta_run_workflow_n:
     input:
-        bam_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[0],
-        bai_n=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[1],
-        ref=config["reference"]["fasta"],
+        unpack(get_normal_aligned_bam),
+        ref=config.get("reference", {}).get("fasta", ""),
         scrpt="cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py",
     output:
         cand_si_vcf=temp("cnv_sv/manta_run_workflow_n/{sample}/results/variants/candidateSmallIndels.vcf.gz"),
