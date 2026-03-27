@@ -6,16 +6,20 @@ __license__ = "GPL-3"
 
 rule sniffles2_call:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
     output:
         vcf=temp("cnv_sv/sniffles2_call/{sample}_{type}.vcf"),
         snf=temp("cnv_sv/sniffles2_call/{sample}_{type}.snf"),
-    params:
-        sample_id=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
-        tandem_repeats=get_tr_bed,
-        extra=config.get("sniffles2_call", {}).get("extra", ""),
     log:
         "cnv_sv/sniffles2_call/{sample}_{type}.vcf.log",
     benchmark:
@@ -23,6 +27,8 @@ rule sniffles2_call:
             "cnv_sv/sniffles2_call/{sample}_{type}.output.benchmark.tsv",
             config.get("sniffles2_call", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("sniffles2_call", {}).get("container", config["default_container"])
     threads: config.get("sniffles2_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("sniffles2_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -30,8 +36,10 @@ rule sniffles2_call:
         partition=config.get("sniffles2_call", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("sniffles2_call", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("sniffles2_call", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("sniffles2_call", {}).get("container", config["default_container"])
+    params:
+        sample_id=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
+        tandem_repeats=get_tr_bed,
+        extra=config.get("sniffles2_call", {}).get("extra", ""),
     message:
         "{rule}: Calls SVs on {input.bam} with sniffles"
     shell:

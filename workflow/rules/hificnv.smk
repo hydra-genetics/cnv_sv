@@ -6,14 +6,20 @@ __license__ = "GPL-3"
 
 rule hificnv:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        ),
     output:
         vcf=temp("cnv_sv/hificnv/{sample}_{type}.vcf.gz"),
         bw=temp("cnv_sv/hificnv/{sample}_{type}.depth.bw"),
         bedgraph=temp("cnv_sv/hificnv/{sample}_{type}.copynum.bedgraph"),
-    params:
-        ref=config.get("reference", {}).get("fasta", ""),
-        exclude=config.get("hificnv", {}).get("exclude", ""),
     log:
         call="cnv_sv/hificnv/{sample}_{type}.vcf.gz.log",
         mv_vcf="cnv_sv/hificnv/{sample}_{type}.vcf.gz.mv.log",
@@ -24,6 +30,8 @@ rule hificnv:
             "cnv_sv/hificnv/{sample}_{type}.output.benchmark.tsv",
             config.get("hificnv", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("hificnv", {}).get("container", config["default_container"])
     threads: config.get("hificnv", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("hificnv", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -31,8 +39,9 @@ rule hificnv:
         partition=config.get("hificnv", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("hificnv", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("hificnv", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("hificnv", {}).get("container", config["default_container"])
+    params:
+        ref=config.get("reference", {}).get("fasta", ""),
+        exclude=config.get("hificnv", {}).get("exclude", ""),
     message:
         "{rule}: Calculating copy number variants on {input.bam} with HiFiCNV"
     shell:

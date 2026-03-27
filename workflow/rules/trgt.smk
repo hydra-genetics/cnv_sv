@@ -6,24 +6,29 @@ __license__ = "GPL-3"
 
 rule trgt_genotype:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        bed=config.get("trgt_genotype", {}).get("bed", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        ),
+        bed=config.get("trgt_genotype", {}).get("bed", []),
+        ref=config.get("reference", {}).get("fasta", []),
     output:
         vcf="cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz",
         bam="cnv_sv/trgt_genotype/{sample}_{type}.spanning.bam",
-    params:
-        extra=config.get("trgt_genotype", {}).get("extra", ""),
-        karyotype=get_karyotype,
-        prefix="cnv_sv/trgt_genotype/{sample}_{type}",
-        sample_name="{sample}_{type}",
     log:
         "cnv_sv/trgt_genotype/{sample}_{type}.vcf.log",
     benchmark:
         repeat(
             "cnv_sv/trgt_genotype/{sample}_{type}.vcf.benchmark.tsv", config.get("trgt_genotype", {}).get("benchmark_repeats", 1)
         )
+    container:
+        config.get("trgt_genotype", {}).get("container", config["default_container"])
     threads: config.get("trgt_genotype", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("trgt_genotype", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -31,8 +36,11 @@ rule trgt_genotype:
         partition=config.get("trgt_genotype", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("trgt_genotype", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("trgt_genotype", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("trgt_genotype", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("trgt_genotype", {}).get("extra", ""),
+        karyotype=get_karyotype,
+        prefix="cnv_sv/trgt_genotype/{sample}_{type}",
+        sample_name="{sample}_{type}",
     message:
         "{rule}: Run trgt genotype on {input.bam}"
     shell:
@@ -53,8 +61,6 @@ rule trgt_bam_sort:
     output:
         bam="cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam",
         idx="cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam.bai",
-    params:
-        extra=config.get("trgt_bam_sort", {}).get("extra", ""),
     log:
         "cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam.log",
     benchmark:
@@ -62,6 +68,8 @@ rule trgt_bam_sort:
             "cnv_sv/trgt_genotype/{sample}_{type}.output.benchmark.tsv",
             config.get("trgt_bam_sort", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("trgt_bam_sort", {}).get("container", config["default_container"])
     threads: config.get("trgt_bam_sort", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("trgt_bam_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -69,8 +77,8 @@ rule trgt_bam_sort:
         partition=config.get("trgt_bam_sort", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("trgt_bam_sort", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("trgt_bam_sort", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("trgt_bam_sort", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("trgt_bam_sort", {}).get("extra", ""),
     message:
         "{rule}: Sort and index {input.bam} with samtools"
     wrapper:
@@ -81,16 +89,11 @@ rule trgt_plot:
     input:
         bam="cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam",
         bai="cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam.bai",
-        bed=config.get("trgt_genotype", {}).get("bed", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        bed=config.get("trgt_genotype", {}).get("bed", []),
+        ref=config.get("reference", {}).get("fasta", []),
         vcf="cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz",
     output:
         image=expand("cnv_sv/trgt_plot/{{sample}}_{{type}}_{{locus}}.{ext}", ext=config.get("trgt_plot", {}).get("image", "svg")),
-    params:
-        extra=config.get("trgt_plot", {}).get("extra", ""),
-        image_type=config.get("trgt_plot", {}).get("image", "svg"),
-        plot_type=config.get("trgt_plot", {}).get("plot_type", "allele"),
-        show=config.get("trgt_plot", {}).get("show", "motifs"),
     log:
         "cnv_sv/trgt_plot/{sample}_{type}_{locus}.output.log",
     benchmark:
@@ -98,6 +101,8 @@ rule trgt_plot:
             "cnv_sv/trgt_plot/{sample}_{type}_{locus}.output.benchmark.tsv",
             config.get("trgt_plot", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("trgt_plot", {}).get("container", config["default_container"])
     threads: config.get("trgt_plot", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("trgt_plot", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -105,8 +110,11 @@ rule trgt_plot:
         partition=config.get("trgt_plot", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("trgt_plot", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("trgt_plot", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("trgt_plot", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("trgt_plot", {}).get("extra", ""),
+        image_type=config.get("trgt_plot", {}).get("image", "svg"),
+        plot_type=config.get("trgt_plot", {}).get("plot_type", "allele"),
+        show=config.get("trgt_plot", {}).get("show", "motifs"),
     message:
         "{rule}: Run trgt plot on {input.bam}"
     shell:

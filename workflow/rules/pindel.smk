@@ -6,7 +6,11 @@ __license__ = "GPL-3"
 
 rule pindel_generate_config:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
         metrics="qc/picard_collect_multiple_metrics/{sample}_{type}.insert_size_metrics",
     output:
         config=temp("cnv_sv/pindel/{sample}_{type}.cfg"),
@@ -17,6 +21,8 @@ rule pindel_generate_config:
             "cnv_sv/pindel/{sample}_{type}_pindel_generate_config.benchmark.tsv",
             config.get("pindel_generate_config", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("pindel_generate_config", {}).get("container", config["default_container"])
     threads: config.get("pindel_generate_config", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("pindel_generate_config", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -24,8 +30,6 @@ rule pindel_generate_config:
         partition=config.get("pindel_generate_config", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("pindel_generate_config", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("pindel_generate_config", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("pindel_generate_config", {}).get("container", config["default_container"])
     message:
         "{rule}: produce config for {wildcards.sample} {wildcards.type}"
     script:
@@ -34,8 +38,16 @@ rule pindel_generate_config:
 
 rule pindel_call:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
         config="cnv_sv/pindel/{sample}_{type}.cfg",
         ref=config["reference"]["fasta"],
         include_bed=config.get("pindel_call", {}).get("include_bed", []),
@@ -57,8 +69,6 @@ rule pindel_call:
                 ],
             )
         ),
-    params:
-        extra=config.get("pindel_call", {}).get("extra", ""),
     log:
         "cnv_sv/pindel/{sample}_{type}_pindel_call.log",
     benchmark:
@@ -66,6 +76,8 @@ rule pindel_call:
             "cnv_sv/pindel/{sample}_{type}_pindel_call.benchmark.tsv",
             config.get("pindel_call", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("pindel_call", {}).get("container", config["default_container"])
     threads: config.get("pindel_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("pindel_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -73,8 +85,8 @@ rule pindel_call:
         partition=config.get("pindel_call", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("pindel_call", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("pindel_call", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("pindel_call", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("pindel_call", {}).get("extra", ""),
     message:
         "{rule}: detect breakpoints in {wildcards.sample} {wildcards.type}"
     wrapper:
@@ -100,10 +112,6 @@ rule pindel2vcf:
         ref=config["reference"]["fasta"],
     output:
         vcf=temp("cnv_sv/pindel_vcf/{sample}_{type}.no_contig.vcf"),
-    params:
-        extra=config.get("pindel2vcf", {}).get("extra", ""),
-        refdate=config.get("pindel2vcf", {}).get("refdate", "20131217"),
-        refname=config.get("pindel2vcf", {}).get("refname", "'Genome Reference Consortium Human Build 38'"),
     log:
         "cnv_sv/pindel_vcf/{sample}_{type}.no_contig.vcf.log",
     benchmark:
@@ -111,6 +119,8 @@ rule pindel2vcf:
             "cnv_sv/pindel/{sample}_{type}.no_contig.vcf.benchmark.tsv",
             config.get("pindel2vcf", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("pindel2vcf", {}).get("container", config["default_container"])
     threads: config.get("pindel2vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("pindel2vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -118,8 +128,10 @@ rule pindel2vcf:
         partition=config.get("pindel2vcf", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("pindel2vcf", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("pindel2vcf", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("pindel2vcf", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("pindel2vcf", {}).get("extra", ""),
+        refdate=config.get("pindel2vcf", {}).get("refdate", "20131217"),
+        refname=config.get("pindel2vcf", {}).get("refname", "'Genome Reference Consortium Human Build 38'"),
     message:
         "{rule}: convert pindel output to vcf for {wildcards.sample}_{wildcards.type}.no_contig"
     wrapper:
@@ -133,8 +145,6 @@ rule pindel_update_vcf:
     output:
         vcf=temp("cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf"),
         samplename=temp("cnv_sv/pindel_vcf/{sample}_{type}.samplename.txt"),
-    params:
-        extra=config.get("pindel_update_vcf", {}).get("extra", ""),
     log:
         "cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf.log",
     benchmark:
@@ -142,6 +152,8 @@ rule pindel_update_vcf:
             "cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf.benchmark.tsv",
             config.get("pindel_update_vcf", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("pindel_update_vcf", {}).get("container", config["default_container"])
     threads: config.get("pindel_update_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("pindel_update_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -149,8 +161,8 @@ rule pindel_update_vcf:
         partition=config.get("pindel_update_vcf", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("pindel_update_vcf", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("pindel_update_vcf", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("pindel_update_vcf", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("pindel_update_vcf", {}).get("extra", ""),
     message:
         "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs and correct samplename"
     shell:

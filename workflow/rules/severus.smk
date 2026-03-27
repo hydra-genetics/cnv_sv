@@ -6,10 +6,18 @@ __license__ = "GPL-3"
 
 rule severus_t_only:
     input:
-        bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[1],
-        vntr=config.get("severus_t_only", {}).get("vntr", ""),
-        pon=config.get("severus_t_only", {}).get("pon", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam",
+            otherwise="snv_indels/whatshap_haplotag/{sample}_T.haplotagged.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_{type}.haplotagged.bam.bai",
+            otherwise="snv_indels/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
+        ),
+        vntr=config.get("severus_t_only", {}).get("vntr", []),
+        pon=config.get("severus_t_only", {}).get("pon", []),
     output:
         dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}/out_dir")),
         b_double=temp("cnv_sv/severus_t_only/{sample}_{type}_breakpoint_double.csv"),
@@ -20,8 +28,6 @@ rule severus_t_only:
         somatic_sv_vcf=temp("cnv_sv/severus_t_only/{sample}_{type}_somatic_sv.vcf"),
         somatic_b_clusters=temp("cnv_sv/severus_t_only/{sample}_{type}_somatic_breakpoint_clusters.tsv"),
         somatic_b_clusters_list=temp("cnv_sv/severus_t_only/{sample}_{type}_somatic_breakpoint_clusters_list.tsv"),
-    params:
-        extra=config.get("severus_t_only", {}).get("extra", ""),
     log:
         "cnv_sv/severus_t_only/{sample}_{type}.severus_t_only.log",
     benchmark:
@@ -29,6 +35,8 @@ rule severus_t_only:
             "cnv_sv/severus_t_only/{sample}_{type}.severus_t_only.benchmark.tsv",
             config.get("severus_t_only", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("severus_t_only", {}).get("container", config["default_container"])
     threads: config.get("severus_t_only", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("severus_t_only", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -36,8 +44,8 @@ rule severus_t_only:
         partition=config.get("severus_t_only", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("severus_t_only", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("severus_t_only", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("severus_t_only", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("severus_t_only", {}).get("extra", ""),
     message:
         "{rule}: use Severus in tumor only mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:
@@ -60,11 +68,27 @@ rule severus_t_only:
 
 rule severus_tn:
     input:
-        bam_t=lambda wildcards: get_severus_tn_input(wildcards)["bam_t"],
-        bai_t=lambda wildcards: get_severus_tn_input(wildcards)["bai_t"],
-        bam_n=lambda wildcards: get_severus_tn_input(wildcards)["bam_n"],
-        bai_n=lambda wildcards: get_severus_tn_input(wildcards)["bai_n"],
-        vntr=config.get("severus_tn", {}).get("vntr", ""),
+        bam_t=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam",
+            otherwise="snv_indels/whatshap_haplotag/{sample}_T.haplotagged.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam.bai",
+            otherwise="snv_indels/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
+        ),
+        bam_n=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_N.haplotagged.bam",
+            otherwise="snv_indels/hiphase/{sample}_N.haplotagged.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_N.haplotagged.bam.bai",
+            otherwise="snv_indels/hiphase/{sample}_N.haplotagged.bam.bai",
+        ),
+        vntr=config.get("severus_tn", {}).get("vntr", []),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}/out_dir")),
         b_double=temp("cnv_sv/severus_tn/{sample}_{type}_breakpoint_double.csv"),
@@ -75,8 +99,6 @@ rule severus_tn:
         somatic_sv_vcf=temp("cnv_sv/severus_tn/{sample}_{type}_somatic_sv.vcf"),
         somatic_b_clusters=temp("cnv_sv/severus_tn/{sample}_{type}_somatic_breakpoint_clusters.tsv"),
         somatic_b_clusters_list=temp("cnv_sv/severus_tn/{sample}_{type}_somatic_breakpoint_clusters_list.tsv"),
-    params:
-        extra=config.get("severus_tn", {}).get("extra", ""),
     log:
         "cnv_sv/severus_tn/{sample}_{type}.severus_tn.log",
     benchmark:
@@ -84,6 +106,8 @@ rule severus_tn:
             "cnv_sv/severus_tn/{sample}_{type}.severus_tn.benchmark.tsv",
             config.get("severus_tn", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("severus_tn", {}).get("container", config["default_container"])
     threads: config.get("severus_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("severus_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -91,8 +115,8 @@ rule severus_tn:
         partition=config.get("severus_tn", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("severus_tn", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("severus_tn", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("severus_tn", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("severus_tn", {}).get("extra", ""),
     message:
         "{rule}: use Severus in tumor-normal mode to call SV in {wildcards.sample}_{wildcards.type}"
     shell:

@@ -15,7 +15,7 @@ from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import get_input_aligned_bam, get_input_haplotagged_bam
 
-min_version("7.8.3")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -50,6 +50,9 @@ wildcard_constraints:
     type="N|T|R",
     file="^cnv_sv/.+",
 
+
+def get_automap_dir(wildcards, output):
+    return os.path.dirname(os.path.dirname(output.pdf))
 
 def get_karyotype(wildcards):
     """
@@ -256,6 +259,14 @@ def get_parent_samples(wildcards, trio_member):
     parent_sample_id = f"{parent_sample}_{wildcards.type}"
 
     return parent_sample_id
+
+
+def get_father(wildcards):
+    return get_parent_samples(wildcards, "father")
+
+
+def get_mother(wildcards):
+    return get_parent_samples(wildcards, "mother")
 
 
 def get_trgt_loci(wildcards):

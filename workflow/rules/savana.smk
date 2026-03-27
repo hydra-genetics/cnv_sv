@@ -6,10 +6,18 @@ __license__ = "GPL-3"
 
 rule savana_pb_to:
     input:
-        bam="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
-        bai="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_{type}.haplotagged.bam",
+            otherwise="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_{type}.haplotagged.bam.bai",
+            otherwise="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
+        fai=config.get("reference", {}).get("fai", []),
     output:
         vcf_somatic=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.classified.vcf"),
@@ -17,17 +25,15 @@ rule savana_pb_to:
         fa=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.inserted_sequences.fa"),
         bedpe=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.sv_breakpoints.bedpe"),
         tsv=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.sv_breakpoints_read_support.tsv"),
-    params:
-        min_support=config.get("savana_pb_to", {}).get("min_support", 10),
-        dir="cnv_sv/savana_pb_to/{sample}_{type}",
-        extra=config.get("savana_pb_to", {}).get("extra", ""),
-        genome_version=config.get("savana_pb_to", {}).get("genome_version", ""),
     log:
         "cnv_sv/savana_pb_to/{sample}_{type}.output.log",
     benchmark:
         repeat(
-            "cnv_sv/savana_pb_to/{sample}_{type}.output.benchmark.tsv", config.get("savana_pb_to", {}).get("benchmark_repeats", 1)
+            "cnv_sv/savana_pb_to/{sample}_{type}.output.benchmark.tsv",
+            config.get("savana_pb_to", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("savana_pb_to", {}).get("container", config["default_container"])
     threads: config.get("savana_pb_to", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("savana_pb_to", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -35,8 +41,11 @@ rule savana_pb_to:
         partition=config.get("savana_pb_to", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("savana_pb_to", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("savana_pb_to", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("savana_pb_to", {}).get("container", config["default_container"])
+    params:
+        min_support=config.get("savana_pb_to", {}).get("min_support", 10),
+        dir="cnv_sv/savana_pb_to/{sample}_{type}",
+        extra=config.get("savana_pb_to", {}).get("extra", ""),
+        genome_version=config.get("savana_pb_to", {}).get("genome_version", ""),
     message:
         "{rule}: run savana on {input.bam}"
     shell:
@@ -52,12 +61,28 @@ rule savana_pb_to:
 
 rule savana_pb_tn:
     input:
-        bam_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bai_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bam_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
-        bai_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        bam_n=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_N.haplotagged.bam",
+            otherwise="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_N.haplotagged.bam.bai",
+            otherwise="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam.bai",
+        ),
+        bam_t=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam",
+            otherwise="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam.bai",
+            otherwise="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
+        fai=config.get("reference", {}).get("fai", []),
     output:
         vcf_somatic=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.classified.vcf"),
@@ -65,14 +90,12 @@ rule savana_pb_tn:
         fa=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.inserted_sequences.fa"),
         bedpe=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.sv_breakpoints.bedpe"),
         tsv=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.sv_breakpoints_read_support.tsv"),
-    params:
-        dir="cnv_sv/savana_pb_tn/{sample}",
-        min_support=config.get("savana_pb_tn", {}).get("min_support", 10),
-        extra=config.get("savana_pb_tn", {}).get("extra", ""),
     log:
         "cnv_sv/savana_pb_tn/{sample}.output.log",
     benchmark:
         repeat("cnv_sv/savana_pb_tn/{sample}.output.benchmark.tsv", config.get("savana_pb_tn", {}).get("benchmark_repeats", 1))
+    container:
+        config.get("savana_pb_tn", {}).get("container", config["default_container"])
     threads: config.get("savana_pb_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("savana_pb_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -80,8 +103,10 @@ rule savana_pb_tn:
         partition=config.get("savana_pb_tn", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("savana_pb_tn", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("savana_pb_tn", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("savana_pb_tn", {}).get("container", config["default_container"])
+    params:
+        dir="cnv_sv/savana_pb_tn/{sample}",
+        min_support=config.get("savana_pb_tn", {}).get("min_support", 10),
+        extra=config.get("savana_pb_tn", {}).get("extra", ""),
     message:
         "{rule}: run savana on {input.bam_n} and {input.bam_t}"
     shell:
@@ -97,10 +122,18 @@ rule savana_pb_tn:
 
 rule savana_ont_to:
     input:
-        bam="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
-        bai="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_{type}.haplotagged.bam",
+            otherwise="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_{type}.haplotagged.bam.bai",
+            otherwise="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
+        fai=config.get("reference", {}).get("fai", []),
     output:
         vcf_somatic=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.classified.vcf"),
@@ -108,10 +141,6 @@ rule savana_ont_to:
         fa=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.inserted_sequences.fa"),
         bedpe=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.sv_breakpoints.bedpe"),
         tsv=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.sv_breakpoints_read_support.tsv"),
-    params:
-        dir="cnv_sv/savana_ont_to/{sample}_{type}",
-        extra=config.get("savana_ont_to", {}).get("extra", ""),
-        genome_version=config.get("savana_ont_to", {}).get("genome_version", ""),
     log:
         "cnv_sv/savana_ont_to/{sample}_{type}.output.log",
     benchmark:
@@ -119,6 +148,8 @@ rule savana_ont_to:
             "cnv_sv/savana_ont_to/{sample}_{type}.output.benchmark.tsv",
             config.get("savana_ont_to", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("savana_ont_to", {}).get("container", config["default_container"])
     threads: config.get("savana_ont_to", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("savana_ont_to", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -126,8 +157,10 @@ rule savana_ont_to:
         partition=config.get("savana_ont_to", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("savana_ont_to", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("savana_ont_to", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("savana_ont_to", {}).get("container", config["default_container"])
+    params:
+        dir="cnv_sv/savana_ont_to/{sample}_{type}",
+        extra=config.get("savana_ont_to", {}).get("extra", ""),
+        genome_version=config.get("savana_ont_to", {}).get("genome_version", ""),
     message:
         "{rule}: run savana on {input.bam}"
     shell:
@@ -142,12 +175,28 @@ rule savana_ont_to:
 
 rule savana_ont_tn:
     input:
-        bam_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bai_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
-        bam_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
-        bai_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        bam_n=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_N.haplotagged.bam",
+            otherwise="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_N.haplotagged.bam.bai",
+            otherwise="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam.bai",
+        ),
+        bam_t=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam",
+            otherwise="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("phaser_path"),
+            then="<phaser_path>/{sample}_T.haplotagged.bam.bai",
+            otherwise="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
+        fai=config.get("reference", {}).get("fai", []),
     output:
         vcf_somatic=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.classified.vcf"),
@@ -155,13 +204,12 @@ rule savana_ont_tn:
         fa=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.inserted_sequences.fa"),
         bedpe=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.sv_breakpoints.bedpe"),
         tsv=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.sv_breakpoints_read_support.tsv"),
-    params:
-        dir="cnv_sv/savana_ont_tn/{sample}",
-        extra=config.get("savana_ont_tn", {}).get("extra", ""),
     log:
         "cnv_sv/savana_ont_tn/{sample}.output.log",
     benchmark:
         repeat("cnv_sv/savana_ont_tn/{sample}.output.benchmark.tsv", config.get("savana_ont_tn", {}).get("benchmark_repeats", 1))
+    container:
+        config.get("savana_ont_tn", {}).get("container", config["default_container"])
     threads: config.get("savana_ont_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("savana_ont_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -169,8 +217,9 @@ rule savana_ont_tn:
         partition=config.get("savana_ont_tn", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("savana_ont_tn", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("savana_ont_tn", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("savana_ont_tn", {}).get("container", config["default_container"])
+    params:
+        dir="cnv_sv/savana_ont_tn/{sample}",
+        extra=config.get("savana_ont_tn", {}).get("extra", ""),
     message:
         "{rule}: run savana on {input.bam_n} and {input.bam_t}"
     shell:

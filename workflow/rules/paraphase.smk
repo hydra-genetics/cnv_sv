@@ -6,9 +6,17 @@ __license__ = "GPL-3"
 
 rule paraphase:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
     output:
         bam="cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam",
         bai="cnv_sv/paraphase/paraphase_{sample}_{type}/{sample}_{type}.paraphase.bam.bai",
@@ -17,16 +25,12 @@ rule paraphase:
             "cnv_sv/paraphase/paraphase_{{sample}}_{{type}}/{{sample}}_{{type}}_paraphase_vcfs/{{sample}}_{{type}}_{gene}.vcf",
             gene=config.get("paraphase", {}).get("genes", ""),
         ),
-    params:
-        extra=config.get("paraphase", {}).get("extra", ""),
-        genome=config.get("paraphase", {}).get("genome", "38"),
-        prefix=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
-        out=lambda wildcards, output: os.path.dirname(output.bam),
-        gene=lambda wildcards: "--gene " + ",".join(config.get("paraphase", {}).get("genes", "")),
     log:
         "cnv_sv/paraphase/{sample}_{type}.output.log",
     benchmark:
         repeat("cnv_sv/paraphase/{sample}_{type}.output.benchmark.tsv", config.get("paraphase", {}).get("benchmark_repeats", 1))
+    container:
+        config.get("paraphase", {}).get("container", config["default_container"])
     threads: config.get("paraphase", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("paraphase", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -34,8 +38,12 @@ rule paraphase:
         partition=config.get("paraphase", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("paraphase", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("paraphase", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("paraphase", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("paraphase", {}).get("extra", ""),
+        genome=config.get("paraphase", {}).get("genome", "38"),
+        prefix=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
+        out=lambda wildcards, output: os.path.dirname(output.bam),
+        gene=lambda wildcards: "--gene " + ",".join(config.get("paraphase", {}).get("genes", "")),
     message:
         "{rule}: run paraphase on  {input.bam}"
     shell:

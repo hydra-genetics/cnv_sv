@@ -6,15 +6,29 @@ __license__ = "GPL-3"
 
 rule manta_config_tn:
     input:
-        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
-        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
-        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
-        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        bam_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        ),
+        bam_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        ),
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py"),
-    params:
-        extra=config.get("manta_config_tn", {}).get("extra", ""),
     log:
         "cnv_sv/manta_config_tn/{sample}/runWorkflow.py.log",
     benchmark:
@@ -22,6 +36,8 @@ rule manta_config_tn:
             "cnv_sv/manta_config_tn/{sample}/runWorkflow.py.benchmark.tsv",
             config.get("manta_config_tn", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("manta_config_tn", {}).get("container", config["default_container"])
     threads: config.get("manta_config_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_config_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -29,8 +45,8 @@ rule manta_config_tn:
         partition=config.get("manta_config_tn", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_config_tn", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_config_tn", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("manta_config_tn", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("manta_config_tn", {}).get("extra", ""),
     message:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
@@ -44,10 +60,26 @@ rule manta_config_tn:
 
 rule manta_run_workflow_tn:
     input:
-        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
-        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
-        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
-        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        bam_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        ),
+        bam_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        ),
         ref=config["reference"]["fasta"],
         scrpt="cnv_sv/manta_run_workflow_tn/{sample}/runWorkflow.py",
     output:
@@ -67,6 +99,8 @@ rule manta_run_workflow_tn:
             "cnv_sv/manta_run_workflow_tn/{sample}/manta_tn.benchmark.tsv",
             config.get("manta_run_workflow_tn", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("manta_run_workflow_tn", {}).get("container", config["default_container"])
     threads: config.get("manta_run_workflow_tn", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_run_workflow_tn", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -74,25 +108,27 @@ rule manta_run_workflow_tn:
         partition=config.get("manta_run_workflow_tn", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_run_workflow_tn", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_run_workflow_tn", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("manta_run_workflow_tn", {}).get("container", config["default_container"])
     message:
         "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
-        "{input.scrpt} "
-        "-j {threads} "
-        "-g unlimited &> {log}"
+        "{input.scrpt} " "-j {threads} " "-g unlimited &> {log}"
 
 
 rule manta_config_t:
     input:
-        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
-        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        bam_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        ),
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py"),
-    params:
-        extra=config.get("manta_config_t", {}).get("extra", ""),
     log:
         "cnv_sv/manta_config_t/{sample}/runWorkflow.py.log",
     benchmark:
@@ -100,6 +136,8 @@ rule manta_config_t:
             "cnv_sv/manta_config_t/{sample}/runWorkflow.py.benchmark.tsv",
             config.get("manta_config_t", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("manta_config_t", {}).get("container", config["default_container"])
     threads: config.get("manta_config_t", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_config_t", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -107,8 +145,8 @@ rule manta_config_t:
         partition=config.get("manta_config_t", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_config_t", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_config_t", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("manta_config_t", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("manta_config_t", {}).get("extra", ""),
     message:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
@@ -121,8 +159,16 @@ rule manta_config_t:
 
 rule manta_run_workflow_t:
     input:
-        bam_t="alignment/samtools_merge_bam/{sample}_T.bam",
-        bai_t="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        bam_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam",
+        ),
+        bai_t=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_T.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_T.bam.bai",
+        ),
         ref=config["reference"]["fasta"],
         scrpt="cnv_sv/manta_run_workflow_t/{sample}/runWorkflow.py",
     output:
@@ -140,6 +186,8 @@ rule manta_run_workflow_t:
             "cnv_sv/manta_run_workflow_t/{sample}/manta_t.benchmark.tsv",
             config.get("manta_run_workflow_t", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("manta_run_workflow_t", {}).get("container", config["default_container"])
     threads: config.get("manta_run_workflow_t", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_run_workflow_t", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -147,25 +195,27 @@ rule manta_run_workflow_t:
         partition=config.get("manta_run_workflow_t", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_run_workflow_t", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_run_workflow_t", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("manta_run_workflow_t", {}).get("container", config["default_container"])
     message:
         "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
-        "{input.scrpt} "
-        "-j {threads} "
-        "-g unlimited &> {log}"
+        "{input.scrpt} " "-j {threads} " "-g unlimited &> {log}"
 
 
 rule manta_config_n:
     input:
-        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
-        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        bam_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        ),
         ref=config["reference"]["fasta"],
     output:
         scrpt=temp("cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py"),
-    params:
-        extra=config.get("manta_config_n", {}).get("extra", ""),
     log:
         "cnv_sv/manta_config_n/{sample}/runWorkflow.py.log",
     benchmark:
@@ -173,6 +223,8 @@ rule manta_config_n:
             "cnv_sv/manta_config_n/{sample}/runWorkflow.py.benchmark.tsv",
             config.get("manta_config_n", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("manta_config_n", {}).get("container", config["default_container"])
     threads: config.get("manta_config_n", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_config_n", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -180,8 +232,8 @@ rule manta_config_n:
         partition=config.get("manta_config_n", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_config_n", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_config_n", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("manta_config_n", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("manta_config_n", {}).get("extra", ""),
     message:
         "{rule}: generate manta runWorkflow.py for {wildcards.sample}"
     shell:
@@ -194,8 +246,16 @@ rule manta_config_n:
 
 rule manta_run_workflow_n:
     input:
-        bam_n="alignment/samtools_merge_bam/{sample}_N.bam",
-        bai_n="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        bam_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam",
+        ),
+        bai_n=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_N.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_N.bam.bai",
+        ),
         ref=config["reference"]["fasta"],
         scrpt="cnv_sv/manta_run_workflow_n/{sample}/runWorkflow.py",
     output:
@@ -211,6 +271,8 @@ rule manta_run_workflow_n:
             "cnv_sv/manta_run_workflow_n/{sample}/manta_run_workflow_n.output.benchmark.tsv",
             config.get("manta_run_workflow_n", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("manta_run_workflow_n", {}).get("container", config["default_container"])
     threads: config.get("manta_run_workflow_n", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("manta_run_workflow_n", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -218,11 +280,7 @@ rule manta_run_workflow_n:
         partition=config.get("manta_run_workflow_n", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("manta_run_workflow_n", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("manta_run_workflow_n", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("manta_run_workflow_n", {}).get("container", config["default_container"])
     message:
         "{rule}: use manta to call sv in {wildcards.sample}"
     shell:
-        "{input.scrpt} "
-        "-j {threads} "
-        "-g unlimited &> {log}"
+        "{input.scrpt} " "-j {threads} " "-g unlimited &> {log}"

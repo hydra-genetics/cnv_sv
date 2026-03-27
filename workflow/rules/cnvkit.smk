@@ -6,9 +6,17 @@ __license__ = "GPL-3"
 
 rule cnvkit_batch:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
+        reference=config.get("cnvkit_batch", {}).get("normal_reference", []),
     output:
         antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
         bins=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.bintest.cns"),
@@ -16,9 +24,6 @@ rule cnvkit_batch:
         segments=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns"),
         segments_called=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns"),
         target_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.targetcoverage.cnn"),
-    params:
-        extra=config.get("cnvkit_batch", {}).get("extra", ""),
-        method=config.get("cnvkit_batch", {}).get("method", "hybrid"),
     log:
         "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns.log",
     benchmark:
@@ -26,6 +31,8 @@ rule cnvkit_batch:
             "cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.call.cns.benchmark.tsv",
             config.get("cnvkit_batch", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("cnvkit_batch", {}).get("container", config["default_container"])
     threads: config.get("cnvkit_batch", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_batch", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -33,8 +40,9 @@ rule cnvkit_batch:
         partition=config.get("cnvkit_batch", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_batch", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_batch", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvkit_batch", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("cnvkit_batch", {}).get("extra", ""),
+        method=config.get("cnvkit_batch", {}).get("method", "hybrid"),
     message:
         "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
     wrapper:
@@ -48,9 +56,6 @@ rule cnvkit_call:
         tc_file=get_tc_file,
     output:
         segment=temp("cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
-    params:
-        extra=config.get("cnvkit_call", {}).get("extra", ""),
-        purity=get_tc,
     log:
         "cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.log",
     benchmark:
@@ -58,6 +63,8 @@ rule cnvkit_call:
             "cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.benchmark.tsv",
             config.get("cnvkit_call", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("cnvkit_call", {}).get("container", config["default_container"])
     threads: config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -65,8 +72,9 @@ rule cnvkit_call:
         partition=config.get("cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_call", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvkit_call", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("cnvkit_call", {}).get("extra", ""),
+        purity=get_tc,
     message:
         "{rule}: call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
     wrapper:
@@ -79,8 +87,6 @@ rule cnvkit_diagram:
         cnr="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cnr",
     output:
         pdf=temp("cnv_sv/cnvkit_diagram/{sample}_{type}.pdf"),
-    params:
-        extra=config.get("cnvkit_diagram", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_diagram/{sample}_{type}.pdf.log",
     benchmark:
@@ -88,6 +94,8 @@ rule cnvkit_diagram:
             "cnv_sv/cnvkit_diagram/{sample}_{type}.pdf.benchmark.tsv",
             config.get("cnvkit_diagram", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("cnvkit_diagram", {}).get("container", config["default_container"])
     threads: config.get("cnvkit_diagram", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_diagram", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -95,8 +103,8 @@ rule cnvkit_diagram:
         partition=config.get("cnvkit_diagram", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_diagram", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_diagram", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvkit_diagram", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("cnvkit_diagram", {}).get("extra", ""),
     message:
         "{rule}: chromosome plot cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.pdf"
     wrapper:
@@ -110,8 +118,6 @@ rule cnvkit_scatter:
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         plot=temp("cnv_sv/cnvkit_scatter/{sample}_{type}.png"),
-    params:
-        extra=config.get("cnvkit_scatter", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_scatter/{sample}_{type}.png.log",
     benchmark:
@@ -119,6 +125,8 @@ rule cnvkit_scatter:
             "cnv_sv/cnvkit_scatter/{sample}_{type}.png.benchmark.tsv",
             config.get("cnvkit_scatter", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("cnvkit_scatter", {}).get("container", config["default_container"])
     threads: config.get("cnvkit_scatter", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_scatter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -126,8 +134,8 @@ rule cnvkit_scatter:
         partition=config.get("cnvkit_scatter", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_scatter", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_scatter", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvkit_scatter", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("cnvkit_scatter", {}).get("extra", ""),
     message:
         "{rule}: plot cnvs into cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.png"
     shell:
@@ -143,12 +151,6 @@ rule cnvkit_vcf:
         segment="cnv_sv/cnvkit_call/{sample}_{type}.{tc_method}.loh.cns",
     output:
         vcf=temp("cnv_sv/cnvkit_vcf/{sample}_{type}.{tc_method}.vcf"),
-    params:
-        sample_name="{sample}_{type}",
-        hom_del_limit=config.get("cnvkit_vcf", {}).get("hom_del_limit", 0.5),
-        het_del_limit=config.get("cnvkit_vcf", {}).get("het_del_limit", 1.5),
-        dup_limit=config.get("cnvkit_vcf", {}).get("dup_limit", 2.5),
-        caller=config.get("cnvkit_vcf", {}).get("caller_name", "cnvkit"),
     log:
         "cnv_sv/cnvkit_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
@@ -156,6 +158,8 @@ rule cnvkit_vcf:
             "cnv_sv/cnvkit_vcf/{sample}_{type}.{tc_method}.vcf.benchmark.tsv",
             config.get("cnvkit_vcf", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("cnvkit_vcf", {}).get("container", config["default_container"])
     threads: config.get("cnvkit_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -163,8 +167,12 @@ rule cnvkit_vcf:
         partition=config.get("cnvkit_vcf", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_vcf", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_vcf", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvkit_vcf", {}).get("container", config["default_container"])
+    params:
+        sample_name="{sample}_{type}",
+        hom_del_limit=config.get("cnvkit_vcf", {}).get("hom_del_limit", 0.5),
+        het_del_limit=config.get("cnvkit_vcf", {}).get("het_del_limit", 1.5),
+        dup_limit=config.get("cnvkit_vcf", {}).get("dup_limit", 2.5),
+        caller=config.get("cnvkit_vcf", {}).get("caller_name", "cnvkit"),
     message:
         "{rule}: export cnvkit segments into vcf in {output.vcf}"
     script:
@@ -176,8 +184,6 @@ rule cnvkit_export_seg:
         segments="cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.cns",
     output:
         seg=temp("cnv_sv/cnvkit_export_seg/{sample}_{type}.seg"),
-    params:
-        extra=config.get("cnvkit_export_seg", {}).get("extra", ""),
     log:
         "cnv_sv/cnvkit_export_seg/{sample}_{type}.seg.log",
     benchmark:
@@ -185,6 +191,8 @@ rule cnvkit_export_seg:
             "cnv_sv/cnvkit_export_seg/{sample}_{type}.seg.benchmark.tsv",
             config.get("cnvkit_export_seg", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("cnvkit_export_seg", {}).get("container", config["default_container"])
     threads: config.get("cnvkit_export_seg", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_export_seg", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -192,8 +200,8 @@ rule cnvkit_export_seg:
         partition=config.get("cnvkit_export_seg", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_export_seg", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_export_seg", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvkit_export_seg", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("cnvkit_export_seg", {}).get("extra", ""),
     message:
         "{rule}: export cnvkit segments into seg in {output.seg}"
     wrapper:
