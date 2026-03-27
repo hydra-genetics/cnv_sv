@@ -40,6 +40,11 @@ rule exomedepth_call:
             then="<aligner_path>/{sample}_{type}.bam",
             otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
         ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
         bedfile=config.get("exomedepth_call", {}).get("bedfile", []),
         sex="qc/peddy/peddy.sex_check-checkpoint.csv",
         ref_count=get_exomedepth_ref,
