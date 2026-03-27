@@ -261,14 +261,6 @@ def get_parent_samples(wildcards, trio_member):
     return parent_sample_id
 
 
-def get_father(wildcards):
-    return get_parent_samples(wildcards, "father")
-
-
-def get_mother(wildcards):
-    return get_parent_samples(wildcards, "mother")
-
-
 def get_trgt_loci(wildcards):
     trgt_bed = config.get("trgt_genotype", {}).get("bed", "")
     rep_ids = []
