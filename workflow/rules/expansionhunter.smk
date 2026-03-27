@@ -42,7 +42,7 @@ rule expansionhunter:
     params:
         extra=config.get("expansionhunter", {}).get("extra", ""),
         prefix=lambda wildcards, output: "{}/{}_{}".format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
-        sex=lambda wildards, input: get_peddy_sex(wildards, input.sex),
+        sex=lambda wildcards, input: get_peddy_sex(wildcards, input.sex),
     message:
         "{rule}: Run ExpansionHunter on {wildcards.sample}_{wildcards.type}"
     shell:
