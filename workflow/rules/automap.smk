@@ -26,8 +26,8 @@ rule automap:
     params:
         extra=config.get("automap", {}).get("extra", ""),
         build=config.get("automap", {}).get("build", ""),
-        dir=lambda wildcards, output: f"{os.path.dirname(output.pdf)}/{wildcards.sample}_{wildcards.type}",
+        outdir=get_automap_dir,
     message:
         "{rule}: finding ROH regions {output.tsv}"
     shell:
-        "automap " "--vcf {input.vcf} " "--out {params.dir} " "--genome {params.build} " "{params.extra} &> {log}"
+        "automap " "--vcf {input.vcf} " "--out {params.outdir} " "--genome {params.build} " "{params.extra} &> {log}"

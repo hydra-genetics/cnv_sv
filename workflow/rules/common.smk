@@ -34,7 +34,7 @@ samples = pd.read_table(config["samples"], dtype={"sample": str}).set_index("sam
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
-units = pandas.read_table(config["units"], dtype=str)
+units = pd.read_table(config["units"], dtype=str)
 
 if units.platform.iloc[0] in ["PACBIO", "ONT"]:
     units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
@@ -137,7 +137,7 @@ def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
     return median_insert_size
 
 
-def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
+def get_purecn_inputs(wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":
