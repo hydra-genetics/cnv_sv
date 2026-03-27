@@ -8,8 +8,8 @@ rule severus_t_only:
     input:
         bam=branch(
             config.get("pathvars", {}).get("phaser_path"),
-            then="<phaser_path>/{sample}_T.haplotagged.bam",
-            otherwise="snv_indels/whatshap_haplotag/{sample}_T.haplotagged.bam",
+            then="<phaser_path>/{sample}_{type}.haplotagged.bam",
+            otherwise="snv_indels/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
         ),
         bai=branch(
             config.get("pathvars", {}).get("phaser_path"),
