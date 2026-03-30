@@ -118,5 +118,8 @@ rule cnvpytor_plot_manhattan:
     message:
         "{rule}: Manhattan plot of cnvpytor CN for {wildcards.sample}_{wildcards.type}"
     shell:
-        "cnvpytor -root {input.pytor} -plot manhattan {params.bin_size} {params.extra} -o {output.png} &> {log}"
-
+        "cnvpytor -root {input.pytor} "
+        "-plot manhattan {params.bin_size} "
+        "{params.extra} "
+        "-o {output.png} "
+        "&> {log}"
