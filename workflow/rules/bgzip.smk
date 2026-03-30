@@ -13,6 +13,8 @@ rule bgzip:
         "{file}.vcf.gz.log",
     benchmark:
         repeat("{file}.vcf.gz.benchmark.tsv", config.get("bgzip", {}).get("benchmark_repeats", 1))
+    container:
+        config.get("bgzip", {}).get("container", config["default_container"])
     threads: config.get("bgzip", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("bgzip", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -20,8 +22,6 @@ rule bgzip:
         partition=config.get("bgzip", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("bgzip", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("bgzip", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("bgzip", {}).get("container", config["default_container"])
     message:
         "{rule}: bgzip {input.vcf}"
     wrapper:

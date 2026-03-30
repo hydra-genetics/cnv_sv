@@ -6,8 +6,16 @@ __license__ = "GPL-3"
 
 rule sawfish_discover:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        ),
         maf=(
             "snv_indels/deepvariant/{sample}_{type}.merged.vcf.gz"
             if config.get("sawfish_discover", {}).get("maf", False)
@@ -18,7 +26,7 @@ rule sawfish_discover:
             if config.get("sawfish_discover", {}).get("maf", False)
             else []
         ),
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=config.get("reference", {}).get("fasta", []),
     output:
         asm_bed=temp("cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed"),
         bcf=temp("cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf"),
@@ -61,12 +69,6 @@ rule sawfish_discover:
         refine_txt=temp("cnv_sv/sawfish_discover/{sample}_{type}/debug.cluster.refinement.txt"),
         settings_json=temp("cnv_sv/sawfish_discover/{sample}_{type}/discover.settings.json"),
         stats_json=temp("cnv_sv/sawfish_discover/{sample}_{type}/run.stats.json"),
-    params:
-        extra=config.get("sawfish_discover", {}).get("extra", ""),
-        expected_cn=get_expected_cn,
-        disable_cnv=("--disable-cnv" if config.get("sawfish_discover", {}).get("disable_cnv", False) else ""),
-        out_dir="cnv_sv/sawfish_discover/{sample}_{type}",
-        maf=lambda wildcards, input: "--maf {} ".format(input.maf) if config.get("sawfish_discover", {}).get("maf", False) else "",
     log:
         "cnv_sv/sawfish_discover/{sample}_{type}.sawfish_discover.log",
     benchmark:
@@ -74,6 +76,8 @@ rule sawfish_discover:
             "cnv_sv/sawfish_discover/{sample}_{type}.sawfish_discover.benchmark.tsv",
             config.get("sawfish_discover", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("sawfish_discover", {}).get("container", config["default_container"])
     threads: config.get("sawfish_discover", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("sawfish_discover", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -81,8 +85,12 @@ rule sawfish_discover:
         partition=config.get("sawfish_discover", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("sawfish_discover", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("sawfish_discover", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("sawfish_discover", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("sawfish_discover", {}).get("extra", ""),
+        expected_cn=get_expected_cn,
+        disable_cnv=("--disable-cnv" if config.get("sawfish_discover", {}).get("disable_cnv", False) else ""),
+        out_dir="cnv_sv/sawfish_discover/{sample}_{type}",
+        maf=lambda wildcards, input: "--maf {} ".format(input.maf) if config.get("sawfish_discover", {}).get("maf", False) else "",
     message:
         "{rule}: Run sawfish discover {input.bam}"
     shell:
@@ -99,9 +107,17 @@ rule sawfish_discover:
 
 rule sawfish_joint_call_single:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/pbmm2_align/{sample}_{type}.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
         asm_bed="cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed",
         bcf="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf",
         csi="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf.csi",
@@ -171,13 +187,6 @@ rule sawfish_joint_call_single:
             else []
         ),
         stats_json=temp("cnv_sv/sawfish_joint_call_single/{sample}_{type}/run.stats.json"),
-    params:
-        extra=config.get("sawfish_joint_call_single", {}).get("extra", ""),
-        in_dir=lambda w, input: os.path.dirname(input.settings_json),
-        out_dir=lambda w, output: output[0].rsplit("/", 3)[0],
-        supporting_reads=(
-            f"--report-supporting-reads" if config.get("sawfish_joint_call_single", {}).get("supporting_reads", False) else ""
-        ),
     log:
         "cnv_sv/sawfish_joint_call_single/{sample}_{type}.joint_call.log",
     benchmark:
@@ -185,6 +194,8 @@ rule sawfish_joint_call_single:
             "cnv_sv/sawfish_joint_call_single/{sample}_{type}.joint_call.benchmark.tsv",
             config.get("sawfish_joint_call_single", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("sawfish_joint_call_single", {}).get("container", config["default_container"])
     threads: config.get("sawfish_joint_call_single", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("sawfish_joint_call_single", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -192,8 +203,13 @@ rule sawfish_joint_call_single:
         partition=config.get("sawfish_joint_call_single", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("sawfish_joint_call_single", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("sawfish_joint_call_single", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("sawfish_joint_call_single", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("sawfish_joint_call_single", {}).get("extra", ""),
+        in_dir=lambda w, input: os.path.dirname(input.settings_json),
+        out_dir=lambda w, output: output[0].rsplit("/", 3)[0],
+        supporting_reads=(
+            f"--report-supporting-reads" if config.get("sawfish_joint_call_single", {}).get("supporting_reads", False) else ""
+        ),
     message:
         "{rule}: Run sawfish joint call on the single sample ouput of sawfish discover"
     shell:

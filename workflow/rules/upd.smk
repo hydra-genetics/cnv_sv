@@ -9,11 +9,6 @@ rule upd_regions:
         vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
         regions=temp("cnv_sv/upd/{sample}_{type}.upd_regions.bed"),
-    params:
-        father=lambda wildcards: get_parent_samples(wildcards, "father"),
-        mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
-        proband="{sample}_{type}",
-        extra=config.get("upd", {}).get("extra", ""),
     log:
         "cnv_sv/upd/{sample}_{type}.upd_regions.bed.log",
     benchmark:
@@ -21,6 +16,8 @@ rule upd_regions:
             "cnv_sv/upd/{sample}_{type}.upd_regions.bed.benchmark.tsv",
             config.get("upd", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("upd", {}).get("container", config["default_container"])
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("upd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -28,8 +25,11 @@ rule upd_regions:
         partition=config.get("upd", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("upd", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("upd", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("upd", {}).get("container", config["default_container"])
+    params:
+        father=lambda wildcards: get_parent_samples(wildcards, "father"),
+        mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
+        proband="{sample}_{type}",
+        extra=config.get("upd", {}).get("extra", ""),
     message:
         "{rule}: Use upd on a trio vcf {input.vcf} to find regions of uniparental disomy"
     shell:
@@ -49,11 +49,6 @@ rule upd_sites:
         vcf="snv_indels/glnexus/{sample}_{type}.vep_annotated.vcf.gz",
     output:
         sites=temp("cnv_sv/upd/{sample}_{type}.upd_sites.bed"),
-    params:
-        father=lambda wildcards: get_parent_samples(wildcards, "father"),
-        mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
-        proband="{sample}_{type}",
-        extra=config.get("upd", {}).get("extra", ""),
     log:
         "cnv_sv/upd/{sample}_{type}.upd_sites.bed.log",
     benchmark:
@@ -61,6 +56,8 @@ rule upd_sites:
             "cnv_sv/upd/{sample}_{type}.upd_sites.bed.benchmark.tsv",
             config.get("upd", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("upd", {}).get("container", config["default_container"])
     threads: config.get("upd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("upd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -68,8 +65,11 @@ rule upd_sites:
         partition=config.get("upd", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("upd", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("upd", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("upd", {}).get("container", config["default_container"])
+    params:
+        father=lambda wildcards: get_parent_samples(wildcards, "father"),
+        mother=lambda wildcards: get_parent_samples(wildcards, "mother"),
+        proband="{sample}_{type}",
+        extra=config.get("upd", {}).get("extra", ""),
     message:
         "{rule}: Use upd on a trio vcf {input.vcf} to find uniparental disomy informative sites"
     shell:
