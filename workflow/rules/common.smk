@@ -52,7 +52,7 @@ wildcard_constraints:
 
 
 def get_automap_dir(wildcards, output):
-    return os.path.dirname(os.path.dirname(output.pdf))
+    return os.path.dirname(os.path.dirname(output.pdf)))
 
 
 def get_karyotype(wildcards):
