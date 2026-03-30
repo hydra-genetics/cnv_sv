@@ -1,5 +1,5 @@
 import_reference_genomes = {
-    "mm9": {
+    "HES45": {
         "name": "HES45",
         "species": "Homo sapiens",
         "chromosomes": OrderedDict(
