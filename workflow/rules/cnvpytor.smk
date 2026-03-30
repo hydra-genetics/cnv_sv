@@ -95,14 +95,14 @@ rule cnvpytor_plot_manhattan:
     input:
         pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
     output:
-        png=temp("cnv_sv/cnvpytor_plot_manhattan/{sample}_{type}.png"),
+        png=temp("cnv_sv/cnvpytor/{sample}_{type}.manhattan.png"),
     params:
         bin_size=config.get("cnvpytor_plot_manhattan", {}).get("bin_size", ""),
     log:
-        "cnv_sv/cnvpytor_plot_manhattan/{sample}_{type}.log",
+        "cnv_sv/cnvpytor/{sample}_{type}.manhattan.log",
     benchmark:
         repeat(
-            "cnv_sv/cnvpytor_plot_manhattan/{sample}_{type}.benchmark.tsv",
+            "cnv_sv/cnvpytor/{sample}_{type}.manhattan.benchmark.tsv",
             config.get("cnvpytor_plot_manhattan", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("cnvpytor_plot_manhattan", {}).get("threads", config["default_resources"]["threads"])
