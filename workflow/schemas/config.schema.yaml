@@ -218,6 +218,9 @@ properties:
       bin_size:
         type: string
         description: bin size for read depth plotting (e.g. 100000)
+      extra:
+        type: string
+        description: parameters that should be forwarded
     required:
       - bin_size
 
