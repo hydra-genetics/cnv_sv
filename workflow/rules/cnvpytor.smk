@@ -95,7 +95,7 @@ rule cnvpytor_plot_manhattan:
     input:
         pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
     output:
-        png=temp("cnv_sv/cnvpytor/{sample}_{type}.manhattan.png"),
+        png=temp("cnv_sv/cnvpytor/{sample}_{type}.manhattan.global.0000.png"),
     params:
         bin_size=config.get("cnvpytor_plot_manhattan", {}).get("bin_size", ""),
         extra=config.get("cnvpytor_plot_manhattan", {}).get("extra", ""),
