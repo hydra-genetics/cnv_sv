@@ -115,7 +115,7 @@ rule cnvpytor_plot_manhattan:
     container:
         config.get("cnvpytor_plot_manhattan", {}).get("container", config["default_container"])
     message:
-        "{rule}: Plot manhattan read depth for {wildcards.sample}_{wildcards.type}"
+        "{rule}: Manhattan plot of cnvpytor CN for {wildcards.sample}_{wildcards.type}"
     shell:
-        "cnvpytor -root {input.pytor} -plot rd {params.bin_size} -o {output.png} &> {log}"
+        "cnvpytor -root {input.pytor} -plot manhattan {params.bin_size} -o {output.png} &> {log}"
 
