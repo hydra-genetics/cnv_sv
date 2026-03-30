@@ -234,6 +234,29 @@ CNVpytor calls copy number variation in WGS germline samples. This rule creates 
 
 ---
 
+### [CNVpytor_plot_manhattan](https://github.com/abyzovlab/CNVpytor)
+CNVpytor calls copy number variation in WGS germline samples. This rule generates a manhattan plot of read depth from the binary 'pytor' file, providing a genome-wide overview of copy number changes.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__cnvpytor__cnvpytor_plot_manhattan#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__cnvpytor__cnvpytor_plot_manhattan#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__cnvpytor_plot_manhattan#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__cnvpytor_plot_manhattan#
+
+---
+
 ## ExomeDepth
 
 ### [ExomeDepth_call](https://github.com/vplagnol/ExomeDepth)

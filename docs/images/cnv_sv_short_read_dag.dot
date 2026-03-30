@@ -46,6 +46,8 @@ digraph snakemake_dag {
 	41[label = "scramble_cluster_identifier", color = "0.44 0.6 0.85", style="rounded"];
 	42[label = "scramble_cluster_analysis", color = "0.44 0.6 0.85", style="rounded"];
 	43[label = "scramble_vcf", color = "0.44 0.6 0.85", style="rounded"];
+	44[label = "cnvpytor_plot_manhattan", color = "0.16 0.6 0.85", style="rounded"];
+	45[label = "scramble_sort", color = "0.44 0.6 0.85", style="rounded"];
     35 -> 36
     36 -> 37
     37 -> 15
@@ -63,6 +65,8 @@ digraph snakemake_dag {
 	4 -> 0
 	23 -> 0
 	42 -> 0
+	45 -> 0
+	44 -> 0
 	2 -> 1
 	2 -> 3
 	2 -> 4
@@ -76,6 +80,7 @@ digraph snakemake_dag {
 	9 -> 5
 	1 -> 6
 	8 -> 7
+	8 -> 44
 	11 -> 10
 	13 -> 11
 	12 -> 11
@@ -100,4 +105,5 @@ digraph snakemake_dag {
 	41 -> 42
 	42 -> 43
 	43 -> 5
+	5 -> 45
 }

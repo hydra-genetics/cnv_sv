@@ -91,42 +91,35 @@ rule cnvpytor_filter:
         """
 
 
-## Might be added later, code not tested ##
-# rule cnvpytor_plot:
-#    input:
-#        tsv="cnv_sv/cnvpytor/{sample}.tsv",
-#        pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
-#    output:
-#        tsv="cnv_sv/cnvpytor/{sample}.png",
-#    params:
-#        extra=config.get("cnvpytor", {}).get("extra", ""),
-#    log:
-#        "cnv_sv/cnvpytor/{sample}_plot.log"
-#    benchmark:
-#        repeat("cnv_sv/cnvpytor/{sample}_plot.output.benchmark.tsv",
-#        config.get("cnvpytor", {}).get("benchmark_repeats", 1))
-#    threads: config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"])
-#    resources:
-#        mem_mb=config.get("cnvpytor", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-#        mem_per_cpu=config.get("cnvpytor", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-#        partition=config.get("cnvpytor", {}).get("partition", config["default_resources"]["partition"]),
-#        threads=config.get("cnvpytor", {}).get("threads", config["default_resources"]["threads"]),
-#        time=config.get("cnvpytor", {}).get("time", config["default_resources"]["time"]),
-#    container:
-#        config.get("cnvpytor", {}).get("container", config["default_container"])
-#    message:
-##    shell:
-#        """echo "rdstat" | cnvpytor -root {input.pytor} -view 100000 -o {output.png} &&
-#        cnvpytor -root file.pytor -view 100000 <<ENDL \
-#        set rd_use_mask \
-#        set markersize 1 \
-#        set grid vertical \
-#        set output_filename {output.png} \
-#        manhattan \
-#        circular \
-#        rd \
-#        likelihood \
-#        baf \
-#        ENDL &&
-#        cnvpytor -root {input.pytor} -view 100000 < script.spytor &&
-#        &> {log}"""
+rule cnvpytor_plot_manhattan:
+    input:
+        pytor="cnv_sv/cnvpytor/{sample}_{type}.pytor",
+    output:
+        png=temp("cnv_sv/cnvpytor/{sample}_{type}.manhattan.global.0000.png"),
+    params:
+        bin_size=config.get("cnvpytor_plot_manhattan", {}).get("bin_size", ""),
+        extra=config.get("cnvpytor_plot_manhattan", {}).get("extra", ""),
+    log:
+        "cnv_sv/cnvpytor/{sample}_{type}.manhattan.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvpytor/{sample}_{type}.manhattan.benchmark.tsv",
+            config.get("cnvpytor_plot_manhattan", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("cnvpytor_plot_manhattan", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("cnvpytor_plot_manhattan", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvpytor_plot_manhattan", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvpytor_plot_manhattan", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvpytor_plot_manhattan", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvpytor_plot_manhattan", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("cnvpytor_plot_manhattan", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Manhattan plot of cnvpytor CN for {wildcards.sample}_{wildcards.type}"
+    shell:
+        "cnvpytor -root {input.pytor} "
+        "-plot manhattan {params.bin_size} "
+        "{params.extra} "
+        "-o {output.png} "
+        "&> {log}"

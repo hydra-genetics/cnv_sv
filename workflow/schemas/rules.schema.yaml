@@ -237,6 +237,25 @@ properties:
             type: string
             description: filtered candidate copy number calls in 'vcf' file format
 
+  cnvpytor_plot_manhattan:
+    type: object
+    description: input and output parameters for cnvpytor_plot_manhattan
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          pytor:
+            type: string
+            description: cnvpytor binary file with copy number data
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          png:
+            type: string
+            description: manhattan plot of read depth in 'png' file format
+
   exomedepth_sex:
     type: object
     description: input and output parameters for exomedepth_sex
