@@ -98,6 +98,7 @@ rule cnvpytor_plot_manhattan:
         png=temp("cnv_sv/cnvpytor/{sample}_{type}.manhattan.png"),
     params:
         bin_size=config.get("cnvpytor_plot_manhattan", {}).get("bin_size", ""),
+        extra=config.get("cnvpytor_plot_manhattan", {}).get("extra", ""),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}.manhattan.log",
     benchmark:
