@@ -6,18 +6,25 @@ __license__ = "GPL-3"
 
 rule scanitd:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
+        ref=config.get("reference", {}).get("fasta", []),
     output:
         vcf="cnv_sv/scanitd/{sample}_{type}.vcf",
-    params:
-        region_bed=config.get("scanitd", {}).get("region_bed", ""),
-        extra=config.get("scanitd", {}).get("extra", ""),
     log:
         "cnv_sv/scanitd/{sample}_{type}.vcf.log",
     benchmark:
         repeat("cnv_sv/scanitd/{sample}_{type}.vcf.benchmark.tsv", config.get("scanitd", {}).get("benchmark_repeats", 1))
+    container:
+        config.get("scanitd", {}).get("container", config["default_container"])
     threads: config.get("scanitd", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("scanitd", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -25,8 +32,9 @@ rule scanitd:
         partition=config.get("scanitd", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("scanitd", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("scanitd", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("scanitd", {}).get("container", config["default_container"])
+    params:
+        region_bed=config.get("scanitd", {}).get("region_bed", ""),
+        extra=config.get("scanitd", {}).get("extra", ""),
     message:
         "{rule}: call ITD in supplied regions into {output.vcf}"
     shell:

@@ -9,8 +9,6 @@ rule tabix:
         gz="{file}.vcf.gz",
     output:
         tbi=temp("{file}.vcf.gz.tbi"),
-    params:
-        extra=config.get("tabix", {}).get("extra", ""),
     log:
         "{file}.vcf.gz.tbi.log",
     benchmark:
@@ -18,6 +16,8 @@ rule tabix:
             "{file}.vcf.gz.tbi.benchmark.tsv",
             config.get("tabix", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("tabix", {}).get("container", config["default_container"])
     threads: config.get("tabix", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("tabix", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -25,8 +25,8 @@ rule tabix:
         partition=config.get("tabix", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("tabix", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("tabix", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("tabix", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("tabix", {}).get("extra", ""),
     message:
         "{rule}: index {input.gz}"
     wrapper:

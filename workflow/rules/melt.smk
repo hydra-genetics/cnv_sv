@@ -6,11 +6,19 @@ __license__ = "GPL-3"
 
 rule melt:
     input:
-        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
-        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        bed=config.get("melt", {}).get("bed", ""),
-        mei=config.get("melt", {}).get("mei", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
+        bed=config.get("melt", {}).get("bed", []),
+        mei=config.get("melt", {}).get("mei", []),
+        ref=config.get("reference", {}).get("fasta", []),
         metrics="qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt",
     output:
         alu=temp("cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf"),
@@ -18,9 +26,6 @@ rule melt:
         line1=temp("cnv_sv/melt/{sample}_{type}.LINE1.final_comp.vcf"),
         sva=temp("cnv_sv/melt/{sample}_{type}.SVA.final_comp.vcf"),
         tmpdir=temp(directory("cnv_sv/melt/{sample}_{type}")),
-    params:
-        extra=config.get("melt", {}).get("extra", ""),
-        median_insert_size=lambda wildcards, input: get_median_insert_size(wildcards, input),
     log:
         "cnv_sv/melt/{sample}_{type}.melt.output.log",
     benchmark:
@@ -28,6 +33,8 @@ rule melt:
             "cnv_sv/melt/{sample}_{type}.melt.benchmark.tsv",
             config.get("melt", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("melt", {}).get("container", config["default_container"])
     threads: config.get("melt", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("melt", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -35,8 +42,9 @@ rule melt:
         partition=config.get("melt", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("melt", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("melt", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("melt", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("melt", {}).get("extra", ""),
+        median_insert_size=lambda wildcards, input: get_median_insert_size(wildcards, input),
     message:
         "{rule}: Calling mobile elements in {input.bam} with MELT"
     shell:
@@ -78,6 +86,8 @@ rule melt_concat:
             "cnv_sv/melt/{sample}_{type}.vcf.benchmark.tsv",
             config.get("melt_concat", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("melt_concat", {}).get("container", config["default_container"])
     threads: config.get("melt_concat", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("melt_concat", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -85,8 +95,6 @@ rule melt_concat:
         partition=config.get("melt_concat", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("melt_concat", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("melt_concat", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("melt_concat", {}).get("container", config["default_container"])
     message:
         "{rule}: Concatenating MELT variant files for {wildcards.sample}_{wildcards.type}"
     shell:
@@ -107,6 +115,8 @@ rule melt_vcf:
         "cnv_sv/melt/{sample}_{type}.melt_vcf.log",
     benchmark:
         repeat("cnv_sv/melt/{sample}_{type}.vcf.benchmark.tsv", config.get("melt_vcf", {}).get("benchmark_repeats", 1))
+    container:
+        config.get("melt_vcf", {}).get("container", config["default_container"])
     threads: config.get("melt_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("melt_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -114,8 +124,6 @@ rule melt_vcf:
         partition=config.get("melt_vcf", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("melt_vcf", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("melt_vcf", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("melt_vcf", {}).get("container", config["default_container"])
     message:
         "{rule}: normalise the VCF file {input.vcf}"
     script:

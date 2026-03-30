@@ -12,12 +12,6 @@ rule svdb_merge:
         vcfs=get_vcfs_for_svdb_merge,
     output:
         vcf=temp("cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf"),
-    params:
-        extra=config.get("svdb_merge", {}).get("extra", ""),
-        overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
-        bnd_distance=config.get("svdb_merge", {}).get("bnd_distance", 10000),
-        priority=get_priority,
-        vcfs=lambda wildcards: get_vcfs_for_svdb_merge(wildcards, add_suffix=True),
     log:
         "cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf.log",
     benchmark:
@@ -25,6 +19,8 @@ rule svdb_merge:
             "cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.benchmark.tsv",
             config.get("svdb_merge", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("svdb_merge", {}).get("container", config["default_container"])
     threads: config.get("svdb_merge", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("svdb_merge", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -32,8 +28,12 @@ rule svdb_merge:
         partition=config.get("svdb_merge", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("svdb_merge", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("svdb_merge", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("svdb_merge", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("svdb_merge", {}).get("extra", ""),
+        overlap=config.get("svdb_merge", {}).get("overlap", 0.6),
+        bnd_distance=config.get("svdb_merge", {}).get("bnd_distance", 10000),
+        priority=get_priority,
+        vcfs=lambda wildcards: get_vcfs_for_svdb_merge(wildcards, add_suffix=True),
     message:
         "{rule}: merges vcf files from different cnv callers into {output.vcf}"
     shell:
@@ -51,10 +51,6 @@ rule svdb_query:
         vcf="cnv_sv/svdb_merge/{sample}_{type}.{tc_method}.merged.vcf",
     output:
         vcf=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf"),
-    params:
-        db_string=config.get("svdb_query", {}).get("db_string", ""),
-        extra=config.get("svdb_query", {}).get("extra", ""),
-        prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
     log:
         "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.log",
     benchmark:
@@ -62,6 +58,8 @@ rule svdb_query:
             "cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.benchmark.tsv",
             config.get("svdb_query", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("svdb_query", {}).get("container", config["default_container"])
     threads: config.get("svdb_query", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("svdb_query", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -69,13 +67,11 @@ rule svdb_query:
         partition=config.get("svdb_query", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("svdb_query", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("svdb_query", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("svdb_query", {}).get("container", config["default_container"])
+    params:
+        db_string=config.get("svdb_query", {}).get("db_string", ""),
+        extra=config.get("svdb_query", {}).get("extra", ""),
+        prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
     message:
         "{rule}: use svdb database to filter cnvs into {output.vcf}"
     shell:
-        "(svdb --query "
-        "--query_vcf {input.vcf} "
-        "{params.db_string} "
-        "--prefix {params.prefix} "
-        "{params.extra}) &> {log}"
+        "(svdb --query " "--query_vcf {input.vcf} " "{params.db_string} " "--prefix {params.prefix} " "{params.extra}) &> {log}"

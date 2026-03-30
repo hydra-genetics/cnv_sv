@@ -15,7 +15,7 @@ from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import get_input_aligned_bam, get_input_haplotagged_bam
 
-min_version("7.8.3")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -34,7 +34,7 @@ samples = pd.read_table(config["samples"], dtype={"sample": str}).set_index("sam
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
-units = pandas.read_table(config["units"], dtype=str)
+units = pd.read_table(config["units"], dtype=str)
 
 if units.platform.iloc[0] in ["PACBIO", "ONT"]:
     units = units.set_index(["sample", "type", "processing_unit", "barcode"], drop=False).sort_index()
@@ -49,6 +49,10 @@ wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
     file="^cnv_sv/.+",
+
+
+def get_automap_dir(wildcards, output):
+    return os.path.dirname(os.path.dirname(output.pdf))
 
 
 def get_karyotype(wildcards):
@@ -133,7 +137,7 @@ def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
     return median_insert_size
 
 
-def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
+def get_purecn_inputs(wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":

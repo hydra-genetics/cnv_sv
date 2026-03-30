@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule reviewer_generate_locus_list:
     input:
-        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        cat=config.get("expansionhunter", {}).get("variant_catalog", []),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
         txt=temp("cnv_sv/reviewer/{sample}_{type}_locus_list.txt"),
@@ -17,6 +17,8 @@ rule reviewer_generate_locus_list:
             "cnv_sv/reviewer/{sample}_{type}_locus_list.txt.benchmark.tsv",
             config.get("reviewer_generate_locus_list", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("reviewer_generate_locus_list", {}).get("container", config["default_container"])
     threads: config.get("reviewer_generate_locus_list", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("reviewer_generate_locus_list", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -24,8 +26,6 @@ rule reviewer_generate_locus_list:
         partition=config.get("reviewer_generate_locus_list", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("reviewer_generate_locus_list", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("reviewer_generate_locus_list", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("reviewer_generate_locus_list", {}).get("container", config["default_container"])
     message:
         "{rule}: Generate a locus list for REViewer from {input.vcf}"
     script:
@@ -36,20 +36,14 @@ rule reviewer:
     input:
         bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam",
         bai="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.bai",
-        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        cat=config.get("expansionhunter", {}).get("variant_catalog", []),
         loci="cnv_sv/reviewer/{sample}_{type}_locus_list.txt",
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=config.get("reference", {}).get("fasta", []),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
         dir=temp(directory("cnv_sv/reviewer/{sample}_{type}/")),
         metrics=temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.metrics.tsv"),
         phasing=temp("cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.phasing.tsv"),
-    params:
-        extra=config.get("reviewer", {}).get("extra", ""),
-        in_locus=lambda wildcards, input: get_locus_str(input.loci),
-        prefix=lambda wildcards, output: "{}/{}_{}/{}_{}".format(
-            os.path.split(output[0])[0], wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
-        ),
     log:
         "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
@@ -57,6 +51,8 @@ rule reviewer:
             "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
             config.get("reviewer", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("reviewer", {}).get("container", config["default_container"])
     threads: config.get("reviewer", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("reviewer", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -64,8 +60,12 @@ rule reviewer:
         partition=config.get("reviewer", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("reviewer", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("reviewer", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("reviewer", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("reviewer", {}).get("extra", ""),
+        in_locus=lambda wildcards, input: get_locus_str(input.loci),
+        prefix=lambda wildcards, output: "{}/{}_{}/{}_{}".format(
+            os.path.split(output[0])[0], wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
+        ),
     message:
         "{rule}: Run reviewer on {wildcards.sample}_{wildcards.type}"
     shell:

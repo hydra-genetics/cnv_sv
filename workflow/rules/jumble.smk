@@ -6,8 +6,16 @@ __license__ = "GPL-3"
 
 rule jumble_run:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         cnv_png=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.png"),
@@ -19,8 +27,6 @@ rule jumble_run:
         gis_csv=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble_gis.csv"),
         qc_csv=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.qc.csv"),
         snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble_snps.csv"),
-    params:
-        reference=config.get("jumble_run", {}).get("normal_reference", ""),
     log:
         "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
@@ -28,6 +34,8 @@ rule jumble_run:
             "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
             config.get("jumble_run", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("jumble_run", {}).get("container", config["default_container"])
     threads: config.get("jumble_run", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("jumble_run", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -35,8 +43,8 @@ rule jumble_run:
         partition=config.get("jumble_run", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("jumble_run", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("jumble_run", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("jumble_run", {}).get("container", config["default_container"])
+    params:
+        reference=config.get("jumble_run", {}).get("normal_reference", ""),
     message:
         "{rule}: Call CNVs with jumble on {input.bam}"
     shell:
@@ -56,9 +64,6 @@ rule jumble_cnvkit_call:
         tc_file=get_tc_file,
     output:
         segment=temp("cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns"),
-    params:
-        extra=config.get("jumble_cnvkit_call", {}).get("extra", ""),
-        purity=get_tc,
     log:
         "cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.log",
     benchmark:
@@ -66,6 +71,8 @@ rule jumble_cnvkit_call:
             "cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns.benchmark.tsv",
             config.get("jumble_cnvkit_call", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("jumble_cnvkit_call", {}).get("container", config["default_container"])
     threads: config.get("jumble_cnvkit_call", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("jumble_cnvkit_call", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -73,8 +80,9 @@ rule jumble_cnvkit_call:
         partition=config.get("jumble_cnvkit_call", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("jumble_cnvkit_call", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("jumble_cnvkit_call", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("jumble_cnvkit_call", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("jumble_cnvkit_call", {}).get("extra", ""),
+        purity=get_tc,
     message:
         "{rule}: call cnvs with loh info into {output.segment}"
     wrapper:
@@ -86,12 +94,6 @@ rule jumble_vcf:
         segment="cnv_sv/jumble_cnvkit_call/{sample}_{type}.{tc_method}.loh.cns",
     output:
         vcf=temp("cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf"),
-    params:
-        caller=config.get("jumble_run", {}).get("caller_name", "jumble"),
-        dup_limit=config.get("jumble_vcf", {}).get("dup_limit", 2.5),
-        het_del_limit=config.get("jumble_vcf", {}).get("het_del_limit", 1.5),
-        hom_del_limit=config.get("jumble_vcf", {}).get("hom_del_limit", 0.5),
-        sample_name="{sample}_{type}",
     log:
         "cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf.log",
     benchmark:
@@ -99,6 +101,8 @@ rule jumble_vcf:
             "cnv_sv/jumble_vcf/{sample}_{type}.{tc_method}.vcf.output.benchmark.tsv",
             config.get("jumble_vcf", {}).get("benchmark_repeats", 1),
         )
+    container:
+        config.get("jumble_vcf", {}).get("container", config["default_container"])
     threads: config.get("jumble_vcf", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("jumble_vcf", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -106,8 +110,12 @@ rule jumble_vcf:
         partition=config.get("jumble_vcf", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("jumble_vcf", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("jumble_vcf", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("jumble_vcf", {}).get("container", config["default_container"])
+    params:
+        caller=config.get("jumble_run", {}).get("caller_name", "jumble"),
+        dup_limit=config.get("jumble_vcf", {}).get("dup_limit", 2.5),
+        het_del_limit=config.get("jumble_vcf", {}).get("het_del_limit", 1.5),
+        hom_del_limit=config.get("jumble_vcf", {}).get("hom_del_limit", 0.5),
+        sample_name="{sample}_{type}",
     message:
         "{rule}: export cnvkit segments into vcf in {output.vcf}"
     script:

@@ -6,21 +6,27 @@ __license__ = "GPL-3"
 
 rule cnvpytor_readdepth:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        ),
+        bai=branch(
+            config.get("pathvars", {}).get("aligner_path"),
+            then="<aligner_path>/{sample}_{type}.bam.bai",
+            otherwise="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ),
         vcf="snv_indels/bcbio_variation_recall_ensemble/{sample}_{type}.germline.vcf",
     output:
         pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor"),
-    params:
-        extra=config.get("cnvpytor_readdepth", {}).get("extra", ""),
-        length=config.get("cnvpytor_readdepth", {}).get("length_list", ""),
-        model=config.get("cnvpytor_readdepth", {}).get("calling_model", ""),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_rd.log",
     benchmark:
         repeat(
             "cnv_sv/cnvpytor/{sample}_{type}_rd.benchmark.tsv", config.get("cnvpytor_readdepth", {}).get("benchmark_repeats", 1)
         )
+    container:
+        config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
     threads: config.get("cnvpytor_readdepth", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvpytor_readdepth", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
@@ -28,8 +34,10 @@ rule cnvpytor_readdepth:
         partition=config.get("cnvpytor_readdepth", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvpytor_readdepth", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvpytor_readdepth", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvpytor_readdepth", {}).get("container", config["default_container"])
+    params:
+        extra=config.get("cnvpytor_readdepth", {}).get("extra", ""),
+        length=config.get("cnvpytor_readdepth", {}).get("length_list", ""),
+        model=config.get("cnvpytor_readdepth", {}).get("calling_model", ""),
     message:
         "{rule}: Run cnvpytor calls based on read depth for {wildcards.sample}_{wildcards.type}"
     shell:
@@ -50,6 +58,21 @@ rule cnvpytor_filter:
     output:
         vcf=temp("cnv_sv/cnvpytor/{sample}_{type}.vcf"),
         filtvcf=temp("cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf"),
+    log:
+        "cnv_sv/cnvpytor/{sample}_{type}_filter.log",
+    benchmark:
+        repeat(
+            "cnv_sv/cnvpytor/{sample}_{type}_filter.benchmark.tsv", config.get("cnvpytor_filter", {}).get("benchmark_repeats", 1)
+        )
+    container:
+        config.get("cnvpytor_filter", {}).get("container", config["default_container"])
+    threads: config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("cnvpytor_filter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("cnvpytor_filter", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("cnvpytor_filter", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvpytor_filter", {}).get("time", config["default_resources"]["time"]),
     params:
         extra=config.get("cnvpytor_filter", {}).get("extra", ""),
         dgrange=config.get("cnvpytor_filter", {}).get("dG_range", ""),
@@ -58,21 +81,6 @@ rule cnvpytor_filter:
         pnrange=config.get("cnvpytor_filter", {}).get("pN_range", ""),
         q0range=config.get("cnvpytor_filter", {}).get("Q0_range", ""),
         view=config.get("cnvpytor_filter", {}).get("view", ""),
-    log:
-        "cnv_sv/cnvpytor/{sample}_{type}_filter.log",
-    benchmark:
-        repeat(
-            "cnv_sv/cnvpytor/{sample}_{type}_filter.benchmark.tsv", config.get("cnvpytor_filter", {}).get("benchmark_repeats", 1)
-        )
-    threads: config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"])
-    resources:
-        mem_mb=config.get("cnvpytor_filter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("cnvpytor_filter", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("cnvpytor_filter", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("cnvpytor_filter", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("cnvpytor_filter", {}).get("time", config["default_resources"]["time"]),
-    container:
-        config.get("cnvpytor_filter", {}).get("container", config["default_container"])
     message:
         "{rule}: Filter cnvpytor calls for {wildcards.sample}_{wildcards.type}"
     shell:
