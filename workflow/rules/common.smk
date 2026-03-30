@@ -363,6 +363,7 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvkit_scatter": ["png"],
         "cnv_sv/cnvkit_vcf": ["pathology.vcf.gz"],
         "cnv_sv/cnvpytor": ["vcf.gz"],
+        "cnv_sv/cnvpytor_plot_manhattan": ["png"],
         "cnv_sv/expansionhunter": ["vcf.gz"],
         "cnv_sv/gatk_vcf": ["pathology.vcf.gz"],
         "cnv_sv/svdb_merge": ["no_tc.merged.vcf.gz", "pathology.merged.vcf.gz"],

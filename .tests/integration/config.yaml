@@ -50,6 +50,9 @@ cnvpytor_filter:
   Q0_range: "0 0.5"
   view: "10000"
 
+cnvpytor_plot_manhattan:
+  bin_size: "10000"
+
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   bedfile: "reference/twist_DNA_solid.chr1.exomedepth.annotated.bed"

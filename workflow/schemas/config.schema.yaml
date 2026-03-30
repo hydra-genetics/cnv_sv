@@ -205,6 +205,22 @@ properties:
         type: string
         description: parameter for minimum variant size (e.g. 1000)
 
+  cnvpytor_plot_manhattan:
+    description: parameters for cnvpytor_plot_manhattan
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      bin_size:
+        type: string
+        description: bin size for read depth plotting (e.g. 100000)
+    required:
+      - bin_size
+
   exomedepth_call:
     description: parameters for exomedepth_call
     type: object
