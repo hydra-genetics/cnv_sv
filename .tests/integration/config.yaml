@@ -51,6 +51,7 @@ cnvpytor_filter:
   view: "10000"
 
 cnvpytor_plot_manhattan:
+  container: "docker://hydragenetics/cnvpytor:1.3.1"
   bin_size: "10000"
 
 exomedepth_call:
