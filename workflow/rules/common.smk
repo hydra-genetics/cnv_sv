@@ -52,7 +52,7 @@ wildcard_constraints:
 
 
 def get_automap_dir(wildcards, output):
-    return os.path.dirname(os.path.dirname(output.pdf))
+    return os.path.dirname(os.path.dirname(output.pdf)))
 
 
 def get_karyotype(wildcards):
@@ -137,7 +137,7 @@ def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
     return median_insert_size
 
 
-def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
+def get_purecn_inputs(wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":
