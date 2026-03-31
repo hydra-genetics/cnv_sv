@@ -99,7 +99,7 @@ rule cnvpytor_plot_manhattan:
     params:
         bin_size=config.get("cnvpytor_plot_manhattan", {}).get("bin_size", ""),
         extra=config.get("cnvpytor_plot_manhattan", {}).get("extra", ""),
-        png=lambda wildcards: "cnv_sv/cnvpytor/{wildcards.sample}_{wildcards.type}.manhattan.png".format(wildcards=wildcards),
+        png="cnv_sv/cnvpytor/{sample}_{type}.manhattan.png",
     log:
         "cnv_sv/cnvpytor/{sample}_{type}.manhattan.log",
     benchmark:
