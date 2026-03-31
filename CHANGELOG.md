@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.1.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.0.0...v3.1.0) (2026-03-31)
+
+
+### Features
+
+* adapt gatk-sv script for wrting and soft-filtering the scramble vcf ([78ac2fa](https://github.com/hydra-genetics/cnv_sv/commit/78ac2fac73921da4c84f98778f5a6b4f183008a4))
+* adapt gatk-sv script for wrting and soft-filtering the scramble vcf ([3714909](https://github.com/hydra-genetics/cnv_sv/commit/371490944eb8a2e298f26be6c1da37b1f860132e))
+* add cnvpytor manhattan plot ([7e33c9a](https://github.com/hydra-genetics/cnv_sv/commit/7e33c9a53b24df7b53dd773e4a407f63fe950c8e))
+* add cnvpytor manhattan plot ([79247d9](https://github.com/hydra-genetics/cnv_sv/commit/79247d937f7126c77e49f4dcf0616c4a9a78545d))
+* **melt:** add insert size parameter ([ed01860](https://github.com/hydra-genetics/cnv_sv/commit/ed01860be33552cb40f7cb7520a8f6f8a298e059))
+* **melt:** add insert size parameter ([9f01d25](https://github.com/hydra-genetics/cnv_sv/commit/9f01d25cd10e84b6ecdffd499f73392a3c9238cc))
+* sort and reheader scramble vcf ([3b4ef1d](https://github.com/hydra-genetics/cnv_sv/commit/3b4ef1da37e6370f87c074e913c6c21c5715a834))
+
+
+### Bug Fixes
+
+* remove un-needed .tbi file as input ([5ded18f](https://github.com/hydra-genetics/cnv_sv/commit/5ded18f30cb997faba8ff79318c588d71dc6569f))
+* set naming of output png using params ([#284](https://github.com/hydra-genetics/cnv_sv/issues/284)) ([d99a3ec](https://github.com/hydra-genetics/cnv_sv/commit/d99a3ec709de977b564a395ae46bb9f851442984))
+
 ## [3.0.0](https://github.com/hydra-genetics/cnv_sv/compare/cnv_sv-v2.0.0...cnv_sv-v3.0.0) (2026-03-16)
 
 
