@@ -1,18 +1,21 @@
 ##fileformat=VCFv4.2
-##fileDate=2025-01-01
-##source=SCRAMBLE
+##fileDate=2026-03-19
+##source=scramble
+##ALT=<ID=INS,Description="Insertion">
 ##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
-##INFO=<ID=SVLEN,Number=.,Type=Integer,Description="Difference in length between REF and ALT alleles">
 ##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference in length between REF and ALT alleles">
 ##INFO=<ID=MEINFO,Number=4,Type=String,Description="Mobile element info of the form NAME,START,END,POLARITY">
-##INFO=<ID=CALLER,Number=1,Type=String,Description="Caller">
-##INFO=<ID=SUPPORT,Number=1,Type=Integer,Description="Number of supporting reads">
-##INFO=<ID=SCORE,Number=1,Type=Float,Description="SCRAMBLE alignment score">
-##INFO=<ID=CLIP_SIDE,Number=1,Type=String,Description="Side of soft-clipping (left/right)">
-##INFO=<ID=POLYA_LEN,Number=1,Type=Integer,Description="Length of polyA tail">
-##INFO=<ID=POLYA_SCORE,Number=1,Type=Float,Description="PolyA alignment score">
-##ALT=<ID=INS:ME:ALU,Description="Insertion of ALU element">
-##ALT=<ID=INS:ME:L1,Description="Insertion of L1 element">
-##ALT=<ID=INS:ME:SVA,Description="Insertion of SVA element">
+##INFO=<ID=ALGORITHMS,Number=.,Type=String,Description="Source algorithms">
+##INFO=<ID=Alignment_Score,Number=1,Type=Float,Description="SCRAMble alignment score">
+##INFO=<ID=Alignment_Percent_Length,Number=1,Type=Float,Description="SCRAMble alignment percent length">
+##INFO=<ID=Alignment_Percent_Identity,Number=1,Type=Float,Description="SCRAMble alignment percent identity">
+##INFO=<ID=Clipped_Reads_In_Cluster,Number=1,Type=Integer,Description="Number of clipped reads in cluster">
+##INFO=<ID=Start_In_MEI,Number=.,Type=Integer,Description="Start of alignment to canonical MEI sequence">
+##INFO=<ID=Stop_In_MEI,Number=.,Type=Integer,Description="End of alignment to canonical MEI sequence">
+##INFO=<ID=polyA_Position,Number=.,Type=Integer,Description="Position of poly-A tail">
+##INFO=<ID=polyA_SupportingReads,Number=.,Type=Integer,Description="Number of reads supporting poly-A tail">
+##INFO=<ID=TSD_length,Number=.,Type=Integer,Description="Target site duplication length">
+##FILTER=<ID=LowQual,Description="Low quality variant">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TEST_SAMPLE_N

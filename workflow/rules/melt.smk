@@ -6,11 +6,12 @@ __license__ = "GPL-3"
 
 rule melt:
     input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
         bed=config.get("melt", {}).get("bed", ""),
         mei=config.get("melt", {}).get("mei", ""),
         ref=config.get("reference", {}).get("fasta", ""),
+        metrics="qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt",
     output:
         alu=temp("cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf"),
         hervk=temp("cnv_sv/melt/{sample}_{type}.HERVK.final_comp.vcf"),
@@ -19,6 +20,7 @@ rule melt:
         tmpdir=temp(directory("cnv_sv/melt/{sample}_{type}")),
     params:
         extra=config.get("melt", {}).get("extra", ""),
+        median_insert_size=lambda wildcards, input: get_median_insert_size(wildcards, input),
     log:
         "cnv_sv/melt/{sample}_{type}.melt.output.log",
     benchmark:
@@ -47,6 +49,7 @@ rule melt:
         -t {input.mei} \
         -n {input.bed} \
         -w {output.tmpdir} \
+        -e {params.median_insert_size} \
         {params.extra} && \
         cp {output.tmpdir}/ALU.final_comp.vcf {output.alu} && \
         cp {output.tmpdir}/HERVK.final_comp.vcf {output.hervk} && \

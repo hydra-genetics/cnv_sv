@@ -10,12 +10,13 @@ __license__ = "GPL-3"
 import sys
 import os
 import unittest
+import tempfile
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPT_DIR = os.path.abspath(os.path.join(TEST_DIR, "../../workflow/scripts"))
 sys.path.insert(0, SCRIPT_DIR)
 
-from scramble_vcf import write_vcf_header  # noqa
+from scramble_vcf import write_vcf_header, process_meis_to_vcf  # noqa: E402
 
 
 class TestWriteVcfHeader(unittest.TestCase):
@@ -88,69 +89,22 @@ class TestMeiParsing(unittest.TestCase):
 
         self._run_mei_conversion(input_file, output_file, expected_file, sample_name)
 
+    def test_mei_conversion_clustered(self):
+        """Test that two nearby records with opposite Clipped_Side are clustered into one"""
+        input_file = "workflow/scripts/.tests/scramble_vcf.meiParsing.clustered.input.txt"
+        expected_file = "workflow/scripts/.tests/scramble_vcf.meiParsing.clustered.expected.vcf"
+        tmp = tempfile.NamedTemporaryFile(suffix=".vcf", delete=False)
+        tmp.close()
+        output_file = tmp.name
+        self.addCleanup(lambda: os.path.exists(output_file) and os.remove(output_file))
+        sample_name = "TEST_CLUSTERED_N"
+
+        self._run_mei_conversion(input_file, output_file, expected_file, sample_name)
+
     def _run_mei_conversion(self, input_file, output_file, expected_file, sample_name):
         """Helper method to run MEI conversion and compare output"""
-        # Simulate the main function logic
-        with open(input_file, "r") as meis_in:
-            with open(output_file, "w") as vcf_out:
-                header_map = {}
-                header_written = False
-                caller = "scramble"
-
-                for line in meis_in:
-                    columns = line.strip().split("\t")
-                    if columns[0] == "Insertion" or columns[0].startswith("#"):
-                        header_map = {column_name: index for index,
-                                      column_name in enumerate(columns)}
-                        write_vcf_header(vcf_out, sample_name)
-                        header_written = True
-                        continue
-                    if not line.strip():
-                        continue
-                    location = columns[header_map.get('Insertion', 0)]
-                    if ':' not in location:
-                        continue
-                    chrom, pos = location.split(':')
-                    try:
-                        pos_int = int(pos)
-                        if pos_int <= 0:
-                            continue
-                    except ValueError:
-                        continue
-                    if not chrom.startswith("chr"):
-                        chrom = f"chr{chrom}"
-                    mei_type = columns[header_map.get('MEI_Family', 1)].upper()
-                    if mei_type == "LINE1":
-                        mei_type = "L1"
-                    orientation = columns[header_map.get('Orientation', 2)]
-                    polarity = "+" if orientation == "Plus" else "-"
-                    support = columns[header_map.get('Support', 3)]
-                    score = columns[header_map.get('Score', 4)]
-                    consensus = columns[header_map.get('Consensus', 7)]
-                    ref = "N"
-                    alt = f"<INS:ME:{mei_type}>"
-
-                    if consensus and consensus != "NA" and consensus != "None Found":
-                        svlen = str(len(consensus))
-                    else:
-                        if mei_type == "ALU":
-                            svlen = "300"
-                        elif mei_type == "L1":
-                            svlen = "6000"
-                        elif mei_type == "SVA":
-                            svlen = "2000"
-                        else:
-                            svlen = "."
-
-                    end = str(pos_int + 1)
-                    info = f"SVTYPE=INS;END={end};SVLEN={svlen};MEINFO={mei_type},{pos},{end},{polarity}"
-                    info += f";CALLER={caller};SUPPORT={support}"
-
-                    out_line = f"{chrom}\t{pos}\t.\tN\t{alt}\t.\tPASS\t{info}\tGT\t0/1\n"
-                    vcf_out.write(out_line)
-
-                if not header_written:
-                    write_vcf_header(vcf_out, sample_name)
+        with open(output_file, "w") as vcf_out:
+            process_meis_to_vcf(input_file, vcf_out, sample_name)
 
         # Compare output with expected (skip date line)
         with open(expected_file, "r") as expected:

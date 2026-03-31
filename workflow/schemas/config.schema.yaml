@@ -205,6 +205,25 @@ properties:
         type: string
         description: parameter for minimum variant size (e.g. 1000)
 
+  cnvpytor_plot_manhattan:
+    description: parameters for cnvpytor_plot_manhattan
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      bin_size:
+        type: string
+        description: bin size for read depth plotting (e.g. 100000)
+      extra:
+        type: string
+        description: parameters that should be forwarded
+    required:
+      - bin_size
+
   exomedepth_call:
     description: parameters for exomedepth_call
     type: object
@@ -980,6 +999,20 @@ properties:
       caller: 
         type: string
         description: name of the caller to be used in the VCF file (default "scramble")
+
+  scramble_sort:
+    description: parameters for scramble_sort
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
 
   severus_t_only:
     description: parameters for severus_t_only

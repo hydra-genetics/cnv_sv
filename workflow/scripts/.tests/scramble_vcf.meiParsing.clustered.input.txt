@@ -1,0 +1,3 @@
+Insertion	MEI_Family	Insertion_Direction	Clipped_Reads_In_Cluster	Alignment_Score	Alignment_Percent_Length	Alignment_Percent_Identity	Clipped_Sequence	Clipped_Side	Start_In_MEI	Stop_In_MEI	polyA_Position	polyA_Seq	polyA_SupportingReads	TSD	TSD_length
+chr1:1667134	alu	Plus	10	58.3331108093262	97.2972972972973	94.4444444444444	CCCGTCTCCACTAAAAATACAAAAATTAGCCGGGCAT	left	107	142	None Found	None Found	None Found	None Found	NA
+chr1:1667010	alu	Plus	7	64.0374145507812	94.5945945945946	94.2857142857143	GGGCAGATCACAAGGTCAGGAGATCGAGACCATCCTG	right	54	88	None Found	None Found	None Found	None Found	NA

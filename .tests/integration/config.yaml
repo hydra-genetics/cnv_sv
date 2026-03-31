@@ -8,6 +8,7 @@ reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   design_intervals_gatk_cnv: "reference/twist_DNA_solid.HES45.annotated.interval_list"
   fasta: "reference/HES45.fna"
+  fai: "reference/HES45.fna.fai"
 
 automap:
   container: "docker://hydragenetics/automap:1.2"
@@ -39,6 +40,7 @@ cnvkit_seg:
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.3.1"
   length_list: "10000"
+  extra: "-conf reference/ref_genome_conf.py"
 
 cnvpytor_filter:
   container: "docker://hydragenetics/cnvpytor:1.3.1"
@@ -48,6 +50,11 @@ cnvpytor_filter:
   pN_range: "0 0.5"
   Q0_range: "0 0.5"
   view: "10000"
+
+cnvpytor_plot_manhattan:
+  container: "docker://hydragenetics/cnvpytor:1.3.1"
+  bin_size: "10000"
+  extra: "-conf reference/ref_genome_conf.py"
 
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"

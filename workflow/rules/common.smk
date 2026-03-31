@@ -118,6 +118,21 @@ def get_tc_file(wildcards):
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
 
+def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
+    """
+    Parse the Picard insert_size_metrics file and return the median insert size.
+    """
+
+    # Read the metrics file with pandas, skipping comment lines
+    df = pd.read_table(input.metrics, comment="#", nrows=1)
+
+    if "MEDIAN_INSERT_SIZE" not in df.columns:
+        raise ValueError(f"MEDIAN_INSERT_SIZE column not found in {input.metrics}")
+
+    median_insert_size = int(float(df["MEDIAN_INSERT_SIZE"].iloc[0]))
+    return median_insert_size
+
+
 def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
@@ -348,6 +363,7 @@ def compile_output_list(wildcards):
         "cnv_sv/cnvkit_scatter": ["png"],
         "cnv_sv/cnvkit_vcf": ["pathology.vcf.gz"],
         "cnv_sv/cnvpytor": ["vcf.gz"],
+        "cnv_sv/cnvpytor": ["manhattan.global.0000.png"],
         "cnv_sv/expansionhunter": ["vcf.gz"],
         "cnv_sv/gatk_vcf": ["pathology.vcf.gz"],
         "cnv_sv/svdb_merge": ["no_tc.merged.vcf.gz", "pathology.merged.vcf.gz"],
@@ -382,16 +398,15 @@ def compile_output_list(wildcards):
     ]
 
     files = {
-        "cnv_sv/scramble_vcf": ["vcf"],
+        "cnv_sv/scramble_vcf": ["sorted.vcf.gz"],
     }
     output_files += [
-        "%s/%s_%s.%s.%s" % (prefix, sample, unit_type, tc_method, suffix)
+        f"{prefix}/{sample}_{unit_type}.{suffix}"
         for prefix in files.keys()
         for sample in get_samples(samples[pd.isnull(samples["trioid"])])
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
         if platform not in ["ONT", "PACBIO"]
-        for tc_method in ["no_tc", "pathology"]
         for suffix in files[prefix]
     ]
 
