@@ -132,9 +132,8 @@ rule pindel_update_vcf:
         vcf="cnv_sv/pindel_vcf/{sample}_{type}.no_contig.vcf",
     output:
         vcf=temp("cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf"),
-        samplename=temp("cnv_sv/pindel_vcf/{sample}_{type}.samplename.txt"),
     params:
-        extra=config.get("pindel_update_vcf", {}).get("extra", ""),
+        samplename_tmp="cnv_sv/pindel_vcf/{sample}_{type}.samplename.txt",
     log:
         "cnv_sv/pindel_vcf/{sample}_{type}.no_tc.vcf.log",
     benchmark:
@@ -154,8 +153,8 @@ rule pindel_update_vcf:
     message:
         "{rule}: update cnv_sv/pindel/{wildcards.sample}_{wildcards.type}.no_contig.vcf to include contigs and correct samplename"
     shell:
-        "(echo -e '{wildcards.sample}_{wildcards.type}\n' > {output.samplename} && "
+        "(echo -e '{wildcards.sample}_{wildcards.type}\n' > {params.samplename_tmp} && "
         "picard UpdateVcfSequenceDictionary "
         "-INPUT {input.vcf} -QUIET true "
         "-SD {input.fasta} "
-        "-OUTPUT /dev/stdout | bcftools reheader -s {output.samplename} -o {output.vcf} - )&> {log}"
+        "-OUTPUT /dev/stdout | bcftools reheader -s {params.samplename_tmp} -o {output.vcf} - && rm {params.samplename_tmp} )&> {log}"
