@@ -157,4 +157,4 @@ rule pindel_update_vcf:
         "picard UpdateVcfSequenceDictionary "
         "-INPUT {input.vcf} -QUIET true "
         "-SD {input.fasta} "
-        "-OUTPUT /dev/stdout | bcftools reheader -s {output.samplename} -o {output.vcf} - && rm {params.samplename_tmp} )&> {log}"
+        "-OUTPUT /dev/stdout | bcftools reheader -s {params.samplename_tmp} -o {output.vcf} - && rm {params.samplename_tmp} )&> {log}"
