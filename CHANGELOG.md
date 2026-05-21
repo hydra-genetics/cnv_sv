@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/hydra-genetics/cnv_sv/compare/v3.1.0...v3.1.1) (2026-05-21)
+
+
+### Bug Fixes
+
+* pindel_update_vcf fails if not --notemp used ([#288](https://github.com/hydra-genetics/cnv_sv/issues/288)) ([#289](https://github.com/hydra-genetics/cnv_sv/issues/289)) ([e92b121](https://github.com/hydra-genetics/cnv_sv/commit/e92b121611f415148321370978280732e96492a5))
+
 ## [3.1.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.0.0...v3.1.0) (2026-03-31)
 
 
