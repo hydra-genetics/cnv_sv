@@ -10,7 +10,6 @@ rule expansionhunter:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
         ref=config.get("reference", {}).get("fasta", ""),
-        sex="qc/peddy/peddy.sex_check.csv",
     output:
         bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.bam"),
         json=temp("cnv_sv/expansionhunter/{sample}_{type}.json"),
@@ -18,7 +17,7 @@ rule expansionhunter:
     params:
         extra=config.get("expansionhunter", {}).get("extra", ""),
         prefix=lambda wildcards, output: "{}/{}_{}".format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
-        sex=lambda wildards, input: get_peddy_sex(wildards, input.sex),
+        sex=lambda wildcards, input: samples.loc[wildcards.sample].sex,
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log",
     benchmark:

@@ -187,17 +187,8 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
     return extra
 
 
-def get_peddy_sex(wildcards, peddy_sex_check):
-    sample = "{}_{}".format(wildcards.sample, wildcards.type)
-    sex_df = pd.read_table(peddy_sex_check, sep=",").set_index("sample_id", drop=False)
-
-    sample_sex = sex_df.at[sample, "predicted_sex"]
-
-    return sample_sex
-
-
 def get_exomedepth_ref(wildcards):
-    sex = get_peddy_sex(wildcards, checkpoints.exomedepth_sex.get().output[0])
+    sex = samples.loc[wildcards.sample].sex
 
     if sex == "male":
         ref = config.get("exomedepth_call", {}).get("male_reference", "")
