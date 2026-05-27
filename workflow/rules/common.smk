@@ -53,7 +53,7 @@ wildcard_constraints:
 
 def get_sample_sex(sample):
     """
-    Get the sex of a sample from the samples dataframe. 
+    Get the sex of a sample from the samples dataframe.
     If the sex column is missing or the value is NA, return "female" as default.
     """
     if "sex" not in samples.columns:
@@ -92,7 +92,7 @@ def get_expected_cn(wildcards):
     if "sex" not in samples.columns:
         return ""
     sex = get_sample_sex(wildcards.sample)
-    
+
     if sex == "male":
         expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
         sawfish_param = f"--expected-cn {expected_cn}"
