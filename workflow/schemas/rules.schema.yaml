@@ -1152,6 +1152,28 @@ properties:
           txt:
             type: string
             description: locus list that should be reviewed
+
+  reviewer_bam_sort:
+    type: object
+    description: input and output parameters for reviewer_bam_sort
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: input realigned 'bam' file from expansionhunter
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          bam:
+            type: string
+            description: output sorted 'bam' file
+          idx:
+            type: string
+            description: output 'bam' file index
   
   reviewer:
     type: object
