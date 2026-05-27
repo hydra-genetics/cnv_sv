@@ -17,7 +17,7 @@ rule expansionhunter:
     params:
         extra=config.get("expansionhunter", {}).get("extra", ""),
         prefix=lambda wildcards, output: "{}/{}_{}".format(os.path.split(output.vcf)[0], wildcards.sample, wildcards.type),
-        sex=lambda wildcards, input: samples.loc[wildcards.sample].sex,
+        sex=lambda wildcards, input: get_sample_sex(wildcards.sample),
     log:
         "cnv_sv/expansionhunter/{sample}_{type}.output.log",
     benchmark:
