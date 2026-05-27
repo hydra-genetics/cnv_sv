@@ -54,14 +54,11 @@ wildcard_constraints:
 def get_sample_sex(sample):
     """
     Get the sex of a sample from the samples dataframe.
-    If the sex column is missing or the value is NA, return "female" as default.
     """
     if "sex" not in samples.columns:
-        return "female"
+        return "NA"
 
     sex = samples.at[sample, "sex"]
-    if pd.isna(sex):
-        return "female"
 
     return sex
 
@@ -89,8 +86,6 @@ def get_expected_cn(wildcards):
     These bed are typically used to specify ploidy in the non-PAR regions of the sex chromosomes.
     """
 
-    if "sex" not in samples.columns:
-        return ""
     sex = get_sample_sex(wildcards.sample)
 
     if sex == "male":

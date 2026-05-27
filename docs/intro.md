@@ -30,7 +30,8 @@ Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path`
 Returns a dict `{"bam_t": ..., "bam_n": ...}` for use with Snakemake's `unpack()`. Calls `get_input_haplotagged_bam` twice with fixed `type="T"` and `type="N"` for the same sample, regardless of `wildcards.type`. Inherits `haplotag_path` and `haplotag_suffix` config behaviour. Used by: `severus_tn`.
 
 ### `get_sample_sex(sample)` *(defined in `workflow/rules/common.smk`)*
-Returns the sex of a sample from the `samples` dataframe. If the `sex` column is missing from the samplesheet or if the value is `NA`, it defaults to "female". Used by: `expansionhunter`, `get_exomedepth_ref`, `get_karyotype`, `get_expected_cn`.
+Returns the sex of a sample from the `samples` dataframe. If the `sex` column is missing from the samplesheet it returns `NA`
+Used by: `expansionhunter`, `get_exomedepth_ref`, `get_karyotype`, `get_expected_cn`.
 
 ### `get_exomedepth_ref(wildcards)` *(defined in `workflow/rules/common.smk`)*
 Returns the appropriate reference count file for ExomeDepth based on sample sex (via `get_sample_sex`). Used by: `exomedepth_call`.

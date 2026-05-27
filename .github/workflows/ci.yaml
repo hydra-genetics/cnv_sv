@@ -99,10 +99,10 @@ jobs:
           pip install -r requirements.txt
       - name: Snakemake dry run
         working-directory: .tests/integration
-        run: snakemake -n -s ../../workflow/Snakefile --configfile config.yaml
+        run: snakemake -n -p -s ../../workflow/Snakefile --configfile config.yaml
       - name: Snakemake dry run PACBIO
         working-directory: .tests/integration
-        run: snakemake -n -s ../../workflow/Snakefile --configfile config_pacbio.yaml
+        run: snakemake -n -p -s ../../workflow/Snakefile --configfile config_pacbio.yaml
 
   # Stage 3 - heavier checks run in parallel after dry run passes
   pytest:
@@ -191,9 +191,9 @@ jobs:
         working-directory: .tests/integration
         run: |
           mkdir -p ~/singularity_containers &&
-          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+          snakemake -p -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
       - name: Integration test - small dataset PACBIO
         working-directory: .tests/integration
         run: |
           mkdir -p ~/singularity_containers &&
-          snakemake -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config_pacbio.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+          snakemake -p -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config_pacbio.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
