@@ -805,7 +805,21 @@ properties:
       extra:
         type: string
         description: parameters that should be forwarded
-
+  
+  reviewer_bam_sort:
+    description: parameters for reviewer_bam_sort
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+ 
   reviewer_generate_locus_list:
     description: parameter for reviewer_generate_locus_list
     properties:
@@ -815,7 +829,6 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-
 
   savana_pb_to:
     type: object
