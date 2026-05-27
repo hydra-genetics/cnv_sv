@@ -256,25 +256,6 @@ properties:
             type: string
             description: manhattan plot of read depth in 'png' file format
 
-  exomedepth_sex:
-    type: object
-    description: input and output parameters for exomedepth_sex
-    properties:
-      input:
-        type: object
-        description: list of inputs
-        properties:
-          peddy:
-            type: string
-            description: a 'peddy' sex file
-      output:
-        type: object
-        description: list of outputs
-        properties:
-          peddy:
-            type: string
-            description: a 'peddy' sex file used by exomedepth
-    
   exomedepth_call:
     type: object
     description: input and output parameters for exomedepth_call
@@ -289,9 +270,6 @@ properties:
           bedfile:
             type: string
             description: a 'bed' file with regions to be analyzed
-          sex:
-            type: string
-            description: a 'peddy' sex file
           ref_count:
             type: string
             description: file with panel of normal reference panel, male or female
@@ -326,9 +304,6 @@ properties:
           ref:
             type: string
             description: fasta genome reference file
-          sex:
-            type: string
-            description: a 'peddy' sex file
       output:
         type: object
         description: list of outputs

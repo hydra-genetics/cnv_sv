@@ -51,6 +51,21 @@ wildcard_constraints:
     file="^cnv_sv/.+",
 
 
+def get_sample_sex(sample):
+    """
+    Get the sex of a sample from the samples dataframe.
+    If the sex column is missing or the value is NA, return "female" as default.
+    """
+    if "sex" not in samples.columns:
+        return "female"
+
+    sex = samples.at[sample, "sex"]
+    if pd.isna(sex):
+        return "female"
+
+    return sex
+
+
 def get_karyotype(wildcards):
     """
     Translate sex to karyotype for trgt. If sex is unknown
@@ -58,7 +73,8 @@ def get_karyotype(wildcards):
     as default
     """
 
-    sex = samples.loc[wildcards.sample].sex
+    sex = get_sample_sex(wildcards.sample)
+
     if sex == "male":
         karyotype = "XY"
     else:
@@ -73,10 +89,10 @@ def get_expected_cn(wildcards):
     These bed are typically used to specify ploidy in the non-PAR regions of the sex chromosomes.
     """
 
-    try:
-        sex = samples.loc[wildcards.sample].sex
-    except AttributeError:
+    if "sex" not in samples.columns:
         return ""
+    sex = get_sample_sex(wildcards.sample)
+
     if sex == "male":
         expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
         sawfish_param = f"--expected-cn {expected_cn}"
@@ -187,17 +203,8 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
     return extra
 
 
-def get_peddy_sex(wildcards, peddy_sex_check):
-    sample = "{}_{}".format(wildcards.sample, wildcards.type)
-    sex_df = pd.read_table(peddy_sex_check, sep=",").set_index("sample_id", drop=False)
-
-    sample_sex = sex_df.at[sample, "predicted_sex"]
-
-    return sample_sex
-
-
 def get_exomedepth_ref(wildcards):
-    sex = get_peddy_sex(wildcards, checkpoints.exomedepth_sex.get().output[0])
+    sex = get_sample_sex(wildcards.sample)
 
     if sex == "male":
         ref = config.get("exomedepth_call", {}).get("male_reference", "")
