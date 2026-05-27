@@ -56,12 +56,8 @@ def get_sample_sex(sample):
     Get the sex of a sample from the samples dataframe.
     If the sex column is missing or the value is NA, return "female" as default.
     """
-    if "sex" not in samples.columns:
-        return "female"
 
     sex = samples.at[sample, "sex"]
-    if pd.isna(sex):
-        return "female"
 
     return sex
 
