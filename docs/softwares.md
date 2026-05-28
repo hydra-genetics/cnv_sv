@@ -282,29 +282,6 @@ ExomeDepth is a R package designed to detect inherited copy number variants (CNV
 
 ---
 
-### [ExomeDepth_sex](https://github.com/vplagnol/ExomeDepth)
-ExomeDepth is a R package designed to detect inherited copy number variants (CNVs) using high throughput DNA sequence data (WES or panels). This rule only copies the peddy sex file to a copy used by ExomeDepth.
-
-#### :snake: Rule
-
-#SNAKEMAKE_RULE_SOURCE__exomedepth__exomedepth_sex#
-
-##### :left_right_arrow: input / output files
-
-#SNAKEMAKE_RULE_TABLE__exomedepth__exomedepth_sex#
-
-#### :wrench: Configuration
-
-##### Software settings (`config.yaml`)
-
-#CONFIGSCHEMA__exomedepth_sex#
-
-##### Resources settings (`resources.yaml`)
-
-#RESOURCESSCHEMA__exomedepth_sex#
-
----
-
 ## [ExpansionHunter](https://github.com/Illumina/ExpansionHunter)
 Expansion Hunter aims to estimate sizes of selected repeats by performing a targeted search through a BAM/CRAM file for reads that span, flank, and are fully contained in each repeat.
 
@@ -1053,6 +1030,29 @@ REViewer is a tool for visualizing alignments of reads in regions containing tan
 ##### Resources settings (`resources.yaml`)
 
 #RESOURCESSCHEMA__reviewer_generate_locus_list#
+
+---
+
+### [reviewer_bam_sort](https://github.com/Illumina/REViewer)
+Sort and index the realigned BAM file from ExpansionHunter using samtools.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__reviewer__reviewer_bam_sort#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__reviewer__reviewer_bam_sort#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__reviewer_bam_sort#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__reviewer_bam_sort#
 
 ---
 

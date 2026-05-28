@@ -29,6 +29,16 @@ Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path`
 ### `get_severus_tn_input(wildcards)` *(defined in `workflow/rules/common.smk`)*
 Returns a dict `{"bam_t": ..., "bam_n": ...}` for use with Snakemake's `unpack()`. Calls `get_input_haplotagged_bam` twice with fixed `type="T"` and `type="N"` for the same sample, regardless of `wildcards.type`. Inherits `haplotag_path` and `haplotag_suffix` config behaviour. Used by: `severus_tn`.
 
+### `get_sample_sex(sample)` *(defined in `workflow/rules/common.smk`)*
+Returns the sex of a sample from the `samples` dataframe. If the `sex` column is missing from the samplesheet it returns `NA`
+Used by: `expansionhunter`, `get_exomedepth_ref`, `get_karyotype`, `get_expected_cn`.
+
+### `get_exomedepth_ref(wildcards)` *(defined in `workflow/rules/common.smk`)*
+Returns the appropriate reference count file for ExomeDepth based on sample sex (via `get_sample_sex`). Used by: `exomedepth_call`.
+
+### `get_karyotype(wildcards)` *(defined in `workflow/rules/common.smk`)*
+Translates sample sex (via `get_sample_sex`) to a karyotype string (e.g., "XY" for male, "XX" for female). Used by: `trgt_genotype`.
+
 ## Module output files
 The output consists of result files that describe different kinds of larger genomic aberrations, such as copy number aberrations (CNVs), structural variants (SVs), and repeat expansions. The output files below are subdivided into short-read and long-read categories.
 

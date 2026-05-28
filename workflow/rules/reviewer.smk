@@ -32,6 +32,36 @@ rule reviewer_generate_locus_list:
         "../scripts/reviewer_generate_locus_list.py"
 
 
+rule reviewer_bam_sort:
+    input:
+        bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.bam",
+    output:
+        bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam"),
+        idx=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.bai"),
+    params:
+        extra=config.get("reviewer_bam_sort", {}).get("extra", ""),
+    log:
+        "cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.log",
+    benchmark:
+        repeat(
+            "cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.benchmark.tsv",
+            config.get("reviewer_bam_sort", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("reviewer_bam_sort", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("reviewer_bam_sort", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("reviewer_bam_sort", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("reviewer_bam_sort", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("reviewer_bam_sort", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("reviewer_bam_sort", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("reviewer_bam_sort", {}).get("container", config["default_container"])
+    message:
+        "{rule}: Sort and index {input.bam} with samtools"
+    wrapper:
+        "v3.10.2/bio/samtools/sort"
+
+
 rule reviewer:
     input:
         bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam",
@@ -51,10 +81,10 @@ rule reviewer:
             os.path.split(output[0])[0], wildcards.sample, wildcards.type, wildcards.sample, wildcards.type
         ),
     log:
-        "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.log",
+        "cnv_sv/reviewer/{sample}_{type}.output.log",
     benchmark:
         repeat(
-            "cnv_sv/reviewer/{sample}_{type}/{sample}_{type}.output.benchmark.tsv",
+            "cnv_sv/reviewer/{sample}_{type}.output.benchmark.tsv",
             config.get("reviewer", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("reviewer", {}).get("threads", config["default_resources"]["threads"])
