@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.2.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.1.1...v3.2.0) (2026-05-28)
+
+
+### Features
+
+* add bam sorting rule for reviewer ([#294](https://github.com/hydra-genetics/cnv_sv/issues/294)) ([9ff251a](https://github.com/hydra-genetics/cnv_sv/commit/9ff251a56cc971506c6df842b870f37da797dfd5))
+* remove the depedency on peddy for exomedepth and expansiohunter ([#291](https://github.com/hydra-genetics/cnv_sv/issues/291)) ([9acc63f](https://github.com/hydra-genetics/cnv_sv/commit/9acc63f9971daa582526030c60ae43e0bdcb7570))
+
+
+### Bug Fixes
+
+* fix logic in get_sample_sex function ([#293](https://github.com/hydra-genetics/cnv_sv/issues/293)) ([1413c25](https://github.com/hydra-genetics/cnv_sv/commit/1413c252c8a6f2336552bcbecd6dbd126674d2e3))
+
 ## [3.1.1](https://github.com/hydra-genetics/cnv_sv/compare/v3.1.0...v3.1.1) (2026-05-21)
 
 
