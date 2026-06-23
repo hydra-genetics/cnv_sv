@@ -54,7 +54,14 @@ rule melt:
         cp {output.tmpdir}/ALU.final_comp.vcf {output.alu} && \
         cp {output.tmpdir}/HERVK.final_comp.vcf {output.hervk} && \
         cp {output.tmpdir}/LINE1.final_comp.vcf {output.line1} && \
-        cp {output.tmpdir}/SVA.final_comp.vcf {output.sva}) \
+        cp {output.tmpdir}/SVA.final_comp.vcf {output.sva} && \
+        s="{wildcards.sample}_{wildcards.type}" && \
+        for vcf in {output.alu} {output.hervk} {output.line1} {output.sva}; do \
+            if [ ! -s "$vcf" ]; then \
+                printf '##fileformat=VCFv4.2\n' > "$vcf" && \
+                printf '#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t%s\n' "$s" >> "$vcf"; \
+            fi; \
+        done) \
         &> {log}
         """
 
