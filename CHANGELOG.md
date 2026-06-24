@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.1](https://github.com/hydra-genetics/cnv_sv/compare/v3.2.0...v3.2.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* handle empty vcf files produced by melt ([eee7341](https://github.com/hydra-genetics/cnv_sv/commit/eee7341c9e97c8e5db5882f6cf4b5381a2ffc5dd))
+* **melt:** handle empty vcf files produced by melt ([662d279](https://github.com/hydra-genetics/cnv_sv/commit/662d279c558b2196f6d751a5d4e8eb1e1c2dd1c8))
+
 ## [3.2.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.1.1...v3.2.0) (2026-05-28)
 
 
