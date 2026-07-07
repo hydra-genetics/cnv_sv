@@ -48,8 +48,7 @@ rule sniffles2_call:
 rule sniffles2_joint_call:
     input:
         snfs=lambda wildcards: [
-            f"cnv_sv/sniffles2_call/{wildcards.sample}_{t}.snf"
-            for t in get_unit_types(units, wildcards.sample)
+            f"cnv_sv/sniffles2_call/{wildcards.sample}_{t}.snf" for t in get_unit_types(units, wildcards.sample)
         ],
         ref=config.get("reference", {}).get("fasta", ""),
     output:
