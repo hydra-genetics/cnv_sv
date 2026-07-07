@@ -316,6 +316,13 @@ def compile_output_list(wildcards):
         for suffix in files[prefix]
     ]
 
+    output_files += [
+        f"cnv_sv/sniffles2_joint_call/{sample}.vcf.gz"
+        for sample in get_samples(samples)
+        for platform in units.loc[(sample,)].platform
+        if platform in ["ONT", "PACBIO"]
+    ]
+
     files = {
         "cnv_sv/trgt_plot": [config.get("trgt_plot", {}).get("image", "svg")],
     }
