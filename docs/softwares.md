@@ -1388,6 +1388,27 @@ Sniffles2 calls germline or somatic structural variants on PacBio and Oxford Nan
 
 #RESOURCESSCHEMA__sniffles2_call#
 
+## [sniffles2_joint_call](url_to_tool)
+Sniffles2 performs joint (multi-sample) structural variant calling from the per-unit `.snf` files produced by `sniffles2_call`.
+
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__sniffles2__sniffles2_joint_call#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__sniffles2__sniffles2_joint_call#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__sniffles2_joint_call#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__sniffles2_joint_call#
+
 ## SVDB
 
 ### [svdb_merge](https://github.com/J35P312/SVDB)
