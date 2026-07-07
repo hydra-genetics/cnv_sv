@@ -1367,7 +1367,7 @@ SMNCopyNumberCaller is a tool to call the copy number of full-length SMN1, full-
 
 ---
 
-## [sniffles2_call](url_to_tool)
+## [sniffles2_call](https://github.com/fritzsedlazeck/sniffles)
 Sniffles2 calls germline or somatic structural variants on PacBio and Oxford Nanopore read data.
 
 ### :snake: Rule
@@ -1388,7 +1388,7 @@ Sniffles2 calls germline or somatic structural variants on PacBio and Oxford Nan
 
 #RESOURCESSCHEMA__sniffles2_call#
 
-## [sniffles2_joint_call](url_to_tool)
+## [sniffles2_joint_call](https://github.com/fritzsedlazeck/sniffles)
 Sniffles2 performs joint (multi-sample) structural variant calling from the per-unit `.snf` files produced by `sniffles2_call`.
 
 ### :snake: Rule
