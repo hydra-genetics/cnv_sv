@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.3.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.2.1...v3.3.0) (2026-08-14)
+
+
+### Features
+
+* add rule sniffles2_join_call ([4cd7f23](https://github.com/hydra-genetics/cnv_sv/commit/4cd7f238cb77427fc099125dcee3693936de6743))
+* add rule sniffles2_joint_call for combining multiple samples' snf files into one vcf file ([d2a7ec4](https://github.com/hydra-genetics/cnv_sv/commit/d2a7ec4084f229f913be77600034989b147fff59))
+
+
+### Bug Fixes
+
+* add sniffles2 container ([09cd21e](https://github.com/hydra-genetics/cnv_sv/commit/09cd21e1d884c40b10423073751094f5b67c0edb))
+* add sniffles2 container to config_pacbio.yaml used in integration test ([0fb2ddf](https://github.com/hydra-genetics/cnv_sv/commit/0fb2ddf5bd1b3d81be2e800011a02e8c7b666e44))
+* add sniffles2_joint_call section to rules.schema.yaml ([8044a19](https://github.com/hydra-genetics/cnv_sv/commit/8044a19b05d5efb3c5ec80740317a605721d37e3))
+* formatting of the input description line ([28156f9](https://github.com/hydra-genetics/cnv_sv/commit/28156f9e34ebb03652ccab928b1b866e5bfbb9b2))
+* **purecn_copy_output:** handles all files specified in wildcards_restraints ([d5825e6](https://github.com/hydra-genetics/cnv_sv/commit/d5825e6fbb6e321fd18a2778528704c2b7aa34c1))
+* skip unneeded checkpoint in purecn ([90c69ce](https://github.com/hydra-genetics/cnv_sv/commit/90c69ceefa8d770d28432076a3238c14d75c7fb8))
+* skip unneeded checkpoint in purecn ([43eb17d](https://github.com/hydra-genetics/cnv_sv/commit/43eb17d3f350f5c2984be43177be58c53934a8b8))
+
 ## [3.2.1](https://github.com/hydra-genetics/cnv_sv/compare/v3.2.0...v3.2.1) (2026-06-24)
 
 
