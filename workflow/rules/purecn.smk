@@ -97,9 +97,10 @@ rule purecn:
 rule purecn_copy_output:
     input:
         file_dir="cnv_sv/purecn/temp/{sample}_{type}/",
-        files="cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}{suffix}",
     output:
         files=temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
+    params:
+        file="cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}{suffix}",
     wildcard_constraints:
         suffix="|".join(
             f"({s})"
@@ -132,9 +133,9 @@ rule purecn_copy_output:
     container:
         config["default_container"]
     message:
-        "{rule}: Copy {input.files} to {output.files}"
+        "{rule}: Copy {params.file} to {output.files}"
     shell:
-        "cp {input.files} {output.files}"
+        "cp {params.file} {output.files}"
 
 
 rule purecn_purity_file:
