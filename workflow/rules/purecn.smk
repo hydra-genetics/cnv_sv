@@ -50,7 +50,7 @@ rule purecn_coverage:
         "{params.extra}) &> {log}"
 
 
-checkpoint purecn:
+rule purecn:
     input:
         unpack(get_purecn_inputs),
         vcf="snv_indels/gatk_mutect2/{sample}_{type}.merged.unfiltered.bcftools_annotated.vcf.gz",
@@ -96,8 +96,8 @@ checkpoint purecn:
 
 rule purecn_copy_output:
     input:
-        file_dir=lambda wildcards: checkpoints.purecn.get(**wildcards).output.outdir,
-        files=lambda wildcards: f"{checkpoints.purecn.get(**wildcards).output.outdir}/{{sample}}_{{type}}{{suffix}}",
+        file_dir="cnv_sv/purecn/temp/{sample}_{type}/",
+        files="cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}{suffix}",
     output:
         files=temp("cnv_sv/purecn/{sample}_{type}{suffix}"),
     wildcard_constraints:
