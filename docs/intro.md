@@ -77,6 +77,7 @@ Some short-read tools may run on long-read datasets; however, here we list them 
 
 * `cnv_sv/sniffles2_call/{sample}_{type}.vcf.gz`
 * `cnv_sv/sniffles2_call/{sample}_{type}.snf`
+* `cnv_sv/sniffles2_joint_call/{sample}.vcf.gz`
 
 #### Pacbio only
 * `cnv_sv/hificnv/{sample}_{type}-depth.bw`
