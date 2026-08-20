@@ -395,6 +395,79 @@ properties:
         type: string
         description: parameters that should be forwarded
 
+  ichorcna_offtarget_read_counter:
+    description: parameters for ichorcna_offtarget_read_counter
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      chrs:
+        type: string
+        description: comma-separated list of chromosomes to count reads in, matching BAM naming convention
+      window:
+        type: integer
+        description: bin size in bp used by HMMcopy readCounter
+      quality:
+        type: integer
+        description: minimum mapping quality for a read to be counted
+
+  ichorcna_offtarget_run:
+    description: parameters for ichorcna_offtarget_run
+    type: object
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      gc_wig:
+        type: string
+        description: path to GC-content reference file in wig format, matching the bin size used by ichorcna_offtarget_read_counter
+      map_wig:
+        type: string
+        description: path to mappability score reference file in wig format, matching the bin size used by ichorcna_offtarget_read_counter
+      centromere:
+        type: string
+        description: path to file containing centromere locations for the reference genome build
+      ploidy:
+        type: string
+        description: initial tumor ploidy restart value(s), as an R vector literal, e.g. c(2,3,4)
+      normal:
+        type: string
+        description: initial normal contamination restart value(s), as an R vector literal, e.g. c(0.5)
+      max_cn:
+        type: integer
+        description: total clonal copy number states to consider
+      include_homd:
+        type: string
+        description: "TRUE/FALSE (as a string): whether to include the homozygous deletion state; useful to set FALSE for large bins"
+      chrs:
+        type: string
+        description: chromosomes to analyze, as an R vector literal, e.g. c(1:22,"X")
+      chr_train:
+        type: string
+        description: chromosomes used to estimate model parameters, as an R vector literal, e.g. c(1:22)
+      genome_build:
+        type: string
+        description: reference genome build, e.g. hg38
+      genome_style:
+        type: string
+        description: chromosome naming convention to use, NCBI or UCSC
+      min_map_score:
+        type: number
+        description: minimum mappability score for a bin to be included
+      normal_panel:
+        type: string
+        description: path to a panel-of-normals file built by ichorCNA's createPanelOfNormals.R; optional, tumor-only samples run fine without it
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   jumble_cnvkit_call:
     type: object
     description: parameters for jumble_cnvkit_call

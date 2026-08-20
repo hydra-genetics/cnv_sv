@@ -447,6 +447,46 @@ properties:
         type: string
         description: max execution time
 
+  ichorcna_offtarget_read_counter:
+    description: resource definitions for ichorcna_offtarget_read_counter
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  ichorcna_offtarget_run:
+    description: resource definitions for ichorcna_offtarget_run
+    type: object
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
   jumble_cnvkit_call:
     type: object
     description: resource definitions for jumble_cnvkit_call
