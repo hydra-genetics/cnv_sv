@@ -43,9 +43,6 @@ rule ichorcna_offtarget_read_counter:
 rule ichorcna_offtarget_run:
     input:
         wig="cnv_sv/ichorcna_offtarget_read_counter/{sample}_{type}.wig",
-        gc_wig=config.get("ichorcna_offtarget_run", {}).get("gc_wig", ""),
-        map_wig=config.get("ichorcna_offtarget_run", {}).get("map_wig", ""),
-        centromere=config.get("ichorcna_offtarget_run", {}).get("centromere", ""),
     output:
         cna=temp("cnv_sv/ichorcna_offtarget_run/{sample}_{type}/{sample}_{type}.cna.seg"),
         seg=temp("cnv_sv/ichorcna_offtarget_run/{sample}_{type}/{sample}_{type}.seg"),
@@ -57,6 +54,14 @@ rule ichorcna_offtarget_run:
     params:
         out_dir="cnv_sv/ichorcna_offtarget_run/{sample}_{type}/",
         id="{sample}_{type}",
+        # gc_wig/map_wig/centromere are params, not input: they're often paths
+        # bundled inside the container (e.g. /opt/ichorCNA/inst/extdata/...),
+        # which don't exist on the host filesystem Snakemake itself checks
+        # against - declaring them as input would make dry-run/DAG-building
+        # fail with a false "missing input file" for any such path.
+        gc_wig=config.get("ichorcna_offtarget_run", {}).get("gc_wig", ""),
+        map_wig=config.get("ichorcna_offtarget_run", {}).get("map_wig", ""),
+        centromere=config.get("ichorcna_offtarget_run", {}).get("centromere", ""),
         ploidy=config.get("ichorcna_offtarget_run", {}).get("ploidy", "c(2,3,4)"),
         normal=config.get("ichorcna_offtarget_run", {}).get("normal", "c(0.5)"),
         max_cn=config.get("ichorcna_offtarget_run", {}).get("max_cn", 7),
@@ -89,9 +94,9 @@ rule ichorcna_offtarget_run:
         "(Rscript /opt/ichorCNA/scripts/runIchorCNA.R "
         "--id {params.id} "
         "--WIG {input.wig} "
-        "--gcWig {input.gc_wig} "
-        "--mapWig {input.map_wig} "
-        "--centromere {input.centromere} "
+        "--gcWig {params.gc_wig} "
+        "--mapWig {params.map_wig} "
+        "--centromere {params.centromere} "
         "--ploidy \"{params.ploidy}\" "
         "--normal \"{params.normal}\" "
         "--maxCN {params.max_cn} "
