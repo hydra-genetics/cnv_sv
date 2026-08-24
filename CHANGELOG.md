@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.4.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.3.0...v3.4.0) (2026-08-24)
+
+
+### Features
+
+* add ichorCNA ([35105e3](https://github.com/hydra-genetics/cnv_sv/commit/35105e37a5a9d63e34f1180ea9f811a4d905816c))
+* Added IchorCNA for purity estimation using off-target reads or lpWGS ([2568788](https://github.com/hydra-genetics/cnv_sv/commit/256878896296619a2d9cb6773ef501f3df7d4d9e))
+
+
+### Bug Fixes
+
+* double-quotes bugfix ([b7d29f0](https://github.com/hydra-genetics/cnv_sv/commit/b7d29f05580e26633258e576883b44ce10299cc5))
+* input moved to config ([fd9cdf4](https://github.com/hydra-genetics/cnv_sv/commit/fd9cdf43ed9ce9f7964c179690bbc32a0e3e6f0e))
+
 ## [3.3.0](https://github.com/hydra-genetics/cnv_sv/compare/v3.2.1...v3.3.0) (2026-08-14)
 
 
