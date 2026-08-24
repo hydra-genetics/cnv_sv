@@ -198,6 +198,19 @@ def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.Inpu
     return extra
 
 
+def get_ichorcna_offtarget_run_extra(wildcards):
+    # normalPanel is optional, if the path is not set, it will not be added to the command
+    normal_panel = config.get("ichorcna_offtarget_run", {}).get("normal_panel", "")
+    extra = "".join(
+        [
+            config.get("ichorcna_offtarget_run", {}).get("extra", ""),
+            f" --normalPanel {normal_panel}" if normal_panel else "",
+        ]
+    )
+
+    return extra
+
+
 def get_exomedepth_ref(wildcards):
     sex = get_sample_sex(wildcards.sample)
 

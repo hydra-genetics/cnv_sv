@@ -470,6 +470,54 @@ HiFiCNV is a tool for calling copy number variants (CNVs) from HiFi sequencing d
 
 ---
 
+## ichorCNA offtarget
+
+### [ichorcna_offtarget_read_counter](https://github.com/shahcompbio/hmmcopy_utils)
+Bins and counts reads from a BAM file using the HMMcopy Suite's `readCounter`, producing the wig-format input ichorCNA needs.
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__ichorcna_offtarget__ichorcna_offtarget_read_counter#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__ichorcna_offtarget__ichorcna_offtarget_read_counter#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__ichorcna_offtarget_read_counter#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__ichorcna_offtarget_read_counter#
+
+---
+
+### [ichorcna_offtarget_run](https://github.com/broadinstitute/ichorCNA)
+Estimates tumor fraction and copy number from off-target/antitarget bins in targeted panel sequencing, using ichorCNA's standard tumor-only workflow ([GavinHaLab/ichorCNA_offtarget](https://github.com/GavinHaLab/ichorCNA_offtarget)).
+
+#### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__ichorcna_offtarget__ichorcna_offtarget_run#
+
+##### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__ichorcna_offtarget__ichorcna_offtarget_run#
+
+#### :wrench: Configuration
+
+##### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__ichorcna_offtarget_run#
+
+##### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__ichorcna_offtarget_run#
+
+---
+
 ## Jumble
 
 ### [jumble_run](https://github.com/ClinSeq/jumble)
