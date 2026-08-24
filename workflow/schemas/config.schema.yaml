@@ -410,7 +410,12 @@ properties:
         description: comma-separated list of chromosomes to count reads in, matching BAM naming convention
       window:
         type: integer
-        description: bin size in bp used by HMMcopy readCounter
+        description: >-
+          Bin size in bp used by HMMcopy readCounter. Must match the bin size actually
+          baked into whichever gc_wig/map_wig get configured for ichorcna_offtarget_run,
+          or R hits a length mismatch. ichorCNA's own bundled wigs only ship at
+          10/50/500/1000kb - this rule's 100kb default has no matching bundled file and
+          requires a custom-generated gc_wig/map_wig at the same bin size.
       quality:
         type: integer
         description: minimum mapping quality for a read to be counted
