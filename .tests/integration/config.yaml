@@ -88,6 +88,12 @@ gatk_to_vcf:
   het_del_limit: 1.5
   hom_del_limit: 0.5
 
+ichorcna_offtarget_read_counter:
+  # Test fixture BAM only contains chr1; the rule's real default (chr1-22+X)
+  # is correct for production hg38 data but readCounter hard-fails outright
+  # if any requested chromosome is absent from the BAM header.
+  chrs: "chr1"
+
 jumble_vcf:
   dup_limit: 2.5
   het_del_limit: 1.5
