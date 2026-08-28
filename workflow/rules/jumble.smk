@@ -78,7 +78,7 @@ rule jumble_cnvkit_call:
     message:
         "{rule}: call cnvs with loh info into {output.segment}"
     wrapper:
-        "v3.3.6/bio/cnvkit/call"
+        "v9.16.0/bio/cnvkit/call"
 
 
 rule jumble_vcf:

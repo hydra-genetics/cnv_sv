@@ -78,7 +78,7 @@ rule pindel_call:
     message:
         "{rule}: detect breakpoints in {wildcards.sample} {wildcards.type}"
     wrapper:
-        "v2.6.0/bio/pindel/call"
+        "v9.16.0/bio/pindel/call"
 
 
 rule pindel2vcf:
@@ -123,7 +123,7 @@ rule pindel2vcf:
     message:
         "{rule}: convert pindel output to vcf for {wildcards.sample}_{wildcards.type}.no_contig"
     wrapper:
-        "v2.6.0/bio/pindel/pindel2vcf"
+        "v9.16.0/bio/pindel/pindel2vcf"
 
 
 rule pindel_update_vcf:

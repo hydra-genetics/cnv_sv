@@ -59,7 +59,7 @@ rule reviewer_bam_sort:
     message:
         "{rule}: Sort and index {input.bam} with samtools"
     wrapper:
-        "v3.10.2/bio/samtools/sort"
+        "v9.16.0/bio/samtools/sort"
 
 
 rule reviewer:
