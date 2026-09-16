@@ -24,10 +24,10 @@ Certain tools in this module use functions to compile paths to input BAM files, 
 Returns a `(bam, bai)` tuple. If `aligner` is set in `config`, the path is `alignment/{aligner}_align/{sample}_{type}.bam`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `cnvkit_batch`, `hificnv`, `paraphase`, `pbsv_discover`, `sawfish_discover`, `sawfish_joint_call_single`, `scramble_alignment_score`, `sniffles2_call`, `trgt_genotype`.
 
 ### `get_input_haplotagged_bam(wildcards, config)`
-Returns a `(bam, bai)` tuple for haplotagged BAM files. Respects `haplotag_path` (custom directory) and `haplotag_suffix` (e.g. `haplotagged` → `{sample}_{type}.haplotagged.bam`) from `config`; otherwise falls back to `alignment/samtools_merge_bam/{sample}_{type}.bam`. Used by: `severus_t_only`.
+Returns a `(bam, bai)` tuple for haplotagged BAM files. The directory is chosen from the `phaser` key in `config` (`whatshap` → `snv_indels/whatshap_haplotag`, `hiphase` → `snv_indels/hiphase`, any other name → `snv_indels/{phaser}`); with no `phaser` set it falls back to `snv_indels/whatshap_haplotag`. The `.haplotagged` suffix is always applied, giving `{sample}_{type}.haplotagged.bam`. Used by: `severus_t_only`.
 
 ### `get_severus_tn_input(wildcards)` *(defined in `workflow/rules/common.smk`)*
-Returns a dict `{"bam_t": ..., "bam_n": ...}` for use with Snakemake's `unpack()`. Calls `get_input_haplotagged_bam` twice with fixed `type="T"` and `type="N"` for the same sample, regardless of `wildcards.type`. Inherits `haplotag_path` and `haplotag_suffix` config behaviour. Used by: `severus_tn`.
+Returns a dict `{"bam_t": ..., "bam_n": ...}` for use with Snakemake's `unpack()`. Calls `get_input_haplotagged_bam` twice with `set_type="T"` and `set_type="N"` for the same sample, so `wildcards.type` is deliberately ignored. Inherits the `phaser` config behaviour. Used by: `severus_tn`.
 
 ### `get_sample_sex(sample)` *(defined in `workflow/rules/common.smk`)*
 Returns the sex of a sample from the `samples` dataframe. If the `sex` column is missing from the samplesheet it returns `NA`

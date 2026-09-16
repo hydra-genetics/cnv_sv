@@ -11,7 +11,7 @@ rule pbsv_discover:
     output:
         svsig=temp("cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz"),
     params:
-        trf=config.get("pbsv_discover", {}).get("trf", ""),
+        trf=lambda wildcards: get_config_value("pbsv_discover", "trf"),
         extra=config.get("pbsv_discover", {}).get("extra", ""),
     log:
         discover="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz.log",
@@ -41,7 +41,7 @@ rule pbsv_discover:
 rule pbsv_call:
     input:
         svsig="cnv_sv/pbsv_discover/{sample}_{type}.svsig.gz",
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         vcf=temp("cnv_sv/pbsv_call/{sample}_{type}.vcf"),
     params:

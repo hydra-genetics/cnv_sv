@@ -8,8 +8,8 @@ rule expansionhunter:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        cat=lambda wildcards: get_config_value("expansionhunter", "variant_catalog"),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         bam=temp("cnv_sv/expansionhunter/{sample}_{type}_realigned.bam"),
         json=temp("cnv_sv/expansionhunter/{sample}_{type}.json"),

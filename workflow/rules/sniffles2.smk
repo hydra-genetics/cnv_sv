@@ -8,7 +8,7 @@ rule sniffles2_call:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         vcf=temp("cnv_sv/sniffles2_call/{sample}_{type}.vcf"),
         snf=temp("cnv_sv/sniffles2_call/{sample}_{type}.snf"),
@@ -50,7 +50,7 @@ rule sniffles2_joint_call:
         snfs=lambda wildcards: [
             f"cnv_sv/sniffles2_call/{wildcards.sample}_{t}.snf" for t in get_unit_types(units, wildcards.sample)
         ],
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         vcf=temp("cnv_sv/sniffles2_joint_call/{sample}.vcf.gz"),
     params:

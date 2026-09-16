@@ -52,7 +52,7 @@ rule svdb_query:
     output:
         vcf=temp("cnv_sv/svdb_query/{sample}_{type}.{tc_method}.svdb_query.vcf"),
     params:
-        db_string=config.get("svdb_query", {}).get("db_string", ""),
+        db_string=lambda wildcards: get_config_value("svdb_query", "db_string"),
         extra=config.get("svdb_query", {}).get("extra", ""),
         prefix=lambda wildcards, output: os.path.splitext(output[0])[0][:-6],
     log:

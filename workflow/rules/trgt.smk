@@ -8,8 +8,8 @@ rule trgt_genotype:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        bed=config.get("trgt_genotype", {}).get("bed", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        bed=lambda wildcards: get_config_value("trgt_genotype", "bed"),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         vcf="cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz",
         bam="cnv_sv/trgt_genotype/{sample}_{type}.spanning.bam",
@@ -74,15 +74,15 @@ rule trgt_bam_sort:
     message:
         "{rule}: Sort and index {input.bam} with samtools"
     wrapper:
-        "v3.10.2/bio/samtools/sort"
+        "v9.16.0/bio/samtools/sort"
 
 
 rule trgt_plot:
     input:
         bam="cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam",
         bai="cnv_sv/trgt_genotype/{sample}_{type}.spanning.sorted.bam.bai",
-        bed=config.get("trgt_genotype", {}).get("bed", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        bed=lambda wildcards: get_config_value("trgt_genotype", "bed"),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
         vcf="cnv_sv/trgt_genotype/{sample}_{type}.vcf.gz",
     output:
         image=expand("cnv_sv/trgt_plot/{{sample}}_{{type}}_{{locus}}.{ext}", ext=config.get("trgt_plot", {}).get("image", "svg")),

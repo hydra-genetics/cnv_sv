@@ -6,16 +6,21 @@ __copyright__ = "Copyright 2021, Jonas Almlöf"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import os
+import re
+
 import pandas as pd
+from snakemake.iocontainers import InputFiles, Wildcards
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.config import config_accessor
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import get_input_aligned_bam, get_input_haplotagged_bam
 
-min_version("7.8.3")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -46,9 +51,12 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 
 wildcard_constraints:
-    sample="|".join(samples.index),
+    sample="|".join(re.escape(s) for s in samples.index),
     type="N|T|R",
-    file="^cnv_sv/.+",
+    file="cnv_sv/.+",
+
+
+get_config_value = config_accessor(config, module="cnv_sv")
 
 
 def get_sample_sex(sample):
@@ -89,10 +97,10 @@ def get_expected_cn(wildcards):
     sex = get_sample_sex(wildcards.sample)
 
     if sex == "male":
-        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
+        expected_cn = get_config_value("sawfish_discover", "expected_cn", "male")
         sawfish_param = f"--expected-cn {expected_cn}"
     elif sex == "female":
-        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
+        expected_cn = get_config_value("sawfish_discover", "expected_cn", "female")
         sawfish_param = f"--expected-cn {expected_cn}"
     else:  # when sex not set to male or female in samples.tsv treat all regions as diploid
         sawfish_param = ""
@@ -129,7 +137,7 @@ def get_tc_file(wildcards):
         return f"cnv_sv/{tc_method}_purity_file/{wildcards.sample}_{wildcards.type}.purity.txt"
 
 
-def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
+def get_median_insert_size(wildcards, input: InputFiles):
     """
     Parse the Picard insert_size_metrics file and return the median insert size.
     """
@@ -144,7 +152,7 @@ def get_median_insert_size(wildcards, input: snakemake.io.InputFiles):
     return median_insert_size
 
 
-def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
+def get_purecn_inputs(wildcards: Wildcards):
     inputs = {k: v for k, v in config.get("purecn", {}).items() if k in ["normaldb", "mapping_bias_file", "snp_blacklist"]}
     segmentation_method = config.get("purecn", {}).get("segmentation_method", "")
     if segmentation_method == "internal":
@@ -174,7 +182,7 @@ def get_purecn_inputs(wildcards: snakemake.io.Wildcards):
     return inputs
 
 
-def get_purecn_extra(wildcards: snakemake.io.Wildcards, input: snakemake.io.InputFiles, threads: int):
+def get_purecn_extra(wildcards: Wildcards, input: InputFiles, threads: int):
     log_ratio_file = input.get("log_ratio_file")
     seg_file = input.get("seg_file")
     intervals = input.get("intervals")
@@ -215,9 +223,9 @@ def get_exomedepth_ref(wildcards):
     sex = get_sample_sex(wildcards.sample)
 
     if sex == "male":
-        ref = config.get("exomedepth_call", {}).get("male_reference", "")
+        ref = get_config_value("exomedepth_call", "male_reference")
     else:  # use female ref in the case of female or NA
-        ref = config.get("exomedepth_call", {}).get("female_reference", "")
+        ref = get_config_value("exomedepth_call", "female_reference")
 
     return ref
 
@@ -274,7 +282,7 @@ def get_parent_samples(wildcards, trio_member):
 
 
 def get_trgt_loci(wildcards):
-    trgt_bed = config.get("trgt_genotype", {}).get("bed", "")
+    trgt_bed = get_config_value("trgt_genotype", "bed")
     rep_ids = []
     with open(trgt_bed, "r") as infile:
         for line in infile:
@@ -287,14 +295,11 @@ def get_trgt_loci(wildcards):
 def get_severus_tn_input(wildcards):
     """
     Get haplotagged BAM paths for both tumor (T) and normal (N) for severus_tn.
-    Respects haplotag_path and haplotag_suffix from config, same as get_input_haplotagged_bam.
+    Respects the 'phaser' config key, same as get_input_haplotagged_bam. The type
+    is pinned per call with set_type, so wildcards.type is deliberately ignored.
     """
-    from types import SimpleNamespace
-
-    wc_t = SimpleNamespace(sample=wildcards.sample, type="T")
-    wc_n = SimpleNamespace(sample=wildcards.sample, type="N")
-    bam_t, bai_t = get_input_haplotagged_bam(wc_t, config)
-    bam_n, bai_n = get_input_haplotagged_bam(wc_n, config)
+    bam_t, bai_t = get_input_haplotagged_bam(wildcards, config, set_type="T")
+    bam_n, bai_n = get_input_haplotagged_bam(wildcards, config, set_type="N")
     return {
         "bam_t": bam_t,
         "bai_t": bai_t,
@@ -375,7 +380,7 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
         if platform in ["ONT", "PACBIO"]
-        for gene in config.get("paraphase", {}).get("genes", "")
+        for gene in config.get("paraphase", {}).get("genes", [])
         for suffix in files[prefix]
     ]
 

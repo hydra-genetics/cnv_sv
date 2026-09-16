@@ -42,7 +42,7 @@ rule smn_caller:
         tsv=temp("cnv_sv/smn_caller/{sample}_{type}.tsv"),
     params:
         extra=config.get("smn_caller", {}).get("extra", ""),
-        genome=config.get("smn_caller", {}).get("genome_version", ""),
+        genome=lambda wildcards: get_config_value("smn_caller", "genome_version"),
         outdir=lambda wildcards, output: "{}".format(os.path.split(output.tsv)[0]),
         prefix=lambda wildcards, output: "{}_{}".format(wildcards.sample, wildcards.type),
     log:
@@ -78,7 +78,7 @@ rule smn_charts:
         pdf=temp("cnv_sv/smn_charts/smn_{sample}_{type}.pdf"),
     params:
         extra=config.get("smn_charts", {}).get("extra", ""),
-        genome=config.get("smn_charts", {}).get("genome_version", ""),
+        genome=lambda wildcards: get_config_value("smn_charts", "genome_version"),
         outdir=lambda wildcards, output: "{}".format(os.path.split(output.pdf)[0]),
     log:
         "cnv_sv/smn_charts/{sample}_{type}.pdf.log",

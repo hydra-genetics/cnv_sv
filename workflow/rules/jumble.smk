@@ -20,7 +20,7 @@ rule jumble_run:
         qc_csv=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.qc.csv"),
         snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble_snps.csv"),
     params:
-        reference=config.get("jumble_run", {}).get("normal_reference", ""),
+        reference=lambda wildcards: get_config_value("jumble_run", "normal_reference"),
     log:
         "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:
@@ -78,7 +78,7 @@ rule jumble_cnvkit_call:
     message:
         "{rule}: call cnvs with loh info into {output.segment}"
     wrapper:
-        "v3.3.6/bio/cnvkit/call"
+        "v9.16.0/bio/cnvkit/call"
 
 
 rule jumble_vcf:

@@ -8,8 +8,8 @@ rule severus_t_only:
     input:
         bam=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_haplotagged_bam(wildcards, config)[1],
-        vntr=config.get("severus_t_only", {}).get("vntr", ""),
-        pon=config.get("severus_t_only", {}).get("pon", ""),
+        vntr=lambda wildcards: get_config_value("severus_t_only", "vntr"),
+        pon=lambda wildcards: get_config_value("severus_t_only", "pon"),
     output:
         dir=temp(directory("cnv_sv/severus_t_only/{sample}_{type}/out_dir")),
         b_double=temp("cnv_sv/severus_t_only/{sample}_{type}_breakpoint_double.csv"),
@@ -64,7 +64,7 @@ rule severus_tn:
         bai_t=lambda wildcards: get_severus_tn_input(wildcards)["bai_t"],
         bam_n=lambda wildcards: get_severus_tn_input(wildcards)["bam_n"],
         bai_n=lambda wildcards: get_severus_tn_input(wildcards)["bai_n"],
-        vntr=config.get("severus_tn", {}).get("vntr", ""),
+        vntr=lambda wildcards: get_config_value("severus_tn", "vntr"),
     output:
         dir=temp(directory("cnv_sv/severus_tn/{sample}_{type}/out_dir")),
         b_double=temp("cnv_sv/severus_tn/{sample}_{type}_breakpoint_double.csv"),

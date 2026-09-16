@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: requirements.txt
       - name: Install dependencies
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -71,15 +71,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_SNAKEMAKE_SNAKEFMT: true
-          OUTPUT_FOLDER: .github/linters/report
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements.test.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.test.txt
+      - name: snakefmt check
+        run: |
+          snakefmt --check --config .github/linters/.snakefmt.toml workflow/
 
   # Stage 2 - dry run after stage 1 passes
   dry-run:
@@ -90,7 +94,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -113,7 +117,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -136,7 +140,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -157,7 +161,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
@@ -178,22 +182,22 @@ jobs:
         run: |
           pip install -r requirements.txt
       - name: Cache SIMG images
-        id: cache-simg
+        id: cache-apptainer
         uses: actions/cache@v4
         with:
           # Path to the folder where you store your .simg files
           path: ~/singularity_containers
           # Key based on your workflow file or a list of images
-          key: ${{ runner.os }}-simg-${{ hashFiles('config/**/*.yaml', '.tests/integration/*.yaml', 'workflow/Snakefile') }}
+          key: ${{ runner.os }}-apptainer-${{ hashFiles('config/**/*.yaml', '.tests/integration/*.yaml', 'workflow/Snakefile') }}
           restore-keys: |
-            ${{ runner.os }}-simg
+            ${{ runner.os }}-apptainer
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
           mkdir -p ~/singularity_containers &&
-          snakemake -p -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+          snakemake -p -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config.yaml --software-deployment-method apptainer --apptainer-args " --cleanenv --bind /home/runner " --apptainer-prefix ~/singularity_containers/
       - name: Integration test - small dataset PACBIO
         working-directory: .tests/integration
         run: |
           mkdir -p ~/singularity_containers &&
-          snakemake -p -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config_pacbio.yaml --use-singularity --singularity-args " --cleanenv --bind /home/runner " --singularity-prefix ~/singularity_containers/
+          snakemake -p -s ../../workflow/Snakefile -j 4 --show-failed-logs --configfile config_pacbio.yaml --software-deployment-method apptainer --apptainer-args " --cleanenv --bind /home/runner " --apptainer-prefix ~/singularity_containers/

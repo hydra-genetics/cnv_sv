@@ -45,8 +45,8 @@ rule scramble_cluster_analysis:
         meis="cnv_sv/scramble_cluster_analysis/{sample}_{type}_MEIs.txt",
     params:
         extra=config.get("scramble_cluster_analysis", {}).get("extra", ""),
-        install_dir=config.get("scramble_cluster_analysis", {}).get("install_dir", ""),
-        mei_refs=config.get("scramble_cluster_analysis", {}).get("mei_refs", ""),
+        install_dir=lambda wildcards: get_config_value("scramble_cluster_analysis", "install_dir"),
+        mei_refs=lambda wildcards: get_config_value("scramble_cluster_analysis", "mei_refs"),
         out_name=lambda wildcards: f"cnv_sv/scramble_cluster_analysis/{wildcards.sample}_{wildcards.type}",
     log:
         "cnv_sv/scramble_cluster_analysis/{sample}_{type}.output.log",
@@ -118,7 +118,7 @@ rule scramble_vcf:
 rule scramble_sort:
     input:
         vcf="cnv_sv/scramble_vcf/{sample}_{type}.vcf.gz",
-        fai=config.get("reference", {}).get("fai", ""),
+        fai=lambda wildcards: get_config_value("reference", "fai"),
     output:
         vcf=temp("cnv_sv/scramble_vcf/{sample}_{type}.sorted.vcf.gz"),
     log:

@@ -8,8 +8,8 @@ rule savana_pb_to:
     input:
         bam="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
         bai="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        fai=lambda wildcards: get_config_value("reference", "fai"),
     output:
         vcf_somatic=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_pb_to/{sample}_{type}/{sample}_{type}.classified.vcf"),
@@ -21,7 +21,7 @@ rule savana_pb_to:
         min_support=config.get("savana_pb_to", {}).get("min_support", 10),
         dir="cnv_sv/savana_pb_to/{sample}_{type}",
         extra=config.get("savana_pb_to", {}).get("extra", ""),
-        genome_version=config.get("savana_pb_to", {}).get("genome_version", ""),
+        genome_version=lambda wildcards: get_config_value("savana_pb_to", "genome_version"),
     log:
         "cnv_sv/savana_pb_to/{sample}_{type}.output.log",
     benchmark:
@@ -56,8 +56,8 @@ rule savana_pb_tn:
         bai_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
         bam_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
         bai_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        fai=lambda wildcards: get_config_value("reference", "fai"),
     output:
         vcf_somatic=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_pb_tn/{sample}/{sample}.classified.vcf"),
@@ -99,8 +99,8 @@ rule savana_ont_to:
     input:
         bam="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam",
         bai="annotation/whatshap_haplotag/{sample}_{type}.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        fai=lambda wildcards: get_config_value("reference", "fai"),
     output:
         vcf_somatic=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_ont_to/{sample}_{type}/{sample}_{type}.classified.vcf"),
@@ -111,7 +111,7 @@ rule savana_ont_to:
     params:
         dir="cnv_sv/savana_ont_to/{sample}_{type}",
         extra=config.get("savana_ont_to", {}).get("extra", ""),
-        genome_version=config.get("savana_ont_to", {}).get("genome_version", ""),
+        genome_version=lambda wildcards: get_config_value("savana_ont_to", "genome_version"),
     log:
         "cnv_sv/savana_ont_to/{sample}_{type}.output.log",
     benchmark:
@@ -146,8 +146,8 @@ rule savana_ont_tn:
         bai_n="annotation/whatshap_haplotag/{sample}_N.haplotagged.bam",
         bam_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam",
         bai_t="annotation/whatshap_haplotag/{sample}_T.haplotagged.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        fai=config.get("reference", {}).get("fai", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        fai=lambda wildcards: get_config_value("reference", "fai"),
     output:
         vcf_somatic=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.classified.somatic.vcf"),
         vcf_classified=temp("cnv_sv/savana_ont_tn/{sample}/{sample}.classified.vcf"),

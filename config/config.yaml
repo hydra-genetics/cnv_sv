@@ -16,16 +16,16 @@ cnvkit_export_seg:
 
 cnvpytor_readdepth:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
-  length_list: ""
+  length_list: "10000"
 
 cnvpytor_filter:
   container: "docker://hydragenetics/cnvpytor:1.2.1"
   calling_model: "rd_mean_shift"
-  dG_range: ""
-  p_range: ""
-  pN_range: ""
-  Q0_range: ""
-  view: ""
+  dG_range: "100000 inf"
+  p_range: "0 0.01"
+  pN_range: "0 0.5"
+  Q0_range: "0 0.5"
+  view: "10000"
 
 expansionhunter:
     container: "docker://hydragenetics/expansionhunter:5.0.0"
@@ -43,7 +43,7 @@ jumble_cnvkit_call:
 
 jumble_run:
   container: "docker://hydragenetics/jumble:260310"
-  normal_reference: ""
+  normal_reference: "references/jumble_reference.RDS"
 
 manta_config_n:
   container: "docker://hydragenetics/manta:1.6.0"
@@ -54,9 +54,9 @@ manta_run_workflow_n:
 
 melt:
   container: "docker://vanallenlab/melt:3159ce1"
-  bed: "" # In singularity /MELT/MELTv2.0.5_patch/add_bed_files/Hg38/Hg38.genes.bed
+  bed: "references/Hg38.genes.bed" # In singularity /MELT/MELTv2.0.5_patch/add_bed_files/Hg38/Hg38.genes.bed
   extra: ""
-  mei: "" # Make txt-file with list to /MELT/MELTv2.0.5_patch/me_refs/Hg38/*zip
+  mei: "references/mei_list.txt" # Make txt-file with list to /MELT/MELTv2.0.5_patch/me_refs/Hg38/*zip
 
 pindel_update_vcf:
   container: "docker://hydragenetics/picard:2.25.4"
@@ -96,18 +96,18 @@ scramble_cluster_identifier:
 
 severus_t_only:
   container: "docker://hydragenetics/severus:1.5"
-  vntr: ""
-  pon: ""
+  vntr: "references/human_GRCh38_no_alt_analysis_set.trf.bed"
+  pon: "references/PoN_1000G_hg38.tsv.gz"
   extra: ""
 
 severus_tn:
   container: "docker://hydragenetics/severus:1.5"
-  vntr: ""
+  vntr: "references/human_GRCh38_no_alt_analysis_set.trf.bed"
   extra: " --vaf-thr 0.05 --TIN-ratio 0.0 --max-genomic-len 100000"
 
 smn_caller:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
-  genome_version: ""
+  genome_version: "38"
 
 smn_charts:
   container: "docker://hydragenetics/smncopynumbercaller:1.1.2"
@@ -121,12 +121,12 @@ upd:
 
 hificnv:
   container: "docker://hydragenetics/hificnv:1.0.1"
-  exclude: ""
+  exclude: "references/cnv.excluded_regions.common_50.hg38.bed.gz"
 
 pbsv_discover:
   container: "docker://hydragenetics/pbsv:2.9.0"
   extra: ""
-  trf: ""
+  trf: "references/human_GRCh38_no_alt_analysis_set.trf.bed"
 
 pbsv_call:
   container: "docker://hydragenetics/pbsv:2.9.0"

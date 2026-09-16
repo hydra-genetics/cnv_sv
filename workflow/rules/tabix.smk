@@ -30,4 +30,4 @@ rule tabix:
     message:
         "{rule}: index {input.gz}"
     wrapper:
-        "v1.3.1/bio/tabix"
+        "v9.16.0/bio/tabix/index"

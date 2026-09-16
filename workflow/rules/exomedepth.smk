@@ -7,7 +7,7 @@ __license__ = "GPL-3"
 rule exomedepth_call:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bedfile=config.get("exomedepth_call", {}).get("bedfile", ""),
+        bedfile=lambda wildcards: get_config_value("exomedepth_call", "bedfile"),
         ref_count=get_exomedepth_ref,
     output:
         exon=temp("cnv_sv/exomedepth_call/{sample}_{type}.RData"),

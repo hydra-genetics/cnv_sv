@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule reviewer_generate_locus_list:
     input:
-        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        cat=lambda wildcards: get_config_value("expansionhunter", "variant_catalog"),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
         txt=temp("cnv_sv/reviewer/{sample}_{type}_locus_list.txt"),
@@ -59,16 +59,16 @@ rule reviewer_bam_sort:
     message:
         "{rule}: Sort and index {input.bam} with samtools"
     wrapper:
-        "v3.10.2/bio/samtools/sort"
+        "v9.16.0/bio/samtools/sort"
 
 
 rule reviewer:
     input:
         bam="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam",
         bai="cnv_sv/expansionhunter/{sample}_{type}_realigned.sorted.bam.bai",
-        cat=config.get("expansionhunter", {}).get("variant_catalog", ""),
+        cat=lambda wildcards: get_config_value("expansionhunter", "variant_catalog"),
         loci="cnv_sv/reviewer/{sample}_{type}_locus_list.txt",
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
         vcf="cnv_sv/expansionhunter/{sample}_{type}.vcf",
     output:
         dir=temp(directory("cnv_sv/reviewer/{sample}_{type}/")),

@@ -8,7 +8,7 @@ rule cnvkit_batch:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+        reference=lambda wildcards: get_config_value("cnvkit_batch", "normal_reference"),
     output:
         antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
         bins=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.bintest.cns"),
@@ -38,7 +38,7 @@ rule cnvkit_batch:
     message:
         "{rule}: use cnvkit to call cnvs in {wildcards.sample}/{wildcards.sample}_{wildcards.type}"
     wrapper:
-        "v9.2.0/bio/cnvkit/batch"
+        "v9.16.0/bio/cnvkit/batch"
 
 
 rule cnvkit_call:
@@ -70,7 +70,7 @@ rule cnvkit_call:
     message:
         "{rule}: call cnvs with loh info into cnv_sv/cnvkit_call/{wildcards.sample}_{wildcards.type}.loh.cns"
     wrapper:
-        "v5.2.1/bio/cnvkit/call"
+        "v9.16.0/bio/cnvkit/call"
 
 
 rule cnvkit_diagram:
@@ -100,7 +100,7 @@ rule cnvkit_diagram:
     message:
         "{rule}: chromosome plot cnv_sv/cnvkit_scatter/{wildcards.sample}_{wildcards.type}.pdf"
     wrapper:
-        "v5.2.1/bio/cnvkit/diagram"
+        "v9.16.0/bio/cnvkit/diagram"
 
 
 rule cnvkit_scatter:
@@ -197,4 +197,4 @@ rule cnvkit_export_seg:
     message:
         "{rule}: export cnvkit segments into seg in {output.seg}"
     wrapper:
-        "v8.1.1/bio/cnvkit/export"
+        "v9.16.0/bio/cnvkit/export"
