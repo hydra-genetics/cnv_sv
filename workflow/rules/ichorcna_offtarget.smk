@@ -67,9 +67,9 @@ rule ichorcna_offtarget_run:
         # which don't exist on the host filesystem Snakemake itself checks
         # against - declaring them as input would make dry-run/DAG-building
         # fail with a false "missing input file" for any such path.
-        gc_wig=config.get("ichorcna_offtarget_run", {}).get("gc_wig", ""),
-        map_wig=config.get("ichorcna_offtarget_run", {}).get("map_wig", ""),
-        centromere=config.get("ichorcna_offtarget_run", {}).get("centromere", ""),
+        gc_wig=lambda wildcards: get_config_value("ichorcna_offtarget_run", "gc_wig"),
+        map_wig=lambda wildcards: get_config_value("ichorcna_offtarget_run", "map_wig"),
+        centromere=lambda wildcards: get_config_value("ichorcna_offtarget_run", "centromere"),
         ploidy=config.get("ichorcna_offtarget_run", {}).get("ploidy", "c(2,3,4)"),
         normal=config.get("ichorcna_offtarget_run", {}).get("normal", "c(0.5)"),
         max_cn=config.get("ichorcna_offtarget_run", {}).get("max_cn", 7),

@@ -12,7 +12,7 @@ rule automap:
         tsv=temp("cnv_sv/automap/{sample}_{type}/{sample}_{type}.HomRegions.tsv"),
     params:
         extra=config.get("automap", {}).get("extra", ""),
-        build=config.get("automap", {}).get("build", ""),
+        build=lambda wildcards: get_config_value("automap", "build"),
         dir=lambda w, output: os.path.dirname(os.path.dirname(output[0])),
     log:
         "cnv_sv/automap/{sample}_{type}.output.log",

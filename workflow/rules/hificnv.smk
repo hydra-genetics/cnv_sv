@@ -12,8 +12,8 @@ rule hificnv:
         bw=temp("cnv_sv/hificnv/{sample}_{type}.depth.bw"),
         bedgraph=temp("cnv_sv/hificnv/{sample}_{type}.copynum.bedgraph"),
     params:
-        ref=config.get("reference", {}).get("fasta", ""),
-        exclude=config.get("hificnv", {}).get("exclude", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        exclude=lambda wildcards: get_config_value("hificnv", "exclude"),
     log:
         call="cnv_sv/hificnv/{sample}_{type}.vcf.gz.log",
         mv_vcf="cnv_sv/hificnv/{sample}_{type}.vcf.gz.mv.log",

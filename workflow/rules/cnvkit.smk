@@ -8,7 +8,7 @@ rule cnvkit_batch:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        reference=config.get("cnvkit_batch", {}).get("normal_reference", ""),
+        reference=lambda wildcards: get_config_value("cnvkit_batch", "normal_reference"),
     output:
         antitarget_coverage=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.antitargetcoverage.cnn"),
         bins=temp("cnv_sv/cnvkit_batch/{sample}/{sample}_{type}.bintest.cns"),

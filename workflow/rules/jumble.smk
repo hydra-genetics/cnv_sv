@@ -20,7 +20,7 @@ rule jumble_run:
         qc_csv=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.qc.csv"),
         snps=temp("cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.jumble_snps.csv"),
     params:
-        reference=config.get("jumble_run", {}).get("normal_reference", ""),
+        reference=lambda wildcards: get_config_value("jumble_run", "normal_reference"),
     log:
         "cnv_sv/jumble_run/{sample}_{type}/{sample}_{type}.output.log",
     benchmark:

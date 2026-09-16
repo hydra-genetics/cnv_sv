@@ -14,6 +14,7 @@ from snakemake.iocontainers import InputFiles, Wildcards
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.config import config_accessor
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
@@ -55,6 +56,9 @@ wildcard_constraints:
     file="cnv_sv/.+",
 
 
+get_config_value = config_accessor(config, module="cnv_sv")
+
+
 def get_sample_sex(sample):
     """
     Get the sex of a sample from the samples dataframe.
@@ -93,10 +97,10 @@ def get_expected_cn(wildcards):
     sex = get_sample_sex(wildcards.sample)
 
     if sex == "male":
-        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("male", "")
+        expected_cn = get_config_value("sawfish_discover", "expected_cn", "male")
         sawfish_param = f"--expected-cn {expected_cn}"
     elif sex == "female":
-        expected_cn = config.get("sawfish_discover", {}).get("expected_cn", {}).get("female", "")
+        expected_cn = get_config_value("sawfish_discover", "expected_cn", "female")
         sawfish_param = f"--expected-cn {expected_cn}"
     else:  # when sex not set to male or female in samples.tsv treat all regions as diploid
         sawfish_param = ""
@@ -219,9 +223,9 @@ def get_exomedepth_ref(wildcards):
     sex = get_sample_sex(wildcards.sample)
 
     if sex == "male":
-        ref = config.get("exomedepth_call", {}).get("male_reference", "")
+        ref = get_config_value("exomedepth_call", "male_reference")
     else:  # use female ref in the case of female or NA
-        ref = config.get("exomedepth_call", {}).get("female_reference", "")
+        ref = get_config_value("exomedepth_call", "female_reference")
 
     return ref
 
@@ -278,7 +282,7 @@ def get_parent_samples(wildcards, trio_member):
 
 
 def get_trgt_loci(wildcards):
-    trgt_bed = config.get("trgt_genotype", {}).get("bed", "")
+    trgt_bed = get_config_value("trgt_genotype", "bed")
     rep_ids = []
     with open(trgt_bed, "r") as infile:
         for line in infile:
@@ -376,7 +380,7 @@ def compile_output_list(wildcards):
         for unit_type in get_unit_types(units, sample)
         for platform in units.loc[(sample,)].platform
         if platform in ["ONT", "PACBIO"]
-        for gene in config.get("paraphase", {}).get("genes", "")
+        for gene in config.get("paraphase", {}).get("genes", [])
         for suffix in files[prefix]
     ]
 

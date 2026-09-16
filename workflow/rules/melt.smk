@@ -8,9 +8,9 @@ rule melt:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        bed=config.get("melt", {}).get("bed", ""),
-        mei=config.get("melt", {}).get("mei", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
+        bed=lambda wildcards: get_config_value("melt", "bed"),
+        mei=lambda wildcards: get_config_value("melt", "mei"),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
         metrics="qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt",
     output:
         alu=temp("cnv_sv/melt/{sample}_{type}.ALU.final_comp.vcf"),

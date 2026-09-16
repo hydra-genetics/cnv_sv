@@ -13,8 +13,8 @@ rule cnvpytor_readdepth:
         pytor=temp("cnv_sv/cnvpytor/{sample}_{type}.pytor"),
     params:
         extra=config.get("cnvpytor_readdepth", {}).get("extra", ""),
-        length=config.get("cnvpytor_readdepth", {}).get("length_list", ""),
-        model=config.get("cnvpytor_readdepth", {}).get("calling_model", ""),
+        length=lambda wildcards: get_config_value("cnvpytor_readdepth", "length_list"),
+        model=config.get("cnvpytor_readdepth", {}).get("calling_model", "rd_mean_shift"),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_rd.log",
     benchmark:
@@ -52,12 +52,12 @@ rule cnvpytor_filter:
         filtvcf=temp("cnv_sv/cnvpytor/{sample}_{type}.filtered.vcf"),
     params:
         extra=config.get("cnvpytor_filter", {}).get("extra", ""),
-        dgrange=config.get("cnvpytor_filter", {}).get("dG_range", ""),
+        dgrange=lambda wildcards: get_config_value("cnvpytor_filter", "dG_range"),
         model=config.get("cnvpytor_filter", {}).get("calling_model", "rd_mean_shift"),
-        prange=config.get("cnvpytor_filter", {}).get("p_range", ""),
-        pnrange=config.get("cnvpytor_filter", {}).get("pN_range", ""),
-        q0range=config.get("cnvpytor_filter", {}).get("Q0_range", ""),
-        view=config.get("cnvpytor_filter", {}).get("view", ""),
+        prange=lambda wildcards: get_config_value("cnvpytor_filter", "p_range"),
+        pnrange=lambda wildcards: get_config_value("cnvpytor_filter", "pN_range"),
+        q0range=lambda wildcards: get_config_value("cnvpytor_filter", "Q0_range"),
+        view=lambda wildcards: get_config_value("cnvpytor_filter", "view"),
     log:
         "cnv_sv/cnvpytor/{sample}_{type}_filter.log",
     benchmark:
@@ -97,7 +97,7 @@ rule cnvpytor_plot_manhattan:
     output:
         png=temp("cnv_sv/cnvpytor/{sample}_{type}.manhattan.global.0000.png"),
     params:
-        bin_size=config.get("cnvpytor_plot_manhattan", {}).get("bin_size", ""),
+        bin_size=lambda wildcards: get_config_value("cnvpytor_plot_manhattan", "bin_size"),
         extra=config.get("cnvpytor_plot_manhattan", {}).get("extra", ""),
         png="cnv_sv/cnvpytor/{sample}_{type}.manhattan.png",
     log:

@@ -21,7 +21,7 @@ rule purecn_coverage:
             )
         ),
     params:
-        intervals=config.get("purecn_coverage", {}).get("intervals", ""),
+        intervals=lambda wildcards: get_config_value("purecn_coverage", "intervals"),
         extra=config.get("purecn_coverage", {}).get("extra", ""),
     log:
         "cnv_sv/purecn_coverage/{sample}_{type}.output.log",
@@ -59,9 +59,9 @@ rule purecn:
         csv=temp("cnv_sv/purecn/temp/{sample}_{type}/{sample}_{type}.csv"),
         outdir=temp(directory("cnv_sv/purecn/temp/{sample}_{type}/")),
     params:
-        fun_segmentation=config.get("purecn", {}).get("fun_segmentation", ""),
-        genome=config.get("purecn", {}).get("genome", ""),
-        interval_padding=config.get("purecn", {}).get("interval_padding", ""),
+        fun_segmentation=lambda wildcards: get_config_value("purecn", "fun_segmentation"),
+        genome=lambda wildcards: get_config_value("purecn", "genome"),
+        interval_padding=lambda wildcards: get_config_value("purecn", "interval_padding"),
         extra=get_purecn_extra,
     log:
         "cnv_sv/purecn/{sample}_{type}.output.log",

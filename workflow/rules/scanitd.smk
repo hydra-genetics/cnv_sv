@@ -8,7 +8,7 @@ rule scanitd:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         vcf="cnv_sv/scanitd/{sample}_{type}.vcf",
     params:

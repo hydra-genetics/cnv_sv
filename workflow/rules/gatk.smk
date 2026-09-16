@@ -8,7 +8,7 @@ rule gatk_collect_read_counts:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        interval=config.get("reference", {}).get("design_intervals_gatk_cnv", ""),
+        interval=lambda wildcards: get_config_value("reference", "design_intervals_gatk_cnv"),
     output:
         hdf5=temp("cnv_sv/gatk_collect_read_counts/{sample}_{type}.counts.hdf5"),
     params:
@@ -45,7 +45,7 @@ rule gatk_collect_allelic_counts:
     input:
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        interval=config.get("gatk_collect_allelic_counts", {}).get("SNP_interval", ""),
+        interval=lambda wildcards: get_config_value("gatk_collect_allelic_counts", "SNP_interval"),
         ref=config["reference"]["fasta"],
     output:
         tsv=temp("cnv_sv/gatk_collect_allelic_counts/{sample}_{type}.clean.allelicCounts.tsv"),
@@ -80,7 +80,7 @@ rule gatk_collect_allelic_counts:
 
 rule gatk_denoise_read_counts:
     input:
-        hdf5PoN=config.get("gatk_denoise_read_counts", {}).get("normal_reference", ""),
+        hdf5PoN=lambda wildcards: get_config_value("gatk_denoise_read_counts", "normal_reference"),
         hdf5Tumor="cnv_sv/gatk_collect_read_counts/{sample}_{type}.counts.hdf5",
     output:
         denoisedCopyRatio=temp("cnv_sv/gatk_denoise_read_counts/{sample}_{type}.clean.denoisedCR.tsv"),

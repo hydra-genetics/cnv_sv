@@ -18,7 +18,7 @@ rule sawfish_discover:
             if config.get("sawfish_discover", {}).get("maf", False)
             else []
         ),
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
     output:
         asm_bed=temp("cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed"),
         bcf=temp("cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf"),
@@ -101,7 +101,7 @@ rule sawfish_joint_call_single:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
         asm_bed="cnv_sv/sawfish_discover/{sample}_{type}/assembly.regions.bed",
         bcf="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf",
         csi="cnv_sv/sawfish_discover/{sample}_{type}/candidate.sv.bcf.csi",
